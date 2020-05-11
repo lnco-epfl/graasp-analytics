@@ -1,9 +1,10 @@
 import React from 'react';
+import Charts from './Charts';
 
 function Space() {
   return (
     <div>
-      <h1>My Space</h1>
+      <Charts />
     </div>
   );
 }
