@@ -14,10 +14,10 @@ function Charts() {
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
           <Chart />
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
           <Chart />
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
           <Chart />
         </Grid>
       </Grid>
