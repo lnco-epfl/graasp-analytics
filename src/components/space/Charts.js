@@ -1,7 +1,8 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import ChartsHeader from './ChartsHeader';
-import Chart from './Chart';
+import ActionsChart from './ActionsChart';
+import ActionsMap from './ActionsMap';
 
 function Charts() {
   return (
@@ -9,16 +10,10 @@ function Charts() {
       <ChartsHeader />
       <Grid container>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-          <Chart />
+          <ActionsChart />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-          <Chart />
-        </Grid>
-        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-          <Chart />
-        </Grid>
-        <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-          <Chart />
+          <ActionsMap />
         </Grid>
       </Grid>
     </div>
