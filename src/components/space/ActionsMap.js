@@ -12,10 +12,10 @@ import {
 } from '../../config/constants';
 import spaceData from '../../data/sample.json';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   clusterMarker: {
     color: '#fff',
-    background: '#5050d2',
+    background: theme.palette.primary.main,
     borderRadius: '50%',
     padding: 10,
     display: 'flex',
@@ -27,8 +27,9 @@ const useStyles = makeStyles(() => ({
   },
   mapContainer: {
     width: '90%',
-    height: '80%',
+    height: 400,
     marginTop: 30,
+    marginBottom: 30,
   },
 }));
 

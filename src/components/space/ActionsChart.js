@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import {
   BarChart,
@@ -18,6 +18,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function ActionsChart() {
+  const theme = useTheme();
   const classes = useStyles();
   const actionsByDay = formatActions(getActionsByDay(spaceData));
 
@@ -35,7 +36,7 @@ function ActionsChart() {
           <XAxis dataKey="date" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="count" name="Count" fill="#5050d2" />
+          <Bar dataKey="count" name="Count" fill={theme.palette.primary.main} />
         </BarChart>
       </ResponsiveContainer>
     </>
