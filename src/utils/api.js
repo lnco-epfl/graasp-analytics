@@ -24,7 +24,7 @@ export const formatActions = (actionsByDayObject) => {
       date: `${entryDate.getDate()}-${
         entryDate.getMonth() + 1
       }-${entryDate.getFullYear()}`,
-      Count: entry[1],
+      count: entry[1],
     };
   });
 };

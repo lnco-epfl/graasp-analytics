@@ -4,6 +4,12 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
+import {
+  DEFAULT_LATITUDE,
+  DEFAULT_LONGITUDE,
+  MAX_CLUSTER_ZOOM,
+  CLUSTER_RADIUS,
+} from '../../config/constants';
 import spaceData from '../../data/sample.json';
 
 const useStyles = makeStyles(() => ({
@@ -15,6 +21,14 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  typography: {
+    textAlign: 'center',
+  },
+  mapContainer: {
+    width: '90%',
+    height: '80%',
+    marginTop: 30,
   },
 }));
 
@@ -38,18 +52,27 @@ function ActionsMap() {
     points,
     bounds,
     zoom,
-    options: { radius: 75, maxZoom: 10 },
+    options: { radius: CLUSTER_RADIUS, maxZoom: MAX_CLUSTER_ZOOM },
   });
 
+  const calculateClusterRadius = (
+    clusterCount,
+    totalCount,
+    baseRadius,
+    scalar,
+  ) => {
+    return baseRadius + (clusterCount / totalCount) * scalar;
+  };
+
   return (
-    <Container style={{ width: '100%', height: '100%' }}>
-      <Typography variant="h6" style={{ textAlign: 'center' }}>
+    <>
+      <Typography variant="h6" className={classes.typography}>
         Actions by location
       </Typography>
-      <Container style={{ width: '90%', height: '80%', marginTop: 30 }}>
+      <Container className={classes.mapContainer}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_KEY }}
-          defaultCenter={{ lat: 47.1269, lng: 6.9283 }}
+          defaultCenter={{ lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE }}
           defaultZoom={5}
           distanceToMouse={() => {}}
           onChange={(map) => {
@@ -74,8 +97,18 @@ function ActionsMap() {
                   <div
                     className={classes.clusterMarker}
                     style={{
-                      width: `${10 + (pointCount / points.length) * 20}px`,
-                      height: `${10 + (pointCount / points.length) * 20}px`,
+                      width: `${calculateClusterRadius(
+                        pointCount,
+                        points.length,
+                        10,
+                        20,
+                      )}px`,
+                      height: `${calculateClusterRadius(
+                        pointCount,
+                        points.length,
+                        10,
+                        20,
+                      )}px`,
                     }}
                   >
                     {pointCount}
@@ -87,7 +120,7 @@ function ActionsMap() {
           })}
         </GoogleMapReact>
       </Container>
-    </Container>
+    </>
   );
 }
 
