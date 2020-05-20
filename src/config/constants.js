@@ -9,3 +9,6 @@ export const MAX_CLUSTER_ZOOM = 10;
 // Size (in pixels) of cluster zones used by supercluster.
 // The higher CLUSTER_RADIUS, the more map area absorbed into a single cluster.
 export const CLUSTER_RADIUS = 75;
+
+// Key code for the Enter/Return key (Used in a placeholder keyboard event listener in ActionsMap)
+export const ENTER_KEY_CODE = 13;

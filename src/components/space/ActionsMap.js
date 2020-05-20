@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +9,7 @@ import {
   DEFAULT_LONGITUDE,
   MAX_CLUSTER_ZOOM,
   CLUSTER_RADIUS,
+  ENTER_KEY_CODE,
 } from '../../config/constants';
 import spaceData from '../../data/sample.json';
 
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    cursor: 'pointer',
   },
   typography: {
     textAlign: 'center',
@@ -37,6 +39,7 @@ const Marker = ({ children }) => children;
 
 function ActionsMap() {
   const classes = useStyles();
+  const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(5);
 
@@ -65,6 +68,11 @@ function ActionsMap() {
     return baseRadius + (clusterCount / totalCount) * scalar;
   };
 
+  const handleClusterZoom = (longitude, latitude) => {
+    mapRef.current.setZoom(mapRef.current.zoom + 1);
+    mapRef.current.panTo({ lng: longitude, lat: latitude });
+  };
+
   return (
     <>
       <Typography variant="h6" className={classes.typography}>
@@ -76,6 +84,10 @@ function ActionsMap() {
           defaultCenter={{ lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE }}
           defaultZoom={5}
           distanceToMouse={() => {}}
+          yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={({ map }) => {
+            mapRef.current = map;
+          }}
           onChange={(map) => {
             setZoom(map.zoom);
             setBounds([
@@ -111,6 +123,14 @@ function ActionsMap() {
                         20,
                       )}px`,
                     }}
+                    onClick={() => handleClusterZoom(longitude, latitude)}
+                    onKeyPress={(event) => {
+                      if (event.keyCode === ENTER_KEY_CODE) {
+                        handleClusterZoom(longitude, latitude);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
                   >
                     {pointCount}
                   </div>
