@@ -9,6 +9,7 @@ import {
   DEFAULT_LONGITUDE,
   MAX_CLUSTER_ZOOM,
   CLUSTER_RADIUS,
+  ENTER_KEY_CODE,
 } from '../../config/constants';
 import spaceData from '../../data/sample.json';
 
@@ -124,8 +125,9 @@ function ActionsMap() {
                     }}
                     onClick={() => handleClusterZoom(longitude, latitude)}
                     onKeyPress={(event) => {
-                      if (event.keyCode === 13)
+                      if (event.keyCode === ENTER_KEY_CODE) {
                         handleClusterZoom(longitude, latitude);
+                      }
                     }}
                     role="button"
                     tabIndex={0}
