@@ -29,6 +29,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:local": "PORT=80 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:once": "cross-env CI=true env-cmd -f ./.env.test react-scripts test",

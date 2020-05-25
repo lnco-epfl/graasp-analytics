@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import {
@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { getActionsByDay, formatActions } from '../../utils/api';
-import spaceData from '../../data/sample.json';
+import { SpaceDataContext } from './SpaceDataProvider';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
@@ -20,6 +20,7 @@ const useStyles = makeStyles(() => ({
 function ActionsChart() {
   const theme = useTheme();
   const classes = useStyles();
+  const spaceData = useContext(SpaceDataContext);
   const actionsByDay = formatActions(getActionsByDay(spaceData));
 
   return (

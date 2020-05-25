@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +11,7 @@ import {
   CLUSTER_RADIUS,
   ENTER_KEY_CODE,
 } from '../../config/constants';
-import spaceData from '../../data/sample.json';
+import { SpaceDataContext } from './SpaceDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   clusterMarker: {
@@ -40,6 +40,7 @@ const Marker = ({ children }) => children;
 function ActionsMap() {
   const classes = useStyles();
   const mapRef = useRef();
+  const spaceData = useContext(SpaceDataContext);
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(5);
 
