@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(2),
     flexGrow: 1,
+    padding: theme.spacing(2),
   },
 }));
 
@@ -33,9 +34,7 @@ function ChartsHeader() {
           alignItems="center"
           className={classes.cell}
         >
-          <Tooltip
-            title={t('These are the analytics charts for this collection.')}
-          >
+          <Tooltip title={t('These are the charts for this space.')}>
             <Info color="primary" />
           </Tooltip>
         </Grid>

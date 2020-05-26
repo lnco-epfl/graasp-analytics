@@ -24,11 +24,11 @@ const SpaceDataProvider = ({ children }) => {
           apiOptions,
         );
         const resolvedData = await fetchedData.json();
-        setData({ actions: resolvedData, error: '' });
+        setData({ actions: resolvedData, error: null });
         setIsLoading(false);
         return resolvedData;
       } catch (error) {
-        setData({ actions: [], error: 'This space does not exist.' });
+        setData({ actions: [], error });
         setIsLoading(false);
         return null;
       }

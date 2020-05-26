@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   mapContainer: {
-    width: '90%',
+    width: '100%',
     height: 400,
     marginTop: 30,
     marginBottom: 30,
