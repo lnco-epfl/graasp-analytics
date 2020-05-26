@@ -20,8 +20,8 @@ const useStyles = makeStyles(() => ({
 function ActionsChart() {
   const theme = useTheme();
   const classes = useStyles();
-  const spaceData = useContext(SpaceDataContext);
-  const actionsByDay = formatActions(getActionsByDay(spaceData));
+  const { actions } = useContext(SpaceDataContext);
+  const actionsByDay = formatActions(getActionsByDay(actions));
 
   return (
     <>

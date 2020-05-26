@@ -40,11 +40,11 @@ const Marker = ({ children }) => children;
 function ActionsMap() {
   const classes = useStyles();
   const mapRef = useRef();
-  const spaceData = useContext(SpaceDataContext);
+  const { actions } = useContext(SpaceDataContext);
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(5);
 
-  const points = spaceData.map((action) => ({
+  const points = actions.map((action) => ({
     type: 'Feature',
     properties: { cluster: false, actionId: action._id },
     geometry: {

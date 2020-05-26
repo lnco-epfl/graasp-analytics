@@ -5,7 +5,8 @@ import { useParams } from 'react-router-dom';
 export const SpaceDataContext = createContext();
 
 const SpaceDataProvider = ({ children }) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ actions: [], error: null });
+  const [isLoading, setIsLoading] = useState(true);
   const { id: routeId } = useParams();
 
   useEffect(() => {
@@ -15,38 +16,28 @@ const SpaceDataProvider = ({ children }) => {
       credentials: 'include',
       method: 'GET',
     };
-    const identifyIfLearningSpace = async (spaceId) => {
-      try {
-        const response = await fetch(
-          `${baseUrl}/spaces/${spaceId}`,
-          apiOptions,
-        );
-        const resolvedResponse = await response.json();
-        return resolvedResponse.isLearningSpace;
-      } catch (error) {
-        setData([{ error: 'This space does not exist' }]);
-        return null;
-      }
-    };
+    const pageSize = 1000;
     const fetchData = async (spaceId) => {
-      const isLearningSpace = await identifyIfLearningSpace(spaceId);
-      if (isLearningSpace) {
-        setData([{ error: 'This space does not have analytics' }]);
-      } else {
-        const pageSize = 1000;
+      try {
         const fetchedData = await fetch(
           `${baseUrl}/actions?spaceId=${spaceId}&pageSize=${pageSize}`,
           apiOptions,
         );
         const resolvedData = await fetchedData.json();
-        setData(resolvedData);
+        setData({ actions: resolvedData, error: '' });
+        setIsLoading(false);
+        return resolvedData;
+      } catch (error) {
+        setData({ actions: [], error: 'This space does not exist.' });
+        setIsLoading(false);
+        return null;
       }
     };
     fetchData(routeId);
   }, [routeId]);
 
   return (
-    <SpaceDataContext.Provider value={data}>
+    <SpaceDataContext.Provider value={{ ...data, isLoading }}>
       {children}
     </SpaceDataContext.Provider>
   );
