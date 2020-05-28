@@ -1,12 +1,9 @@
-const baseUrl = process.env.REACT_APP_BASE_URL;
-const apiOptions = {
+export const DEFAULT_API_OPTIONS = {
   headers: { 'content-type': 'application/json' },
   credentials: 'include',
   method: 'GET',
 };
-const pageSize = 1000;
+export const DEFAULT_REQUEST_PAGE_SIZE = 1000;
 
-const buildActionsEndpoint = (spaceId) =>
-  fetch(`${baseUrl}?spaceId=${spaceId}&pageSize=${pageSize}`, apiOptions);
-
-export default buildActionsEndpoint;
+export const buildActionsEndpoint = (url, spaceId, pageSize) =>
+  `${url}?spaceId=${spaceId}&pageSize=${pageSize}`;
