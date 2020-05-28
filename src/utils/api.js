@@ -2,7 +2,7 @@
 export const getActionsByDay = (spaceData) => {
   const actionsByDay = {};
   spaceData.forEach((action) => {
-    const actionDate = new Date(action.postedAt.slice(0, 10));
+    const actionDate = new Date(action.createdAt.slice(0, 10));
     if (!actionsByDay[actionDate]) {
       actionsByDay[actionDate] = 1;
     } else {
