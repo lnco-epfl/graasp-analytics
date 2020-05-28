@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
+import buildActionsEndpoint from '../api/graasp';
 
 export const SpaceDataContext = createContext();
 
@@ -10,27 +11,15 @@ const SpaceDataProvider = ({ children }) => {
   const { id: routeId } = useParams();
 
   useEffect(() => {
-    const baseUrl = 'https://graasp-users.api.graasp.eu';
-    const apiOptions = {
-      headers: { 'content-type': 'application/json' },
-      credentials: 'include',
-      method: 'GET',
-    };
-    const pageSize = 1000;
     const fetchData = async (spaceId) => {
       try {
-        const fetchedData = await fetch(
-          `${baseUrl}/actions?spaceId=${spaceId}&pageSize=${pageSize}`,
-          apiOptions,
-        );
+        const fetchedData = await buildActionsEndpoint(spaceId);
         const resolvedData = await fetchedData.json();
+        setIsLoading(false);
         setData({ actions: resolvedData, error: null });
-        setIsLoading(false);
-        return resolvedData;
       } catch (error) {
-        setData({ actions: [], error });
         setIsLoading(false);
-        return null;
+        setData({ actions: [], error });
       }
     };
     fetchData(routeId);

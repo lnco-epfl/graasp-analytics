@@ -12,11 +12,6 @@ const useStyles = makeStyles((theme) => ({
       height: 'calc(100% - 64px - 64px)',
     },
   },
-  '@global': {
-    'html, body, #root': {
-      height: '100%',
-    },
-  },
 }));
 
 function App() {

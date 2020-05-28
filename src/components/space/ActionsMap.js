@@ -11,7 +11,7 @@ import {
   CLUSTER_RADIUS,
   ENTER_KEY_CODE,
 } from '../../config/constants';
-import { SpaceDataContext } from './SpaceDataProvider';
+import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   clusterMarker: {

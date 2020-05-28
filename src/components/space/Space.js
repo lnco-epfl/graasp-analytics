@@ -1,6 +1,6 @@
 import React from 'react';
 import Charts from './Charts';
-import SpaceDataProvider from './SpaceDataProvider';
+import SpaceDataProvider from '../../contexts/SpaceDataProvider';
 
 function Space() {
   return (

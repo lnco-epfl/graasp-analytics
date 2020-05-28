@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { getActionsByDay, formatActions } from '../../utils/api';
-import { SpaceDataContext } from './SpaceDataProvider';
+import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },

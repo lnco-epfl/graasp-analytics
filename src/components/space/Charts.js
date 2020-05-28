@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import ChartsHeader from './ChartsHeader';
 import ActionsChart from './ActionsChart';
 import ActionsMap from './ActionsMap';
-import { SpaceDataContext } from './SpaceDataProvider';
+import Loader from '../common/Loader';
+import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 function Charts() {
   const { actions, error, isLoading } = useContext(SpaceDataContext);
@@ -13,7 +14,7 @@ function Charts() {
   if (isLoading) {
     return (
       <div>
-        <Typography>{t('Loading...')}</Typography>
+        <Loader />
       </div>
     );
   }
