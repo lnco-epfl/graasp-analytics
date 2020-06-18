@@ -19,7 +19,7 @@ function App() {
       <Header />
       <main className={classes.main}>
         <Switch>
-          <Route path="/spaces/:id">
+          <Route path="/spaces/:spaceId">
             <Space />
           </Route>
           <Route path="/">

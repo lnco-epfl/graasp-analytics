@@ -1,16 +1,13 @@
 import React from 'react';
 import Charts from './Charts';
-import ActionsDataProvider from '../../contexts/ActionsDataProvider';
-import SubspaceDataProvider from '../../contexts/SubspaceDataProvider';
+import SpaceDataProvider from '../../contexts/SpaceDataProvider';
 
 function Space() {
   return (
     <div>
-      <SubspaceDataProvider>
-        <ActionsDataProvider>
-          <Charts />
-        </ActionsDataProvider>
-      </SubspaceDataProvider>
+      <SpaceDataProvider>
+        <Charts />
+      </SpaceDataProvider>
     </div>
   );
 }

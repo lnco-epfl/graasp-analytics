@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Tooltip, Typography } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import SubspaceList from './SubspaceList';
-import { SubspaceDataContext } from '../../contexts/SubspaceDataProvider';
+import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   spaceName: {
@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ChartsHeader({ status }) {
-  const { currentSpaceName } = useContext(SubspaceDataContext);
+function ChartsHeader() {
   const { t } = useTranslation();
   const classes = useStyles();
+  const { spaceName } = useContext(SpaceDataContext);
   return (
     <div className={classes.root}>
       <Grid container>
@@ -42,7 +42,7 @@ function ChartsHeader({ status }) {
             color="inherit"
             className={classes.spaceName}
           >
-            {currentSpaceName}
+            {spaceName}
           </Typography>
         </Grid>
         <Grid item xs={6} className={classes.rightCell}>
@@ -55,15 +55,15 @@ function ChartsHeader({ status }) {
           </Tooltip>
         </Grid>
       </Grid>
-      <Typography variant="subtitle1">{status}</Typography>
+      <Typography variant="subtitle1">Chart</Typography>
       <SubspaceList />
     </div>
   );
 }
 
-ChartsHeader.propTypes = {
-  status: PropTypes.string,
-};
+// ChartsHeader.propTypes = {
+//   status: PropTypes.string,
+// };
 
 ChartsHeader.defaultProps = {
   status: '',

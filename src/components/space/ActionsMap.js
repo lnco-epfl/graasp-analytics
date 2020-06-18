@@ -11,7 +11,7 @@ import {
   CLUSTER_RADIUS,
   ENTER_KEY_CODE,
 } from '../../config/constants';
-import { ActionsDataContext } from '../../contexts/ActionsDataProvider';
+import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   clusterMarker: {
@@ -40,9 +40,9 @@ const Marker = ({ children }) => children;
 function ActionsMap() {
   const classes = useStyles();
   const mapRef = useRef();
-  const { actions } = useContext(ActionsDataContext);
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(3);
+  const { actions } = useContext(SpaceDataContext);
 
   // GeoJSON Feature objects
   const points = actions.map((action) => ({

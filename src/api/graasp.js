@@ -4,25 +4,14 @@ export const DEFAULT_API_OPTIONS = {
   method: 'GET',
 };
 
-export const DEFAULT_REQUEST_PAGE_SIZE = 1000;
+export const DEFAULT_REQUEST_SAMPLE_SIZE = 2000;
+export const ANALYTICS_PARAMETER = 'analytics';
 
-export const ACTIONS_PARAMETER = 'actions';
-export const buildActionsEndpoint = (
+export const buildAnalyticsEndpoint = (
   url,
   parameter,
   spaceId,
-  pageSize,
-  ...additionalSpaceIds
+  requestedSampleSize,
 ) => {
-  const additionalSpacesString = additionalSpaceIds.reduce(
-    (currentString, additionalSpaceId) => {
-      return `${currentString}&spaceId=${additionalSpaceId}`;
-    },
-    '',
-  );
-  return `${url}/${parameter}?spaceId=${spaceId}&pageSize=${pageSize}${additionalSpacesString}`;
+  return `${url}/${parameter}/?spaceId=${spaceId}&requestedSampleSize=${requestedSampleSize}`;
 };
-
-export const SPACES_PARAMETER = 'spaces';
-export const buildSpacesEndpoint = (url, parameter, spaceId) =>
-  `${url}/${parameter}/${spaceId}`;

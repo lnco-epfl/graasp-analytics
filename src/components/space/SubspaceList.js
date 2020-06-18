@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState /* useEffect */ } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
@@ -7,9 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
-
-import { ActionsDataContext } from '../../contexts/ActionsDataProvider';
-import { SubspaceDataContext } from '../../contexts/SubspaceDataProvider';
+import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   gridText: {
@@ -36,38 +34,26 @@ const useStyles = makeStyles((theme) => ({
 // };
 
 function SubspaceList() {
+  const { spaceImmediateChildren } = useContext(SpaceDataContext);
   const classes = useStyles();
-  const { error, setSubspacesToFetch } = useContext(ActionsDataContext);
-  const { spaceSubspaces, isLoading } = useContext(SubspaceDataContext);
+
   const [selectedSubspaces, setSelectedSubspaces] = useState([]);
 
-  const mapSpaceNameToSpaceId = (spaceName, spacesArray) => {
-    return spacesArray.find((space) => space.name === spaceName).id;
-  };
+  // const mapSpaceNameToSpaceId = (spaceName, spacesArray) => {
+  //   return spacesArray.find((space) => space.name === spaceName).id;
+  // };
 
   const handleChange = (event) => {
     setSelectedSubspaces(event.target.value);
   };
 
-  useEffect(() => {
-    setSubspacesToFetch(
-      selectedSubspaces.map((subspace) =>
-        mapSpaceNameToSpaceId(subspace, spaceSubspaces),
-      ),
-    );
-  }, [selectedSubspaces, setSubspacesToFetch, spaceSubspaces]);
-
-  if (isLoading || error) {
-    return null;
-  }
-
-  if (!isLoading && spaceSubspaces.length === 0) {
-    return (
-      <Typography variant="subtitle1">
-        This space has no additional sub-spaces.
-      </Typography>
-    );
-  }
+  // if (!isLoading && spaceSubspaces.length === 0) {
+  //   return (
+  //     <Typography variant="subtitle1">
+  //       This space has no additional sub-spaces.
+  //     </Typography>
+  //   );
+  // }
 
   return (
     <Grid container>
@@ -88,14 +74,16 @@ function SubspaceList() {
             renderValue={(selected) => selected.join(', ')}
             // MenuProps={MenuProps}
           >
-            {spaceSubspaces.map((subspace) => (
-              <MenuItem key={subspace.id} value={subspace.name}>
-                <Checkbox
-                  checked={selectedSubspaces.indexOf(subspace.name) > -1}
-                />
-                <Typography variant="subtitle2">{subspace.name}</Typography>
-              </MenuItem>
-            ))}
+            {spaceImmediateChildren
+              .sort((spaceOne, spaceTwo) => spaceOne.name > spaceTwo.name)
+              .map((space) => (
+                <MenuItem key={space.id} value={space.name}>
+                  <Checkbox
+                    checked={selectedSubspaces.indexOf(space.name) > -1}
+                  />
+                  <Typography variant="subtitle2">{space.name}</Typography>
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
       </Grid>
