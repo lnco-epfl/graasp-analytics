@@ -11,7 +11,7 @@ import {
   CLUSTER_RADIUS,
   ENTER_KEY_CODE,
 } from '../../config/constants';
-import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
+import { ActionsDataContext } from '../../contexts/ActionsDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   clusterMarker: {
@@ -40,10 +40,11 @@ const Marker = ({ children }) => children;
 function ActionsMap() {
   const classes = useStyles();
   const mapRef = useRef();
-  const { actions } = useContext(SpaceDataContext);
+  const { actions } = useContext(ActionsDataContext);
   const [bounds, setBounds] = useState(null);
-  const [zoom, setZoom] = useState(5);
+  const [zoom, setZoom] = useState(3);
 
+  // GeoJSON Feature objects
   const points = actions.map((action) => ({
     type: 'Feature',
     properties: { cluster: false, actionId: action._id },
@@ -83,7 +84,7 @@ function ActionsMap() {
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_KEY }}
           defaultCenter={{ lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE }}
-          defaultZoom={5}
+          defaultZoom={3}
           distanceToMouse={() => {}}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({ map }) => {

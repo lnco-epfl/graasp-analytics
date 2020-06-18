@@ -6,11 +6,9 @@ import Space from './space/Space';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   main: {
-    [theme.breakpoints.up('md')]: {
-      height: 'calc(100% - 64px - 64px)',
-    },
+    flex: 1,
   },
 }));
 

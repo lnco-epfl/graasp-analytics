@@ -1,36 +1,36 @@
 import React, { useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import ChartsHeader from './ChartsHeader';
 import ActionsChart from './ActionsChart';
 import ActionsMap from './ActionsMap';
 import Loader from '../common/Loader';
-import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
+import { ActionsDataContext } from '../../contexts/ActionsDataProvider';
 
 function Charts() {
-  const { actions, error, isLoading } = useContext(SpaceDataContext);
+  const { actions, error, isLoading } = useContext(ActionsDataContext);
   const { t } = useTranslation();
   if (isLoading) {
     return (
       <div>
-        <Loader />
+        <ChartsHeader />
+        <div>
+          <Loader />
+        </div>
       </div>
     );
   }
   if (error) {
     return (
       <div>
-        <Typography>{t('This space does not exist.')}</Typography>
+        <ChartsHeader status={t('This space does not exist.')} />
       </div>
     );
   }
   if (!isLoading && actions.length === 0) {
     return (
       <div>
-        <Typography>
-          {t('This space does not have any actions yet.')}
-        </Typography>
+        <ChartsHeader status={t('This space does not have any actions yet.')} />
       </div>
     );
   }

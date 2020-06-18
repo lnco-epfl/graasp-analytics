@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { getActionsByDay, formatActions } from '../../utils/api';
-import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
+import { ActionsDataContext } from '../../contexts/ActionsDataProvider';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
 function ActionsChart() {
   const theme = useTheme();
   const classes = useStyles();
-  const { actions } = useContext(SpaceDataContext);
+  const { actions } = useContext(ActionsDataContext);
   const actionsByDay = formatActions(getActionsByDay(actions));
 
   return (

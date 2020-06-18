@@ -19,8 +19,9 @@ ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
 
 const styles = {
   root: {
-    flexGrow: 1,
-    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
   },
 };
 
