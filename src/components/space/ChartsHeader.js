@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
-// import PropTypes from 'prop-types';
 import { Tooltip, Typography } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-import SubspaceList from './SubspaceList';
 import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,9 +21,16 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   root: {
-    marginBottom: theme.spacing(2),
     flexGrow: 1,
-    padding: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingBottom: theme.spacing(1),
+  },
+  alert: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -33,6 +38,7 @@ function ChartsHeader() {
   const { t } = useTranslation();
   const classes = useStyles();
   const { spaceName } = useContext(SpaceDataContext);
+
   return (
     <div className={classes.root}>
       <Grid container>
@@ -48,25 +54,15 @@ function ChartsHeader() {
         <Grid item xs={6} className={classes.rightCell}>
           <Tooltip
             title={t(
-              'Any charts available for this space will be shown below.',
+              'Any actions from this space and its subspaces are shown in the charts below.',
             )}
           >
             <Info color="primary" />
           </Tooltip>
         </Grid>
       </Grid>
-      <Typography variant="subtitle1">Chart</Typography>
-      <SubspaceList />
     </div>
   );
 }
-
-// ChartsHeader.propTypes = {
-//   status: PropTypes.string,
-// };
-
-ChartsHeader.defaultProps = {
-  status: '',
-};
 
 export default ChartsHeader;
