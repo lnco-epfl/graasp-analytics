@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import {
@@ -18,6 +19,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function ActionsChart() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
   const { actions } = useContext(SpaceDataContext);
@@ -26,7 +28,7 @@ function ActionsChart() {
   return (
     <>
       <Typography variant="h6" className={classes.typography}>
-        Actions by day
+        {t('Actions by Day')}
       </Typography>
       <ResponsiveContainer width="95%" height={450}>
         <BarChart

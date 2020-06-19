@@ -6,9 +6,12 @@ import Space from './space/Space';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   main: {
     flex: 1,
+  },
+  embedded: {
+    paddingTop: theme.spacing(2),
   },
 }));
 
@@ -16,18 +19,27 @@ function App() {
   const classes = useStyles();
   return (
     <Router>
-      <Header />
-      <main className={classes.main}>
-        <Switch>
-          <Route path="/spaces/:spaceId">
+      <Switch>
+        <Route path="/embedded/:spaceId">
+          <main className={classes.embedded}>
             <Space />
-          </Route>
-          <Route path="/">
+          </main>
+        </Route>
+        <Route path="/spaces/:spaceId">
+          <Header />
+          <main className={classes.main}>
+            <Space />
+          </main>
+          <Footer />
+        </Route>
+        <Route path="/">
+          <Header />
+          <main className={classes.main}>
             <Home />
-          </Route>
-        </Switch>
-      </main>
-      <Footer />
+          </main>
+          <Footer />
+        </Route>
+      </Switch>
     </Router>
   );
 }

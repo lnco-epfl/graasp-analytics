@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import { useTranslation } from 'react-i18next';
 import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
 import {
@@ -39,6 +40,7 @@ const Marker = ({ children }) => children;
 
 function ActionsMap() {
   const classes = useStyles();
+  const { t } = useTranslation();
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(3);
@@ -78,7 +80,7 @@ function ActionsMap() {
   return (
     <>
       <Typography variant="h6" className={classes.typography}>
-        Actions by location
+        {t('Actions by Location')}
       </Typography>
       <Container className={classes.mapContainer}>
         <GoogleMapReact

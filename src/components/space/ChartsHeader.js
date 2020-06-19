@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Tooltip, Typography } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
@@ -38,6 +39,11 @@ function ChartsHeader() {
   const { t } = useTranslation();
   const classes = useStyles();
   const { spaceName } = useContext(SpaceDataContext);
+  const location = useLocation();
+
+  if (location.pathname.slice(0, 9) === '/embedded') {
+    return null;
+  }
 
   return (
     <div className={classes.root}>
