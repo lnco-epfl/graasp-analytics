@@ -8,6 +8,7 @@ import useSupercluster from 'use-supercluster';
 import {
   DEFAULT_LATITUDE,
   DEFAULT_LONGITUDE,
+  DEFAULT_ZOOM,
   MAX_CLUSTER_ZOOM,
   CLUSTER_RADIUS,
   ENTER_KEY_CODE,
@@ -43,7 +44,7 @@ function ActionsMap() {
   const { t } = useTranslation();
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
-  const [zoom, setZoom] = useState(3);
+  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const { actions } = useContext(SpaceDataContext);
 
   // GeoJSON Feature objects
@@ -86,7 +87,7 @@ function ActionsMap() {
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_KEY }}
           defaultCenter={{ lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE }}
-          defaultZoom={3}
+          defaultZoom={DEFAULT_ZOOM}
           distanceToMouse={() => {}}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({ map }) => {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, matchPath } from 'react-router-dom';
 import { Tooltip, Typography } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
@@ -9,7 +9,7 @@ import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   spaceName: {
-    fontWeight: 900,
+    fontWeight: theme.typography.fontWeightBold,
   },
   leftCell: {
     display: 'flex',
@@ -39,9 +39,14 @@ function ChartsHeader() {
   const { t } = useTranslation();
   const classes = useStyles();
   const { spaceName } = useContext(SpaceDataContext);
-  const location = useLocation();
+  const { pathname } = useLocation();
 
-  if (location.pathname.slice(0, 9) === '/embedded') {
+  const match = matchPath(pathname, {
+    path: '/embedded/',
+    exact: false,
+  });
+
+  if (match) {
     return null;
   }
 
