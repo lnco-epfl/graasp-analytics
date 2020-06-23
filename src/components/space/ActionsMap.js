@@ -2,11 +2,13 @@ import React, { useState, useRef, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import { useTranslation } from 'react-i18next';
 import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
 import {
   DEFAULT_LATITUDE,
   DEFAULT_LONGITUDE,
+  DEFAULT_ZOOM,
   MAX_CLUSTER_ZOOM,
   CLUSTER_RADIUS,
   ENTER_KEY_CODE,
@@ -39,11 +41,13 @@ const Marker = ({ children }) => children;
 
 function ActionsMap() {
   const classes = useStyles();
+  const { t } = useTranslation();
   const mapRef = useRef();
-  const { actions } = useContext(SpaceDataContext);
   const [bounds, setBounds] = useState(null);
-  const [zoom, setZoom] = useState(5);
+  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
+  const { actions } = useContext(SpaceDataContext);
 
+  // GeoJSON Feature objects
   const points = actions.map((action) => ({
     type: 'Feature',
     properties: { cluster: false, actionId: action._id },
@@ -77,13 +81,13 @@ function ActionsMap() {
   return (
     <>
       <Typography variant="h6" className={classes.typography}>
-        Actions by location
+        {t('Actions by Location')}
       </Typography>
       <Container className={classes.mapContainer}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_KEY }}
           defaultCenter={{ lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE }}
-          defaultZoom={5}
+          defaultZoom={DEFAULT_ZOOM}
           distanceToMouse={() => {}}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({ map }) => {

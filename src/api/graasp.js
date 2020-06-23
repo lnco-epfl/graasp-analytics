@@ -3,7 +3,15 @@ export const DEFAULT_API_OPTIONS = {
   credentials: 'include',
   method: 'GET',
 };
-export const DEFAULT_REQUEST_PAGE_SIZE = 1000;
 
-export const buildActionsEndpoint = (url, spaceId, pageSize) =>
-  `${url}?spaceId=${spaceId}&pageSize=${pageSize}`;
+export const DEFAULT_REQUEST_SAMPLE_SIZE = 2000;
+export const ANALYTICS_PARAMETER = 'analytics';
+
+export const buildAnalyticsEndpoint = (
+  url,
+  parameter,
+  spaceId,
+  requestedSampleSize,
+) => {
+  return `${url}/${parameter}/?spaceId=${spaceId}&requestedSampleSize=${requestedSampleSize}`;
+};

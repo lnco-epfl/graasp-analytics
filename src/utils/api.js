@@ -28,3 +28,14 @@ export const formatActions = (actionsByDayObject) => {
     };
   });
 };
+
+// Extract main space name
+export const extractMainSpace = (arrayOfSpaceObjects) => {
+  return arrayOfSpaceObjects.filter((space) => space.parentId === null)[0];
+};
+
+// Extract main space *immediate* children
+export const extractMainSpaceChildren = (arrayOfSpaceObjects) => {
+  const mainSpaceId = extractMainSpace(arrayOfSpaceObjects).id;
+  return arrayOfSpaceObjects.filter((space) => space.parentId === mainSpaceId);
+};

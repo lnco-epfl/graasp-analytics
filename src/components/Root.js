@@ -19,8 +19,9 @@ ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
 
 const styles = {
   root: {
-    flexGrow: 1,
-    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
   },
 };
 
@@ -45,6 +46,7 @@ let theme = createMuiTheme({
     useNextVariants: true,
     fontFamily: ['SuisseIntl', 'Helvetica', 'Arial', 'sans-serif'].join(','),
     fontSize: 12,
+    fontWeightBold: 700,
   },
 });
 

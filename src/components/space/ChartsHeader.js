@@ -1,40 +1,73 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useLocation, matchPath } from 'react-router-dom';
 import { Tooltip, Typography } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
+import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles((theme) => ({
-  cell: {
+  spaceName: {
+    fontWeight: theme.typography.fontWeightBold,
+  },
+  leftCell: {
     display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  rightCell: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   root: {
-    marginBottom: theme.spacing(2),
     flexGrow: 1,
-    padding: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingBottom: theme.spacing(1),
+  },
+  alert: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: theme.spacing(1),
   },
 }));
 
 function ChartsHeader() {
   const { t } = useTranslation();
   const classes = useStyles();
+  const { spaceName } = useContext(SpaceDataContext);
+  const { pathname } = useLocation();
+
+  const match = matchPath(pathname, {
+    path: '/embedded/',
+    exact: false,
+  });
+
+  if (match) {
+    return null;
+  }
+
   return (
     <div className={classes.root}>
       <Grid container>
-        <Grid item xs={6} justify="flex-start" className={classes.cell}>
-          <Typography variant="h4" color="inherit" alignItems="center">
-            {t('Charts')}
+        <Grid item xs={6} className={classes.leftCell}>
+          <Typography
+            variant="h5"
+            color="inherit"
+            className={classes.spaceName}
+          >
+            {spaceName}
           </Typography>
         </Grid>
-        <Grid
-          item
-          xs={6}
-          justify="flex-end"
-          alignItems="center"
-          className={classes.cell}
-        >
-          <Tooltip title={t('These are the charts for this space.')}>
+        <Grid item xs={6} className={classes.rightCell}>
+          <Tooltip
+            title={t(
+              'Any actions from this space and its subspaces are shown in the charts below.',
+            )}
+          >
             <Info color="primary" />
           </Tooltip>
         </Grid>
