@@ -40,11 +40,7 @@ function ChartsAlerts() {
     if (maxTreeLengthExceeded) {
       return (
         <Alert severity="warning" className={classes.alert}>
-          {t('This space has more than ')}
-          {maxTreeLength}
-          {t(' subspaces. The data below is sampled from only the first ')}
-          {maxTreeLength}
-          {t(' retrieved subspaces.')}
+          {t('space-warning-alert', { maxTreeLength })}
         </Alert>
       );
     }
@@ -55,11 +51,10 @@ function ChartsAlerts() {
     if (numActionsRetrieved !== 0) {
       return (
         <Alert severity="info" className={classes.alert}>
-          {t('Displaying ')}
-          {numActionsRetrieved}
-          {t(' actions from a requested sample of ')}
-          {requestedSampleSize}
-          {t(' actions.')}
+          {t('actions-info-alert', {
+            numActionsRetrieved,
+            requestedSampleSize,
+          })}
         </Alert>
       );
     }

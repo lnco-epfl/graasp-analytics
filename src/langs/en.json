@@ -1,3 +1,6 @@
 {
-  "translations": {}
+  "translations": {
+    "space-warning-alert": "This space has more than {{maxTreeLength}} subspaces. The data below is sampled from only the first {{maxTreeLength}} retrieved subspaces.",
+    "actions-info-alert": "Displaying {{numActionsRetrieved}} actions from a requested sample of {{requestedSampleSize}} actions."
+  }
 }
