@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/graasp/graasp-research/compare/v0.1.0...v0.1.1) (2020-06-24)
+
+### Bug Fixes
+
+- filter out actions with no geolocation data ([60d0792](https://github.com/graasp/graasp-research/commit/60d07921c76da258e1b618ea5f92041107505432)), closes [#38](https://github.com/graasp/graasp-research/issues/38)
+
 ## 0.1.0 (2020-06-24)
 
 ### Features
