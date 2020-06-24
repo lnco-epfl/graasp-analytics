@@ -1,9 +1,11 @@
 app:
   build: .
+  dockerfile: Dockerfile
 
 build-dev:
   build: .
   dockerfile: Dockerfile.build.dev
+  encrypted_env_file: .env.dev.encrypted
   environment:
     ENV: production
   volumes:
@@ -13,6 +15,7 @@ build-dev:
 build-prod:
   build: .
   dockerfile: Dockerfile.build.prod
+  encrypted_env_file: .env.prod.encrypted
   environment:
     ENV: production
   volumes:
