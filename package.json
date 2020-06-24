@@ -41,8 +41,8 @@
     "lint": "eslint .",
     "prettier:check": "prettier --check 'src/**/*.js'",
     "prettier:write": "prettier --write 'src/**/*.js'",
-    "release": "git add CHANGELOG.md && standard-version -a",
-    "release:first": "git add CHANGELOG.md && standard-version -a --first-release"
+    "release": "git fetch --tags && git add CHANGELOG.md && standard-version -a",
+    "release:first": "git fetch --tags && git add CHANGELOG.md && standard-version -a --first-release"
   },
   "browserslist": {
     "production": [
