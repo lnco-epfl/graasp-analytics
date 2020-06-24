@@ -48,14 +48,16 @@ function ActionsMap() {
   const { actions } = useContext(SpaceDataContext);
 
   // GeoJSON Feature objects
-  const points = actions.map((action) => ({
-    type: 'Feature',
-    properties: { cluster: false, actionId: action._id },
-    geometry: {
-      type: 'Point',
-      coordinates: [action.geolocation.ll[1], action.geolocation.ll[0]],
-    },
-  }));
+  const points = actions
+    .filter((action) => action.geolocation)
+    .map((action) => ({
+      type: 'Feature',
+      properties: { cluster: false, actionId: action._id },
+      geometry: {
+        type: 'Point',
+        coordinates: [action.geolocation.ll[1], action.geolocation.ll[0]],
+      },
+    }));
 
   const { clusters } = useSupercluster({
     points,
