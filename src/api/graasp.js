@@ -4,6 +4,7 @@ export const DEFAULT_API_OPTIONS = {
   method: 'GET',
 };
 
+const APP_ROUTE = 'research';
 export const DEFAULT_REQUEST_SAMPLE_SIZE = 2000;
 export const ANALYTICS_PARAMETER = 'analytics';
 
@@ -13,5 +14,5 @@ export const buildAnalyticsEndpoint = (
   spaceId,
   requestedSampleSize,
 ) => {
-  return `${url}/${parameter}/?spaceId=${spaceId}&requestedSampleSize=${requestedSampleSize}`;
+  return `${url}/${APP_ROUTE}/${parameter}?spaceId=${spaceId}&requestedSampleSize=${requestedSampleSize}`;
 };
