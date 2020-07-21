@@ -4,6 +4,7 @@ import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import ChartsHeader from './ChartsHeader';
+import ExportData from './ExportData';
 import ChartsAlerts from './ChartsAlerts';
 import ActionsChart from './ActionsChart';
 import ActionsMap from './ActionsMap';
@@ -63,6 +64,7 @@ function Charts() {
   return (
     <div>
       <ChartsHeader />
+      <ExportData />
       <ChartsAlerts />
       <Grid container>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
