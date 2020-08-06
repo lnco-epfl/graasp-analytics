@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useLocation, matchPath } from 'react-router-dom';
 import { Tooltip, Typography } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
@@ -30,6 +31,15 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingBottom: theme.spacing(1),
   },
+  rootAlt: {
+    flexGrow: 1,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    paddingTop: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingBottom: theme.spacing(1),
+  },
   alert: {
     display: 'flex',
     alignItems: 'center',
@@ -37,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ChartsHeader() {
+function ChartsHeader({ downloadButton }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const { spaceName } = useContext(SpaceDataContext);
@@ -49,7 +59,11 @@ function ChartsHeader() {
   });
 
   if (match) {
-    return null;
+    return (
+      <div className={classes.rootAlt}>
+        {downloadButton ? <ExportData /> : null}
+      </div>
+    );
   }
 
   return (
@@ -63,7 +77,7 @@ function ChartsHeader() {
           >
             {spaceName}
           </Typography>
-          <ExportData />
+          {downloadButton ? <ExportData /> : null}
         </Grid>
         <Grid item xs={6} className={classes.rightCell}>
           <Tooltip
@@ -78,5 +92,9 @@ function ChartsHeader() {
     </div>
   );
 }
+
+ChartsHeader.propTypes = {
+  downloadButton: PropTypes.bool.isRequired,
+};
 
 export default ChartsHeader;

@@ -50,7 +50,7 @@ function Charts() {
   if (numActionsRetrieved === 0) {
     return (
       <div>
-        <ChartsHeader />
+        <ChartsHeader downloadButton={false} />
         <div className={classes.warning}>
           <Alert severity="warning" className={classes.alert}>
             {t('This space and its subspaces do not have any actions yet.')}
@@ -62,7 +62,7 @@ function Charts() {
 
   return (
     <div>
-      <ChartsHeader />
+      <ChartsHeader downloadButton />
       <ChartsAlerts />
       <Grid container>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
