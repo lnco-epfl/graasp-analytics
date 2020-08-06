@@ -5,11 +5,13 @@ import { Info } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
+import ExportData from './ExportData';
 import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   spaceName: {
     fontWeight: theme.typography.fontWeightBold,
+    marginRight: theme.spacing(2),
   },
   leftCell: {
     display: 'flex',
@@ -61,6 +63,7 @@ function ChartsHeader() {
           >
             {spaceName}
           </Typography>
+          <ExportData />
         </Grid>
         <Grid item xs={6} className={classes.rightCell}>
           <Tooltip

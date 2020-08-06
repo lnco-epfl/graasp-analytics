@@ -14,32 +14,31 @@ export const TaskDataContext = createContext();
 const TaskDataProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [existingTask, setExistingTask] = useState();
-  const [error, setError] = useState(null);
+  const [taskGetError, setTaskGetError] = useState(null);
+  const [taskCreateError, setTaskCreateError] = useState(null);
   const { userId } = useContext(UserDataContext);
   const { spaceId } = useParams();
 
-  // build endpoints that are called
+  // build endpoints that are called in this context API
   const baseUrl = process.env.REACT_APP_BASE_URL;
-
-  const fetchTaskUrl = buildTasksEndpoint(
+  const getTaskUrl = buildTasksEndpoint(
     baseUrl,
     RESEARCH_API_ROUTE,
     TASKS_PARAMETER,
     { userId, spaceId },
   );
-
   const createTaskUrl = buildTasksEndpoint(
     baseUrl,
     RESEARCH_API_ROUTE,
     TASKS_PARAMETER,
   );
 
-  // on component load, check if a task already exists on this space
+  // on component load, check if a task already exists for this space
   useEffect(() => {
     const fetchTask = async () => {
       if (userId) {
         try {
-          const response = await fetch(fetchTaskUrl, buildApiOptions('GET'));
+          const response = await fetch(getTaskUrl, buildApiOptions('GET'));
           if (!response.ok) {
             throw response;
           }
@@ -47,37 +46,52 @@ const TaskDataProvider = ({ children }) => {
           setExistingTask(resolvedResponse);
           setIsLoading(false);
         } catch (err) {
-          setError(err);
+          const resolvedErr = await err.json();
+          setTaskGetError(resolvedErr);
           setIsLoading(false);
         }
       }
     };
     fetchTask();
-  }, [userId, spaceId, fetchTaskUrl]);
+  }, [userId, spaceId, getTaskUrl]);
 
-  // function passed down to ExportData component; used to trigger dataset request
+  // function passed down to ExportData component, used to trigger dataset request
   const requestFullDataset = async () => {
-    const requestBody = JSON.stringify({ userId, spaceId });
-    const response = await fetch(
-      createTaskUrl,
-      buildApiOptions('POST', { body: requestBody }),
-    );
-    const resolvedResponse = await response.json();
-    setExistingTask(resolvedResponse.task);
-    // edit this setInterval call code below/make it more concise
-    setInterval(async () => {
-      const taskRequestResponse = await fetch(
-        fetchTaskUrl,
-        buildApiOptions('GET'),
+    try {
+      // requestBody as required by api endpoint
+      const requestBody = JSON.stringify({ userId, spaceId });
+      const createTask = await fetch(
+        createTaskUrl,
+        buildApiOptions('POST', { body: requestBody }),
       );
-      const taskResolvedResponse = await taskRequestResponse.json();
-      setExistingTask(taskResolvedResponse);
-    }, 5000);
+      if (!createTask.ok) {
+        throw createTask;
+      }
+      const resolvedCreateTask = await createTask.json();
+      // note here that resolvedCreateTask is a server response object with 'success', 'message', and 'task' props
+      setExistingTask(resolvedCreateTask.task);
+      // every 5 seconds, ping tasks endpoint to update status of task
+      // this status is used by the ExportData component for conditional rendering
+      setInterval(async () => {
+        const response = await fetch(getTaskUrl, buildApiOptions('GET'));
+        const resolvedResponse = await response.json();
+        setExistingTask(resolvedResponse);
+      }, 5000);
+    } catch (err) {
+      const resolvedErr = await err.json();
+      setTaskCreateError(resolvedErr);
+    }
   };
 
   return (
     <TaskDataContext.Provider
-      value={{ isLoading, existingTask, error, requestFullDataset }}
+      value={{
+        isLoading,
+        existingTask,
+        taskGetError,
+        taskCreateError,
+        requestFullDataset,
+      }}
     >
       {children}
     </TaskDataContext.Provider>

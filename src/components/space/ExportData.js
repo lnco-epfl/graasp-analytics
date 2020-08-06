@@ -1,10 +1,18 @@
 import React, { useContext, useState } from 'react';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { Tooltip } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import LaunchIcon from '@material-ui/icons/Launch';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { TaskDataContext } from '../../contexts/TaskDataProvider';
+
+const LightTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.background,
+    color: 'white',
+    fontSize: 12,
+  },
+}))(Tooltip);
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -17,97 +25,123 @@ const useStyles = makeStyles((theme) => ({
   button: {
     width: '200px',
   },
-  icon: {
-    paddingLeft: theme.spacing(1),
-  },
-  link: {
-    textDecoration: 'none',
-    '&:visited': { color: theme.palette.primary.main },
-  },
   '@keyframes blinker': {
     from: { opacity: 1 },
     to: { opacity: 0 },
   },
-  blinkingText: {
+  initialDownloadButton: {
+    color: theme.palette.primary.main,
+    fontSize: 30,
+    cursor: 'pointer',
+  },
+  blinkingDownloadButton: {
+    color: 'grey',
+    cursor: 'pointer',
+    fontSize: 30,
     animationName: '$blinker',
     animationDuration: '2s',
     animationTimingFunction: 'linear',
     animationIterationCount: 'infinite',
   },
+  finalDownloadButton: {
+    color: theme.palette.primary.main,
+    fontSize: 26,
+    cursor: 'pointer',
+  },
+  errorDownloadButton: {
+    color: 'red',
+    fontSize: 30,
+  },
 }));
 
 const ExportData = () => {
   const classes = useStyles();
-  const [showButtonLoader, setShowButtonLoader] = useState(false);
-  const { isLoading, existingTask, requestFullDataset } = useContext(
-    TaskDataContext,
-  );
+  const [showLoadingSpinner, setShowLoadingSpinner] = useState(false);
+  const {
+    isLoading,
+    existingTask,
+    taskGetError,
+    taskCreateError,
+    requestFullDataset,
+  } = useContext(TaskDataContext);
 
-  if (isLoading) {
+  // isLoading is true when TaskDataContext is still fetching userId/spaceId to determine task status
+  // Note: do *NOT* return null if taskGetError === 'Task not found.' (this means it can be created!)
+  if (isLoading || (taskGetError && taskGetError.error !== 'Task not found.')) {
     return null;
   }
 
+  // if there is an error in task creation, return this
+  if (taskCreateError) {
+    return (
+      <LightTooltip
+        title="Something went wrong with your request. Please try again later."
+        placement="right"
+        arrow
+      >
+        <CloudDownloadIcon className={classes.errorDownloadButton} />
+      </LightTooltip>
+    );
+  }
+
+  // if a task exists, return this
+  // existingTask is true when (a) a task exists on initial page load
+  // or (b) request cycle below this code block is triggered
   if (existingTask) {
     if (existingTask.completed) {
       return (
-        <div className={classes.container}>
+        <LightTooltip
+          title="Download the full dataset for this space"
+          placement="right"
+          arrow
+        >
           <a
             href={existingTask.location}
             target="_blank"
             rel="noopener noreferrer"
-            className={classes.link}
           >
-            <Button
-              variant="outlined"
-              color="primary"
-              className={classes.button}
-            >
-              <Typography>Go to file</Typography>
-              <LaunchIcon className={classes.icon} />
-            </Button>
+            <LaunchIcon className={classes.finalDownloadButton} />
           </a>
-        </div>
+        </LightTooltip>
       );
     }
     return (
-      <div className={classes.container}>
-        <Button variant="outlined" color="primary" className={classes.button}>
-          <Typography className={classes.blinkingText}>
-            Preparing file ...
-          </Typography>
-        </Button>
-      </div>
+      <LightTooltip
+        title="Your file is being prepared..."
+        placement="right"
+        arrow
+      >
+        <CloudDownloadIcon className={classes.blinkingDownloadButton} />
+      </LightTooltip>
     );
   }
 
-  const showLoader = () => {
-    setShowButtonLoader(true);
+  // this is for visual purposes; it shows a loading spinner for 1 second, *then* requests full dataset
+  // used in the onClick handler of the 'default' return statement below
+  // (alternatively, we can just call 'requestFullDataset' in that onClick handler (sans loading spinner))
+  const triggerRequest = () => {
+    setShowLoadingSpinner(true);
     setTimeout(() => {
       requestFullDataset();
-    }, 1500);
+    }, 1000);
   };
 
-  if (showButtonLoader) {
-    return (
-      <div className={classes.container}>
-        <Button variant="outlined" color="primary" className={classes.button}>
-          <CircularProgress size={20} />
-        </Button>
-      </div>
-    );
+  if (showLoadingSpinner) {
+    return <CircularProgress size={24} />;
   }
 
+  // default display for when no task or error exists
   return (
-    <div className={classes.container}>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={showLoader}
-        className={classes.button}
-      >
-        Request full dataset
-      </Button>
-    </div>
+    <LightTooltip
+      title="Request the full dataset for this space"
+      placement="right"
+      arrow
+    >
+      <CloudDownloadIcon
+        onClick={triggerRequest}
+        className={classes.initialDownloadButton}
+      />
+    </LightTooltip>
   );
 };
 
