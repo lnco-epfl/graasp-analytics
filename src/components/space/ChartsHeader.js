@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'flex-end',
-    paddingTop: theme.spacing(2),
+    paddingTop: theme.spacing(1),
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(2),
     paddingBottom: theme.spacing(1),
@@ -60,9 +60,13 @@ function ChartsHeader({ downloadButton }) {
 
   if (match) {
     return (
-      <div className={classes.rootAlt}>
-        {downloadButton ? <ExportData /> : null}
-      </div>
+      <>
+        {downloadButton ? (
+          <div className={classes.rootAlt}>
+            <ExportData />
+          </div>
+        ) : null}
+      </>
     );
   }
 

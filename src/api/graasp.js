@@ -1,3 +1,5 @@
+const qs = require('qs');
+
 // app routes and parameters
 export const RESEARCH_API_ROUTE = 'research';
 export const USERS_API_ROUTE = 'users';
@@ -31,7 +33,11 @@ export const buildAnalyticsEndpoint = (
   spaceId,
   requestedSampleSize,
 ) => {
-  return `${url}/${apiRoute}/${parameter}?spaceId=${spaceId}&requestedSampleSize=${requestedSampleSize}`;
+  const analyticsQueryString = qs.stringify(
+    { spaceId, requestedSampleSize },
+    { addQueryPrefix: true },
+  );
+  return `${url}/${apiRoute}/${parameter}${analyticsQueryString}`;
 };
 
 export const buildTasksEndpoint = (
@@ -40,7 +46,9 @@ export const buildTasksEndpoint = (
   parameter,
   { userId, spaceId } = {},
 ) => {
-  return userId && spaceId
-    ? `${url}/${apiRoute}/${parameter}?userId=${userId}&spaceId=${spaceId}`
-    : `${url}/${apiRoute}/${parameter}`;
+  const tasksQueryString = qs.stringify(
+    { userId, spaceId },
+    { addQueryPrefix: true },
+  );
+  return `${url}/${apiRoute}/${parameter}${tasksQueryString}`;
 };

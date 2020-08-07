@@ -7,6 +7,7 @@ import {
   buildTasksEndpoint,
   buildApiOptions,
 } from '../api/graasp';
+import { REACT_APP_BASE_URL } from '../config/env';
 import { UserDataContext } from './UserDataProvider';
 
 export const TaskDataContext = createContext();
@@ -20,7 +21,7 @@ const TaskDataProvider = ({ children }) => {
   const { spaceId } = useParams();
 
   // build endpoints that are called in this context API
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const baseUrl = REACT_APP_BASE_URL;
   const getTaskUrl = buildTasksEndpoint(
     baseUrl,
     RESEARCH_API_ROUTE,
@@ -72,10 +73,20 @@ const TaskDataProvider = ({ children }) => {
       setExistingTask(resolvedCreateTask.task);
       // every 5 seconds, ping tasks endpoint to update status of task
       // this status is used by the ExportData component for conditional rendering
-      setInterval(async () => {
+      // clear and exit setInterval if task status is 'completed' or MAX_TASK_QUERIES are made
+      let taskQueriesMade = 0;
+      const MAX_TASK_QUERIES = 100;
+      const queryTaskStatus = setInterval(async () => {
         const response = await fetch(getTaskUrl, buildApiOptions('GET'));
         const resolvedResponse = await response.json();
         setExistingTask(resolvedResponse);
+        taskQueriesMade += 1;
+        if (
+          resolvedResponse.completed ||
+          taskQueriesMade === MAX_TASK_QUERIES
+        ) {
+          clearInterval(queryTaskStatus);
+        }
       }, 5000);
     } catch (err) {
       const resolvedErr = await err.json();

@@ -8,6 +8,7 @@ import {
   buildApiOptions,
   DEFAULT_REQUEST_SAMPLE_SIZE,
 } from '../api/graasp';
+import { REACT_APP_BASE_URL } from '../config/env';
 import { extractMainSpace, extractMainSpaceChildren } from '../utils/api';
 
 export const SpaceDataContext = createContext();
@@ -24,7 +25,7 @@ const SpaceDataProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const baseUrl = process.env.REACT_APP_BASE_URL;
+      const baseUrl = REACT_APP_BASE_URL;
       const requestUrl = buildAnalyticsEndpoint(
         baseUrl,
         RESEARCH_API_ROUTE,

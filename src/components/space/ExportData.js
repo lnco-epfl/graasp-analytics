@@ -1,18 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { Tooltip } from '@material-ui/core';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
+import { makeStyles } from '@material-ui/core/styles';
 import LaunchIcon from '@material-ui/icons/Launch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import LightTooltip from '../common/LightTooltip';
 import { TaskDataContext } from '../../contexts/TaskDataProvider';
-
-const LightTooltip = withStyles((theme) => ({
-  tooltip: {
-    backgroundColor: theme.palette.background,
-    color: 'white',
-    fontSize: 12,
-  },
-}))(Tooltip);
+import TASK_NOT_FOUND from '../../config/errors';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -21,9 +15,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     marginBottom: theme.spacing(2),
-  },
-  button: {
-    width: '200px',
   },
   '@keyframes blinker': {
     from: { opacity: 1 },
@@ -55,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ExportData = () => {
+  const { t } = useTranslation();
   const classes = useStyles();
   const [showLoadingSpinner, setShowLoadingSpinner] = useState(false);
   const {
@@ -67,7 +59,7 @@ const ExportData = () => {
 
   // isLoading is true when TaskDataContext is still fetching userId/spaceId to determine task status
   // Note: do *NOT* return null if taskGetError === 'Task not found.' (this means it can be created!)
-  if (isLoading || (taskGetError && taskGetError.error !== 'Task not found.')) {
+  if (isLoading || (taskGetError && taskGetError.error !== TASK_NOT_FOUND)) {
     return null;
   }
 
@@ -75,7 +67,9 @@ const ExportData = () => {
   if (taskCreateError) {
     return (
       <LightTooltip
-        title="Something went wrong with your request. Please try again later."
+        title={t(
+          'Something went wrong with your request. Please try again later.',
+        )}
         placement="right"
         arrow
       >
@@ -91,7 +85,7 @@ const ExportData = () => {
     if (existingTask.completed) {
       return (
         <LightTooltip
-          title="Download the full dataset for this space"
+          title={t('Download the full dataset for this space')}
           placement="right"
           arrow
         >
@@ -107,7 +101,7 @@ const ExportData = () => {
     }
     return (
       <LightTooltip
-        title="Your file is being prepared..."
+        title={t('Your file is being prepared...')}
         placement="right"
         arrow
       >
@@ -133,7 +127,7 @@ const ExportData = () => {
   // default display for when no task or error exists
   return (
     <LightTooltip
-      title="Request the full dataset for this space"
+      title={t('Request the full dataset for this space')}
       placement="right"
       arrow
     >
