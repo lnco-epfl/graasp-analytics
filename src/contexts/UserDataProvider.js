@@ -16,9 +16,8 @@ const UserDataProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const baseUrl = REACT_APP_BASE_URL;
       const requestUrl = buildUsersEndpoint(
-        baseUrl,
+        REACT_APP_BASE_URL,
         USERS_API_ROUTE,
         CURRENT_USER_PARAMETER,
       );

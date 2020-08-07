@@ -59,15 +59,11 @@ function ChartsHeader({ downloadButton }) {
   });
 
   if (match) {
-    return (
-      <>
-        {downloadButton ? (
-          <div className={classes.rootAlt}>
-            <ExportData />
-          </div>
-        ) : null}
-      </>
-    );
+    return downloadButton ? (
+      <div className={classes.rootAlt}>
+        <ExportData />
+      </div>
+    ) : null;
   }
 
   return (

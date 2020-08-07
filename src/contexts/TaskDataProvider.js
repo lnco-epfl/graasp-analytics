@@ -21,15 +21,14 @@ const TaskDataProvider = ({ children }) => {
   const { spaceId } = useParams();
 
   // build endpoints that are called in this context API
-  const baseUrl = REACT_APP_BASE_URL;
   const getTaskUrl = buildTasksEndpoint(
-    baseUrl,
+    REACT_APP_BASE_URL,
     RESEARCH_API_ROUTE,
     TASKS_PARAMETER,
     { userId, spaceId },
   );
   const createTaskUrl = buildTasksEndpoint(
-    baseUrl,
+    REACT_APP_BASE_URL,
     RESEARCH_API_ROUTE,
     TASKS_PARAMETER,
   );
@@ -81,10 +80,7 @@ const TaskDataProvider = ({ children }) => {
         const resolvedResponse = await response.json();
         setExistingTask(resolvedResponse);
         taskQueriesMade += 1;
-        if (
-          resolvedResponse.completed ||
-          taskQueriesMade === MAX_TASK_QUERIES
-        ) {
+        if (resolvedResponse.completed || taskQueriesMade >= MAX_TASK_QUERIES) {
           clearInterval(queryTaskStatus);
         }
       }, 5000);

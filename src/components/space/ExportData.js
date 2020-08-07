@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import LightTooltip from '../common/LightTooltip';
 import { TaskDataContext } from '../../contexts/TaskDataProvider';
-import TASK_NOT_FOUND from '../../config/errors';
+import { TASK_NOT_FOUND } from '../../config/errors';
 
 const useStyles = makeStyles((theme) => ({
   container: {

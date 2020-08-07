@@ -25,9 +25,8 @@ const SpaceDataProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const baseUrl = REACT_APP_BASE_URL;
       const requestUrl = buildAnalyticsEndpoint(
-        baseUrl,
+        REACT_APP_BASE_URL,
         RESEARCH_API_ROUTE,
         ANALYTICS_PARAMETER,
         spaceId,
