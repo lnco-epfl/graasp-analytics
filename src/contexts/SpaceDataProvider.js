@@ -2,11 +2,13 @@ import React, { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import {
-  DEFAULT_API_OPTIONS,
-  DEFAULT_REQUEST_SAMPLE_SIZE,
+  RESEARCH_API_ROUTE,
   ANALYTICS_PARAMETER,
   buildAnalyticsEndpoint,
+  buildApiOptions,
+  DEFAULT_REQUEST_SAMPLE_SIZE,
 } from '../api/graasp';
+import { REACT_APP_BASE_URL } from '../config/env';
 import { extractMainSpace, extractMainSpaceChildren } from '../utils/api';
 
 export const SpaceDataContext = createContext();
@@ -23,15 +25,15 @@ const SpaceDataProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const baseUrl = process.env.REACT_APP_BASE_URL;
       const requestUrl = buildAnalyticsEndpoint(
-        baseUrl,
+        REACT_APP_BASE_URL,
+        RESEARCH_API_ROUTE,
         ANALYTICS_PARAMETER,
         spaceId,
         DEFAULT_REQUEST_SAMPLE_SIZE,
       );
       try {
-        const response = await fetch(requestUrl, DEFAULT_API_OPTIONS);
+        const response = await fetch(requestUrl, buildApiOptions('GET'));
         if (!response.ok) {
           throw response;
         }

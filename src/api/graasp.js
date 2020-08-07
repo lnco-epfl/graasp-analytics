@@ -1,18 +1,54 @@
-export const DEFAULT_API_OPTIONS = {
-  headers: { 'content-type': 'application/json' },
-  credentials: 'include',
-  method: 'GET',
+const qs = require('qs');
+
+// app routes and parameters
+export const RESEARCH_API_ROUTE = 'research';
+export const USERS_API_ROUTE = 'users';
+export const ANALYTICS_PARAMETER = 'analytics';
+export const TASKS_PARAMETER = 'tasks';
+export const CURRENT_USER_PARAMETER = 'current';
+
+// parameter used with analytics requests
+export const DEFAULT_REQUEST_SAMPLE_SIZE = 2000;
+
+// builds API options object used with all API calls
+export const buildApiOptions = (method, { body } = {}) => {
+  return {
+    headers: { 'content-type': 'application/json' },
+    credentials: 'include',
+    method,
+    body,
+  };
 };
 
-const APP_ROUTE = 'research';
-export const DEFAULT_REQUEST_SAMPLE_SIZE = 2000;
-export const ANALYTICS_PARAMETER = 'analytics';
+// existing graasp API /users endpoint
+export const buildUsersEndpoint = (url, apiRoute, parameter) => {
+  return `${url}/${apiRoute}/${parameter}`;
+};
 
+// graasp-research custom API endpoints
 export const buildAnalyticsEndpoint = (
   url,
+  apiRoute,
   parameter,
   spaceId,
   requestedSampleSize,
 ) => {
-  return `${url}/${APP_ROUTE}/${parameter}?spaceId=${spaceId}&requestedSampleSize=${requestedSampleSize}`;
+  const analyticsQueryString = qs.stringify(
+    { spaceId, requestedSampleSize },
+    { addQueryPrefix: true },
+  );
+  return `${url}/${apiRoute}/${parameter}${analyticsQueryString}`;
+};
+
+export const buildTasksEndpoint = (
+  url,
+  apiRoute,
+  parameter,
+  { userId, spaceId } = {},
+) => {
+  const tasksQueryString = qs.stringify(
+    { userId, spaceId },
+    { addQueryPrefix: true },
+  );
+  return `${url}/${apiRoute}/${parameter}${tasksQueryString}`;
 };
