@@ -31,7 +31,7 @@ const Loader = () => {
   useEffect(() => {
     setTimeout(() => {
       setShowAdditionalText(true);
-    }, 1000);
+    }, 5000);
   }, []);
 
   return (
