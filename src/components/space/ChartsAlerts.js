@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import { Info } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
@@ -17,6 +19,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
 }));
+
+const AlertsTooltip = withStyles({
+  tooltip: {
+    fontSize: '11px',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    marginRight: '1em',
+  },
+})(Tooltip);
 
 function ChartsAlerts() {
   const { t } = useTranslation();
@@ -39,7 +49,24 @@ function ChartsAlerts() {
     }
     if (maxTreeLengthExceeded) {
       return (
-        <Alert severity="warning" className={classes.alert}>
+        <Alert
+          severity="warning"
+          className={classes.alert}
+          action={
+            // adding a tooltip to an Alert is tricky; this hack uses the Alert's built-in 'action' prop to do this
+            // doing so creates a conflict between eslint and prettier on using () around JSX; thus the disable below
+            // eslint-disable-next-line react/jsx-wrap-multilines
+            <AlertsTooltip
+              title={t(
+                'By default, the number of subspaces retrieved and sampled in the charts below is capped.',
+                { maxTreeLength },
+              )}
+              placement="left"
+            >
+              <Info fontSize="small" />
+            </AlertsTooltip>
+          }
+        >
           {t(
             'This space has more than the maximum subspaces allowed. The data below is sampled from the maximum number of retrieved subspaces.',
             { maxTreeLength },
@@ -53,7 +80,24 @@ function ChartsAlerts() {
   const displaySampleInfo = () => {
     if (numActionsRetrieved !== 0) {
       return (
-        <Alert severity="info" className={classes.alert}>
+        <Alert
+          severity="info"
+          className={classes.alert}
+          action={
+            // adding a tooltip to an Alert is tricky; this hack uses the Alert's built-in 'action' prop to do this
+            // doing so creates a conflict between eslint and prettier on using () around JSX; thus the disable below
+            // eslint-disable-next-line react/jsx-wrap-multilines
+            <AlertsTooltip
+              title={t(
+                'By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this space and its subspaces.',
+                { requestedSampleSize },
+              )}
+              placement="left"
+            >
+              <Info fontSize="small" />
+            </AlertsTooltip>
+          }
+        >
           {t(
             'The charts below display a sample of actions from this space and its nested subspaces.',
             {
