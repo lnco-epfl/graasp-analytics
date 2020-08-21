@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import { LOADER_TEXT_DELAY } from '../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -25,24 +27,25 @@ const useStyles = makeStyles((theme) => ({
 
 const Loader = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
   const [showAdditionalText, setShowAdditionalText] = useState(false);
 
-  // after 5 seconds, display 'still loading' text by changing state of showAdditionalText
+  // after LOADER_TEXT_DELAY milliseconds, display 'still loading' text by changing state of showAdditionalText
   useEffect(() => {
     setTimeout(() => {
       setShowAdditionalText(true);
-    }, 5000);
+    }, LOADER_TEXT_DELAY);
   }, []);
 
   return (
     <Grid container>
       <Grid item className={classes.gridItem}>
         <CircularProgress />
-        {showAdditionalText ? (
+        {showAdditionalText && (
           <Typography variant="subtitle1" className={classes.additionalText}>
-            Still loading...
+            {t('Still loading...')}
           </Typography>
-        ) : null}
+        )}
       </Grid>
     </Grid>
   );
