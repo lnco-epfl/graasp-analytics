@@ -15,3 +15,6 @@ export const CLUSTER_RADIUS = 75;
 
 // Key code for the Enter/Return key (Used in a placeholder keyboard event listener in ActionsMap)
 export const ENTER_KEY_CODE = 13;
+
+// Milliseconds after which additional text appears under loading spinner
+export const LOADER_TEXT_DELAY = 5000;

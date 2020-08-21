@@ -81,6 +81,7 @@ function ChartsHeader({ downloadButton }) {
         </Grid>
         <Grid item xs={6} className={classes.rightCell}>
           <Tooltip
+            placement="left"
             title={t(
               'Any actions from this space and its subspaces are shown in the charts below.',
             )}
