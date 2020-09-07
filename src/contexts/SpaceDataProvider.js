@@ -9,18 +9,23 @@ import {
   DEFAULT_REQUEST_SAMPLE_SIZE,
 } from '../api/graasp';
 import { REACT_APP_BASE_URL } from '../config/env';
-import { extractMainSpace, extractMainSpaceChildren } from '../utils/api';
+import {
+  extractMainSpace,
+  consolidateUsers,
+  formatConsolidatedUsers,
+  addValueKeyToUsers,
+} from '../utils/api';
 
 export const SpaceDataContext = createContext();
 
 const SpaceDataProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [spaceName, setSpaceName] = useState(null);
-  const [spaceImmediateChildren, setSpaceImmediateChildren] = useState([]);
-  const [spaceTree, setSpaceTree] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
   const [actions, setActions] = useState([]);
   const [metadata, setMetadata] = useState({});
   const [error, setError] = useState(null);
+  const [usersToFilter, setUsersToFilter] = useState([]);
   const { spaceId } = useParams();
 
   useEffect(() => {
@@ -38,14 +43,16 @@ const SpaceDataProvider = ({ children }) => {
           throw response;
         }
         const resolvedData = await response.json();
-        setIsLoading(false);
-        setSpaceName(extractMainSpace(resolvedData.spaceTree).name);
-        setSpaceImmediateChildren(
-          extractMainSpaceChildren(resolvedData.spaceTree),
+        const mainSpaceName = extractMainSpace(resolvedData.spaceTree).name;
+        const consolidatedUsers = addValueKeyToUsers(
+          formatConsolidatedUsers(consolidateUsers(resolvedData.users)),
         );
-        setSpaceTree(resolvedData.spaceTree);
+        setSpaceName(mainSpaceName);
         setActions(resolvedData.actions);
+        setAllUsers(consolidatedUsers);
+        setUsersToFilter(consolidatedUsers);
         setMetadata(resolvedData.metadata);
+        setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
         setError(err);
@@ -59,11 +66,12 @@ const SpaceDataProvider = ({ children }) => {
       value={{
         isLoading,
         spaceName,
-        spaceImmediateChildren,
-        spaceTree,
         actions,
+        allUsers,
         metadata,
         error,
+        usersToFilter,
+        setUsersToFilter,
       }}
     >
       {children}
