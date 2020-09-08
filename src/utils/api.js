@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
 export const getActionsByDay = (actions) => {
   const actionsByDay = {};
@@ -49,6 +51,7 @@ export const findYAxisMax = (actionsByDay) => {
   }
   const maxActionsCount = arrayOfActionsCount.reduce((a, b) => Math.max(a, b));
   let yAxisMax;
+  // if maxActionsCount <= 100, round up yAxisMax to the nearest ten; else, to the nearest hundred
   if (maxActionsCount <= 100) {
     yAxisMax = Math.ceil(maxActionsCount / 10) * 10;
   } else {
@@ -106,7 +109,7 @@ export const formatConsolidatedUsers = (consolidatedUsersArray) => {
     if (user.name.indexOf('@') !== -1) {
       return {
         ...user,
-        name: user.name[0].toUpperCase() + user.name.slice(1),
+        name: _.capitalize(user.name),
       };
     }
     // otherwise, reg exp below capitalizes first letter of each part of a user's space-delimited name
@@ -116,9 +119,7 @@ export const formatConsolidatedUsers = (consolidatedUsersArray) => {
     };
   });
   // return alphbatically sorted array of users
-  return usersArrayCapitalized.sort((user1, user2) =>
-    user1.name > user2.name ? 1 : -1,
-  );
+  return _.sortBy(usersArrayCapitalized, (user) => user.name);
 };
 
 // for react-select purposes, add a 'value' key to each element of the users array, holding the same value as the key 'name'

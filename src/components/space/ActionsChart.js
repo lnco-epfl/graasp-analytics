@@ -17,6 +17,7 @@ import {
   filterActionsByUser,
   findYAxisMax,
 } from '../../utils/api';
+import { CONTAINER_HEIGHT } from '../../config/constants';
 import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles(() => ({
@@ -25,7 +26,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '450px',
+    height: `${CONTAINER_HEIGHT}px`,
   },
 }));
 
@@ -76,7 +77,7 @@ function ActionsChart() {
       <Typography variant="h6" className={classes.typography}>
         {t('Actions by Day')}
       </Typography>
-      <ResponsiveContainer width="95%" height={450}>
+      <ResponsiveContainer width="95%" height={CONTAINER_HEIGHT}>
         <BarChart
           data={formattedActionsByDay}
           margin={{ top: 30, bottom: 20, left: 20, right: 20 }}

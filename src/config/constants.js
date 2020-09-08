@@ -16,5 +16,8 @@ export const CLUSTER_RADIUS = 75;
 // Key code for the Enter/Return key (Used in a placeholder keyboard event listener in ActionsMap)
 export const ENTER_KEY_CODE = 13;
 
+// Height of container in ActionsChart
+export const CONTAINER_HEIGHT = 450;
+
 // Milliseconds after which additional text appears under loading spinner
 export const LOADER_TEXT_DELAY = 5000;

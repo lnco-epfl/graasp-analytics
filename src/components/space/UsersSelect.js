@@ -20,23 +20,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // custom styling used by react-select (deviates from material-ui approach used in rest of app)
+const styleConstants = {
+  border: 'solid 1px #dfe3e9',
+  borderRadius: '4px',
+  fontSize: '0.8rem',
+};
+
 const customStyles = {
   menu: () => ({
     width: '250px',
-    border: 'solid 1px #dfe3e9',
-    borderRadius: '4px',
     position: 'absolute',
     zIndex: 999999,
     backgroundColor: 'white',
-    fontSize: '0.8rem',
+    ...styleConstants,
   }),
   control: () => ({
     display: 'flex',
     minWidth: '250px',
     maxWidth: '600px',
-    borderRadius: '4px',
-    border: 'solid 1px #dfe3e9',
-    fontSize: '0.8rem',
+    ...styleConstants,
   }),
 };
 
@@ -54,7 +56,7 @@ const UsersSelect = () => {
 
   // custom option allowing us to select all users in the dropdown
   const allOption = {
-    name: 'Select all',
+    name: t('Select All'),
     value: '*',
   };
 
@@ -66,7 +68,7 @@ const UsersSelect = () => {
   return (
     <div className={classes.root}>
       <Typography className={classes.typography}>
-        {t('Filter by user:')}
+        {t('Filter by User:')}
       </Typography>
       <Select
         styles={customStyles}
