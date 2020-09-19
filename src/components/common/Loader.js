@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(4),
   },
   '@keyframes blinker': {
-    from: { opacity: 1 },
-    to: { opacity: 0 },
+    from: { opacity: 0 },
+    to: { opacity: 1 },
   },
   additionalText: {
     marginTop: theme.spacing(4),

@@ -8,7 +8,7 @@ export const TASKS_PARAMETER = 'tasks';
 export const CURRENT_USER_PARAMETER = 'current';
 
 // parameter used with analytics requests
-export const DEFAULT_REQUEST_SAMPLE_SIZE = 2000;
+export const DEFAULT_REQUEST_SAMPLE_SIZE = 5000;
 
 // builds API options object used with all API calls
 export const buildApiOptions = (method, { body } = {}) => {

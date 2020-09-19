@@ -3,6 +3,7 @@
     "This space has more than the maximum subspaces allowed. The data below is sampled from the maximum number of retrieved subspaces.": "This space has more than {{maxTreeLength}} subspaces. The data below is sampled from only the first {{maxTreeLength}} retrieved subspaces.",
     "By default, the number of subspaces retrieved and sampled in the charts below is capped.": "By default, the number of subspaces retrieved and sampled in the charts below is capped at {{maxTreeLength}} total spaces.",
     "The charts below display a sample of actions from this space and its nested subspaces.": "Displaying {{numActionsRetrieved}} actions from a requested sample of {{requestedSampleSize}} actions.",
-    "By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this space and its subspaces.": "By default, a sample of maximum {{requestedSampleSize}} actions is requested and displayed in the charts below, in order to provide a general overview of activity in this space and its subspaces."
+    "By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this space and its subspaces.": "By default, a sample of maximum {{requestedSampleSize}} actions is requested and displayed in the charts below, in order to provide a general overview of activity in this space and its subspaces.",
+    "Many users selected...": "{{firstSelection}}, {{secondSelection}}, and {{alsoSelectedCount}} other{{plural}} selected"
   }
 }
