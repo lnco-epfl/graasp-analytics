@@ -38,6 +38,7 @@ const customStyles = {
     display: 'flex',
     minWidth: '250px',
     maxWidth: '600px',
+    backgroundColor: 'white',
     ...styleConstants,
   }),
 };
