@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/graasp/graasp-research/compare/v0.1.4...v0.1.5) (2020-09-19)
+
+### Features
+
+- add functionality to filter/display actions by user ([0c0bf47](https://github.com/graasp/graasp-research/commit/0c0bf47eb1c364aaf52397cf1f2fc412bf9ff58c)), closes [#48](https://github.com/graasp/graasp-research/issues/48)
+
 ### [0.1.4](https://github.com/graasp/graasp-research/compare/v0.1.3...v0.1.4) (2020-08-23)
 
 ### [0.1.3](https://github.com/graasp/graasp-research/compare/v0.1.2...v0.1.3) (2020-08-07)
