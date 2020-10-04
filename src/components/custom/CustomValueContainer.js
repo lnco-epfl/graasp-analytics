@@ -11,9 +11,9 @@ const CustomValueContainer = ({ children, ...props }) => {
 
   // values is an array of objects corresponding to the currently made selection
   let [values] = children;
-  const { length } = values;
 
-  if (length) {
+  if (Array.isArray(values)) {
+    const { length } = values;
     const plural = length === 3 ? '' : 's';
     const alsoSelectedCount = length - 2;
     if (length === 1) {

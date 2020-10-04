@@ -6,8 +6,10 @@ import { useTranslation } from 'react-i18next';
 import ChartsHeader from './ChartsHeader';
 import ChartsAlerts from './ChartsAlerts';
 import UsersSelect from './UsersSelect';
-import ActionsChart from './ActionsChart';
+import ActionsByDayChart from './ActionsByDayChart';
 import ActionsMap from './ActionsMap';
+import ActionsByTimeOfDayChart from './ActionsByTimeOfDayChart';
+import ActionsByVerbChart from './ActionsByVerbChart';
 import Loader from '../common/Loader';
 import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
@@ -68,10 +70,16 @@ function Charts() {
       <UsersSelect />
       <Grid container>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-          <ActionsChart />
+          <ActionsByDayChart />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
           <ActionsMap />
+        </Grid>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          <ActionsByTimeOfDayChart />
+        </Grid>
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          <ActionsByVerbChart />
         </Grid>
       </Grid>
     </div>
