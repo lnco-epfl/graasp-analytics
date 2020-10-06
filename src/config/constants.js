@@ -26,6 +26,9 @@ export const LOADER_TEXT_DELAY = 5000;
 // for visual purposes, all verbs with < 3 percent of total actions are consolidated into an entry 'other'
 export const MIN_PERCENTAGE_TO_SHOW_VERB = 3;
 
+// 'other' verb used in api.js
+export const OTHER = 'Other';
+
 // colors used to fill the segments of the ActionsByVerb piechart
 export const COLORS = [
   '#3066BE',

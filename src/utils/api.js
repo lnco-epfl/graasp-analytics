@@ -2,6 +2,7 @@
 const _ = require('lodash');
 const {
   MIN_PERCENTAGE_TO_SHOW_VERB,
+  OTHER,
   LATE_NIGHT,
   EARLY_MORNING,
   MORNING,
@@ -53,18 +54,21 @@ export const getActionsByTimeOfDay = (actions) => {
   };
   actions.forEach((action) => {
     const actionHourOfDay = action.createdAt.slice(11, 13);
-    if (actionHourOfDay >= 0 && actionHourOfDay <= 4) {
+    if (actionHourOfDay >= 0 && actionHourOfDay < 4) {
       actionsByTimeOfDay[LATE_NIGHT] += 1;
-    } else if (actionHourOfDay > 4 && actionHourOfDay <= 8) {
+    } else if (actionHourOfDay >= 4 && actionHourOfDay < 8) {
       actionsByTimeOfDay[EARLY_MORNING] += 1;
-    } else if (actionHourOfDay > 8 && actionHourOfDay <= 12) {
+    } else if (actionHourOfDay >= 8 && actionHourOfDay < 12) {
       actionsByTimeOfDay[MORNING] += 1;
-    } else if (actionHourOfDay > 12 && actionHourOfDay <= 16) {
+    } else if (actionHourOfDay >= 12 && actionHourOfDay < 16) {
       actionsByTimeOfDay[AFTERNOON] += 1;
-    } else if (actionHourOfDay > 16 && actionHourOfDay <= 20) {
+    } else if (actionHourOfDay >= 16 && actionHourOfDay < 20) {
       actionsByTimeOfDay[EVENING] += 1;
-    } else {
+    } else if (actionHourOfDay >= 20 && actionHourOfDay < 24) {
       actionsByTimeOfDay[NIGHT] += 1;
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(`actionHourOfDay ${actionHourOfDay} is undefined`);
     }
   });
   return actionsByTimeOfDay;
@@ -112,7 +116,7 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
   // add ['other', x%] to cover all verbs that are filtered out of the array
   if (formattedActionsByVerbArray.length) {
     formattedActionsByVerbArray.push([
-      'Other',
+      OTHER,
       // ensure that it is a number with two decimal places
       parseFloat(
         (
