@@ -1,6 +1,14 @@
 // Functions in this file manipulate data retrieved from the api to make it usable by the app's charts/components
 const _ = require('lodash');
-const { MIN_PERCENTAGE_TO_SHOW_VERB } = require('../config/constants');
+const {
+  MIN_PERCENTAGE_TO_SHOW_VERB,
+  LATE_NIGHT,
+  EARLY_MORNING,
+  MORNING,
+  AFTERNOON,
+  EVENING,
+  NIGHT,
+} = require('../config/constants');
 
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
 export const getActionsByDay = (actions) => {
@@ -36,27 +44,27 @@ export const formatActionsByDay = (actionsByDayObject) => {
 // Takes array of action objects and returns an object with {key: value} pairs of {hourOfDay: #-of-actions}
 export const getActionsByTimeOfDay = (actions) => {
   const actionsByTimeOfDay = {
-    'Late night': 0,
-    'Early morning': 0,
-    Morning: 0,
-    Afternoon: 0,
-    Evening: 0,
-    Night: 0,
+    [LATE_NIGHT]: 0,
+    [EARLY_MORNING]: 0,
+    [MORNING]: 0,
+    [AFTERNOON]: 0,
+    [EVENING]: 0,
+    [NIGHT]: 0,
   };
   actions.forEach((action) => {
     const actionHourOfDay = action.createdAt.slice(11, 13);
     if (actionHourOfDay >= 0 && actionHourOfDay <= 4) {
-      actionsByTimeOfDay['Late night'] += 1;
+      actionsByTimeOfDay[LATE_NIGHT] += 1;
     } else if (actionHourOfDay > 4 && actionHourOfDay <= 8) {
-      actionsByTimeOfDay['Early morning'] += 1;
+      actionsByTimeOfDay[EARLY_MORNING] += 1;
     } else if (actionHourOfDay > 8 && actionHourOfDay <= 12) {
-      actionsByTimeOfDay.Morning += 1;
+      actionsByTimeOfDay[MORNING] += 1;
     } else if (actionHourOfDay > 12 && actionHourOfDay <= 16) {
-      actionsByTimeOfDay.Afternoon += 1;
+      actionsByTimeOfDay[AFTERNOON] += 1;
     } else if (actionHourOfDay > 16 && actionHourOfDay <= 20) {
-      actionsByTimeOfDay.Evening += 1;
+      actionsByTimeOfDay[EVENING] += 1;
     } else {
-      actionsByTimeOfDay.Night += 1;
+      actionsByTimeOfDay[NIGHT] += 1;
     }
   });
   return actionsByTimeOfDay;
@@ -80,6 +88,8 @@ export const getActionsByVerb = (actions) => {
   const actionsByVerb = {};
   actions.forEach((action) => {
     if (!actionsByVerb[action.verb]) {
+      // if verb is still not in the actionsByVerb object, add it and assign it to (1 / totalActions)
+      // we use (1 / totalActions) because in the end we want this object to be {verb: PERCENTAGE-of-total-actions}
       actionsByVerb[action.verb] = 1 / totalActions;
     } else {
       actionsByVerb[action.verb] += 1 / totalActions;

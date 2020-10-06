@@ -39,3 +39,11 @@ export const COLORS = [
   '#B54A3F',
   '#FFFFAF',
 ];
+
+// strings used in components/custom/CustomTooltip to generate added tooltip text in ActionsByTimeOfDay
+export const LATE_NIGHT = 'Late night';
+export const EARLY_MORNING = 'Early morning';
+export const MORNING = 'Morning';
+export const AFTERNOON = 'Afternoon';
+export const EVENING = 'Evening';
+export const NIGHT = 'Night';

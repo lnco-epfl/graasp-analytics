@@ -22,7 +22,11 @@ const ActionsByVerbChart = () => {
   const { actions, usersToFilter, allUsers } = useContext(SpaceDataContext);
 
   let actionsByVerb;
-  if (usersToFilter.length === 0 || usersToFilter.length === allUsers.length) {
+  if (
+    usersToFilter === null ||
+    usersToFilter.length === 0 ||
+    usersToFilter.length === allUsers.length
+  ) {
     actionsByVerb = getActionsByVerb(actions);
   } else {
     actionsByVerb = getActionsByVerb(

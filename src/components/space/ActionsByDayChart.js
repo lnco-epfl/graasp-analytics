@@ -38,7 +38,11 @@ function ActionsByDayChart() {
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
   let actionsByDay;
-  if (usersToFilter.length === 0 || usersToFilter.length === allUsers.length) {
+  if (
+    usersToFilter === null ||
+    usersToFilter.length === 0 ||
+    usersToFilter.length === allUsers.length
+  ) {
     actionsByDay = getActionsByDay(actions);
   } else {
     actionsByDay = getActionsByDay(filterActionsByUser(actions, usersToFilter));

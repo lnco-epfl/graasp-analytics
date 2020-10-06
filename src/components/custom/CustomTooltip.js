@@ -4,6 +4,14 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import {
+  LATE_NIGHT,
+  EARLY_MORNING,
+  MORNING,
+  AFTERNOON,
+  EVENING,
+  NIGHT,
+} from '../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   customTooltipDiv: {
@@ -23,22 +31,22 @@ const CustomTooltip = ({ active, payload, label }) => {
   const classes = useStyles();
 
   const generateAddedTooltipText = (input) => {
-    if (input === 'Late night') {
-      return '00:00-04:00';
+    switch (input) {
+      case LATE_NIGHT:
+        return '00:00-04:00';
+      case EARLY_MORNING:
+        return '04:00-08:00';
+      case MORNING:
+        return '08:00-12:00';
+      case AFTERNOON:
+        return '12:00-16:00';
+      case EVENING:
+        return '16:00-20:00';
+      case NIGHT:
+        return '20:00-00:00';
+      default:
+        return null;
     }
-    if (input === 'Early morning') {
-      return '04:00-08:00';
-    }
-    if (input === 'Morning') {
-      return '08:00-12:00';
-    }
-    if (input === 'Afternoon') {
-      return '12:00-16:00';
-    }
-    if (input === 'Evening') {
-      return '16:00-20:00';
-    }
-    return '20:00-00:00';
   };
 
   if (active) {
