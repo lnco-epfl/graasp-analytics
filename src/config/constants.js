@@ -27,7 +27,7 @@ export const LOADER_TEXT_DELAY = 5000;
 export const MIN_PERCENTAGE_TO_SHOW_VERB = 3;
 
 // 'other' verb used in api.js
-export const OTHER = 'Other';
+export const OTHER_VERB = 'Other';
 
 // colors used to fill the segments of the ActionsByVerb piechart
 export const COLORS = [

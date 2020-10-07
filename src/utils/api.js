@@ -2,7 +2,7 @@
 const _ = require('lodash');
 const {
   MIN_PERCENTAGE_TO_SHOW_VERB,
-  OTHER,
+  OTHER_VERB,
   LATE_NIGHT,
   EARLY_MORNING,
   MORNING,
@@ -42,6 +42,14 @@ export const formatActionsByDay = (actionsByDayObject) => {
   });
 };
 
+// helper function user in getActionsByTimeOfDay
+// todo: update this function to retrieve hour of day using JS Date objects/moment
+const getActionHourOfDay = (action) => {
+  // expects action to be an object with a createdAt key
+  // createdAt should have the format "2020-12-31T23:59:59.999Z"
+  return action.createdAt.slice(11, 13);
+};
+
 // Takes array of action objects and returns an object with {key: value} pairs of {hourOfDay: #-of-actions}
 export const getActionsByTimeOfDay = (actions) => {
   const actionsByTimeOfDay = {
@@ -53,7 +61,7 @@ export const getActionsByTimeOfDay = (actions) => {
     [NIGHT]: 0,
   };
   actions.forEach((action) => {
-    const actionHourOfDay = action.createdAt.slice(11, 13);
+    const actionHourOfDay = getActionHourOfDay(action);
     if (actionHourOfDay >= 0 && actionHourOfDay < 4) {
       actionsByTimeOfDay[LATE_NIGHT] += 1;
     } else if (actionHourOfDay >= 4 && actionHourOfDay < 8) {
@@ -108,7 +116,7 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
   // capitalize verbs (entry[0][0]), convert 0.0x notation to x% and round to two decimal places (entry[0][1])
   const formattedActionsByVerbArray = actionsByVerbArray
     .map((entry) => [
-      entry[0][0].toUpperCase() + entry[0].substring(1),
+      _.capitalize(entry[0]),
       parseFloat((entry[1] * 100).toFixed(2)),
     ])
     .filter((entry) => entry[1] >= MIN_PERCENTAGE_TO_SHOW_VERB);
@@ -116,7 +124,7 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
   // add ['other', x%] to cover all verbs that are filtered out of the array
   if (formattedActionsByVerbArray.length) {
     formattedActionsByVerbArray.push([
-      OTHER,
+      OTHER_VERB,
       // ensure that it is a number with two decimal places
       parseFloat(
         (
