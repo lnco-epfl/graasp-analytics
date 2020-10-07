@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/graasp/graasp-research/compare/v0.1.6...v0.1.7) (2020-10-07)
+
+### Features
+
+- add additional charts ActionsByTimeOfDay and ActionsByVerb ([cdd1875](https://github.com/graasp/graasp-research/commit/cdd1875c741397c6770b5bd43e1ea80321f6fa00)), closes [#55](https://github.com/graasp/graasp-research/issues/55)
+- address PR feedback ([0920c70](https://github.com/graasp/graasp-research/commit/0920c702afa76cd0036f9d250c7f4dd51f6f0f98))
+
+### Bug Fixes
+
+- separate getActionHourOfDay into its own function ([771c62b](https://github.com/graasp/graasp-research/commit/771c62baa2cce9ddde735d7b72d61a812ff30b53))
+- update keys ([6f47e36](https://github.com/graasp/graasp-research/commit/6f47e36d88c4254f33646cb8a5957fd014688255))
+
 ### [0.1.6](https://github.com/graasp/graasp-research/compare/v0.1.5...v0.1.6) (2020-09-19)
 
 ### [0.1.5](https://github.com/graasp/graasp-research/compare/v0.1.4...v0.1.5) (2020-09-19)
