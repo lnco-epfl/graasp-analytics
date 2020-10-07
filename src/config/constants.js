@@ -16,8 +16,37 @@ export const CLUSTER_RADIUS = 75;
 // Key code for the Enter/Return key (Used in a placeholder keyboard event listener in ActionsMap)
 export const ENTER_KEY_CODE = 13;
 
-// Height of container in ActionsChart
+// Height of container in ActionsByDayChart
 export const CONTAINER_HEIGHT = 450;
 
 // Milliseconds after which additional text appears under loading spinner
 export const LOADER_TEXT_DELAY = 5000;
+
+// Used in api.js and then the ActionsByVerb piechart
+// for visual purposes, all verbs with < 3 percent of total actions are consolidated into an entry 'other'
+export const MIN_PERCENTAGE_TO_SHOW_VERB = 3;
+
+// 'other' verb used in api.js
+export const OTHER_VERB = 'Other';
+
+// colors used to fill the segments of the ActionsByVerb piechart
+export const COLORS = [
+  '#3066BE',
+  '#96CCE6',
+  '#20A39E',
+  '#61D095',
+  '#FFBA49',
+  '#EF5B5B',
+  '#FFA8A8',
+  '#A4036F',
+  '#B54A3F',
+  '#FFFFAF',
+];
+
+// strings used in components/custom/CustomTooltip to generate added tooltip text in ActionsByTimeOfDay
+export const LATE_NIGHT = 'Late night';
+export const EARLY_MORNING = 'Early morning';
+export const MORNING = 'Morning';
+export const AFTERNOON = 'Afternoon';
+export const EVENING = 'Evening';
+export const NIGHT = 'Night';

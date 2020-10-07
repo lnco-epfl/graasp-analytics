@@ -1,4 +1,15 @@
+// Functions in this file manipulate data retrieved from the api to make it usable by the app's charts/components
 const _ = require('lodash');
+const {
+  MIN_PERCENTAGE_TO_SHOW_VERB,
+  OTHER_VERB,
+  LATE_NIGHT,
+  EARLY_MORNING,
+  MORNING,
+  AFTERNOON,
+  EVENING,
+  NIGHT,
+} = require('../config/constants');
 
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
 export const getActionsByDay = (actions) => {
@@ -15,7 +26,7 @@ export const getActionsByDay = (actions) => {
 };
 
 // Takes object with {key: value} pairs of {date: #-of-actions} and returns a date-sorted array in Recharts.js format
-export const formatActions = (actionsByDayObject) => {
+export const formatActionsByDay = (actionsByDayObject) => {
   const actionsByDayArray = Object.entries(actionsByDayObject);
   const sortedActionsByDay = actionsByDayArray.sort(
     (entryA, entryB) => Date.parse(entryA[0]) - Date.parse(entryB[0]),
@@ -27,6 +38,111 @@ export const formatActions = (actionsByDayObject) => {
         entryDate.getMonth() + 1
       }-${entryDate.getFullYear()}`,
       count: entry[1],
+    };
+  });
+};
+
+// helper function user in getActionsByTimeOfDay
+// todo: update this function to retrieve hour of day using JS Date objects/moment
+const getActionHourOfDay = (action) => {
+  // expects action to be an object with a createdAt key
+  // createdAt should have the format "2020-12-31T23:59:59.999Z"
+  return action.createdAt.slice(11, 13);
+};
+
+// Takes array of action objects and returns an object with {key: value} pairs of {hourOfDay: #-of-actions}
+export const getActionsByTimeOfDay = (actions) => {
+  const actionsByTimeOfDay = {
+    [LATE_NIGHT]: 0,
+    [EARLY_MORNING]: 0,
+    [MORNING]: 0,
+    [AFTERNOON]: 0,
+    [EVENING]: 0,
+    [NIGHT]: 0,
+  };
+  actions.forEach((action) => {
+    const actionHourOfDay = getActionHourOfDay(action);
+    if (actionHourOfDay >= 0 && actionHourOfDay < 4) {
+      actionsByTimeOfDay[LATE_NIGHT] += 1;
+    } else if (actionHourOfDay >= 4 && actionHourOfDay < 8) {
+      actionsByTimeOfDay[EARLY_MORNING] += 1;
+    } else if (actionHourOfDay >= 8 && actionHourOfDay < 12) {
+      actionsByTimeOfDay[MORNING] += 1;
+    } else if (actionHourOfDay >= 12 && actionHourOfDay < 16) {
+      actionsByTimeOfDay[AFTERNOON] += 1;
+    } else if (actionHourOfDay >= 16 && actionHourOfDay < 20) {
+      actionsByTimeOfDay[EVENING] += 1;
+    } else if (actionHourOfDay >= 20 && actionHourOfDay < 24) {
+      actionsByTimeOfDay[NIGHT] += 1;
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(`actionHourOfDay ${actionHourOfDay} is undefined`);
+    }
+  });
+  return actionsByTimeOfDay;
+};
+
+// Takes object with {key: value} pairs of {timeOfDay: #-of-actions}
+// returns a date-sorted array in Recharts.js format
+export const formatActionsByTimeOfDay = (actionsByTimeOfDayObject) => {
+  const actionsByTimeOfDayArray = Object.entries(actionsByTimeOfDayObject);
+  return actionsByTimeOfDayArray.map((entry) => {
+    return {
+      timeOfDay: entry[0],
+      count: entry[1],
+    };
+  });
+};
+
+// Takes array of action objects and returns an object with {key: value} pairs of {verb: %-of-actions}
+export const getActionsByVerb = (actions) => {
+  const totalActions = actions.length;
+  const actionsByVerb = {};
+  actions.forEach((action) => {
+    if (!actionsByVerb[action.verb]) {
+      // if verb is still not in the actionsByVerb object, add it and assign it to (1 / totalActions)
+      // we use (1 / totalActions) because in the end we want this object to be {verb: PERCENTAGE-of-total-actions}
+      actionsByVerb[action.verb] = 1 / totalActions;
+    } else {
+      actionsByVerb[action.verb] += 1 / totalActions;
+    }
+  });
+  return actionsByVerb;
+};
+
+export const formatActionsByVerb = (actionsByVerbObject) => {
+  const actionsByVerbArray = Object.entries(actionsByVerbObject);
+
+  // capitalize verbs (entry[0][0]), convert 0.0x notation to x% and round to two decimal places (entry[0][1])
+  const formattedActionsByVerbArray = actionsByVerbArray
+    .map((entry) => [
+      _.capitalize(entry[0]),
+      parseFloat((entry[1] * 100).toFixed(2)),
+    ])
+    .filter((entry) => entry[1] >= MIN_PERCENTAGE_TO_SHOW_VERB);
+
+  // add ['other', x%] to cover all verbs that are filtered out of the array
+  if (formattedActionsByVerbArray.length) {
+    formattedActionsByVerbArray.push([
+      OTHER_VERB,
+      // ensure that it is a number with two decimal places
+      parseFloat(
+        (
+          100 -
+          formattedActionsByVerbArray.reduce(
+            (acc, current) => acc + current[1],
+            0,
+          )
+        ).toFixed(2),
+      ),
+    ]);
+  }
+
+  // convert to recharts required format
+  return formattedActionsByVerbArray.map((entry) => {
+    return {
+      verb: entry[0],
+      percentage: entry[1],
     };
   });
 };
@@ -43,7 +159,7 @@ export const filterActionsByUser = (actions, usersArray) => {
   });
 };
 
-// given an actionsByDay object, findYAxisMax finds max value to set on the yAxis in the graph in ActionsChart.js
+// given an actionsByDay object, findYAxisMax finds max value to set on the yAxis in the graph in ActionsByDayChart.js
 export const findYAxisMax = (actionsByDay) => {
   const arrayOfActionsCount = Object.values(actionsByDay);
   if (!arrayOfActionsCount.length) {

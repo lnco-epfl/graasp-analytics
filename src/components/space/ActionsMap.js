@@ -49,13 +49,18 @@ function ActionsMap() {
   const { actions, usersToFilter, allUsers } = useContext(SpaceDataContext);
 
   // actionsToChart is the array converted to GeoJSON Feature objects below
+  // if you remove all names in the react-select dropdown, usersToFilter becomes null
   // if no users are selected (i.e. usersToFilter.length === 0), show all actions
   // if all users are selected (i.e. usersToFilter.length === allUsers.length), also show all actions
-  // second condition above is necessary: some actions are made by users NOT in the users list (e.g. user account deleted)
+  // third condition above is necessary: some actions are made by users NOT in the users list (e.g. user account deleted)
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
   let actionsToChart;
-  if (usersToFilter.length === 0 || usersToFilter.length === allUsers.length) {
+  if (
+    usersToFilter === null ||
+    usersToFilter.length === 0 ||
+    usersToFilter.length === allUsers.length
+  ) {
     actionsToChart = actions;
   } else {
     actionsToChart = filterActionsByUser(actions, usersToFilter);

@@ -11,9 +11,10 @@ import {
   Bar,
   ResponsiveContainer,
 } from 'recharts';
+import EmptyChart from './EmptyChart';
 import {
   getActionsByDay,
-  formatActions,
+  formatActionsByDay,
   filterActionsByUser,
   findYAxisMax,
 } from '../../utils/api';
@@ -22,53 +23,42 @@ import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
-  emptyChartAlert: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: `${CONTAINER_HEIGHT}px`,
-  },
 }));
 
-function ActionsChart() {
+function ActionsByDayChart() {
   const { t } = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
   const { actions, usersToFilter, allUsers } = useContext(SpaceDataContext);
 
   // actionsByDay is the object passed, after formatting, to the BarChart component below
+  // if you remove all names in the react-select dropdown, usersToFilter becomes null
   // if no users are selected (i.e. usersToFilter.length === 0), show all actions
   // if all users are selected (i.e. usersToFilter.length === allUsers.length), also show all actions
-  // second condition above is necessary: some actions are made by users NOT in the users list (e.g. user account deleted)
+  // third condition above is necessary: some actions are made by users NOT in the users list (e.g. user account deleted)
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
   let actionsByDay;
-  if (usersToFilter.length === 0 || usersToFilter.length === allUsers.length) {
+  if (
+    usersToFilter === null ||
+    usersToFilter.length === 0 ||
+    usersToFilter.length === allUsers.length
+  ) {
     actionsByDay = getActionsByDay(actions);
   } else {
     actionsByDay = getActionsByDay(filterActionsByUser(actions, usersToFilter));
   }
 
   const yAxisMax = findYAxisMax(actionsByDay);
-  const formattedActionsByDay = formatActions(actionsByDay);
+  const formattedActionsByDay = formatActionsByDay(actionsByDay);
 
   // if selected user(s) have no actions, render component with message that there are no actions
   if (formattedActionsByDay.length === 0) {
-    let message = '';
-    if (usersToFilter.length > 1) {
-      message = t('No actions to show for these users');
-    } else {
-      message = t('No actions to show for this user');
-    }
     return (
-      <>
-        <Typography variant="h6" className={classes.typography}>
-          {t('Actions by Day')}
-        </Typography>
-        <div className={classes.emptyChartAlert}>
-          <Typography>{message}</Typography>
-        </div>
-      </>
+      <EmptyChart
+        usersToFilter={usersToFilter}
+        chartTitle={t('Actions by Day')}
+      />
     );
   }
 
@@ -93,4 +83,4 @@ function ActionsChart() {
   );
 }
 
-export default ActionsChart;
+export default ActionsByDayChart;
