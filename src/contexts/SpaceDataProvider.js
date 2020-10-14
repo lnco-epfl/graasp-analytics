@@ -11,6 +11,7 @@ import {
 import { REACT_APP_BASE_URL } from '../config/env';
 import {
   extractMainSpace,
+  removeLearningAnalyticsUser,
   consolidateUsers,
   formatConsolidatedUsers,
   addValueKeyToUsers,
@@ -45,7 +46,9 @@ const SpaceDataProvider = ({ children }) => {
         const resolvedData = await response.json();
         const mainSpaceName = extractMainSpace(resolvedData.spaceTree).name;
         const consolidatedUsers = addValueKeyToUsers(
-          formatConsolidatedUsers(consolidateUsers(resolvedData.users)),
+          formatConsolidatedUsers(
+            consolidateUsers(removeLearningAnalyticsUser(resolvedData.users)),
+          ),
         );
         setSpaceName(mainSpaceName);
         setActions(resolvedData.actions);
