@@ -1,6 +1,7 @@
 // Functions in this file manipulate data retrieved from the api to make it usable by the app's charts/components
 const _ = require('lodash');
 const {
+  LEARNING_ANALYTICS_USER_ID,
   MIN_PERCENTAGE_TO_SHOW_VERB,
   OTHER_VERB,
   LATE_NIGHT,
@@ -42,7 +43,7 @@ export const formatActionsByDay = (actionsByDayObject) => {
   });
 };
 
-// helper function user in getActionsByTimeOfDay
+// helper function used in getActionsByTimeOfDay
 // todo: update this function to retrieve hour of day using JS Date objects/moment
 const getActionHourOfDay = (action) => {
   // expects action to be an object with a createdAt key
@@ -185,6 +186,12 @@ export const extractMainSpace = (arrayOfSpaceObjects) => {
 export const extractMainSpaceChildren = (arrayOfSpaceObjects) => {
   const mainSpaceId = extractMainSpace(arrayOfSpaceObjects).id;
   return arrayOfSpaceObjects.filter((space) => space.parentId === mainSpaceId);
+};
+
+// remove user 'Learning Analytics' from users list retrieved by API
+// this is an auto-generated 'user' that we don't want to display in the application
+export const removeLearningAnalyticsUser = (usersArray) => {
+  return usersArray.filter((user) => user._id !== LEARNING_ANALYTICS_USER_ID);
 };
 
 // consolidate users with the same name into a single entry

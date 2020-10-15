@@ -22,6 +22,9 @@ export const CONTAINER_HEIGHT = 450;
 // Milliseconds after which additional text appears under loading spinner
 export const LOADER_TEXT_DELAY = 5000;
 
+// Used in api.js, to filter out the auto-generated 'user' with name 'Learning Analytics'
+export const LEARNING_ANALYTICS_USER_ID = '5405e202da3a95cf9050e8f9';
+
 // Used in api.js and then the ActionsByVerb piechart
 // for visual purposes, all verbs with < 3 percent of total actions are consolidated into an entry 'other'
 export const MIN_PERCENTAGE_TO_SHOW_VERB = 3;
