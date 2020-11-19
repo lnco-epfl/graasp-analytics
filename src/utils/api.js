@@ -10,13 +10,16 @@ const {
   AFTERNOON,
   EVENING,
   NIGHT,
+  LIVE_VIEW_STRING,
+  COMPOSE_VIEW_STRING,
 } = require('../config/constants');
 
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
-export const getActionsByDay = (actions) => {
+export const getActionsByDay = (actions, view) => {
+  const dateKey = view === COMPOSE_VIEW_STRING ? 'published' : 'createdAt';
   const actionsByDay = {};
   actions.forEach((action) => {
-    const actionDate = new Date(action.createdAt.slice(0, 10));
+    const actionDate = new Date(action[dateKey].slice(0, 10));
     if (!actionsByDay[actionDate]) {
       actionsByDay[actionDate] = 1;
     } else {
@@ -43,16 +46,44 @@ export const formatActionsByDay = (actionsByDayObject) => {
   });
 };
 
-// helper function used in getActionsByTimeOfDay
+export const mapActionsToGeoJSONFeatureObjects = (actions, view) => {
+  if (view === LIVE_VIEW_STRING) {
+    return actions
+      .filter((action) => action.geolocation)
+      .map((action) => ({
+        type: 'Feature',
+        properties: { cluster: false, actionId: action._id },
+        geometry: {
+          type: 'Point',
+          coordinates: [action.geolocation.ll[1], action.geolocation.ll[0]],
+        },
+      }));
+  }
+  return actions
+    .filter((action) => action.context)
+    .filter((action) => action.context.location)
+    .map((action) => ({
+      type: 'Feature',
+      properties: { cluster: false, actionId: action._id },
+      geometry: {
+        type: 'Point',
+        coordinates: [action.context.location.lon, action.context.location.lat],
+      },
+    }));
+};
+
+// helper function used in getActionsByTimeOfDay below
 // todo: update this function to retrieve hour of day using JS Date objects/moment
-const getActionHourOfDay = (action) => {
-  // expects action to be an object with a createdAt key
-  // createdAt should have the format "2020-12-31T23:59:59.999Z"
-  return action.createdAt.slice(11, 13);
+const getActionHourOfDay = (action, view) => {
+  const dateKey = view === COMPOSE_VIEW_STRING ? 'published' : 'createdAt';
+  // if view === 'compose', expects action to be an object with a published key
+  // if view === 'live', expects action to be an object with a createdAt key
+  // published/createdAt should have the format "2020-12-31T23:59:59.999Z"
+  return action[dateKey].slice(11, 13);
 };
 
 // Takes array of action objects and returns an object with {key: value} pairs of {hourOfDay: #-of-actions}
-export const getActionsByTimeOfDay = (actions) => {
+export const getActionsByTimeOfDay = (actions, dateKey) => {
   const actionsByTimeOfDay = {
     [LATE_NIGHT]: 0,
     [EARLY_MORNING]: 0,
@@ -62,7 +93,7 @@ export const getActionsByTimeOfDay = (actions) => {
     [NIGHT]: 0,
   };
   actions.forEach((action) => {
-    const actionHourOfDay = getActionHourOfDay(action);
+    const actionHourOfDay = getActionHourOfDay(action, dateKey);
     if (actionHourOfDay >= 0 && actionHourOfDay < 4) {
       actionsByTimeOfDay[LATE_NIGHT] += 1;
     } else if (actionHourOfDay >= 4 && actionHourOfDay < 8) {
@@ -152,10 +183,11 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
 // i.e. a user (identified by their name) can have multiple ids (due to different sign-in sesions)
 // 'actions' is an array in the format retrieved from the API: [ { id: 1, user: 2, ... }, {...} ]
 // therefore note: id is the id of the action, and user is the userId of the user performing the action
-export const filterActionsByUser = (actions, usersArray) => {
+export const filterActionsByUser = (actions, usersArray, view) => {
+  const userKey = view === 'compose' ? 'actorUser' : 'user';
   return actions.filter((action) => {
     return usersArray.some((user) => {
-      return user.ids.includes(action.user);
+      return user.ids.includes(action[userKey]);
     });
   });
 };

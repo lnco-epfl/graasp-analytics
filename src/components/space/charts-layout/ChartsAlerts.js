@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Info } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
-import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,10 +28,9 @@ const AlertsTooltip = withStyles({
   },
 })(Tooltip);
 
-function ChartsAlerts() {
+const ChartsAlerts = ({ metadata, view }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { metadata } = useContext(SpaceDataContext);
   const {
     maxTreeLength,
     maxTreeLengthExceeded,
@@ -43,7 +42,9 @@ function ChartsAlerts() {
     if (numActionsRetrieved === 0) {
       return (
         <Alert severity="warning" className={classes.alert}>
-          {t('This space and its subspaces do not have any actions yet.')}
+          {t('This space and its subspaces do not have any actions yet.', {
+            view,
+          })}
         </Alert>
       );
     }
@@ -101,6 +102,7 @@ function ChartsAlerts() {
           {t(
             'The charts below display a sample of actions from this space and its nested subspaces.',
             {
+              view,
               numActionsRetrieved,
               requestedSampleSize,
             },
@@ -117,6 +119,17 @@ function ChartsAlerts() {
       {displaySampleInfo()}
     </div>
   );
-}
+};
+
+ChartsAlerts.propTypes = {
+  metadata: PropTypes.shape({
+    numSpacesRetrieved: PropTypes.number.isRequired,
+    maxTreeLength: PropTypes.number.isRequired,
+    maxTreeLengthExceeded: PropTypes.bool.isRequired,
+    requestedSampleSize: PropTypes.number.isRequired,
+    numActionsRetrieved: PropTypes.number.isRequired,
+  }).isRequired,
+  view: PropTypes.string.isRequired,
+};
 
 export default ChartsAlerts;

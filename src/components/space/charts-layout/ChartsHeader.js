@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, matchPath } from 'react-router-dom';
-import { Tooltip, Typography } from '@material-ui/core';
-import { Info } from '@material-ui/icons';
+import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
-import ExportData from './ExportData';
-import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
+import ExportData from '../functionality/ExportData';
+import ViewSelect from '../functionality/ViewSelect';
+import { ComposeDataContext } from '../../../contexts/ComposeDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   spaceName: {
@@ -34,11 +33,12 @@ const useStyles = makeStyles((theme) => ({
   rootAlt: {
     flexGrow: 1,
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingTop: theme.spacing(1),
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(2),
-    paddingBottom: theme.spacing(1),
+    paddingBottom: theme.spacing(2),
   },
   alert: {
     display: 'flex',
@@ -47,10 +47,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ChartsHeader({ downloadButton }) {
-  const { t } = useTranslation();
+const ChartsHeader = ({ downloadButton }) => {
   const classes = useStyles();
-  const { spaceName } = useContext(SpaceDataContext);
+  const { spaceName } = useContext(ComposeDataContext);
   const { pathname } = useLocation();
 
   const match = matchPath(pathname, {
@@ -59,11 +58,12 @@ function ChartsHeader({ downloadButton }) {
   });
 
   if (match) {
-    return downloadButton ? (
+    return (
       <div className={classes.rootAlt}>
-        <ExportData />
+        {downloadButton ? <ExportData /> : null}
+        <ViewSelect />
       </div>
-    ) : null;
+    );
   }
 
   return (
@@ -80,19 +80,12 @@ function ChartsHeader({ downloadButton }) {
           {downloadButton ? <ExportData /> : null}
         </Grid>
         <Grid item xs={6} className={classes.rightCell}>
-          <Tooltip
-            placement="left"
-            title={t(
-              'Any actions from this space and its subspaces are shown in the charts below.',
-            )}
-          >
-            <Info color="primary" />
-          </Tooltip>
+          <ViewSelect />
         </Grid>
       </Grid>
     </div>
   );
-}
+};
 
 ChartsHeader.propTypes = {
   downloadButton: PropTypes.bool.isRequired,

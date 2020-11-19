@@ -9,6 +9,7 @@ import {
 } from '../api/graasp';
 import { REACT_APP_BASE_URL } from '../config/env';
 import { UserDataContext } from './UserDataProvider';
+import { ViewDataContext } from './ViewDataProvider';
 
 export const TaskDataContext = createContext();
 
@@ -18,6 +19,7 @@ const TaskDataProvider = ({ children }) => {
   const [taskGetError, setTaskGetError] = useState(null);
   const [taskCreateError, setTaskCreateError] = useState(null);
   const { userId } = useContext(UserDataContext);
+  const { view } = useContext(ViewDataContext);
   const { spaceId } = useParams();
 
   // build endpoints that are called in this context API
@@ -25,7 +27,7 @@ const TaskDataProvider = ({ children }) => {
     REACT_APP_BASE_URL,
     RESEARCH_API_ROUTE,
     TASKS_PARAMETER,
-    { userId, spaceId },
+    { userId, spaceId, requestedView: view },
   );
   const createTaskUrl = buildTasksEndpoint(
     REACT_APP_BASE_URL,
@@ -33,7 +35,7 @@ const TaskDataProvider = ({ children }) => {
     TASKS_PARAMETER,
   );
 
-  // on component load, check if a task already exists for this space
+  // on component load and when view changes, check if a task already exists for this space/user/view combination
   useEffect(() => {
     const fetchTask = async () => {
       if (userId) {
@@ -46,6 +48,7 @@ const TaskDataProvider = ({ children }) => {
           setExistingTask(resolvedResponse);
           setIsLoading(false);
         } catch (err) {
+          setExistingTask();
           const resolvedErr = await err.json();
           setTaskGetError(resolvedErr);
           setIsLoading(false);
@@ -53,13 +56,17 @@ const TaskDataProvider = ({ children }) => {
       }
     };
     fetchTask();
-  }, [userId, spaceId, getTaskUrl]);
+  }, [userId, spaceId, getTaskUrl, view]);
 
   // function passed down to ExportData component, used to trigger dataset request
   const requestFullDataset = async () => {
     try {
       // requestBody as required by api endpoint
-      const requestBody = JSON.stringify({ userId, spaceId });
+      const requestBody = JSON.stringify({
+        userId,
+        spaceId,
+        view,
+      });
       const createTask = await fetch(
         createTaskUrl,
         buildApiOptions('POST', { body: requestBody }),

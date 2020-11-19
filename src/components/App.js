@@ -5,6 +5,7 @@ import Home from './home/Home';
 import Space from './space/Space';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
+import ContextsWrapper from './context/ContextsWrapper';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -22,13 +23,17 @@ function App() {
       <Switch>
         <Route path="/embedded/:spaceId">
           <main className={classes.embedded}>
-            <Space />
+            <ContextsWrapper>
+              <Space />
+            </ContextsWrapper>
           </main>
         </Route>
         <Route path="/spaces/:spaceId">
           <Header />
           <main className={classes.main}>
-            <Space />
+            <ContextsWrapper>
+              <Space />
+            </ContextsWrapper>
           </main>
           <Footer />
         </Route>
