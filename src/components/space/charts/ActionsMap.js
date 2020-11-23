@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
 import {
-  mapActionsToGeoJSONFeatureObjects,
+  mapActionsToGeoJsonFeatureObjects,
   filterActionsByUser,
 } from '../../../utils/api';
 import {
@@ -69,18 +69,7 @@ const ActionsMap = ({ actions, view, usersToFilter, allUsers }) => {
   }
 
   // GeoJSON Feature objects
-  const points = mapActionsToGeoJSONFeatureObjects(actionsToChart, view);
-
-  // actionsToChart
-  //   .filter((action) => action.geolocation)
-  //   .map((action) => ({
-  //     type: 'Feature',
-  //     properties: { cluster: false, actionId: action._id },
-  //     geometry: {
-  //       type: 'Point',
-  //       coordinates: [action.geolocation.ll[1], action.geolocation.ll[0]],
-  //     },
-  //   }));
+  const points = mapActionsToGeoJsonFeatureObjects(actionsToChart, view);
 
   const { clusters } = useSupercluster({
     points,

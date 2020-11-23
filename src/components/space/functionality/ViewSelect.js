@@ -42,10 +42,10 @@ const ViewSelect = () => {
       title={
         view === COMPOSE_VIEW_STRING
           ? t(
-              "The 'compose' view displays analytics from the default Graasp space creation interface. The data below is sampled from this space and its subspaces.",
+              "The 'compose' view displays analytics from the default Graasp space creation interface.",
             )
           : t(
-              "The 'live' view displays analytics from the standalone Graasp interface typically used by students to access a space. The data below is sampled from this space and its subspaces.",
+              "The 'live' view displays analytics from the standalone Graasp interface typically used by students to access a space.",
             )
       }
       placement="left"

@@ -46,7 +46,7 @@ export const formatActionsByDay = (actionsByDayObject) => {
   });
 };
 
-export const mapActionsToGeoJSONFeatureObjects = (actions, view) => {
+export const mapActionsToGeoJsonFeatureObjects = (actions, view) => {
   if (view === LIVE_VIEW_STRING) {
     return actions
       .filter((action) => action.geolocation)
@@ -83,7 +83,7 @@ const getActionHourOfDay = (action, view) => {
 };
 
 // Takes array of action objects and returns an object with {key: value} pairs of {hourOfDay: #-of-actions}
-export const getActionsByTimeOfDay = (actions, dateKey) => {
+export const getActionsByTimeOfDay = (actions, view) => {
   const actionsByTimeOfDay = {
     [LATE_NIGHT]: 0,
     [EARLY_MORNING]: 0,
@@ -93,7 +93,7 @@ export const getActionsByTimeOfDay = (actions, dateKey) => {
     [NIGHT]: 0,
   };
   actions.forEach((action) => {
-    const actionHourOfDay = getActionHourOfDay(action, dateKey);
+    const actionHourOfDay = getActionHourOfDay(action, view);
     if (actionHourOfDay >= 0 && actionHourOfDay < 4) {
       actionsByTimeOfDay[LATE_NIGHT] += 1;
     } else if (actionHourOfDay >= 4 && actionHourOfDay < 8) {
@@ -184,7 +184,7 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
 // 'actions' is an array in the format retrieved from the API: [ { id: 1, user: 2, ... }, {...} ]
 // therefore note: id is the id of the action, and user is the userId of the user performing the action
 export const filterActionsByUser = (actions, usersArray, view) => {
-  const userKey = view === 'compose' ? 'actorUser' : 'user';
+  const userKey = view === COMPOSE_VIEW_STRING ? 'actorUser' : 'user';
   return actions.filter((action) => {
     return usersArray.some((user) => {
       return user.ids.includes(action[userKey]);
