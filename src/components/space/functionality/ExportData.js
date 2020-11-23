@@ -4,9 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import LaunchIcon from '@material-ui/icons/Launch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import LightTooltip from '../common/LightTooltip';
-import { TaskDataContext } from '../../contexts/TaskDataProvider';
-import { TASK_NOT_FOUND } from '../../config/errors';
+import LightTooltip from '../../common/LightTooltip';
+import { TaskDataContext } from '../../../contexts/TaskDataProvider';
+import { TASK_NOT_FOUND } from '../../../config/errors';
+import { ViewDataContext } from '../../../contexts/ViewDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -56,6 +57,7 @@ const ExportData = () => {
     taskCreateError,
     requestFullDataset,
   } = useContext(TaskDataContext);
+  const { view } = useContext(ViewDataContext);
 
   // isLoading is true when TaskDataContext is still fetching userId/spaceId to determine task status
   // Note: do *NOT* return null if taskGetError === 'Task not found.' (this means it can be created!)
@@ -85,7 +87,9 @@ const ExportData = () => {
     if (existingTask.completed) {
       return (
         <LightTooltip
-          title={t('Download the full dataset for this space')}
+          title={t('Download the full dataset for this view of this space', {
+            view,
+          })}
           placement="right"
           arrow
         >
@@ -117,6 +121,7 @@ const ExportData = () => {
     setShowLoadingSpinner(true);
     setTimeout(() => {
       requestFullDataset();
+      setShowLoadingSpinner(false);
     }, 1000);
   };
 
@@ -127,7 +132,9 @@ const ExportData = () => {
   // default display for when no task or error exists
   return (
     <LightTooltip
-      title={t('Request the full dataset for this space')}
+      title={t('Request the full dataset for this view of this space', {
+        view,
+      })}
       placement="right"
       arrow
     >

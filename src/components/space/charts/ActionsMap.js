@@ -1,11 +1,15 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'react-i18next';
 import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
-import { filterActionsByUser } from '../../utils/api';
+import {
+  mapActionsToGeoJsonFeatureObjects,
+  filterActionsByUser,
+} from '../../../utils/api';
 import {
   DEFAULT_LATITUDE,
   DEFAULT_LONGITUDE,
@@ -13,8 +17,7 @@ import {
   MAX_CLUSTER_ZOOM,
   CLUSTER_RADIUS,
   ENTER_KEY_CODE,
-} from '../../config/constants';
-import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
+} from '../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   clusterMarker: {
@@ -40,13 +43,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Marker = ({ children }) => children;
 
-function ActionsMap() {
+const ActionsMap = ({ actions, view, usersToFilter, allUsers }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
-  const { actions, usersToFilter, allUsers } = useContext(SpaceDataContext);
 
   // actionsToChart is the array converted to GeoJSON Feature objects below
   // if you remove all names in the react-select dropdown, usersToFilter becomes null
@@ -63,20 +65,11 @@ function ActionsMap() {
   ) {
     actionsToChart = actions;
   } else {
-    actionsToChart = filterActionsByUser(actions, usersToFilter);
+    actionsToChart = filterActionsByUser(actions, usersToFilter, view);
   }
 
   // GeoJSON Feature objects
-  const points = actionsToChart
-    .filter((action) => action.geolocation)
-    .map((action) => ({
-      type: 'Feature',
-      properties: { cluster: false, actionId: action._id },
-      geometry: {
-        type: 'Point',
-        coordinates: [action.geolocation.ll[1], action.geolocation.ll[0]],
-      },
-    }));
+  const points = mapActionsToGeoJsonFeatureObjects(actionsToChart, view);
 
   const { clusters } = useSupercluster({
     points,
@@ -169,6 +162,13 @@ function ActionsMap() {
       </Container>
     </>
   );
-}
+};
+
+ActionsMap.propTypes = {
+  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  view: PropTypes.string.isRequired,
+  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default ActionsMap;

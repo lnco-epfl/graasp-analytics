@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,18 +9,16 @@ import {
   getActionsByVerb,
   formatActionsByVerb,
   filterActionsByUser,
-} from '../../utils/api';
-import { COLORS, CONTAINER_HEIGHT } from '../../config/constants';
-import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
+} from '../../../utils/api';
+import { COLORS, CONTAINER_HEIGHT } from '../../../config/constants';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
 }));
 
-const ActionsByVerbChart = () => {
+const ActionsByVerbChart = ({ actions, view, allUsers, usersToFilter }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { actions, usersToFilter, allUsers } = useContext(SpaceDataContext);
 
   let actionsByVerb;
   if (
@@ -30,7 +29,7 @@ const ActionsByVerbChart = () => {
     actionsByVerb = getActionsByVerb(actions);
   } else {
     actionsByVerb = getActionsByVerb(
-      filterActionsByUser(actions, usersToFilter),
+      filterActionsByUser(actions, usersToFilter, view),
     );
   }
   const formattedActionsByVerb = formatActionsByVerb(actionsByVerb);
@@ -69,6 +68,13 @@ const ActionsByVerbChart = () => {
       </ResponsiveContainer>
     </>
   );
+};
+
+ActionsByVerbChart.propTypes = {
+  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  view: PropTypes.string.isRequired,
+  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default ActionsByVerbChart;

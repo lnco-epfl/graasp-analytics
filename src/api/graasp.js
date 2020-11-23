@@ -32,9 +32,10 @@ export const buildAnalyticsEndpoint = (
   parameter,
   spaceId,
   requestedSampleSize,
+  requestedView,
 ) => {
   const analyticsQueryString = qs.stringify(
-    { spaceId, requestedSampleSize },
+    { spaceId, requestedSampleSize, view: requestedView },
     { addQueryPrefix: true },
   );
   return `${url}/${apiRoute}/${parameter}${analyticsQueryString}`;
@@ -44,10 +45,10 @@ export const buildTasksEndpoint = (
   url,
   apiRoute,
   parameter,
-  { userId, spaceId } = {},
+  { userId, spaceId, requestedView } = {},
 ) => {
   const tasksQueryString = qs.stringify(
-    { userId, spaceId },
+    { userId, spaceId, view: requestedView },
     { addQueryPrefix: true },
   );
   return `${url}/${apiRoute}/${parameter}${tasksQueryString}`;

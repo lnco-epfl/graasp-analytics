@@ -1,21 +1,14 @@
-import React from 'react';
-import Charts from './Charts';
-import UserDataProvider from '../../contexts/UserDataProvider';
-import TaskDataProvider from '../../contexts/TaskDataProvider';
-import SpaceDataProvider from '../../contexts/SpaceDataProvider';
+import React, { useContext } from 'react';
+import ChartsLayout from './ChartsLayout';
+import { ViewDataContext } from '../../contexts/ViewDataProvider';
 
-function Space() {
+const Space = () => {
+  const { view } = useContext(ViewDataContext);
   return (
     <div>
-      <UserDataProvider>
-        <TaskDataProvider>
-          <SpaceDataProvider>
-            <Charts />
-          </SpaceDataProvider>
-        </TaskDataProvider>
-      </UserDataProvider>
+      <ChartsLayout view={view} />
     </div>
   );
-}
+};
 
 export default Space;

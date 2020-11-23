@@ -16,27 +16,29 @@ import {
   formatConsolidatedUsers,
   addValueKeyToUsers,
 } from '../utils/api';
+import { COMPOSE_VIEW_STRING } from '../config/constants';
 
-export const SpaceDataContext = createContext();
+export const ComposeDataContext = createContext();
 
-const SpaceDataProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true);
+const ComposeDataProvider = ({ children }) => {
   const [spaceName, setSpaceName] = useState(null);
-  const [allUsers, setAllUsers] = useState([]);
-  const [actions, setActions] = useState([]);
-  const [metadata, setMetadata] = useState({});
-  const [error, setError] = useState(null);
-  const [usersToFilter, setUsersToFilter] = useState([]);
+  const [isLoadingComposeData, setIsLoadingComposeData] = useState(true);
+  const [composeActions, setComposeActions] = useState([]);
+  const [allComposeUsers, setAllComposeUsers] = useState([]);
+  const [composeMetadata, setComposeMetadata] = useState({});
+  const [composeFetchingError, setComposeFetchingError] = useState(null);
+  const [composeUsersToFilter, setComposeUsersToFilter] = useState([]);
   const { spaceId } = useParams();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchComposeData = async () => {
       const requestUrl = buildAnalyticsEndpoint(
         REACT_APP_BASE_URL,
         RESEARCH_API_ROUTE,
         ANALYTICS_PARAMETER,
         spaceId,
         DEFAULT_REQUEST_SAMPLE_SIZE,
+        COMPOSE_VIEW_STRING,
       );
       try {
         const response = await fetch(requestUrl, buildApiOptions('GET'));
@@ -51,39 +53,39 @@ const SpaceDataProvider = ({ children }) => {
           ),
         );
         setSpaceName(mainSpaceName);
-        setActions(resolvedData.actions);
-        setAllUsers(consolidatedUsers);
-        setUsersToFilter(consolidatedUsers);
-        setMetadata(resolvedData.metadata);
-        setIsLoading(false);
+        setComposeActions(resolvedData.actions);
+        setAllComposeUsers(consolidatedUsers);
+        setComposeUsersToFilter(consolidatedUsers);
+        setComposeMetadata(resolvedData.metadata);
+        setIsLoadingComposeData(false);
       } catch (err) {
-        setIsLoading(false);
-        setError(err);
+        setIsLoadingComposeData(false);
+        setComposeFetchingError(err);
       }
     };
-    fetchData();
+    fetchComposeData();
   }, [spaceId]);
 
   return (
-    <SpaceDataContext.Provider
+    <ComposeDataContext.Provider
       value={{
-        isLoading,
         spaceName,
-        actions,
-        allUsers,
-        metadata,
-        error,
-        usersToFilter,
-        setUsersToFilter,
+        isLoadingComposeData,
+        composeActions,
+        allComposeUsers,
+        composeMetadata,
+        composeFetchingError,
+        composeUsersToFilter,
+        setComposeUsersToFilter,
       }}
     >
       {children}
-    </SpaceDataContext.Provider>
+    </ComposeDataContext.Provider>
   );
 };
 
-SpaceDataProvider.propTypes = {
+ComposeDataProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export default SpaceDataProvider;
+export default ComposeDataProvider;

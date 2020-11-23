@@ -53,3 +53,7 @@ export const MORNING = 'Morning';
 export const AFTERNOON = 'Afternoon';
 export const EVENING = 'Evening';
 export const NIGHT = 'Night';
+
+// strings for supported 'views'
+export const COMPOSE_VIEW_STRING = 'compose';
+export const LIVE_VIEW_STRING = 'live';

@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import {
   BarChart,
@@ -12,52 +13,62 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import EmptyChart from './EmptyChart';
+import CustomTooltip from '../../custom/CustomTooltip';
 import {
-  getActionsByDay,
-  formatActionsByDay,
+  getActionsByTimeOfDay,
+  formatActionsByTimeOfDay,
   filterActionsByUser,
   findYAxisMax,
-} from '../../utils/api';
-import { CONTAINER_HEIGHT } from '../../config/constants';
-import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
+} from '../../../utils/api';
+import { CONTAINER_HEIGHT } from '../../../config/constants';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
 }));
 
-function ActionsByDayChart() {
+const ActionsByTimeOfDayChart = ({
+  actions,
+  view,
+  allUsers,
+  usersToFilter,
+}) => {
   const { t } = useTranslation();
-  const theme = useTheme();
   const classes = useStyles();
-  const { actions, usersToFilter, allUsers } = useContext(SpaceDataContext);
 
-  // actionsByDay is the object passed, after formatting, to the BarChart component below
+  // actionsByTimeOfDay is the object passed, after formatting, to the BarChart component below
   // if you remove all names in the react-select dropdown, usersToFilter becomes null
   // if no users are selected (i.e. usersToFilter.length === 0), show all actions
   // if all users are selected (i.e. usersToFilter.length === allUsers.length), also show all actions
   // third condition above is necessary: some actions are made by users NOT in the users list (e.g. user account deleted)
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
-  let actionsByDay;
+  let actionsByTimeOfDay;
   if (
     usersToFilter === null ||
     usersToFilter.length === 0 ||
     usersToFilter.length === allUsers.length
   ) {
-    actionsByDay = getActionsByDay(actions);
+    actionsByTimeOfDay = getActionsByTimeOfDay(actions, view);
   } else {
-    actionsByDay = getActionsByDay(filterActionsByUser(actions, usersToFilter));
+    actionsByTimeOfDay = getActionsByTimeOfDay(
+      filterActionsByUser(actions, usersToFilter, view),
+      view,
+    );
   }
 
-  const yAxisMax = findYAxisMax(actionsByDay);
-  const formattedActionsByDay = formatActionsByDay(actionsByDay);
+  const yAxisMax = findYAxisMax(actionsByTimeOfDay);
+  const formattedActionsByTimeOfDay = formatActionsByTimeOfDay(
+    actionsByTimeOfDay,
+  );
 
   // if selected user(s) have no actions, render component with message that there are no actions
-  if (formattedActionsByDay.length === 0) {
+  if (
+    formattedActionsByTimeOfDay.every((timePeriod) => timePeriod.count === 0)
+  ) {
     return (
       <EmptyChart
         usersToFilter={usersToFilter}
-        chartTitle={t('Actions by Day')}
+        chartTitle={t('Actions by Time of Day')}
       />
     );
   }
@@ -65,22 +76,29 @@ function ActionsByDayChart() {
   return (
     <>
       <Typography variant="h6" className={classes.typography}>
-        {t('Actions by Day')}
+        {t('Actions by Time of Day')}
       </Typography>
       <ResponsiveContainer width="95%" height={CONTAINER_HEIGHT}>
         <BarChart
-          data={formattedActionsByDay}
+          data={formattedActionsByTimeOfDay}
           margin={{ top: 30, bottom: 20, left: 20, right: 20 }}
         >
           <CartesianGrid strokeDasharray="2" />
-          <XAxis dataKey="date" tick={{ fontSize: 14 }} />
+          <XAxis dataKey="timeOfDay" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
-          <Tooltip />
-          <Bar dataKey="count" name="Count" fill={theme.palette.primary.main} />
+          <Tooltip content={<CustomTooltip />} />
+          <Bar dataKey="count" name="Count" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
     </>
   );
-}
+};
 
-export default ActionsByDayChart;
+ActionsByTimeOfDayChart.propTypes = {
+  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  view: PropTypes.string.isRequired,
+  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default ActionsByTimeOfDayChart;

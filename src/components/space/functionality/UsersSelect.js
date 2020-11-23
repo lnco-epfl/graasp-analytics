@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
-import { SpaceDataContext } from '../../contexts/SpaceDataProvider';
-import CustomValueContainer from '../custom/CustomValueContainer';
+import Typography from '@material-ui/core/Typography';
+import CustomValueContainer from '../../custom/CustomValueContainer';
+import customStyles from '../../../styles/react-select-styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,47 +20,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// custom styling used by react-select (deviates from material-ui approach used in rest of app)
-const styleConstants = {
-  border: 'solid 1px #dfe3e9',
-  borderRadius: '4px',
-  fontSize: '0.8rem',
-};
-
-const customStyles = {
-  menu: () => ({
-    width: '250px',
-    position: 'absolute',
-    zIndex: 999999,
-    backgroundColor: 'white',
-    ...styleConstants,
-  }),
-  control: () => ({
-    display: 'flex',
-    minWidth: '250px',
-    maxWidth: '600px',
-    backgroundColor: 'white',
-    ...styleConstants,
-  }),
-};
-
-const UsersSelect = () => {
+const UsersSelect = ({ view, allUsers, setUsersToFilter }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { isLoading, allUsers, setUsersToFilter } = useContext(
-    SpaceDataContext,
-  );
   const [selectedUsers, setSelectedUsers] = useState([]);
-
-  if (isLoading) {
-    return null;
-  }
 
   // custom option allowing us to select all users in the dropdown
   const allOption = {
     name: t('Select All'),
     value: '*',
   };
+
+  // resets the display in the Select component below when the selected view is changed
+  useEffect(() => {
+    setSelectedUsers([]);
+    setUsersToFilter(allUsers);
+  }, [view, setUsersToFilter, allUsers]);
 
   const handleChange = (selectedUser) => {
     setSelectedUsers(selectedUser);
@@ -96,6 +72,12 @@ const UsersSelect = () => {
       />
     </div>
   );
+};
+
+UsersSelect.propTypes = {
+  view: PropTypes.string.isRequired,
+  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setUsersToFilter: PropTypes.func.isRequired,
 };
 
 export default UsersSelect;
