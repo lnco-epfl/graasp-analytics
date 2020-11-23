@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/graasp/graasp-research/compare/v0.1.7...v0.1.8) (2020-11-23)
+
+### Features
+
+- add authoring view ([a84d562](https://github.com/graasp/graasp-research/commit/a84d562d614543399af75767f3e57fbd0fbe1071)), closes [#61](https://github.com/graasp/graasp-research/issues/61)
+- filter LearningAnalytics user by id instead of name ([d89892c](https://github.com/graasp/graasp-research/commit/d89892ca454a7e1fc8a5bc659a34c06faef800bc))
+- remove 'user' Learning Analytics from users list ([e71398e](https://github.com/graasp/graasp-research/commit/e71398e9698b901ba32802f856f508f72ba288c2)), closes [#58](https://github.com/graasp/graasp-research/issues/58)
+
+### Bug Fixes
+
+- update dependency to fix linting error ([274bf02](https://github.com/graasp/graasp-research/commit/274bf0266eb91091ca2c5dc65def41b102d36e80))
+
 ### [0.1.7](https://github.com/graasp/graasp-research/compare/v0.1.6...v0.1.7) (2020-10-07)
 
 ### Features
