@@ -10,7 +10,7 @@ const {
   AFTERNOON,
   EVENING,
   NIGHT,
-  LIVE_VIEW_STRING,
+  PERFORM_VIEW_STRING,
   COMPOSE_VIEW_STRING,
 } = require('../config/constants');
 
@@ -47,7 +47,7 @@ export const formatActionsByDay = (actionsByDayObject) => {
 };
 
 export const mapActionsToGeoJsonFeatureObjects = (actions, view) => {
-  if (view === LIVE_VIEW_STRING) {
+  if (view === PERFORM_VIEW_STRING) {
     return actions
       .filter((action) => action.geolocation)
       .map((action) => ({
@@ -77,7 +77,7 @@ export const mapActionsToGeoJsonFeatureObjects = (actions, view) => {
 const getActionHourOfDay = (action, view) => {
   const dateKey = view === COMPOSE_VIEW_STRING ? 'published' : 'createdAt';
   // if view === 'compose', expects action to be an object with a published key
-  // if view === 'live', expects action to be an object with a createdAt key
+  // if view === 'perform', expects action to be an object with a createdAt key
   // published/createdAt should have the format "2020-12-31T23:59:59.999Z"
   return action[dateKey].slice(11, 13);
 };

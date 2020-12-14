@@ -4,7 +4,7 @@ import ViewDataProvider from '../../contexts/ViewDataProvider';
 import UserDataProvider from '../../contexts/UserDataProvider';
 import TaskDataProvider from '../../contexts/TaskDataProvider';
 import ComposeDataProvider from '../../contexts/ComposeDataProvider';
-import LiveDataProvider from '../../contexts/LiveDataProvider';
+import PerformDataProvider from '../../contexts/PerformDataProvider';
 
 const ContextsWrapper = ({ children }) => {
   return (
@@ -12,7 +12,7 @@ const ContextsWrapper = ({ children }) => {
       <UserDataProvider>
         <TaskDataProvider>
           <ComposeDataProvider>
-            <LiveDataProvider>{children}</LiveDataProvider>
+            <PerformDataProvider>{children}</PerformDataProvider>
           </ComposeDataProvider>
         </TaskDataProvider>
       </UserDataProvider>

@@ -8,7 +8,7 @@ import LightTooltip from '../../common/LightTooltip';
 import { ViewDataContext } from '../../../contexts/ViewDataProvider';
 import {
   COMPOSE_VIEW_STRING,
-  LIVE_VIEW_STRING,
+  PERFORM_VIEW_STRING,
 } from '../../../config/constants';
 import customStyles from '../../../styles/react-select-styles';
 
@@ -45,7 +45,7 @@ const ViewSelect = () => {
               "The 'compose' view displays analytics from the default Graasp space creation interface.",
             )
           : t(
-              "The 'live' view displays analytics from the standalone Graasp interface typically used by students to access a space.",
+              "The 'perform' view displays analytics from the standalone Graasp interface typically used by students to access a space.",
             )
       }
       placement="left"
@@ -61,7 +61,10 @@ const ViewSelect = () => {
               name: _.capitalize(COMPOSE_VIEW_STRING),
               value: COMPOSE_VIEW_STRING,
             },
-            { name: _.capitalize(LIVE_VIEW_STRING), value: LIVE_VIEW_STRING },
+            {
+              name: _.capitalize(PERFORM_VIEW_STRING),
+              value: PERFORM_VIEW_STRING,
+            },
           ]}
           closeMenuOnSelect
           hideSelectedOptions={false}
