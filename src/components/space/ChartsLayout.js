@@ -9,7 +9,7 @@ import Charts from './charts-layout/ChartsArea';
 import UsersSelect from './functionality/UsersSelect';
 import Loader from '../common/Loader';
 import { ComposeDataContext } from '../../contexts/ComposeDataProvider';
-import { LiveDataContext } from '../../contexts/LiveDataProvider';
+import { PerformDataContext } from '../../contexts/PerformDataProvider';
 import { COMPOSE_VIEW_STRING } from '../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,14 +42,14 @@ const ChartsLayout = ({ view }) => {
     composeFetchingError,
   } = useContext(ComposeDataContext);
   const {
-    isLoadingLiveData,
-    liveActions,
-    allLiveUsers,
-    liveMetadata,
-    liveUsersToFilter,
-    setLiveUsersToFilter,
-    liveFetchingError,
-  } = useContext(LiveDataContext);
+    isLoadingPerformData,
+    performActions,
+    allPerformUsers,
+    performMetadata,
+    performUsersToFilter,
+    setPerformUsersToFilter,
+    performFetchingError,
+  } = useContext(PerformDataContext);
 
   let isLoading;
   let actions;
@@ -68,13 +68,13 @@ const ChartsLayout = ({ view }) => {
     setUsersToFilter = setComposeUsersToFilter;
     error = composeFetchingError;
   } else {
-    isLoading = isLoadingLiveData;
-    actions = liveActions;
-    allUsers = allLiveUsers;
-    metadata = liveMetadata;
-    usersToFilter = liveUsersToFilter;
-    setUsersToFilter = setLiveUsersToFilter;
-    error = liveFetchingError;
+    isLoading = isLoadingPerformData;
+    actions = performActions;
+    allUsers = allPerformUsers;
+    metadata = performMetadata;
+    usersToFilter = performUsersToFilter;
+    setUsersToFilter = setPerformUsersToFilter;
+    error = performFetchingError;
   }
 
   if (isLoading) {
