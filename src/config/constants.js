@@ -57,3 +57,7 @@ export const NIGHT = 'Night';
 // strings for supported 'views'
 export const COMPOSE_VIEW_STRING = 'compose';
 export const PERFORM_VIEW_STRING = 'perform';
+
+// constants for most viewed items chart
+export const ACCESSED_STRING = 'accessed';
+export const TOP_NUMBER_OF_ITEMS_TO_DISPLAY = 10;

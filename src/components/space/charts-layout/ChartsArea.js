@@ -5,10 +5,22 @@ import ActionsByDayChart from '../charts/ActionsByDayChart';
 import ActionsMap from '../charts/ActionsMap';
 import ActionsByTimeOfDayChart from '../charts/ActionsByTimeOfDayChart';
 import ActionsByVerbChart from '../charts/ActionsByVerbChart';
+import { COMPOSE_VIEW_STRING } from '../../../config/constants';
+import ItemsByAccessedCount from '../charts/ItemsByAccessedCount';
 
 const ChartsArea = ({ actions, view, allUsers, usersToFilter }) => {
   return (
     <Grid container>
+      {view === COMPOSE_VIEW_STRING && (
+        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+          <ItemsByAccessedCount
+            actions={actions}
+            view={view}
+            allUsers={allUsers}
+            usersToFilter={usersToFilter}
+          />
+        </Grid>
+      )}
       <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
         <ActionsByDayChart
           actions={actions}
