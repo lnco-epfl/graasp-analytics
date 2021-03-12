@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import ChartsHeader from './charts-layout/ChartsHeader';
 import ChartsAlerts from './charts-layout/ChartsAlerts';
-import Charts from './charts-layout/ChartsArea';
+import ChartsArea from './charts-layout/ChartsArea';
 import UsersSelect from './functionality/UsersSelect';
 import Loader from '../common/Loader';
 import { ComposeDataContext } from '../../contexts/ComposeDataProvider';
@@ -98,7 +98,7 @@ const ChartsLayout = ({ view }) => {
             allUsers={allUsers}
             setUsersToFilter={setUsersToFilter}
           />
-          <Charts
+          <ChartsArea
             actions={actions}
             view={view}
             allUsers={allUsers}

@@ -12,6 +12,8 @@ const {
   NIGHT,
   PERFORM_VIEW_STRING,
   COMPOSE_VIEW_STRING,
+  ACCESSED_STRING,
+  TOP_NUMBER_OF_ITEMS_TO_DISPLAY,
 } = require('../config/constants');
 
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
@@ -281,5 +283,45 @@ export const formatConsolidatedUsers = (consolidatedUsersArray) => {
 export const addValueKeyToUsers = (consolidatedUsersArray) => {
   return consolidatedUsersArray.map((user) => {
     return { ...user, value: user.name };
+  });
+};
+
+// Takes array of action objects
+// Keeps only those with verb 'accessed'
+// Returns an object with {key: value} pairs of {displayName: count}
+export const getItemsByAccessedCount = (actions) => {
+  const filteredActions = actions.filter(
+    (action) => action.verb === ACCESSED_STRING,
+  );
+  const itemsCount = {};
+  filteredActions.forEach((action) => {
+    const { displayName } = action.target;
+    if (!itemsCount[displayName]) {
+      itemsCount[displayName] = 1;
+    } else {
+      itemsCount[displayName] += 1;
+    }
+  });
+  return itemsCount;
+};
+
+// Takes object with {key: value} pairs of {displayName: count} and returns a sorted array in Recharts.js format
+export const formatItemsByAccessedCount = (itemsCount) => {
+  const itemsCountArray = Object.entries(itemsCount);
+  const sortedItemsCountArray = itemsCountArray.sort(
+    (itemA, itemB) => itemB[1] - itemA[1],
+  );
+  // keep only top ten entries
+  // reverse so that in the chart the most frequent item appears on the right
+  const slicedItemsCountArray = sortedItemsCountArray
+    .slice(0, TOP_NUMBER_OF_ITEMS_TO_DISPLAY)
+    .reverse();
+
+  // convert array to recharts format, i.e. [{displayName: 'A', count: N},...]
+  return slicedItemsCountArray.map((entry) => {
+    return {
+      displayName: entry[0],
+      count: entry[1],
+    };
   });
 };
