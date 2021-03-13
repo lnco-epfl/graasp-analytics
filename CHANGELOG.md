@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/graasp/graasp-research/compare/v0.1.9...v0.1.10) (2021-03-13)
+
+### Features
+
+- add chart showing most viewed items in compose view ([3cc2cca](https://github.com/graasp/graasp-research/commit/3cc2ccac687b580621fcc0aa77cd21f749153459)), closes [#68](https://github.com/graasp/graasp-research/issues/68)
+
 ### [0.1.9](https://github.com/graasp/graasp-research/compare/v0.1.8...v0.1.9) (2020-12-14)
 
 ### [0.1.8](https://github.com/graasp/graasp-research/compare/v0.1.7...v0.1.8) (2020-11-23)
