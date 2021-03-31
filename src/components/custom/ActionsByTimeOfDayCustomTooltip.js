@@ -56,7 +56,7 @@ const ActionsByTimeOfDayCustomTooltip = ({ active, payload, label }) => {
       <div className={classes.customTooltipDiv}>
         <p>{`${label} (${generateAddedTooltipText(label)})`}</p>
         <p className={classes.customTooltipCount}>
-          {`${t('Count')} : ${payload[0].value}`}
+          {`${t('Count:')} ${payload[0].value}`}
         </p>
       </div>
     );

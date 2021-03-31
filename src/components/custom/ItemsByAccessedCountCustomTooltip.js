@@ -30,9 +30,9 @@ const ItemsByAccessedCountCustomTooltip = ({ active, payload, label }) => {
     return (
       <div className={classes.customTooltipDiv}>
         <p className={classes.heading}>{`${label} (${label})`}</p>
-        <p>{`${t('Category')}: ${payload[0].payload.category}`}</p>
+        <p>{`${t('Category:')} ${payload[0].payload.category}`}</p>
         <p className={classes.customTooltipCount}>
-          {`${t('Count')}: ${payload[0].payload.count}`}
+          {`${t('Count:')} ${payload[0].payload.count}`}
         </p>
       </div>
     );
