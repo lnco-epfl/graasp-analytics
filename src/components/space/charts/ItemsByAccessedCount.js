@@ -11,6 +11,7 @@ import {
   Tooltip,
   Bar,
   ResponsiveContainer,
+  Label,
 } from 'recharts';
 import EmptyChart from './EmptyChart';
 import {
@@ -97,7 +98,11 @@ const ItemsByAccessedCount = ({
           margin={{ top: 30, bottom: 20, left: 20, right: 20 }}
         >
           <CartesianGrid strokeDasharray="2" />
-          <XAxis dataKey="displayName" tick={{ fontSize: 12 }} />
+          <XAxis
+            dataKey="displayName"
+            tick={false}
+            label={<Label value={t('Item')} fill="grey" />}
+          />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip content={<ItemsByAccessedCountCustomTooltip />} />
           <Bar
