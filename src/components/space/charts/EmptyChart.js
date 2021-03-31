@@ -13,9 +13,14 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     height: `${CONTAINER_HEIGHT}px`,
   },
+  selectContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '1em',
+  },
 }));
 
-const EmptyChart = ({ usersToFilter, chartTitle }) => {
+const EmptyChart = ({ usersToFilter, chartTitle, selectFilter }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -31,6 +36,9 @@ const EmptyChart = ({ usersToFilter, chartTitle }) => {
       <Typography variant="h6" className={classes.typography}>
         {chartTitle}
       </Typography>
+      {selectFilter && (
+        <div className={classes.selectContainer}>{selectFilter}</div>
+      )}
       <div className={classes.emptyChartAlert}>
         <Typography>{message}</Typography>
       </div>
@@ -48,6 +56,11 @@ EmptyChart.propTypes = {
     }),
   ).isRequired,
   chartTitle: PropTypes.string.isRequired,
+  selectFilter: PropTypes.element,
+};
+
+EmptyChart.defaultProps = {
+  selectFilter: null,
 };
 
 export default EmptyChart;

@@ -78,7 +78,11 @@ const ActionsByDayChart = ({ actions, view, allUsers, usersToFilter }) => {
           <XAxis dataKey="date" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip />
-          <Bar dataKey="count" name="Count" fill={theme.palette.primary.main} />
+          <Bar
+            dataKey="count"
+            name={t('Count')}
+            fill={theme.palette.primary.main}
+          />
         </BarChart>
       </ResponsiveContainer>
     </>

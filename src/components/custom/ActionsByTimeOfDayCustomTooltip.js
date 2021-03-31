@@ -4,6 +4,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import {
   LATE_NIGHT,
   EARLY_MORNING,
@@ -27,8 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomTooltip = ({ active, payload, label }) => {
+const ActionsByTimeOfDayCustomTooltip = ({ active, payload, label }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const generateAddedTooltipText = (input) => {
     switch (input) {
@@ -54,7 +56,7 @@ const CustomTooltip = ({ active, payload, label }) => {
       <div className={classes.customTooltipDiv}>
         <p>{`${label} (${generateAddedTooltipText(label)})`}</p>
         <p className={classes.customTooltipCount}>
-          {`Count : ${payload[0].value}`}
+          {`${t('Count:')} ${payload[0].value}`}
         </p>
       </div>
     );
@@ -63,4 +65,4 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-export default CustomTooltip;
+export default ActionsByTimeOfDayCustomTooltip;

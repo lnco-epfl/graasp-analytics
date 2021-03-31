@@ -13,7 +13,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import EmptyChart from './EmptyChart';
-import CustomTooltip from '../../custom/CustomTooltip';
+import ActionsByTimeOfDayCustomTooltip from '../../custom/ActionsByTimeOfDayCustomTooltip';
 import {
   getActionsByTimeOfDay,
   formatActionsByTimeOfDay,
@@ -86,8 +86,8 @@ const ActionsByTimeOfDayChart = ({
           <CartesianGrid strokeDasharray="2" />
           <XAxis dataKey="timeOfDay" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
-          <Tooltip content={<CustomTooltip />} />
-          <Bar dataKey="count" name="Count" fill="#8884d8" />
+          <Tooltip content={<ActionsByTimeOfDayCustomTooltip />} />
+          <Bar dataKey="count" name={t('Count')} fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
     </>
