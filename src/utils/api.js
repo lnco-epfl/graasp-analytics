@@ -286,42 +286,74 @@ export const addValueKeyToUsers = (consolidatedUsersArray) => {
   });
 };
 
-// Takes array of action objects
-// Keeps only those with verb 'accessed'
-// Returns an object with {key: value} pairs of {displayName: count}
-export const getItemsByAccessedCount = (actions) => {
-  const filteredActions = actions.filter(
-    (action) => action.verb === ACCESSED_STRING,
-  );
-  const itemsCount = {};
+// takes array of action objects and array of itemTypes (e.g. ['Space', 'Resource'])
+// keeps only actions with verb 'accessed'
+// returns an array of objects {displayName, count, category} (corresponding to format required by Recharts)
+export const getItemsByAccessedCount = (actions, itemTypes) => {
+  let filteredActions;
+  // when app is initially loaded, selected itemTypes (taken from the Select dropdown in the Most Viewed Items chart) is empty
+  // in this case, we want to show all actions (with the verb 'accessed')
+  if (!itemTypes || itemTypes.length === 0) {
+    filteredActions = actions.filter(
+      (action) => action.verb === ACCESSED_STRING,
+    );
+  }
+  // otherwise, filter actions by selected item types
+  else {
+    filteredActions = actions.filter(
+      (action) =>
+        action.verb === ACCESSED_STRING &&
+        itemTypes.includes(action.target.objectType),
+    );
+  }
+  // determine the number of actions for each item type, keeping note of the item type (objectType/category)
+  let itemsCount = [];
   filteredActions.forEach((action) => {
-    const { displayName } = action.target;
-    if (!itemsCount[displayName]) {
-      itemsCount[displayName] = 1;
+    const { displayName, objectType } = action.target;
+    const displayNameIndex = itemsCount.findIndex(
+      (item) => item.displayName === displayName,
+    );
+    if (displayNameIndex === -1) {
+      itemsCount.push({ displayName, count: 1, category: objectType });
     } else {
-      itemsCount[displayName] += 1;
+      itemsCount = [
+        ...itemsCount.slice(0, displayNameIndex),
+        {
+          ...itemsCount[displayNameIndex],
+          count: itemsCount[displayNameIndex].count + 1,
+        },
+        ...itemsCount.slice(displayNameIndex + 1),
+      ];
     }
   });
   return itemsCount;
 };
 
-// Takes object with {key: value} pairs of {displayName: count} and returns a sorted array in Recharts.js format
+// Takes array of objects {displayName, count, category} and returns a sorted array with only top items
 export const formatItemsByAccessedCount = (itemsCount) => {
-  const itemsCountArray = Object.entries(itemsCount);
-  const sortedItemsCountArray = itemsCountArray.sort(
-    (itemA, itemB) => itemB[1] - itemA[1],
+  const sortedItemsCountArray = itemsCount.sort(
+    (itemA, itemB) => itemB.count - itemA.count,
   );
   // keep only top ten entries
   // reverse so that in the chart the most frequent item appears on the right
   const slicedItemsCountArray = sortedItemsCountArray
     .slice(0, TOP_NUMBER_OF_ITEMS_TO_DISPLAY)
     .reverse();
+  return slicedItemsCountArray;
+};
 
-  // convert array to recharts format, i.e. [{displayName: 'A', count: N},...]
-  return slicedItemsCountArray.map((entry) => {
-    return {
-      displayName: entry[0],
-      count: entry[1],
-    };
+export const extractItemTypes = (actions) => {
+  const filteredActions = actions.filter(
+    (action) => action.verb === ACCESSED_STRING,
+  );
+  const items = [];
+  filteredActions.forEach((action) => {
+    const { objectType } = action.target;
+    if (items.indexOf(objectType) === -1) {
+      items.push(objectType);
+    }
   });
+  const itemsReactSelect = [];
+  items.forEach((item) => itemsReactSelect.push({ name: item, value: item }));
+  return itemsReactSelect;
 };
