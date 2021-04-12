@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/graasp/graasp-research/compare/v0.1.10...v0.1.11) (2021-04-12)
+
+### Features
+
+- add functionality to filter by item type in most viewed items chart ([f673e36](https://github.com/graasp/graasp-research/commit/f673e361024e6674a35059504544a592967bd7d2)), closes [#72](https://github.com/graasp/graasp-research/issues/72) [#71](https://github.com/graasp/graasp-research/issues/71)
+
+### Bug Fixes
+
+- remove x-axis labels from Most Viewed Items chart ([17f758a](https://github.com/graasp/graasp-research/commit/17f758a1dc9319097d1e9bf2d3cf18f0e7cc0d82))
+
 ### [0.1.10](https://github.com/graasp/graasp-research/compare/v0.1.9...v0.1.10) (2021-03-13)
 
 ### Features
