@@ -24,7 +24,7 @@
     "react-ga": "2.7.0",
     "react-i18next": "11.4.0",
     "react-router-dom": "5.1.2",
-    "react-scripts": "3.4.1",
+    "react-scripts": "4.0.3",
     "react-select": "3.1.0",
     "recharts": "1.8.5",
     "supercluster": "7.0.0",
@@ -60,19 +60,27 @@
     ]
   },
   "devDependencies": {
+    "@babel/eslint-parser": "7.16.0",
+    "@babel/eslint-plugin": "7.14.5",
     "@commitlint/cli": "9.1.1",
     "@commitlint/config-conventional": "9.1.1",
+    "@typescript-eslint/eslint-plugin": "5.2.0",
     "cross-env": "7.0.2",
     "env-cmd": "10.1.0",
+    "eslint": "^7.31.0",
     "eslint-config-airbnb": "18.1.0",
     "eslint-config-prettier": "6.11.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "8.0.3",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.19.0",
+    "eslint-plugin-react-hooks": "4.2.0",
     "husky": "4.2.5",
     "prettier": "2.0.5",
     "pretty-quick": "2.0.1",
     "standard-version": "8.0.2",
     "typescript": "3.8.3"
-  }
+  },
+  "packageManager": "yarn@3.2.0-rc.2"
 }
