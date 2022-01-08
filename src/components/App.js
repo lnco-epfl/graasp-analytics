@@ -21,14 +21,14 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/embedded/:spaceId">
+        <Route path="/embedded/:itemId">
           <main className={classes.embedded}>
             <ContextsWrapper>
               <Space />
             </ContextsWrapper>
           </main>
         </Route>
-        <Route path="/spaces/:spaceId">
+        <Route path="/items/:itemId">
           <Header />
           <main className={classes.main}>
             <ContextsWrapper>

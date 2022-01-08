@@ -7,8 +7,9 @@ import _ from 'lodash';
 import LightTooltip from '../../common/LightTooltip';
 import { ViewDataContext } from '../../../contexts/ViewDataProvider';
 import {
-  COMPOSE_VIEW_STRING,
-  PERFORM_VIEW_STRING,
+  BUILDER_VIEW_STRING,
+  PLAYER_VIEW_STRING,
+  EXPLORER_VIEW_STRING,
 } from '../../../config/constants';
 import customStyles from '../../../styles/react-select-styles';
 
@@ -37,19 +38,19 @@ const ViewSelect = () => {
     setView(userSelection.value);
   };
 
+  let viewMessage = '';
+  if (view === BUILDER_VIEW_STRING) {
+    viewMessage =
+      "The 'builder' view displays analytics from the default Graasp item creation interface.";
+  } else if (view === PLAYER_VIEW_STRING) {
+    viewMessage =
+      "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.";
+  } else if (view === EXPLORER_VIEW_STRING) {
+    viewMessage =
+      "The 'explore' view displays analytics from the standalone Graasp interface typically used by visualize resources.";
+  }
   return (
-    <LightTooltip
-      title={
-        view === COMPOSE_VIEW_STRING
-          ? t(
-              "The 'compose' view displays analytics from the default Graasp space creation interface.",
-            )
-          : t(
-              "The 'perform' view displays analytics from the standalone Graasp interface typically used by students to access a space.",
-            )
-      }
-      placement="left"
-    >
+    <LightTooltip title={t(viewMessage)} placement="left">
       <div className={classes.root}>
         <Typography className={classes.typography}>
           {t('Select View:')}
@@ -58,12 +59,16 @@ const ViewSelect = () => {
           styles={customStyles}
           options={[
             {
-              name: _.capitalize(COMPOSE_VIEW_STRING),
-              value: COMPOSE_VIEW_STRING,
+              name: _.capitalize(BUILDER_VIEW_STRING),
+              value: BUILDER_VIEW_STRING,
             },
             {
-              name: _.capitalize(PERFORM_VIEW_STRING),
-              value: PERFORM_VIEW_STRING,
+              name: _.capitalize(PLAYER_VIEW_STRING),
+              value: PLAYER_VIEW_STRING,
+            },
+            {
+              name: _.capitalize(EXPLORER_VIEW_STRING),
+              value: EXPLORER_VIEW_STRING,
             },
           ]}
           closeMenuOnSelect

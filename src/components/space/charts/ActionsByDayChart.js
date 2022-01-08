@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
 }));
 
-const ActionsByDayChart = ({ actions, view, allUsers, usersToFilter }) => {
+const ActionsByDayChart = ({ actions, allUsers, usersToFilter }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
@@ -43,12 +43,9 @@ const ActionsByDayChart = ({ actions, view, allUsers, usersToFilter }) => {
     usersToFilter.length === 0 ||
     usersToFilter.length === allUsers.length
   ) {
-    actionsByDay = getActionsByDay(actions, view);
+    actionsByDay = getActionsByDay(actions);
   } else {
-    actionsByDay = getActionsByDay(
-      filterActionsByUser(actions, usersToFilter, view),
-      view,
-    );
+    actionsByDay = getActionsByDay(filterActionsByUser(actions, usersToFilter));
   }
 
   const yAxisMax = findYAxisMax(actionsByDay);
@@ -91,7 +88,6 @@ const ActionsByDayChart = ({ actions, view, allUsers, usersToFilter }) => {
 
 ActionsByDayChart.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  view: PropTypes.string.isRequired,
   allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

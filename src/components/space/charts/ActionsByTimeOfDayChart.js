@@ -26,12 +26,7 @@ const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
 }));
 
-const ActionsByTimeOfDayChart = ({
-  actions,
-  view,
-  allUsers,
-  usersToFilter,
-}) => {
+const ActionsByTimeOfDayChart = ({ actions, allUsers, usersToFilter }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -48,11 +43,10 @@ const ActionsByTimeOfDayChart = ({
     usersToFilter.length === 0 ||
     usersToFilter.length === allUsers.length
   ) {
-    actionsByTimeOfDay = getActionsByTimeOfDay(actions, view);
+    actionsByTimeOfDay = getActionsByTimeOfDay(actions);
   } else {
     actionsByTimeOfDay = getActionsByTimeOfDay(
-      filterActionsByUser(actions, usersToFilter, view),
-      view,
+      filterActionsByUser(actions, usersToFilter),
     );
   }
 
@@ -96,7 +90,6 @@ const ActionsByTimeOfDayChart = ({
 
 ActionsByTimeOfDayChart.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  view: PropTypes.string.isRequired,
   allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
