@@ -2,7 +2,7 @@ const qs = require('qs');
 
 // app routes and parameters
 export const RESEARCH_API_ROUTE = 'research';
-export const ITEM_API_ROUTE = 'item';
+export const ITEM_API_ROUTE = 'items';
 export const USERS_API_ROUTE = 'members';
 export const ANALYTICS_PARAMETER = 'analytics';
 export const TASKS_PARAMETER = 'tasks';

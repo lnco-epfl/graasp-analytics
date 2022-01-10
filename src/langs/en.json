@@ -9,6 +9,6 @@
     "Request the full dataset for this view of this space": "Request the full dataset for the '{{view}}' view of this space",
     "The 'builder' view displays analytics from the default Graasp item creation interface.": "The 'builder' view displays analytics from the default Graasp item creation interface.",
     "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.": "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.",
-    "The 'explore' view displays analytics from the standalone Graasp interface typically used by visualize resources.": "The 'explore' view displays analytics from the standalone Graasp interface typically used by visualize resources."
+    "The 'explorer' view displays analytics from the standalone Graasp interface typically used by visualize resources.": "The 'explore' view displays analytics from the standalone Graasp interface typically used by visualize resources."
   }
 }

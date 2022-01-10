@@ -72,30 +72,34 @@ const ChartsLayout = ({ view }) => {
   let setUsersToFilter;
   let error;
 
-  if (view === BUILDER_VIEW_STRING) {
-    isLoading = isLoadingBuilderData;
-    actions = builderActions;
-    allUsers = allBuilderUsers;
-    metadata = builderMetadata;
-    usersToFilter = builderUsersToFilter;
-    setUsersToFilter = setBuilderUsersToFilter;
-    error = builderFetchingError;
-  } else if (view === PLAYER_VIEW_STRING) {
-    isLoading = isLoadingPlayerData;
-    actions = playerActions;
-    allUsers = allPlayerUsers;
-    metadata = playerMetadata;
-    usersToFilter = playerUsersToFilter;
-    setUsersToFilter = setPlayerUsersToFilter;
-    error = playerFetchingError;
-  } else {
-    isLoading = isLoadingExplorerData;
-    actions = explorerActions;
-    allUsers = allExplorerUsers;
-    metadata = explorerMetadata;
-    usersToFilter = explorerUsersToFilter;
-    setUsersToFilter = setExplorerUsersToFilter;
-    error = explorerFetchingError;
+  switch (view) {
+    case BUILDER_VIEW_STRING:
+      isLoading = isLoadingBuilderData;
+      actions = builderActions;
+      allUsers = allBuilderUsers;
+      metadata = builderMetadata;
+      usersToFilter = builderUsersToFilter;
+      setUsersToFilter = setBuilderUsersToFilter;
+      error = builderFetchingError;
+      break;
+    case PLAYER_VIEW_STRING:
+      isLoading = isLoadingPlayerData;
+      actions = playerActions;
+      allUsers = allPlayerUsers;
+      metadata = playerMetadata;
+      usersToFilter = playerUsersToFilter;
+      setUsersToFilter = setPlayerUsersToFilter;
+      error = playerFetchingError;
+      break;
+    default:
+      isLoading = isLoadingExplorerData;
+      actions = explorerActions;
+      allUsers = allExplorerUsers;
+      metadata = explorerMetadata;
+      usersToFilter = explorerUsersToFilter;
+      setUsersToFilter = setExplorerUsersToFilter;
+      error = explorerFetchingError;
+      break;
   }
 
   if (isLoading) {

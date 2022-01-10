@@ -39,15 +39,19 @@ const ViewSelect = () => {
   };
 
   let viewMessage = '';
-  if (view === BUILDER_VIEW_STRING) {
-    viewMessage =
-      "The 'builder' view displays analytics from the default Graasp item creation interface.";
-  } else if (view === PLAYER_VIEW_STRING) {
-    viewMessage =
-      "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.";
-  } else if (view === EXPLORER_VIEW_STRING) {
-    viewMessage =
-      "The 'explore' view displays analytics from the standalone Graasp interface typically used by visualize resources.";
+  switch (view) {
+    case BUILDER_VIEW_STRING:
+      viewMessage =
+        "The 'builder' view displays analytics from the default Graasp item creation interface.";
+      break;
+    case PLAYER_VIEW_STRING:
+      viewMessage =
+        "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.";
+      break;
+    default:
+      viewMessage =
+        "The 'explore' view displays analytics from the standalone Graasp interface typically used by visualize resources.";
+      break;
   }
   return (
     <LightTooltip title={t(viewMessage)} placement="left">

@@ -49,6 +49,7 @@ const ChartsAlerts = ({ metadata, view }) => {
   const displaySampleInfo = () => {
     if (numActionsRetrieved !== 0) {
       return (
+        // TODO: implement maxTreeLengthExceeded to show message if depth is capped
         <Alert
           severity="info"
           className={classes.alert}
