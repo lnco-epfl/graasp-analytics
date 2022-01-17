@@ -57,7 +57,7 @@ const ViewSelect = () => {
     <LightTooltip title={t(viewMessage)} placement="left">
       <div className={classes.root}>
         <Typography className={classes.typography}>
-          {t('Select View:')}
+          {t('Select View')}
         </Typography>
         <Select
           styles={customStyles}

@@ -4,7 +4,7 @@ const qs = require('qs');
 export const RESEARCH_API_ROUTE = 'research';
 export const ITEM_API_ROUTE = 'items';
 export const USERS_API_ROUTE = 'members';
-export const ANALYTICS_PARAMETER = 'analytics';
+export const ANALYTICS_PARAMETER = '';
 export const TASKS_PARAMETER = 'tasks';
 export const CURRENT_USER_PARAMETER = 'current';
 
@@ -39,7 +39,7 @@ export const buildAnalyticsEndpoint = (
     { requestedSampleSize, view: requestedView },
     { addQueryPrefix: true },
   );
-  return `${url}/${apiRoute}/${itemId}/${parameter}${analyticsQueryString}`;
+  return `${url}/analytics/${apiRoute}/${itemId}${parameter}${analyticsQueryString}`;
 };
 
 export const buildTasksEndpoint = (

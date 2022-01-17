@@ -112,7 +112,7 @@ const ChartsLayout = ({ view }) => {
       {error ? (
         <div className={classes.root}>
           <Alert severity="error" className={classes.alert}>
-            {t("There was an error retrieving this space's data.", { view })}
+            {t("There was an error retrieving this item's data.", { view })}
           </Alert>
         </div>
       ) : (

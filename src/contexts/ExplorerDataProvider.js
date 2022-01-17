@@ -8,7 +8,7 @@ import {
   buildApiOptions,
   DEFAULT_REQUEST_SAMPLE_SIZE,
 } from '../api/graasp';
-import { REACT_APP_BASE_URL } from '../config/env';
+import { REACT_APP_API_HOST } from '../config/env';
 import {
   removeLearningAnalyticsUser,
   consolidateUsers,
@@ -31,7 +31,7 @@ const ExplorerDataProvider = ({ children }) => {
   useEffect(() => {
     const fetchExplorerData = async () => {
       const requestUrl = buildAnalyticsEndpoint(
-        REACT_APP_BASE_URL,
+        REACT_APP_API_HOST,
         ITEM_API_ROUTE,
         ANALYTICS_PARAMETER,
         itemId,

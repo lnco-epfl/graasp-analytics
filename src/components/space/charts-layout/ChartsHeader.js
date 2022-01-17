@@ -4,7 +4,6 @@ import { useLocation, matchPath } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import ExportData from '../functionality/ExportData';
 import ViewSelect from '../functionality/ViewSelect';
 import { BuilderDataContext } from '../../../contexts/BuilderDataProvider';
 
@@ -47,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// eslint-disable-next-line no-unused-vars
 const ChartsHeader = ({ downloadButton }) => {
   const classes = useStyles();
   const { itemName } = useContext(BuilderDataContext);
@@ -60,7 +60,7 @@ const ChartsHeader = ({ downloadButton }) => {
   if (match) {
     return (
       <div className={classes.rootAlt}>
-        {downloadButton ? <ExportData /> : null}
+        {/* {downloadButton ? <ExportData /> : null} */}
         <ViewSelect />
       </div>
     );
@@ -73,7 +73,7 @@ const ChartsHeader = ({ downloadButton }) => {
           <Typography variant="h5" color="inherit" className={classes.itemName}>
             {itemName}
           </Typography>
-          {downloadButton ? <ExportData /> : null}
+          {/* {downloadButton ? <ExportData /> : null} */}
         </Grid>
         <Grid item xs={6} className={classes.rightCell}>
           <ViewSelect />
