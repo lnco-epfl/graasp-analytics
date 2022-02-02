@@ -1,3 +1,23 @@
 {
-  "translations": {}
+  "translations": {
+    "There was an error retrieving this item's data.": "Une erreur est survenue lors de l'affiche de cet élément pour la vue '{{view}}'.",
+    "This item does not have any actions yet.": "Cet élément n'a encore aucune action pour la vue '{{view}}'.",
+    "The charts below display a sample of actions from this item.": "Affichage de {{numActionsRetrieved}} actions pour la vue '{{view}}' pour un échantillon de {{requestedSampleSize}} actions.",
+    "By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this item.": "Par défaut, un échantillon de maximum {{requestedSampleSize}} actions est affichle dans les graphiques ci-dessous, afin de montrer une vue d'ensemble de l'élément.",
+    "Many users selected...": "{{firstSelection}}, {{secondSelection}}, et {{alsoSelectedCount}} autre{{plural}} sélectionnés",
+    "Download the full dataset for this view of this space": "Télécharger toutes les données pour la vue '{{view}}' de cet élément",
+    "Request the full dataset for this view of this space": "Faire une demande pour télécharger toutes les données pour la vue '{{view}}' de cet élément",
+    "The 'builder' view displays analytics from the default Graasp item creation interface.": "La vue 'builder' affiche les analytics de l'interface de création des éléments de Graasp.",
+    "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.": "La vue 'player' affiche les analytics de l'interface indépendente de Graasp typiquement utilisée par les étudiants pour accéder à un élément.",
+    "The 'explorer' view displays analytics from the standalone Graasp interface typically used by visualize resources.": "La vue 'explore' affiche les analytics de l'interface indépendent Graasp typiquement utilisée pour visualiser les ressources ouvertes.",
+    "Analytics": "Analytics",
+    "Select View": "Sélectionner une Vue:",
+    "Select All": "Tout Sélectionner",
+    "Filter by User": "Filtrer par Utilisateur:",
+    "No actions to show for these users": "Aucune action à afficher pour ces utilisateurs",
+    "Actions by Time of Day": "Actions par Moment de la Journée",
+    "Actions by Verb": "Actions par Verbe",
+    "Actions by Location": "Actions par Localisation",
+    "Actions by Day": "Actions par Jour"
+  }
 }

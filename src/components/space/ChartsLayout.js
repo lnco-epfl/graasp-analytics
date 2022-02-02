@@ -8,9 +8,13 @@ import ChartsAlerts from './charts-layout/ChartsAlerts';
 import ChartsArea from './charts-layout/ChartsArea';
 import UsersSelect from './functionality/UsersSelect';
 import Loader from '../common/Loader';
-import { ComposeDataContext } from '../../contexts/ComposeDataProvider';
-import { PerformDataContext } from '../../contexts/PerformDataProvider';
-import { COMPOSE_VIEW_STRING } from '../../config/constants';
+import { BuilderDataContext } from '../../contexts/BuilderDataProvider';
+import { PlayerDataContext } from '../../contexts/PlayerDataProvider';
+import { ExplorerDataContext } from '../../contexts/ExplorerDataProvider';
+import {
+  BUILDER_VIEW_STRING,
+  PLAYER_VIEW_STRING,
+} from '../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,23 +37,32 @@ const ChartsLayout = ({ view }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const {
-    isLoadingComposeData,
-    composeActions,
-    allComposeUsers,
-    composeMetadata,
-    composeUsersToFilter,
-    setComposeUsersToFilter,
-    composeFetchingError,
-  } = useContext(ComposeDataContext);
+    isLoadingBuilderData,
+    builderActions,
+    allBuilderUsers,
+    builderMetadata,
+    builderUsersToFilter,
+    setBuilderUsersToFilter,
+    builderFetchingError,
+  } = useContext(BuilderDataContext);
   const {
-    isLoadingPerformData,
-    performActions,
-    allPerformUsers,
-    performMetadata,
-    performUsersToFilter,
-    setPerformUsersToFilter,
-    performFetchingError,
-  } = useContext(PerformDataContext);
+    isLoadingPlayerData,
+    playerActions,
+    allPlayerUsers,
+    playerMetadata,
+    playerUsersToFilter,
+    setPlayerUsersToFilter,
+    playerFetchingError,
+  } = useContext(PlayerDataContext);
+  const {
+    isLoadingExplorerData,
+    explorerActions,
+    allExplorerUsers,
+    explorerMetadata,
+    explorerUsersToFilter,
+    setExplorerUsersToFilter,
+    explorerFetchingError,
+  } = useContext(ExplorerDataContext);
 
   let isLoading;
   let actions;
@@ -59,22 +72,34 @@ const ChartsLayout = ({ view }) => {
   let setUsersToFilter;
   let error;
 
-  if (view === COMPOSE_VIEW_STRING) {
-    isLoading = isLoadingComposeData;
-    actions = composeActions;
-    allUsers = allComposeUsers;
-    metadata = composeMetadata;
-    usersToFilter = composeUsersToFilter;
-    setUsersToFilter = setComposeUsersToFilter;
-    error = composeFetchingError;
-  } else {
-    isLoading = isLoadingPerformData;
-    actions = performActions;
-    allUsers = allPerformUsers;
-    metadata = performMetadata;
-    usersToFilter = performUsersToFilter;
-    setUsersToFilter = setPerformUsersToFilter;
-    error = performFetchingError;
+  switch (view) {
+    case BUILDER_VIEW_STRING:
+      isLoading = isLoadingBuilderData;
+      actions = builderActions;
+      allUsers = allBuilderUsers;
+      metadata = builderMetadata;
+      usersToFilter = builderUsersToFilter;
+      setUsersToFilter = setBuilderUsersToFilter;
+      error = builderFetchingError;
+      break;
+    case PLAYER_VIEW_STRING:
+      isLoading = isLoadingPlayerData;
+      actions = playerActions;
+      allUsers = allPlayerUsers;
+      metadata = playerMetadata;
+      usersToFilter = playerUsersToFilter;
+      setUsersToFilter = setPlayerUsersToFilter;
+      error = playerFetchingError;
+      break;
+    default:
+      isLoading = isLoadingExplorerData;
+      actions = explorerActions;
+      allUsers = allExplorerUsers;
+      metadata = explorerMetadata;
+      usersToFilter = explorerUsersToFilter;
+      setUsersToFilter = setExplorerUsersToFilter;
+      error = explorerFetchingError;
+      break;
   }
 
   if (isLoading) {
@@ -87,7 +112,7 @@ const ChartsLayout = ({ view }) => {
       {error ? (
         <div className={classes.root}>
           <Alert severity="error" className={classes.alert}>
-            {t("There was an error retrieving this space's data.", { view })}
+            {t("There was an error retrieving this item's data.", { view })}
           </Alert>
         </div>
       ) : (

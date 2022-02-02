@@ -35,7 +35,7 @@
     "start:local": "PORT=80 react-scripts start",
     "build": "react-scripts build",
     "build:dev": "env-cmd -f ./.env.dev yarn build",
-    "build:prod": "env-cmd -f ./.env.prod yarn build",
+    "dist": "env-cmd -f ./.env.prod yarn build",
     "test": "react-scripts test",
     "test:once": "cross-env CI=true env-cmd -f ./.env.test react-scripts test",
     "eject": "react-scripts eject",

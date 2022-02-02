@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
 }));
 
-const ActionsByVerbChart = ({ actions, view, allUsers, usersToFilter }) => {
+const ActionsByVerbChart = ({ actions, allUsers, usersToFilter }) => {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -29,7 +29,7 @@ const ActionsByVerbChart = ({ actions, view, allUsers, usersToFilter }) => {
     actionsByVerb = getActionsByVerb(actions);
   } else {
     actionsByVerb = getActionsByVerb(
-      filterActionsByUser(actions, usersToFilter, view),
+      filterActionsByUser(actions, usersToFilter),
     );
   }
   const formattedActionsByVerb = formatActionsByVerb(actionsByVerb);
@@ -54,13 +54,16 @@ const ActionsByVerbChart = ({ actions, view, allUsers, usersToFilter }) => {
           <Pie
             data={formattedActionsByVerb}
             dataKey="percentage"
-            nameKey="verb"
+            nameKey="actionType"
             fill="#82ca9d"
             unit="%"
             label={({ value }) => `${value}%`}
           >
             {formattedActionsByVerb.map((entry, index) => (
-              <Cell key={entry.verb} fill={COLORS[index % COLORS.length]} />
+              <Cell
+                key={entry.actionType}
+                fill={COLORS[index % COLORS.length]}
+              />
             ))}
           </Pie>
           <Tooltip formatter={(value) => `${value}%`} />
@@ -72,7 +75,6 @@ const ActionsByVerbChart = ({ actions, view, allUsers, usersToFilter }) => {
 
 ActionsByVerbChart.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  view: PropTypes.string.isRequired,
   allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

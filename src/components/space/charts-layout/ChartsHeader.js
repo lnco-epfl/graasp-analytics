@@ -4,12 +4,11 @@ import { useLocation, matchPath } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import ExportData from '../functionality/ExportData';
 import ViewSelect from '../functionality/ViewSelect';
-import { ComposeDataContext } from '../../../contexts/ComposeDataProvider';
+import { BuilderDataContext } from '../../../contexts/BuilderDataProvider';
 
 const useStyles = makeStyles((theme) => ({
-  spaceName: {
+  itemName: {
     fontWeight: theme.typography.fontWeightBold,
     marginRight: theme.spacing(2),
   },
@@ -47,9 +46,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// eslint-disable-next-line no-unused-vars
 const ChartsHeader = ({ downloadButton }) => {
   const classes = useStyles();
-  const { spaceName } = useContext(ComposeDataContext);
+  const { itemName } = useContext(BuilderDataContext);
   const { pathname } = useLocation();
 
   const match = matchPath(pathname, {
@@ -60,7 +60,7 @@ const ChartsHeader = ({ downloadButton }) => {
   if (match) {
     return (
       <div className={classes.rootAlt}>
-        {downloadButton ? <ExportData /> : null}
+        {/* {downloadButton ? <ExportData /> : null} */}
         <ViewSelect />
       </div>
     );
@@ -70,14 +70,10 @@ const ChartsHeader = ({ downloadButton }) => {
     <div className={classes.root}>
       <Grid container>
         <Grid item xs={6} className={classes.leftCell}>
-          <Typography
-            variant="h5"
-            color="inherit"
-            className={classes.spaceName}
-          >
-            {spaceName}
+          <Typography variant="h5" color="inherit" className={classes.itemName}>
+            {itemName}
           </Typography>
-          {downloadButton ? <ExportData /> : null}
+          {/* {downloadButton ? <ExportData /> : null} */}
         </Grid>
         <Grid item xs={6} className={classes.rightCell}>
           <ViewSelect />

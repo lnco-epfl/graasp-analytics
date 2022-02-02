@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Marker = ({ children }) => children;
 
-const ActionsMap = ({ actions, view, usersToFilter, allUsers }) => {
+const ActionsMap = ({ actions, usersToFilter, allUsers }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const mapRef = useRef();
@@ -65,11 +65,11 @@ const ActionsMap = ({ actions, view, usersToFilter, allUsers }) => {
   ) {
     actionsToChart = actions;
   } else {
-    actionsToChart = filterActionsByUser(actions, usersToFilter, view);
+    actionsToChart = filterActionsByUser(actions, usersToFilter);
   }
 
   // GeoJSON Feature objects
-  const points = mapActionsToGeoJsonFeatureObjects(actionsToChart, view);
+  const points = mapActionsToGeoJsonFeatureObjects(actionsToChart);
 
   const { clusters } = useSupercluster({
     points,
@@ -166,7 +166,6 @@ const ActionsMap = ({ actions, view, usersToFilter, allUsers }) => {
 
 ActionsMap.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  view: PropTypes.string.isRequired,
   allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
   usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

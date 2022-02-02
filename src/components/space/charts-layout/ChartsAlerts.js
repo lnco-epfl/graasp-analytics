@@ -31,47 +31,15 @@ const AlertsTooltip = withStyles({
 const ChartsAlerts = ({ metadata, view }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const {
-    maxTreeLength,
-    maxTreeLengthExceeded,
-    requestedSampleSize,
-    numActionsRetrieved,
-  } = metadata;
+  const { requestedSampleSize, numActionsRetrieved } = metadata;
 
   const displayWarningMessage = () => {
     if (numActionsRetrieved === 0) {
       return (
         <Alert severity="warning" className={classes.alert}>
-          {t('This space and its subspaces do not have any actions yet.', {
+          {t('This item does not have any actions yet.', {
             view,
           })}
-        </Alert>
-      );
-    }
-    if (maxTreeLengthExceeded) {
-      return (
-        <Alert
-          severity="warning"
-          className={classes.alert}
-          action={
-            // adding a tooltip to an Alert is tricky; this hack uses the Alert's built-in 'action' prop to do this
-            // doing so creates a conflict between eslint and prettier on using () around JSX; thus the disable below
-            // eslint-disable-next-line react/jsx-wrap-multilines
-            <AlertsTooltip
-              title={t(
-                'By default, the number of subspaces retrieved and sampled in the charts below is capped.',
-                { maxTreeLength },
-              )}
-              placement="left"
-            >
-              <Info fontSize="small" />
-            </AlertsTooltip>
-          }
-        >
-          {t(
-            'This space has more than the maximum subspaces allowed. The data below is sampled from the maximum number of retrieved subspaces.',
-            { maxTreeLength },
-          )}
         </Alert>
       );
     }
@@ -81,6 +49,7 @@ const ChartsAlerts = ({ metadata, view }) => {
   const displaySampleInfo = () => {
     if (numActionsRetrieved !== 0) {
       return (
+        // TODO: implement maxTreeLengthExceeded to show message if depth is capped
         <Alert
           severity="info"
           className={classes.alert}
@@ -90,7 +59,7 @@ const ChartsAlerts = ({ metadata, view }) => {
             // eslint-disable-next-line react/jsx-wrap-multilines
             <AlertsTooltip
               title={t(
-                'By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this space and its subspaces.',
+                'By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this item.',
                 { requestedSampleSize },
               )}
               placement="left"
@@ -99,14 +68,11 @@ const ChartsAlerts = ({ metadata, view }) => {
             </AlertsTooltip>
           }
         >
-          {t(
-            'The charts below display a sample of actions from this space and its nested subspaces.',
-            {
-              view,
-              numActionsRetrieved,
-              requestedSampleSize,
-            },
-          )}
+          {t('The charts below display a sample of actions from this item.', {
+            view,
+            numActionsRetrieved,
+            requestedSampleSize,
+          })}
         </Alert>
       );
     }
@@ -123,11 +89,8 @@ const ChartsAlerts = ({ metadata, view }) => {
 
 ChartsAlerts.propTypes = {
   metadata: PropTypes.shape({
-    numSpacesRetrieved: PropTypes.number.isRequired,
-    maxTreeLength: PropTypes.number.isRequired,
-    maxTreeLengthExceeded: PropTypes.bool.isRequired,
-    requestedSampleSize: PropTypes.number.isRequired,
     numActionsRetrieved: PropTypes.number.isRequired,
+    requestedSampleSize: PropTypes.number.isRequired,
   }).isRequired,
   view: PropTypes.string.isRequired,
 };

@@ -45,7 +45,7 @@ const UsersSelect = ({ view, allUsers, setUsersToFilter }) => {
   return (
     <div className={classes.root}>
       <Typography className={classes.typography}>
-        {t('Filter by User:')}
+        {t('Filter by User')}
       </Typography>
       <Select
         styles={customStyles}

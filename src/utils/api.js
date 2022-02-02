@@ -10,15 +10,13 @@ const {
   AFTERNOON,
   EVENING,
   NIGHT,
-  PERFORM_VIEW_STRING,
-  COMPOSE_VIEW_STRING,
   ACCESSED_STRING,
   TOP_NUMBER_OF_ITEMS_TO_DISPLAY,
 } = require('../config/constants');
 
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
-export const getActionsByDay = (actions, view) => {
-  const dateKey = view === COMPOSE_VIEW_STRING ? 'published' : 'createdAt';
+export const getActionsByDay = (actions) => {
+  const dateKey = 'createdAt';
   const actionsByDay = {};
   actions.forEach((action) => {
     const actionDate = new Date(action[dateKey].slice(0, 10));
@@ -48,44 +46,29 @@ export const formatActionsByDay = (actionsByDayObject) => {
   });
 };
 
-export const mapActionsToGeoJsonFeatureObjects = (actions, view) => {
-  if (view === PERFORM_VIEW_STRING) {
-    return actions
-      .filter((action) => action.geolocation)
-      .map((action) => ({
-        type: 'Feature',
-        properties: { cluster: false, actionId: action._id },
-        geometry: {
-          type: 'Point',
-          coordinates: [action.geolocation.ll[1], action.geolocation.ll[0]],
-        },
-      }));
-  }
+export const mapActionsToGeoJsonFeatureObjects = (actions) => {
   return actions
-    .filter((action) => action.context)
-    .filter((action) => action.context.location)
+    .filter((action) => action.geolocation)
     .map((action) => ({
       type: 'Feature',
-      properties: { cluster: false, actionId: action._id },
+      properties: { cluster: false, actionId: action.id },
       geometry: {
         type: 'Point',
-        coordinates: [action.context.location.lon, action.context.location.lat],
+        coordinates: [action.geolocation.ll[1], action.geolocation.ll[0]],
       },
     }));
 };
 
 // helper function used in getActionsByTimeOfDay below
 // todo: update this function to retrieve hour of day using JS Date objects/moment
-const getActionHourOfDay = (action, view) => {
-  const dateKey = view === COMPOSE_VIEW_STRING ? 'published' : 'createdAt';
-  // if view === 'compose', expects action to be an object with a published key
-  // if view === 'perform', expects action to be an object with a createdAt key
-  // published/createdAt should have the format "2020-12-31T23:59:59.999Z"
+const getActionHourOfDay = (action) => {
+  const dateKey = 'createdAt';
+  // createdAt should have the format "2020-12-31T23:59:59.999Z"
   return action[dateKey].slice(11, 13);
 };
 
 // Takes array of action objects and returns an object with {key: value} pairs of {hourOfDay: #-of-actions}
-export const getActionsByTimeOfDay = (actions, view) => {
+export const getActionsByTimeOfDay = (actions) => {
   const actionsByTimeOfDay = {
     [LATE_NIGHT]: 0,
     [EARLY_MORNING]: 0,
@@ -95,7 +78,7 @@ export const getActionsByTimeOfDay = (actions, view) => {
     [NIGHT]: 0,
   };
   actions.forEach((action) => {
-    const actionHourOfDay = getActionHourOfDay(action, view);
+    const actionHourOfDay = getActionHourOfDay(action);
     if (actionHourOfDay >= 0 && actionHourOfDay < 4) {
       actionsByTimeOfDay[LATE_NIGHT] += 1;
     } else if (actionHourOfDay >= 4 && actionHourOfDay < 8) {
@@ -133,12 +116,12 @@ export const getActionsByVerb = (actions) => {
   const totalActions = actions.length;
   const actionsByVerb = {};
   actions.forEach((action) => {
-    if (!actionsByVerb[action.verb]) {
-      // if verb is still not in the actionsByVerb object, add it and assign it to (1 / totalActions)
+    if (!actionsByVerb[action.actionType]) {
+      // if actionType is still not in the actionsByVerb object, add it and assign it to (1 / totalActions)
       // we use (1 / totalActions) because in the end we want this object to be {verb: PERCENTAGE-of-total-actions}
-      actionsByVerb[action.verb] = 1 / totalActions;
+      actionsByVerb[action.actionType] = 1 / totalActions;
     } else {
-      actionsByVerb[action.verb] += 1 / totalActions;
+      actionsByVerb[action.actionType] += 1 / totalActions;
     }
   });
   return actionsByVerb;
@@ -146,7 +129,6 @@ export const getActionsByVerb = (actions) => {
 
 export const formatActionsByVerb = (actionsByVerbObject) => {
   const actionsByVerbArray = Object.entries(actionsByVerbObject);
-
   // capitalize verbs (entry[0][0]), convert 0.0x notation to x% and round to two decimal places (entry[0][1])
   const formattedActionsByVerbArray = actionsByVerbArray
     .map((entry) => [
@@ -175,7 +157,7 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
   // convert to recharts required format
   return formattedActionsByVerbArray.map((entry) => {
     return {
-      verb: entry[0],
+      actionType: entry[0],
       percentage: entry[1],
     };
   });
@@ -183,10 +165,10 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
 
 // 'usersArray' has the form [ { ids: [1, 2], name: 'Augie March', type: 'light', value: 'Augie March'}, {...}, ... ]
 // i.e. a user (identified by their name) can have multiple ids (due to different sign-in sesions)
-// 'actions' is an array in the format retrieved from the API: [ { id: 1, user: 2, ... }, {...} ]
-// therefore note: id is the id of the action, and user is the userId of the user performing the action
-export const filterActionsByUser = (actions, usersArray, view) => {
-  const userKey = view === COMPOSE_VIEW_STRING ? 'actorUser' : 'user';
+// 'actions' is an array in the format retrieved from the API: [ { id: 1, memberId: 2, ... }, {...} ]
+// therefore note: id is the id of the action, and memberId is the memberId of the user performing the action
+export const filterActionsByUser = (actions, usersArray) => {
+  const userKey = 'memberId';
   return actions.filter((action) => {
     return usersArray.some((user) => {
       return user.ids.includes(action[userKey]);
@@ -245,14 +227,14 @@ export const consolidateUsers = (usersArray) => {
     // if user doesn't exist in consolidatedUsersArray, push that user into the array
     if (userIndex === -1) {
       consolidatedUsersArray.push({
-        ids: [user._id],
+        ids: [user.id],
         name: user.name,
         type: user.type,
       });
     }
     // if user *does* exist in consolidatedUsersArray, push current user's id to that user's ids array
     else {
-      consolidatedUsersArray[userIndex].ids.push(user._id);
+      consolidatedUsersArray[userIndex].ids.push(user.id);
     }
   });
   return consolidatedUsersArray;

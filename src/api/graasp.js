@@ -2,8 +2,9 @@ const qs = require('qs');
 
 // app routes and parameters
 export const RESEARCH_API_ROUTE = 'research';
-export const USERS_API_ROUTE = 'users';
-export const ANALYTICS_PARAMETER = 'analytics';
+export const ITEM_API_ROUTE = 'items';
+export const USERS_API_ROUTE = 'members';
+export const ANALYTICS_PARAMETER = '';
 export const TASKS_PARAMETER = 'tasks';
 export const CURRENT_USER_PARAMETER = 'current';
 
@@ -30,15 +31,15 @@ export const buildAnalyticsEndpoint = (
   url,
   apiRoute,
   parameter,
-  spaceId,
+  itemId,
   requestedSampleSize,
   requestedView,
 ) => {
   const analyticsQueryString = qs.stringify(
-    { spaceId, requestedSampleSize, view: requestedView },
+    { requestedSampleSize, view: requestedView },
     { addQueryPrefix: true },
   );
-  return `${url}/${apiRoute}/${parameter}${analyticsQueryString}`;
+  return `${url}/analytics/${apiRoute}/${itemId}${parameter}${analyticsQueryString}`;
 };
 
 export const buildTasksEndpoint = (

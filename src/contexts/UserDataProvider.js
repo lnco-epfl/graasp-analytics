@@ -6,7 +6,7 @@ import {
   buildUsersEndpoint,
   buildApiOptions,
 } from '../api/graasp';
-import { REACT_APP_BASE_URL } from '../config/env';
+import { REACT_APP_API_HOST } from '../config/env';
 
 export const UserDataContext = createContext();
 
@@ -17,7 +17,7 @@ const UserDataProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       const requestUrl = buildUsersEndpoint(
-        REACT_APP_BASE_URL,
+        REACT_APP_API_HOST,
         USERS_API_ROUTE,
         CURRENT_USER_PARAMETER,
       );
