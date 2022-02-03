@@ -119,10 +119,8 @@ const ActionsMap = ({ actions, usersToFilter, allUsers }) => {
         >
           {clusters.map((cluster) => {
             const [longitude, latitude] = cluster.geometry.coordinates;
-            const {
-              cluster: isCluster,
-              point_count: pointCount,
-            } = cluster.properties;
+            const { cluster: isCluster, point_count: pointCount } =
+              cluster.properties;
             if (isCluster) {
               return (
                 <Marker key={cluster.id} lat={latitude} lng={longitude}>
