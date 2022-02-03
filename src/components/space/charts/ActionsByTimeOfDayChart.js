@@ -51,9 +51,8 @@ const ActionsByTimeOfDayChart = ({ actions, allUsers, usersToFilter }) => {
   }
 
   const yAxisMax = findYAxisMax(actionsByTimeOfDay);
-  const formattedActionsByTimeOfDay = formatActionsByTimeOfDay(
-    actionsByTimeOfDay,
-  );
+  const formattedActionsByTimeOfDay =
+    formatActionsByTimeOfDay(actionsByTimeOfDay);
 
   // if selected user(s) have no actions, render component with message that there are no actions
   if (
