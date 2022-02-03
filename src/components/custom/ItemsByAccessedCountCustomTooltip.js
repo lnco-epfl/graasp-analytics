@@ -1,6 +1,5 @@
 // CustomToolTip used in MostViewedItems chart
 // this tooltip adds the category of each item to the box that shows when a bar is hovered
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';

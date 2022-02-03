@@ -1,13 +1,9 @@
 {
   "extends": [
-    "react-app",
-    "airbnb",
     "prettier"
   ],
   "plugins": [
     "import",
-    "jsx-a11y",
-    "react",
     "@babel"
   ],
   "env": {
@@ -31,30 +27,7 @@
         ]
       }
     ],
-    "jsx-a11y/anchor-is-valid": [
-      "error",
-      {
-        "components": ["Link"],
-        "specialLink": ["to", "hrefLeft", "hrefRight"],
-        "aspects": ["noHref", "invalidHref", "preferButton"]
-      }
-    ],
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [".js", ".jsx"]
-      }
-    ],
-    "import/no-named-as-default": 0,
-    "react/static-property-placement": ["error", "property assignment", {
-      "childContextTypes": "static public field",
-      "contextTypes": "static public field",
-      "contextType": "static public field",
-      "defaultProps": "static public field",
-      "displayName": "static public field",
-      "propTypes": "static public field"
-    }],
-    "react/state-in-constructor": ["error", "never"]
+    "import/no-named-as-default": 0
   },
   "parserOptions": {
     "requireConfigFile": false,

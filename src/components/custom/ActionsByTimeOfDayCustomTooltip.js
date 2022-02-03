@@ -1,7 +1,6 @@
 // CustomToolTip used in ActionsByTimeOfDayChart
 // x-axis labels in that chart say 'morning', 'afternoon', etc.
 // this tooltip adds the time of day those labels refer to
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';

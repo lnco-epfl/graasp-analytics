@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Typography, Toolbar } from '@material-ui/core';
 
-function Footer() {
+const Footer = () => {
   return (
     <footer>
       <AppBar position="static">
@@ -11,6 +11,6 @@ function Footer() {
       </AppBar>
     </footer>
   );
-}
+};
 
 export default Footer;

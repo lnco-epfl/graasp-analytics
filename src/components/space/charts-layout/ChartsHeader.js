@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation, matchPath } from 'react-router-dom';
+import { useLocation, useMatch } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -52,7 +52,7 @@ const ChartsHeader = ({ downloadButton }) => {
   const { itemName } = useContext(BuilderDataContext);
   const { pathname } = useLocation();
 
-  const match = matchPath(pathname, {
+  const match = useMatch(pathname, {
     path: '/embedded/',
     exact: false,
   });

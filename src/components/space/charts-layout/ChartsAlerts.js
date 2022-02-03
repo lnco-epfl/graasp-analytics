@@ -56,7 +56,6 @@ const ChartsAlerts = ({ metadata, view }) => {
           action={
             // adding a tooltip to an Alert is tricky; this hack uses the Alert's built-in 'action' prop to do this
             // doing so creates a conflict between eslint and prettier on using () around JSX; thus the disable below
-            // eslint-disable-next-line react/jsx-wrap-multilines
             <AlertsTooltip
               title={t(
                 'By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this item.',
