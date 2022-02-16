@@ -2,6 +2,7 @@
 // this tooltip adds the category of each item to the box that shows when a bar is hovered
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +39,19 @@ const ItemsByAccessedCountCustomTooltip = ({ active, payload, label }) => {
   }
 
   return null;
+};
+
+ItemsByAccessedCountCustomTooltip.propTypes = {
+  payload: PropTypes.arrayOf(
+    PropTypes.shape({
+      payload: {
+        count: PropTypes.number.isRequired,
+        category: PropTypes.string.isRequired,
+      },
+    }),
+  ).isRequired,
+  active: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default ItemsByAccessedCountCustomTooltip;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { components } from 'react-select';
+import PropTypes from 'prop-types';
 
 // this component, used within the UsersSelect component, overrides react-select's default text display
 // by default, react-select will keep expanding its text display as additional options are selected
@@ -32,11 +33,16 @@ const CustomValueContainer = ({ children, ...props }) => {
   }
 
   return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <components.ValueContainer {...props}>
       {values}
       {children[1]}
     </components.ValueContainer>
   );
+};
+
+CustomValueContainer.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default CustomValueContainer;

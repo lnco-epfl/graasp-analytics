@@ -3,6 +3,7 @@
 // this tooltip adds the time of day those labels refer to
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import {
   LATE_NIGHT,
@@ -62,6 +63,12 @@ const ActionsByTimeOfDayCustomTooltip = ({ active, payload, label }) => {
   }
 
   return null;
+};
+
+ActionsByTimeOfDayCustomTooltip.propTypes = {
+  active: PropTypes.bool.isRequired,
+  payload: PropTypes.arrayOf().isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default ActionsByTimeOfDayCustomTooltip;

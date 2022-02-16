@@ -24,6 +24,7 @@ const App = () => {
         <Route
           path="/embedded/:itemId"
           element={
+            // eslint-disable-next-line react/jsx-wrap-multilines
             <main className={classes.embedded}>
               <ContextsWrapper>
                 <Space />
@@ -34,6 +35,7 @@ const App = () => {
         <Route
           path="/items/:itemId"
           element={
+            // eslint-disable-next-line react/jsx-wrap-multilines
             <>
               <Header />
               <main className={classes.main}>
@@ -48,6 +50,7 @@ const App = () => {
         <Route
           path="/"
           element={
+            // eslint-disable-next-line react/jsx-wrap-multilines
             <>
               <Header />
               <main className={classes.main}>

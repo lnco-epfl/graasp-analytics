@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import {
@@ -62,18 +62,29 @@ const PlayerDataProvider = ({ children }) => {
     fetchPlayerData();
   }, [itemId]);
 
+  const value = useMemo(
+    () => ({
+      isLoadingPlayerData,
+      playerActions,
+      allPlayerUsers,
+      playerMetadata,
+      playerFetchingError,
+      playerUsersToFilter,
+      setPlayerUsersToFilter,
+    }),
+    [
+      isLoadingPlayerData,
+      playerActions,
+      allPlayerUsers,
+      playerMetadata,
+      playerFetchingError,
+      playerUsersToFilter,
+      setPlayerUsersToFilter,
+    ],
+  );
+
   return (
-    <PlayerDataContext.Provider
-      value={{
-        isLoadingPlayerData,
-        playerActions,
-        allPlayerUsers,
-        playerMetadata,
-        playerFetchingError,
-        playerUsersToFilter,
-        setPlayerUsersToFilter,
-      }}
-    >
+    <PlayerDataContext.Provider value={value}>
       {children}
     </PlayerDataContext.Provider>
   );

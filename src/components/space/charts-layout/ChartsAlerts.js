@@ -20,13 +20,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AlertsTooltip = withStyles({
+const AlertsTooltip = withStyles((theme) => ({
   tooltip: {
     fontSize: '11px',
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    marginRight: '1em',
+    marginRight: theme.spacing(1),
   },
-})(Tooltip);
+}))(Tooltip);
 
 const ChartsAlerts = ({ metadata, view }) => {
   const { t } = useTranslation();
@@ -46,27 +46,25 @@ const ChartsAlerts = ({ metadata, view }) => {
     return null;
   };
 
+  // adding a tooltip to an Alert is tricky; this hack uses the Alert's built-in 'action' prop to do this
+  // eslint-disable-next-line react/jsx-wrap-multilines
+  const action = (
+    <AlertsTooltip
+      title={t(
+        'By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this item.',
+        { requestedSampleSize },
+      )}
+      placement="left"
+    >
+      <Info fontSize="small" />
+    </AlertsTooltip>
+  );
+
   const displaySampleInfo = () => {
     if (numActionsRetrieved !== 0) {
       return (
         // TODO: implement maxTreeLengthExceeded to show message if depth is capped
-        <Alert
-          severity="info"
-          className={classes.alert}
-          action={
-            // adding a tooltip to an Alert is tricky; this hack uses the Alert's built-in 'action' prop to do this
-            // doing so creates a conflict between eslint and prettier on using () around JSX; thus the disable below
-            <AlertsTooltip
-              title={t(
-                'By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this item.',
-                { requestedSampleSize },
-              )}
-              placement="left"
-            >
-              <Info fontSize="small" />
-            </AlertsTooltip>
-          }
-        >
+        <Alert severity="info" className={classes.alert} action={action}>
           {t('The charts below display a sample of actions from this item.', {
             view,
             numActionsRetrieved,

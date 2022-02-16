@@ -69,6 +69,7 @@ const ItemsByAccessedCount = ({
         usersToFilter={usersToFilter}
         chartTitle={t('Most Viewed Items')}
         selectFilter={
+          // eslint-disable-next-line react/jsx-wrap-multilines
           <ItemsSelect
             actions={filteredActions}
             selectedItemTypes={selectedItemTypes}

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   USERS_API_ROUTE,
@@ -35,8 +35,10 @@ const UserDataProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  const value = useMemo(() => ({ userId, error }), [userId, error]);
+
   return (
-    <UserDataContext.Provider value={{ userId, error }}>
+    <UserDataContext.Provider value={value}>
       {children}
     </UserDataContext.Provider>
   );

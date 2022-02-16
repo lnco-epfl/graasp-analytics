@@ -65,16 +65,28 @@ const BuilderDataProvider = ({ children }) => {
     fetchBuilderData();
   }, [itemId]);
 
-  const value = {
-    itemName,
-    isLoadingBuilderData,
-    builderActions,
-    allBuilderUsers,
-    builderMetadata,
-    builderFetchingError,
-    builderUsersToFilter,
-    setBuilderUsersToFilter,
-  };
+  const value = useMemo(
+    () => ({
+      itemName,
+      isLoadingBuilderData,
+      builderActions,
+      allBuilderUsers,
+      builderMetadata,
+      builderFetchingError,
+      builderUsersToFilter,
+      setBuilderUsersToFilter,
+    }),
+    [
+      itemName,
+      isLoadingBuilderData,
+      builderActions,
+      allBuilderUsers,
+      builderMetadata,
+      builderFetchingError,
+      builderUsersToFilter,
+      setBuilderUsersToFilter,
+    ],
+  );
 
   return (
     <BuilderDataContext.Provider value={value}>

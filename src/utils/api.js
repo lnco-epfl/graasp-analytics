@@ -207,7 +207,7 @@ export const extractMainSpaceChildren = (arrayOfSpaceObjects) => {
 // remove user 'Learning Analytics' from users list retrieved by API
 // this is an auto-generated 'user' that we don't want to display in the application
 export const removeLearningAnalyticsUser = (usersArray) => {
-  return usersArray.filter((user) => user._id !== LEARNING_ANALYTICS_USER_ID);
+  return usersArray.filter((user) => user.id !== LEARNING_ANALYTICS_USER_ID);
 };
 
 // consolidate users with the same name into a single entry
