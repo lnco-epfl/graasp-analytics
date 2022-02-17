@@ -1,4 +1,11 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useMemo,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import {
@@ -59,7 +66,7 @@ const TaskDataProvider = ({ children }) => {
   }, [userId, spaceId, getTaskUrl, view]);
 
   // function passed down to ExportData component, used to trigger dataset request
-  const requestFullDataset = async () => {
+  const requestFullDataset = useCallback(async () => {
     try {
       // requestBody as required by api endpoint
       const requestBody = JSON.stringify({
@@ -95,18 +102,27 @@ const TaskDataProvider = ({ children }) => {
       const resolvedErr = await err.json();
       setTaskCreateError(resolvedErr);
     }
-  };
+  }, [userId, spaceId, view, createTaskUrl, getTaskUrl]);
+
+  const value = useMemo(
+    () => ({
+      isLoading,
+      existingTask,
+      taskGetError,
+      taskCreateError,
+      requestFullDataset,
+    }),
+    [
+      isLoading,
+      existingTask,
+      taskGetError,
+      taskCreateError,
+      requestFullDataset,
+    ],
+  );
 
   return (
-    <TaskDataContext.Provider
-      value={{
-        isLoading,
-        existingTask,
-        taskGetError,
-        taskCreateError,
-        requestFullDataset,
-      }}
-    >
+    <TaskDataContext.Provider value={value}>
       {children}
     </TaskDataContext.Provider>
   );

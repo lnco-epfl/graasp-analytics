@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { components } from 'react-select';
+import PropTypes from 'prop-types';
 
 // this component, used within the UsersSelect component, overrides react-select's default text display
 // by default, react-select will keep expanding its text display as additional options are selected
 // with this component, after 2 selections, the text box will stop expanding and display: 'A, B, and X other(s) selected'
-// eslint-disable-next-line react/prop-types
 const CustomValueContainer = ({ children, ...props }) => {
   const { t } = useTranslation();
 
@@ -39,6 +39,10 @@ const CustomValueContainer = ({ children, ...props }) => {
       {children[1]}
     </components.ValueContainer>
   );
+};
+
+CustomValueContainer.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default CustomValueContainer;

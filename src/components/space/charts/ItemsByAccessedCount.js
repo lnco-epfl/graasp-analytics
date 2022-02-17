@@ -24,11 +24,11 @@ import { CONTAINER_HEIGHT } from '../../../config/constants';
 import ItemsSelect from '../functionality/ItemsSelect';
 import ItemsByAccessedCountCustomTooltip from '../../custom/ItemsByAccessedCountCustomTooltip';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   selectContainer: {
     display: 'flex',
     justifyContent: 'center',
-    marginTop: '1em',
+    marginTop: theme.spacing(1),
   },
   typography: { textAlign: 'center' },
 }));

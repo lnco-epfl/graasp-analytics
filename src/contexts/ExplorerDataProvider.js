@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import {
@@ -62,18 +62,29 @@ const ExplorerDataProvider = ({ children }) => {
     fetchExplorerData();
   }, [itemId]);
 
+  const value = useMemo(
+    () => ({
+      isLoadingExplorerData,
+      explorerActions,
+      allExplorerUsers,
+      explorerMetadata,
+      explorerFetchingError,
+      explorerUsersToFilter,
+      setExplorerUsersToFilter,
+    }),
+    [
+      isLoadingExplorerData,
+      explorerActions,
+      allExplorerUsers,
+      explorerMetadata,
+      explorerFetchingError,
+      explorerUsersToFilter,
+      setExplorerUsersToFilter,
+    ],
+  );
+
   return (
-    <ExplorerDataContext.Provider
-      value={{
-        isLoadingExplorerData,
-        explorerActions,
-        allExplorerUsers,
-        explorerMetadata,
-        explorerFetchingError,
-        explorerUsersToFilter,
-        setExplorerUsersToFilter,
-      }}
-    >
+    <ExplorerDataContext.Provider value={value}>
       {children}
     </ExplorerDataContext.Provider>
   );

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import {
@@ -65,19 +65,31 @@ const BuilderDataProvider = ({ children }) => {
     fetchBuilderData();
   }, [itemId]);
 
+  const value = useMemo(
+    () => ({
+      itemName,
+      isLoadingBuilderData,
+      builderActions,
+      allBuilderUsers,
+      builderMetadata,
+      builderFetchingError,
+      builderUsersToFilter,
+      setBuilderUsersToFilter,
+    }),
+    [
+      itemName,
+      isLoadingBuilderData,
+      builderActions,
+      allBuilderUsers,
+      builderMetadata,
+      builderFetchingError,
+      builderUsersToFilter,
+      setBuilderUsersToFilter,
+    ],
+  );
+
   return (
-    <BuilderDataContext.Provider
-      value={{
-        itemName,
-        isLoadingBuilderData,
-        builderActions,
-        allBuilderUsers,
-        builderMetadata,
-        builderFetchingError,
-        builderUsersToFilter,
-        setBuilderUsersToFilter,
-      }}
-    >
+    <BuilderDataContext.Provider value={value}>
       {children}
     </BuilderDataContext.Provider>
   );

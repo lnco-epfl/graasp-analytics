@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Home from './home/Home';
 import Space from './space/Space';
@@ -16,37 +16,53 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App() {
+const App = () => {
   const classes = useStyles();
   return (
     <Router>
-      <Switch>
-        <Route path="/embedded/:itemId">
-          <main className={classes.embedded}>
-            <ContextsWrapper>
-              <Space />
-            </ContextsWrapper>
-          </main>
-        </Route>
-        <Route path="/items/:itemId">
-          <Header />
-          <main className={classes.main}>
-            <ContextsWrapper>
-              <Space />
-            </ContextsWrapper>
-          </main>
-          <Footer />
-        </Route>
-        <Route path="/">
-          <Header />
-          <main className={classes.main}>
-            <Home />
-          </main>
-          <Footer />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route
+          path="/embedded/:itemId"
+          element={
+            // eslint-disable-next-line react/jsx-wrap-multilines
+            <main className={classes.embedded}>
+              <ContextsWrapper>
+                <Space />
+              </ContextsWrapper>
+            </main>
+          }
+        />
+        <Route
+          path="/items/:itemId"
+          element={
+            // eslint-disable-next-line react/jsx-wrap-multilines
+            <>
+              <Header />
+              <main className={classes.main}>
+                <ContextsWrapper>
+                  <Space />
+                </ContextsWrapper>
+              </main>
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            // eslint-disable-next-line react/jsx-wrap-multilines
+            <>
+              <Header />
+              <main className={classes.main}>
+                <Home />
+              </main>
+              <Footer />
+            </>
+          }
+        />
+      </Routes>
     </Router>
   );
-}
+};
 
 export default App;
