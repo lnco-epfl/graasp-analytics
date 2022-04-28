@@ -54,11 +54,8 @@ export const AFTERNOON = 'Afternoon';
 export const EVENING = 'Evening';
 export const NIGHT = 'Night';
 
-// strings for supported 'views'
-export const BUILDER_VIEW_STRING = 'builder';
-export const PLAYER_VIEW_STRING = 'player';
-export const EXPLORER_VIEW_STRING = 'explorer';
-
 // constants for most viewed items chart
 export const ACCESSED_STRING = 'accessed';
 export const TOP_NUMBER_OF_ITEMS_TO_DISPLAY = 10;
+
+export const DEFAULT_REQUEST_SAMPLE_SIZE = 5000;

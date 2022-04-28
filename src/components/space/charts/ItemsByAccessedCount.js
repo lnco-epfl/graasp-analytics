@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -23,6 +22,8 @@ import {
 import { CONTAINER_HEIGHT } from '../../../config/constants';
 import ItemsSelect from '../functionality/ItemsSelect';
 import ItemsByAccessedCountCustomTooltip from '../../custom/ItemsByAccessedCountCustomTooltip';
+import { DataContext } from '../../context/DataProvider';
+import { ViewDataContext } from '../../context/ViewDataProvider';
 
 const useStyles = makeStyles((theme) => ({
   selectContainer: {
@@ -33,26 +34,28 @@ const useStyles = makeStyles((theme) => ({
   typography: { textAlign: 'center' },
 }));
 
-const ItemsByAccessedCount = ({
-  actions: allActions,
-  view,
-  allUsers,
-  usersToFilter,
-}) => {
+const ItemsByAccessedCount = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
+  const { view } = useContext(ViewDataContext);
+  const {
+    actions: allActions,
+
+    allMembers,
+    selectedUsers,
+  } = useContext(DataContext);
   const [selectedItemTypes, setSelectedItemTypes] = useState([]);
 
   let filteredActions;
   if (
-    usersToFilter === null ||
-    usersToFilter.length === 0 ||
-    usersToFilter.length === allUsers.length
+    selectedUsers === null ||
+    selectedUsers.length === 0 ||
+    selectedUsers.length === allMembers.length
   ) {
     filteredActions = allActions;
   } else {
-    filteredActions = filterActionsByUser(allActions, usersToFilter, view);
+    filteredActions = filterActionsByUser(allActions, selectedUsers, view);
   }
 
   const mostViewedItems = getItemsByAccessedCount(
@@ -66,7 +69,7 @@ const ItemsByAccessedCount = ({
   if (formattedMostViewedItems.length === 0) {
     return (
       <EmptyChart
-        usersToFilter={usersToFilter}
+        selectedUsers={selectedUsers}
         chartTitle={t('Most Viewed Items')}
         selectFilter={
           // eslint-disable-next-line react/jsx-wrap-multilines
@@ -115,12 +118,4 @@ const ItemsByAccessedCount = ({
     </>
   );
 };
-
-ItemsByAccessedCount.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  view: PropTypes.string.isRequired,
-  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
 export default ItemsByAccessedCount;

@@ -1,11 +1,11 @@
 import React, { createContext, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { BUILDER_VIEW_STRING } from '../config/constants';
+import { Context } from '@graasp/utils';
 
 export const ViewDataContext = createContext();
 
 const ViewDataProvider = ({ children }) => {
-  const [view, setView] = useState(BUILDER_VIEW_STRING);
+  const [view, setView] = useState(Context.BUILDER);
   const value = useMemo(() => ({ view, setView }), [view, setView]);
   return (
     <ViewDataContext.Provider value={value}>

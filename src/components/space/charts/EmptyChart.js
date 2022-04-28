@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { CONTAINER_HEIGHT } from '../../../config/constants';
+import { DataContext } from '../../context/DataProvider';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
@@ -20,12 +21,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const EmptyChart = ({ usersToFilter, chartTitle, selectFilter }) => {
+const EmptyChart = ({ chartTitle, selectFilter }) => {
   const { t } = useTranslation();
   const classes = useStyles();
+  const { selectedUsers } = useContext(DataContext);
 
   let message = '';
-  if (usersToFilter.length > 1) {
+  if (selectedUsers.length > 1) {
     message = t('No actions to show for these users');
   } else {
     message = t('No actions to show for this user');
@@ -47,14 +49,6 @@ const EmptyChart = ({ usersToFilter, chartTitle, selectFilter }) => {
 };
 
 EmptyChart.propTypes = {
-  usersToFilter: PropTypes.arrayOf(
-    PropTypes.shape({
-      ids: PropTypes.arrayOf(PropTypes.string),
-      name: PropTypes.string,
-      type: PropTypes.string,
-      value: PropTypes.string,
-    }),
-  ).isRequired,
   chartTitle: PropTypes.string.isRequired,
   selectFilter: PropTypes.element,
 };

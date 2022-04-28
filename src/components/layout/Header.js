@@ -1,13 +1,15 @@
 import React from 'react';
+import { GraaspLogo } from '@graasp/ui';
 import { AppBar, Typography, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as Logo } from '../../resources/logo.svg';
 
 const useStyles = makeStyles((theme) => ({
   logo: {
-    height: '48px',
-    marginRight: theme.spacing(2),
+    fill: 'white',
+  },
+  title: {
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -18,8 +20,8 @@ const Header = () => {
     <header>
       <AppBar position="static">
         <Toolbar>
-          <Logo className={classes.logo} />
-          <Typography variant="h6" color="inherit">
+          <GraaspLogo height={40} className={classes.logo} />
+          <Typography variant="h6" color="inherit" className={classes.title}>
             {t('Analytics')}
           </Typography>
         </Toolbar>

@@ -9,11 +9,15 @@
     "Kim Lan Phan Hoang"
   ],
   "dependencies": {
+    "@graasp/query-client": "github:graasp/graasp-query-client",
+    "@graasp/ui": "github:graasp/graasp-ui",
+    "@graasp/utils": "github:graasp/graasp-utils",
     "@material-ui/core": "4.9.13",
     "@material-ui/icons": "4.9.1",
     "@material-ui/lab": "4.0.0-alpha.52",
     "google-map-react": "1.1.7",
     "i18next": "19.9.2",
+    "immutable": "4.0.0",
     "lodash": "4.17.21",
     "prop-types": "15.8.1",
     "qs": "6.10.3",
@@ -24,6 +28,7 @@
     "react-router-dom": "6.2.1",
     "react-scripts": "5.0.0",
     "react-select": "5.2.2",
+    "react-toastify": "8.2.0",
     "recharts": "1.8.5",
     "supercluster": "7.1.4",
     "use-supercluster": "0.2.9"
@@ -31,7 +36,6 @@
   "scripts": {
     "pre-commit": "yarn prettier:check && yarn lint",
     "start": "react-scripts start",
-    "start:local": "PORT=80 react-scripts start",
     "build": "react-scripts build",
     "build:dev": "env-cmd -f ./.env.dev yarn build",
     "dist": "env-cmd -f ./.env.prod yarn build",
@@ -82,5 +86,5 @@
     "standard-version": "8.0.2",
     "typescript": "4.5.5"
   },
-  "packageManager": "yarn@3.2.0-rc.2"
+  "packageManager": "yarn@3.2.0"
 }

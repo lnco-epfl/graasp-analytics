@@ -1,21 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ViewDataProvider from '../../contexts/ViewDataProvider';
-import UserDataProvider from '../../contexts/UserDataProvider';
-import BuilderDataProvider from '../../contexts/BuilderDataProvider';
-import PlayerDataProvider from '../../contexts/PlayerDataProvider';
-import ExplorerDataProvider from '../../contexts/ExplorerDataProvider';
+import ViewDataProvider from './ViewDataProvider';
+import DataProvider from './DataProvider';
 
 const ContextsWrapper = ({ children }) => {
   return (
     <ViewDataProvider>
-      <UserDataProvider>
-        <BuilderDataProvider>
-          <PlayerDataProvider>
-            <ExplorerDataProvider>{children}</ExplorerDataProvider>
-          </PlayerDataProvider>
-        </BuilderDataProvider>
-      </UserDataProvider>
+      <DataProvider>{children}</DataProvider>
     </ViewDataProvider>
   );
 };

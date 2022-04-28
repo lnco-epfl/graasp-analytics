@@ -163,15 +163,12 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
   });
 };
 
-// 'usersArray' has the form [ { ids: [1, 2], name: 'Augie March', type: 'light', value: 'Augie March'}, {...}, ... ]
-// i.e. a user (identified by their name) can have multiple ids (due to different sign-in sesions)
 // 'actions' is an array in the format retrieved from the API: [ { id: 1, memberId: 2, ... }, {...} ]
-// therefore note: id is the id of the action, and memberId is the memberId of the user performing the action
 export const filterActionsByUser = (actions, usersArray) => {
   const userKey = 'memberId';
   return actions.filter((action) => {
     return usersArray.some((user) => {
-      return user.ids.includes(action[userKey]);
+      return user.id === action[userKey];
     });
   });
 };
@@ -195,13 +192,13 @@ export const findYAxisMax = (actionsByDay) => {
 
 // Extract main space name
 export const extractMainSpace = (arrayOfSpaceObjects) => {
-  return arrayOfSpaceObjects.filter((space) => space.parentId === null)[0];
+  return arrayOfSpaceObjects.filter((item) => item.parentId === null)[0];
 };
 
 // Extract main space *immediate* children
 export const extractMainSpaceChildren = (arrayOfSpaceObjects) => {
   const mainSpaceId = extractMainSpace(arrayOfSpaceObjects).id;
-  return arrayOfSpaceObjects.filter((space) => space.parentId === mainSpaceId);
+  return arrayOfSpaceObjects.filter((item) => item.parentId === mainSpaceId);
 };
 
 // remove user 'Learning Analytics' from users list retrieved by API

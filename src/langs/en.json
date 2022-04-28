@@ -1,12 +1,12 @@
 {
   "translations": {
-    "There was an error retrieving this space's data.": "There was an error retrieving this space's '{{view}} view' data.",
+    "There was an error retrieving this item's data.": "There was an error retrieving this item's '{{view}} view' data.",
     "This item does not have any actions yet.": "This item does not have any '{{view}} view' actions yet.",
     "The charts below display a sample of actions from this item.": "Displaying {{numActionsRetrieved}} '{{view}} view' actions from a requested sample of {{requestedSampleSize}} actions.",
     "By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this item.": "By default, a sample of maximum {{requestedSampleSize}} actions is requested and displayed in the charts below, in order to provide a general overview of activity in this item.",
     "Many users selected...": "{{firstSelection}}, {{secondSelection}}, and {{alsoSelectedCount}} other{{plural}} selected",
-    "Download the full dataset for this view of this space": "Download the full dataset for the '{{view}}' view of this space",
-    "Request the full dataset for this view of this space": "Request the full dataset for the '{{view}}' view of this space",
+    "Download the full dataset for this item": "Download the full dataset for this item",
+    "Request the full dataset for this view of this item": "Request the full dataset for the '{{view}}' view of this item",
     "The 'builder' view displays analytics from the default Graasp item creation interface.": "The 'builder' view displays analytics from the default Graasp item creation interface.",
     "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.": "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.",
     "The 'explorer' view displays analytics from the standalone Graasp interface typically used by visualize resources.": "The 'explore' view displays analytics from the standalone Graasp interface typically used by visualize resources.",
@@ -18,6 +18,8 @@
     "Actions by Time of Day": "Actions by Time of Day",
     "Actions by Verb": "Actions by Verb",
     "Actions by Location": "Actions by Location",
-    "Actions by Day": "Actions by Day"
+    "Actions by Day": "Actions by Day",
+    "No actions to show for this user": "No actions to show for this user",
+    "Your request has been sent. An email will be sent to you in several minutes.": "Your request has been sent. An email will be sent to you in several minutes."
   }
 }

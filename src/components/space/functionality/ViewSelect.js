@@ -3,14 +3,10 @@ import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { Context } from '@graasp/utils';
 import _ from 'lodash';
 import LightTooltip from '../../common/LightTooltip';
-import { ViewDataContext } from '../../../contexts/ViewDataProvider';
-import {
-  BUILDER_VIEW_STRING,
-  PLAYER_VIEW_STRING,
-  EXPLORER_VIEW_STRING,
-} from '../../../config/constants';
+import { ViewDataContext } from '../../context/ViewDataProvider';
 import customStyles from '../../../styles/react-select-styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,17 +36,19 @@ const ViewSelect = () => {
 
   let viewMessage = '';
   switch (view) {
-    case BUILDER_VIEW_STRING:
+    case Context.BUILDER:
       viewMessage =
         "The 'builder' view displays analytics from the default Graasp item creation interface.";
       break;
-    case PLAYER_VIEW_STRING:
+    case Context.PLAYER:
       viewMessage =
         "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.";
       break;
-    default:
+    case Context.EXPLORER:
       viewMessage =
         "The 'explore' view displays analytics from the standalone Graasp interface typically used by visualize resources.";
+      break;
+    default:
       break;
   }
   return (
@@ -61,20 +59,13 @@ const ViewSelect = () => {
         </Typography>
         <Select
           styles={customStyles}
-          options={[
-            {
-              name: _.capitalize(BUILDER_VIEW_STRING),
-              value: BUILDER_VIEW_STRING,
-            },
-            {
-              name: _.capitalize(PLAYER_VIEW_STRING),
-              value: PLAYER_VIEW_STRING,
-            },
-            {
-              name: _.capitalize(EXPLORER_VIEW_STRING),
-              value: EXPLORER_VIEW_STRING,
-            },
-          ]}
+          options={Object.values(Context)
+            // does not show analyzer
+            .filter((context) => context !== Context.ANALYZER)
+            .map((context) => ({
+              value: context,
+              name: context,
+            }))}
           closeMenuOnSelect
           hideSelectedOptions={false}
           getOptionLabel={(option) => option.name}

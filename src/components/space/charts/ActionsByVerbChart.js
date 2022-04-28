@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -11,25 +10,27 @@ import {
   filterActionsByUser,
 } from '../../../utils/api';
 import { COLORS, CONTAINER_HEIGHT } from '../../../config/constants';
+import { DataContext } from '../../context/DataProvider';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
 }));
 
-const ActionsByVerbChart = ({ actions, allUsers, usersToFilter }) => {
+const ActionsByVerbChart = () => {
   const { t } = useTranslation();
   const classes = useStyles();
+  const { actions, allMembers, selectedUsers } = useContext(DataContext);
 
   let actionsByVerb;
   if (
-    usersToFilter === null ||
-    usersToFilter.length === 0 ||
-    usersToFilter.length === allUsers.length
+    selectedUsers === null ||
+    selectedUsers.length === 0 ||
+    selectedUsers.length === allMembers.length
   ) {
     actionsByVerb = getActionsByVerb(actions);
   } else {
     actionsByVerb = getActionsByVerb(
-      filterActionsByUser(actions, usersToFilter),
+      filterActionsByUser(actions, selectedUsers),
     );
   }
   const formattedActionsByVerb = formatActionsByVerb(actionsByVerb);
@@ -38,7 +39,7 @@ const ActionsByVerbChart = ({ actions, allUsers, usersToFilter }) => {
   if (formattedActionsByVerb.length === 0) {
     return (
       <EmptyChart
-        usersToFilter={usersToFilter}
+        selectedUsers={selectedUsers}
         chartTitle={t('Actions by Verb')}
       />
     );
@@ -71,12 +72,6 @@ const ActionsByVerbChart = ({ actions, allUsers, usersToFilter }) => {
       </ResponsiveContainer>
     </>
   );
-};
-
-ActionsByVerbChart.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default ActionsByVerbChart;

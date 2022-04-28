@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -21,32 +20,34 @@ import {
   findYAxisMax,
 } from '../../../utils/api';
 import { CONTAINER_HEIGHT } from '../../../config/constants';
+import { DataContext } from '../../context/DataProvider';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
 }));
 
-const ActionsByTimeOfDayChart = ({ actions, allUsers, usersToFilter }) => {
+const ActionsByTimeOfDayChart = () => {
   const { t } = useTranslation();
   const classes = useStyles();
+  const { actions, allMembers, selectedUsers } = useContext(DataContext);
 
   // actionsByTimeOfDay is the object passed, after formatting, to the BarChart component below
-  // if you remove all names in the react-select dropdown, usersToFilter becomes null
-  // if no users are selected (i.e. usersToFilter.length === 0), show all actions
-  // if all users are selected (i.e. usersToFilter.length === allUsers.length), also show all actions
+  // if you remove all names in the react-select dropdown, selectedUsers becomes null
+  // if no users are selected (i.e. selectedUsers.length === 0), show all actions
+  // if all users are selected (i.e. selectedUsers.length === allMembers.length), also show all actions
   // third condition above is necessary: some actions are made by users NOT in the users list (e.g. user account deleted)
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
   let actionsByTimeOfDay;
   if (
-    usersToFilter === null ||
-    usersToFilter.length === 0 ||
-    usersToFilter.length === allUsers.length
+    selectedUsers === null ||
+    selectedUsers.length === 0 ||
+    selectedUsers.length === allMembers.length
   ) {
     actionsByTimeOfDay = getActionsByTimeOfDay(actions);
   } else {
     actionsByTimeOfDay = getActionsByTimeOfDay(
-      filterActionsByUser(actions, usersToFilter),
+      filterActionsByUser(actions, selectedUsers),
     );
   }
 
@@ -60,7 +61,7 @@ const ActionsByTimeOfDayChart = ({ actions, allUsers, usersToFilter }) => {
   ) {
     return (
       <EmptyChart
-        usersToFilter={usersToFilter}
+        selectedUsers={selectedUsers}
         chartTitle={t('Actions by Time of Day')}
       />
     );
@@ -86,11 +87,4 @@ const ActionsByTimeOfDayChart = ({ actions, allUsers, usersToFilter }) => {
     </>
   );
 };
-
-ActionsByTimeOfDayChart.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
 export default ActionsByTimeOfDayChart;

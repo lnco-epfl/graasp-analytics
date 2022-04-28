@@ -6,7 +6,9 @@ const Footer = () => {
     <footer>
       <AppBar position="static">
         <Toolbar>
-          <Typography>© 2020 Graasp Association</Typography>
+          <Typography>
+            {`© ${new Date().getFullYear()} Graasp Association`}
+          </Typography>
         </Toolbar>
       </AppBar>
     </footer>

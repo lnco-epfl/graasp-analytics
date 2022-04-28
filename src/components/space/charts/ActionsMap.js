@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -18,6 +17,7 @@ import {
   CLUSTER_RADIUS,
   ENTER_KEY_CODE,
 } from '../../../config/constants';
+import { DataContext } from '../../context/DataProvider';
 
 const useStyles = makeStyles((theme) => ({
   clusterMarker: {
@@ -43,29 +43,30 @@ const useStyles = makeStyles((theme) => ({
 
 const Marker = ({ children }) => children;
 
-const ActionsMap = ({ actions, usersToFilter, allUsers }) => {
+const ActionsMap = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
+  const { actions, selectedUsers, allMembers } = useContext(DataContext);
 
   // actionsToChart is the array converted to GeoJSON Feature objects below
-  // if you remove all names in the react-select dropdown, usersToFilter becomes null
-  // if no users are selected (i.e. usersToFilter.length === 0), show all actions
-  // if all users are selected (i.e. usersToFilter.length === allUsers.length), also show all actions
+  // if you remove all names in the react-select dropdown, selectedUsers becomes null
+  // if no users are selected (i.e. selectedUsers.length === 0), show all actions
+  // if all users are selected (i.e. selectedUsers.length === allMembers.length), also show all actions
   // third condition above is necessary: some actions are made by users NOT in the users list (e.g. user account deleted)
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
   let actionsToChart;
   if (
-    usersToFilter === null ||
-    usersToFilter.length === 0 ||
-    usersToFilter.length === allUsers.length
+    selectedUsers === null ||
+    selectedUsers.length === 0 ||
+    selectedUsers.length === allMembers.length
   ) {
     actionsToChart = actions;
   } else {
-    actionsToChart = filterActionsByUser(actions, usersToFilter);
+    actionsToChart = filterActionsByUser(actions, selectedUsers);
   }
 
   // GeoJSON Feature objects
@@ -160,12 +161,6 @@ const ActionsMap = ({ actions, usersToFilter, allUsers }) => {
       </Container>
     </>
   );
-};
-
-ActionsMap.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default ActionsMap;

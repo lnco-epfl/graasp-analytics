@@ -11,9 +11,16 @@ import {
 import grey from '@material-ui/core/colors/grey';
 import orange from '@material-ui/core/colors/orange';
 import pink from '@material-ui/core/colors/pink';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import i18nConfig from '../config/i18n';
 import App from './App';
-import { REACT_APP_GOOGLE_ANALYTICS_ID } from '../config/env';
+import { NODE_ENV, REACT_APP_GOOGLE_ANALYTICS_ID } from '../config/env';
+import {
+  QueryClientProvider,
+  queryClient,
+  ReactQueryDevtools,
+} from '../config/queryClient';
 
 ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
 
@@ -54,11 +61,15 @@ theme = responsiveFontSizes(theme);
 
 const Root = ({ classes }) => (
   <div className={classes.root}>
-    <MuiThemeProvider theme={theme}>
-      <I18nextProvider i18n={i18nConfig}>
-        <App />
-      </I18nextProvider>
-    </MuiThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <MuiThemeProvider theme={theme}>
+        <I18nextProvider i18n={i18nConfig}>
+          <App />
+          <ToastContainer />
+        </I18nextProvider>
+      </MuiThemeProvider>
+      {NODE_ENV === 'development' && <ReactQueryDevtools />}
+    </QueryClientProvider>
   </div>
 );
 

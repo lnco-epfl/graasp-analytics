@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -20,32 +19,34 @@ import {
   findYAxisMax,
 } from '../../../utils/api';
 import { CONTAINER_HEIGHT } from '../../../config/constants';
+import { DataContext } from '../../context/DataProvider';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
 }));
 
-const ActionsByDayChart = ({ actions, allUsers, usersToFilter }) => {
+const ActionsByDayChart = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
+  const { actions, selectedUsers, allMembers } = useContext(DataContext);
 
   // actionsByDay is the object passed, after formatting, to the BarChart component below
-  // if you remove all names in the react-select dropdown, usersToFilter becomes null
-  // if no users are selected (i.e. usersToFilter.length === 0), show all actions
-  // if all users are selected (i.e. usersToFilter.length === allUsers.length), also show all actions
+  // if you remove all names in the react-select dropdown, selectedUsers becomes null
+  // if no users are selected (i.e. selectedUsers.length === 0), show all actions
+  // if all users are selected (i.e. selectedUsers.length === allMembers.length), also show all actions
   // third condition above is necessary: some actions are made by users NOT in the users list (e.g. user account deleted)
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
   let actionsByDay;
   if (
-    usersToFilter === null ||
-    usersToFilter.length === 0 ||
-    usersToFilter.length === allUsers.length
+    selectedUsers === null ||
+    selectedUsers.length === 0 ||
+    selectedUsers.length === allMembers.length
   ) {
     actionsByDay = getActionsByDay(actions);
   } else {
-    actionsByDay = getActionsByDay(filterActionsByUser(actions, usersToFilter));
+    actionsByDay = getActionsByDay(filterActionsByUser(actions, selectedUsers));
   }
 
   const yAxisMax = findYAxisMax(actionsByDay);
@@ -55,7 +56,7 @@ const ActionsByDayChart = ({ actions, allUsers, usersToFilter }) => {
   if (formattedActionsByDay.length === 0) {
     return (
       <EmptyChart
-        usersToFilter={usersToFilter}
+        selectedUsers={selectedUsers}
         chartTitle={t('Actions by Day')}
       />
     );
@@ -84,12 +85,6 @@ const ActionsByDayChart = ({ actions, allUsers, usersToFilter }) => {
       </ResponsiveContainer>
     </>
   );
-};
-
-ActionsByDayChart.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  usersToFilter: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default ActionsByDayChart;

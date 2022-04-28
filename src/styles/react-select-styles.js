@@ -3,6 +3,7 @@ const styleConstants = {
   border: 'solid 1px #dfe3e9',
   borderRadius: '4px',
   fontSize: '0.8rem',
+  textTransform: 'capitalize',
 };
 
 const customStyles = {

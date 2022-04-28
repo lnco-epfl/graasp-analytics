@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Info } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
+import { ViewDataContext } from '../../context/ViewDataProvider';
+import { DataContext } from '../../context/DataProvider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,10 +29,11 @@ const AlertsTooltip = withStyles((theme) => ({
   },
 }))(Tooltip);
 
-const ChartsAlerts = ({ metadata, view }) => {
+const ChartsAlerts = () => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { requestedSampleSize, numActionsRetrieved } = metadata;
+  const { view, requestedSampleSize } = useContext(ViewDataContext);
+  const { numActionsRetrieved } = useContext(DataContext);
 
   const displayWarningMessage = () => {
     if (numActionsRetrieved === 0) {
@@ -61,7 +63,7 @@ const ChartsAlerts = ({ metadata, view }) => {
   );
 
   const displaySampleInfo = () => {
-    if (numActionsRetrieved !== 0) {
+    if (numActionsRetrieved > 0) {
       return (
         // TODO: implement maxTreeLengthExceeded to show message if depth is capped
         <Alert severity="info" className={classes.alert} action={action}>
@@ -82,14 +84,6 @@ const ChartsAlerts = ({ metadata, view }) => {
       {displaySampleInfo()}
     </div>
   );
-};
-
-ChartsAlerts.propTypes = {
-  metadata: PropTypes.shape({
-    numActionsRetrieved: PropTypes.number.isRequired,
-    requestedSampleSize: PropTypes.number.isRequired,
-  }).isRequired,
-  view: PropTypes.string.isRequired,
 };
 
 export default ChartsAlerts;
