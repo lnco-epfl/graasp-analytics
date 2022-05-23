@@ -7,10 +7,9 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import { Context } from '@graasp/utils';
 import { ViewDataContext } from './ViewDataProvider';
 import { hooks } from '../../config/queryClient';
-import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../config/constants';
+import { DEFAULT_REQUEST_SAMPLE_SIZE, Context } from '../../config/constants';
 
 export const DataContext = createContext();
 
@@ -55,7 +54,6 @@ const DataProvider = ({ children }) => {
     if (!enabledArray[view]) {
       setEnabledArray({ ...enabledArray, [view]: true });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [view]);
 
   useEffect(() => {

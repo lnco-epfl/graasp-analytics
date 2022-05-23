@@ -54,7 +54,7 @@ const ItemsSelect = ({ actions, selectedItemTypes, setSelectedItemTypes }) => {
 };
 
 ItemsSelect.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  actions: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   selectedItemTypes: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,

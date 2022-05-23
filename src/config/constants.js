@@ -59,3 +59,10 @@ export const ACCESSED_STRING = 'accessed';
 export const TOP_NUMBER_OF_ITEMS_TO_DISPLAY = 10;
 
 export const DEFAULT_REQUEST_SAMPLE_SIZE = 5000;
+
+export const Context = {
+  BUILDER: 'builder',
+  PLAYER: 'player',
+  EXPLORER: 'explorer',
+  ANALYZER: 'analyzer',
+};

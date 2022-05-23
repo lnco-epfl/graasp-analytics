@@ -22,6 +22,7 @@ import {
   ReactQueryDevtools,
 } from '../config/queryClient';
 
+// eslint-disable-next-line import/no-named-as-default-member
 ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
 
 const styles = {

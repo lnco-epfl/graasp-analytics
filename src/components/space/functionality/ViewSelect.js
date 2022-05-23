@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Context } from '@graasp/utils';
 import _ from 'lodash';
 import LightTooltip from '../../common/LightTooltip';
 import { ViewDataContext } from '../../context/ViewDataProvider';
 import customStyles from '../../../styles/react-select-styles';
+import { Context } from '../../../config/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {

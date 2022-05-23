@@ -84,9 +84,7 @@ const ActionsMap = () => {
     totalCount,
     baseRadius,
     scalar,
-  ) => {
-    return baseRadius + (clusterCount / totalCount) * scalar;
-  };
+  ) => baseRadius + (clusterCount / totalCount) * scalar;
 
   const handleClusterZoom = (longitude, latitude) => {
     mapRef.current.setZoom(mapRef.current.zoom + 1);

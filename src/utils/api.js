@@ -46,8 +46,8 @@ export const formatActionsByDay = (actionsByDayObject) => {
   });
 };
 
-export const mapActionsToGeoJsonFeatureObjects = (actions) => {
-  return actions
+export const mapActionsToGeoJsonFeatureObjects = (actions) =>
+  actions
     .filter((action) => action.geolocation)
     .map((action) => ({
       type: 'Feature',
@@ -57,7 +57,6 @@ export const mapActionsToGeoJsonFeatureObjects = (actions) => {
         coordinates: [action.geolocation.ll[1], action.geolocation.ll[0]],
       },
     }));
-};
 
 // helper function used in getActionsByTimeOfDay below
 // todo: update this function to retrieve hour of day using JS Date objects/moment
@@ -103,12 +102,10 @@ export const getActionsByTimeOfDay = (actions) => {
 // returns a date-sorted array in Recharts.js format
 export const formatActionsByTimeOfDay = (actionsByTimeOfDayObject) => {
   const actionsByTimeOfDayArray = Object.entries(actionsByTimeOfDayObject);
-  return actionsByTimeOfDayArray.map((entry) => {
-    return {
-      timeOfDay: entry[0],
-      count: entry[1],
-    };
-  });
+  return actionsByTimeOfDayArray.map((entry) => ({
+    timeOfDay: entry[0],
+    count: entry[1],
+  }));
 };
 
 // Takes array of action objects and returns an object with {key: value} pairs of {verb: %-of-actions}
@@ -155,22 +152,18 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
   }
 
   // convert to recharts required format
-  return formattedActionsByVerbArray.map((entry) => {
-    return {
-      actionType: entry[0],
-      percentage: entry[1],
-    };
-  });
+  return formattedActionsByVerbArray.map((entry) => ({
+    actionType: entry[0],
+    percentage: entry[1],
+  }));
 };
 
 // 'actions' is an array in the format retrieved from the API: [ { id: 1, memberId: 2, ... }, {...} ]
 export const filterActionsByUser = (actions, usersArray) => {
   const userKey = 'memberId';
-  return actions.filter((action) => {
-    return usersArray.some((user) => {
-      return user.id === action[userKey];
-    });
-  });
+  return actions.filter((action) =>
+    usersArray.some((user) => user.id === action[userKey]),
+  );
 };
 
 // given an actionsByDay object, findYAxisMax finds max value to set on the yAxis in the graph in ActionsByDayChart.js
@@ -191,9 +184,8 @@ export const findYAxisMax = (actionsByDay) => {
 };
 
 // Extract main space name
-export const extractMainSpace = (arrayOfSpaceObjects) => {
-  return arrayOfSpaceObjects.filter((item) => item.parentId === null)[0];
-};
+export const extractMainSpace = (arrayOfSpaceObjects) =>
+  arrayOfSpaceObjects.filter((item) => item.parentId === null)[0];
 
 // Extract main space *immediate* children
 export const extractMainSpaceChildren = (arrayOfSpaceObjects) => {
@@ -203,17 +195,17 @@ export const extractMainSpaceChildren = (arrayOfSpaceObjects) => {
 
 // remove user 'Learning Analytics' from users list retrieved by API
 // this is an auto-generated 'user' that we don't want to display in the application
-export const removeLearningAnalyticsUser = (usersArray) => {
-  return usersArray.filter((user) => user.id !== LEARNING_ANALYTICS_USER_ID);
-};
+export const removeLearningAnalyticsUser = (usersArray) =>
+  usersArray.filter((user) => user.id !== LEARNING_ANALYTICS_USER_ID);
 
 // consolidate users with the same name into a single entry
 // instead of users = [{id: 1, name: 'Augie March'}, {id: 2, name: 'augie march'}], users = [{ids: [1,2], name: 'augie march'}]
 export const consolidateUsers = (usersArray) => {
   // remove trailing spaces from user names and turn them lower case
-  const usersArrayWithTrimmedNames = usersArray.map((user) => {
-    return { ...user, name: user.name.trim().toLowerCase() };
-  });
+  const usersArrayWithTrimmedNames = usersArray.map((user) => ({
+    ...user,
+    name: user.name.trim().toLowerCase(),
+  }));
 
   // group ids of matching user names under one object
   const consolidatedUsersArray = [];
@@ -259,11 +251,8 @@ export const formatConsolidatedUsers = (consolidatedUsersArray) => {
 };
 
 // for react-select purposes, add a 'value' key to each element of the users array, holding the same value as the key 'name'
-export const addValueKeyToUsers = (consolidatedUsersArray) => {
-  return consolidatedUsersArray.map((user) => {
-    return { ...user, value: user.name };
-  });
-};
+export const addValueKeyToUsers = (consolidatedUsersArray) =>
+  consolidatedUsersArray.map((user) => ({ ...user, value: user.name }));
 
 // takes array of action objects and array of itemTypes (e.g. ['Space', 'Resource'])
 // keeps only actions with verb 'accessed'
