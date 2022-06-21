@@ -4,6 +4,7 @@ import ActionsByDayChart from '../charts/ActionsByDayChart';
 import ActionsMap from '../charts/ActionsMap';
 import ActionsByTimeOfDayChart from '../charts/ActionsByTimeOfDayChart';
 import ActionsByVerbChart from '../charts/ActionsByVerbChart';
+import ActionsByUserChart from '../charts/ActionsByUserChart';
 
 const ChartsArea = () => (
   <Grid container>
@@ -18,6 +19,9 @@ const ChartsArea = () => (
     </Grid>
     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
       <ActionsByVerbChart />
+    </Grid>
+    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+      <ActionsByUserChart />
     </Grid>
   </Grid>
 );
