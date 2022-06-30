@@ -66,3 +66,17 @@ export const Context = {
   EXPLORER: 'explorer',
   ANALYZER: 'analyzer',
 };
+
+// Used in ActionsByUserChart.js, maximum number of displayed users in the stacked bar
+export const ACTIONS_BY_USER_MAX_DISPLAYED_USERS = 10;
+
+// Used in ActionsByUserChart.js, 
+export const ACTION_TYPES = [
+  'get',
+  'get_children',
+  'update',
+  'create',
+  'delete',
+  'copy',
+  'move',
+];

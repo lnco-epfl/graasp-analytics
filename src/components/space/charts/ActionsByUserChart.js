@@ -19,37 +19,17 @@ import {
 } from '../../../utils/api';
 import { COLORS, CONTAINER_HEIGHT } from '../../../config/constants';
 import { DataContext } from '../../context/DataProvider';
-
-const ACTION_TYPES = [
-  'get',
-  'get_children',
-  'update',
-  'create',
-  'delete',
-  'copy',
-  'move',
-];
+import {ACTIONS_BY_USER_MAX_DISPLAYED_USERS, ACTION_TYPES} from '../../../config/constants';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
 }));
 
 const ActionsByUserChart = () => {
-  const maxUsers = 10;
-  const title = 'Actions by Most Active Users';
   const { t } = useTranslation();
   const classes = useStyles();
   const { actions, selectedUsers, allMembers } = useContext(DataContext);
-  let users;
-  if (
-    selectedUsers === null ||
-    selectedUsers.length === 0 ||
-    selectedUsers.length === allMembers.length
-  ) {
-    users = allMembers;
-  } else {
-    users = selectedUsers;
-  }
+  const users = selectedUsers.length ? selectedUsers : allMembers 
   const yAxisMax = findYAxisMax(users);
   let formattedActions = [];
 
@@ -69,6 +49,9 @@ const ActionsByUserChart = () => {
     });
     formattedActions.push(userActions);
   });
+
+  const maxUsers = ACTIONS_BY_USER_MAX_DISPLAYED_USERS;
+  const title = 'Actions by Most Active Users';
 
   // sort by total actions in descending order
   formattedActions.sort((a, b) => b.total - a.total);
