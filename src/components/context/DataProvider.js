@@ -51,7 +51,7 @@ const DataProvider = ({ children }) => {
   const { data: unknownData, isError: unknownIsError } = hooks.useActions(
     {
       itemId,
-      view: 'unknown',
+      view: Context.OTHER,
       requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
     },
     { enabled: Boolean(enabledArray.other) },
@@ -103,7 +103,7 @@ const DataProvider = ({ children }) => {
   useEffect(() => {
     if (
       unknownData &&
-      view === 'other' &&
+      view === Context.OTHER &&
       actions.length !== unknownData?.get('actions').length
     ) {
       setActions(unknownData?.get('actions'));

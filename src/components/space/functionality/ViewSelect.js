@@ -59,7 +59,7 @@ const ViewSelect = () => {
         </Typography>
         <Select
           styles={customStyles}
-          options={[...Object.values(Context), 'other']
+          options={Object.values(Context)
             // does not show analyzer
             .filter((context) => context !== Context.ANALYZER)
             .map((context) => ({
