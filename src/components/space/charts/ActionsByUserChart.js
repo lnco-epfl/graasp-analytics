@@ -26,6 +26,7 @@ import {
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
+  margin: { marginTop: 30, marginBottom: 20, marginLeft: 20, marginRight: 20 },
 }));
 
 const ActionsByUserChart = () => {
@@ -48,6 +49,8 @@ const ActionsByUserChart = () => {
     ACTION_TYPES.forEach((actionType) => {
       if (actionsByVerb[actionType]) {
         userActions[actionType] = actionsByVerb[actionType];
+      } else {
+        userActions[actionType] = 0;
       }
     });
     formattedActions.push(userActions);
@@ -73,10 +76,7 @@ const ActionsByUserChart = () => {
         {t(title)}
       </Typography>
       <ResponsiveContainer width="95%" height={CONTAINER_HEIGHT}>
-        <BarChart
-          data={formattedActions}
-          margin={{ top: 30, bottom: 20, left: 20, right: 20 }}
-        >
+        <BarChart data={formattedActions} className={classes.margin}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis dataKey="name" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
