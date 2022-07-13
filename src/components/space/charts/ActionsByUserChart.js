@@ -3,13 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import {
-  BarChart,
   CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
   Bar,
+  Line,
   ResponsiveContainer,
+  ComposedChart,
 } from 'recharts';
 import EmptyChart from './EmptyChart';
 import {
@@ -26,7 +27,12 @@ import {
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
-  margin: { marginTop: 30, marginBottom: 20, marginLeft: 20, marginRight: 20 },
+  composedChart: {
+    marginTop: 30,
+    marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
 }));
 
 const ActionsByUserChart = () => {
@@ -76,20 +82,30 @@ const ActionsByUserChart = () => {
         {t(title)}
       </Typography>
       <ResponsiveContainer width="95%" height={CONTAINER_HEIGHT}>
-        <BarChart data={formattedActions} className={classes.margin}>
+        <ComposedChart
+          data={formattedActions}
+          className={classes.composedChart}
+        >
           <CartesianGrid strokeDasharray="2" />
           <XAxis dataKey="name" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip />
           {ACTION_TYPES.map((actionType, index) => (
             <Bar
-              key=""
+              key="actionType"
               dataKey={actionType}
               stackId="1"
               fill={COLORS[index % COLORS.length]}
             />
           ))}
-        </BarChart>
+          <Line
+            dataKey="total"
+            name={t('Total')}
+            type="monotone"
+            stroke="#8884d8"
+            activeDot={{ r: 6 }}
+          />
+        </ComposedChart>
       </ResponsiveContainer>
     </>
   );
