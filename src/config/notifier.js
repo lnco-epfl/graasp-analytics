@@ -6,7 +6,6 @@ const { exportActionsRoutine } = routines;
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({ type, payload }) => {
-  console.log('type: ', type);
   let message = null;
   switch (type) {
     case exportActionsRoutine.SUCCESS: {
