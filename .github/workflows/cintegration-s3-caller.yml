@@ -1,0 +1,34 @@
+name: Deploy to development environment
+
+# Control when the action will run.
+on:
+  # Triggers the workflow on push events only for the main branch
+  push:
+    branches:
+      - main
+      - master
+
+  # Allows to run the workflow manually from the Actions tab
+  workflow_dispatch:
+
+# This workflow is made up of one job that calls the reusable workflow in graasp-deploy
+jobs:
+  graasp-deploy-s3-workflow:
+    name: Graasp Analyzer
+    # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
+    uses: graasp/graasp-deploy/.github/workflows/cintegration-s3.yml@7b5dd84304458c3c5ab03cbbde059670f77b1687
+    with:
+      build-folder: 'build'
+    secrets:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+      aws-region: ${{ secrets.AWS_REGION_DEV }}
+      aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_RESEARCH_DEV }}
+      cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_RESEARCH_DEV }}
+      api-host: ${{ secrets.REACT_APP_API_HOST_DEV }}
+      google-key: ${{ secrets.REACT_APP_GOOGLE_KEY_DEV }}
+      authentication-host: ${{ secrets.REACT_APP_AUTHENTICATION_HOST_DEV }}
+      graasp-perform-host: ${{ secrets.PLAYER_CLIENT_HOST_DEV }}
+      graasp-compose-host: ${{ secrets.BUILDER_CLIENT_HOST_STAGE }}
+      graasp-explorer-host: ${{ secrets.EXPLORER_CLIENT_HOST_STAGE }}
+      domain: ${{ secrets.REACT_APP_DOMAIN_DEV }}
