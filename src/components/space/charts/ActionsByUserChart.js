@@ -18,7 +18,6 @@ import {
   filterActionsByUser,
   findYAxisMax,
 } from '../../../utils/api';
-// import { COLORS, CONTAINER_HEIGHT } from '../../../config/constants';
 import { DataContext } from '../../context/DataProvider';
 import {
   COLORS,
@@ -49,8 +48,6 @@ const ActionsByUserChart = () => {
       {},
     );
   const actionTypes = Object.keys(groupBy('actionType', actions));
-  // eslint-disable-next-line
-  // console.log(Object.keys(grouped));
   const users = selectedUsers.length ? selectedUsers : allMembers;
   const yAxisMax = findYAxisMax(users);
   let formattedActions = [];
