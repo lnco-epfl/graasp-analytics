@@ -48,6 +48,14 @@ const DataProvider = ({ children }) => {
     },
     { enabled: Boolean(enabledArray[Context.EXPLORER]) },
   );
+  const { data: unknownData, isError: unknownIsError } = hooks.useActions(
+    {
+      itemId,
+      view: Context.UNKNOWN,
+      requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
+    },
+    { enabled: Boolean(enabledArray[Context.UNKNOWN]) },
+  );
 
   useEffect(() => {
     // fetch corresponding data only when view is shown
@@ -91,6 +99,18 @@ const DataProvider = ({ children }) => {
       setError(explorerIsError);
     }
   }, [explorerData, view, actions, explorerIsError]);
+
+  useEffect(() => {
+    if (
+      unknownData &&
+      view === Context.UNKNOWN &&
+      actions.length !== unknownData?.get('actions').length
+    ) {
+      setActions(unknownData?.get('actions'));
+      setAllMembers(unknownData?.get('members'));
+      setError(unknownIsError);
+    }
+  }, [unknownData, view, actions, unknownIsError]);
 
   const value = useMemo(
     () => ({

@@ -124,6 +124,13 @@ export const getActionsByVerb = (actions) => {
   return actionsByVerb;
 };
 
+// Takes array of action objects and returns an object with {key: value} pairs of {verb: #-of-actions}
+export const getActionNumByVerb = (actions) => {
+  const actionsByVerb = _.countBy(actions, 'actionType');
+  actionsByVerb.total =  actions.length;
+  return actionsByVerb;
+};
+
 export const formatActionsByVerb = (actionsByVerbObject) => {
   const actionsByVerbArray = Object.entries(actionsByVerbObject);
   // capitalize verbs (entry[0][0]), convert 0.0x notation to x% and round to two decimal places (entry[0][1])
