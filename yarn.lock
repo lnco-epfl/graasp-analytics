@@ -7877,9 +7877,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graasp-research@workspace:.":
+"graasp-analytics@workspace:.":
   version: 0.0.0-use.local
-  resolution: "graasp-research@workspace:."
+  resolution: "graasp-analytics@workspace:."
   dependencies:
     "@babel/eslint-parser": 7.17.0
     "@babel/eslint-plugin": 7.17.7

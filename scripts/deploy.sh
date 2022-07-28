@@ -66,7 +66,7 @@ fi
 export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
 export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 
-echo "info: releasing graasp research"
+echo "info: releasing graasp analytics"
 
 # sync s3 bucket
 aws s3 sync ${BUILD} s3://${BUCKET} --delete

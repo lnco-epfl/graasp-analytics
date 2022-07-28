@@ -9,7 +9,7 @@ on:
 # This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
   graasp-deploy-s3-workflow:
-    name: Graasp Analyzer
+    name: Graasp Analytics
     uses: graasp/graasp-deploy/.github/workflows/cdelivery-s3.yml@7b5dd84304458c3c5ab03cbbde059670f77b1687
     with:
       build-folder: 'build'
