@@ -18,11 +18,12 @@ import {
   filterActionsByUser,
   findYAxisMax,
 } from '../../../utils/api';
-import { COLORS, CONTAINER_HEIGHT } from '../../../config/constants';
+// import { COLORS, CONTAINER_HEIGHT } from '../../../config/constants';
 import { DataContext } from '../../context/DataProvider';
 import {
+  COLORS,
+  CONTAINER_HEIGHT,
   ACTIONS_BY_USER_MAX_DISPLAYED_USERS,
-  ACTION_TYPES,
 } from '../../../config/constants';
 
 const useStyles = makeStyles(() => ({
@@ -39,6 +40,17 @@ const ActionsByUserChart = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { actions, selectedUsers, allMembers } = useContext(DataContext);
+  const groupBy = (key, arr) =>
+    arr.reduce(
+      (acc, cur) => ({
+        ...acc,
+        [cur[key]]: cur[key] in acc ? acc[cur[key]].concat(cur) : [cur],
+      }),
+      {},
+    );
+  const actionTypes = Object.keys(groupBy('actionType', actions));
+  // eslint-disable-next-line
+  // console.log(Object.keys(grouped));
   const users = selectedUsers.length ? selectedUsers : allMembers;
   const yAxisMax = findYAxisMax(users);
   let formattedActions = [];
@@ -52,7 +64,7 @@ const ActionsByUserChart = () => {
       name: user.name,
       total: actionsByVerb.total,
     };
-    ACTION_TYPES.forEach((actionType) => {
+    actionTypes.forEach((actionType) => {
       if (actionsByVerb[actionType]) {
         userActions[actionType] = actionsByVerb[actionType];
       } else {
@@ -90,7 +102,7 @@ const ActionsByUserChart = () => {
           <XAxis dataKey="name" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip />
-          {ACTION_TYPES.map((actionType, index) => (
+          {actionTypes.map((actionType, index) => (
             <Bar
               key=""
               dataKey={actionType}
