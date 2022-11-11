@@ -50,8 +50,8 @@ const ItemsByAccessedCount = () => {
   let filteredActions;
   if (
     selectedUsers === null ||
-    selectedUsers.length === 0 ||
-    selectedUsers.length === allMembers.length
+    selectedUsers.size === 0 ||
+    selectedUsers.size === allMembers.size
   ) {
     filteredActions = allActions;
   } else {
@@ -64,13 +64,13 @@ const ItemsByAccessedCount = () => {
   );
   const yAxisMax = findYAxisMax(mostViewedItems);
   const formattedMostViewedItems = formatItemsByAccessedCount(mostViewedItems);
-
+  const title = 'Most Viewed Items';
   // if selected user(s) have no actions, render component with message that there are no actions
-  if (formattedMostViewedItems.length === 0) {
+  if (!formattedMostViewedItems.length) {
     return (
       <EmptyChart
         selectedUsers={selectedUsers}
-        chartTitle={t('Most Viewed Items')}
+        chartTitle={t(title)}
         selectFilter={
           // eslint-disable-next-line react/jsx-wrap-multilines
           <ItemsSelect
@@ -86,7 +86,7 @@ const ItemsByAccessedCount = () => {
   return (
     <>
       <Typography variant="h6" className={classes.typography}>
-        {t('Most Viewed Items')}
+        {t(title)}
       </Typography>
       <div className={classes.selectContainer}>
         <ItemsSelect

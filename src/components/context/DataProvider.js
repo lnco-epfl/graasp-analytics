@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
+import { List } from 'immutable';
 import { ViewDataContext } from './ViewDataProvider';
 import { hooks } from '../../config/queryClient';
 import { DEFAULT_REQUEST_SAMPLE_SIZE, Context } from '../../config/constants';
@@ -17,9 +18,10 @@ export const DataContext = createContext();
 // enabled becomes true only if the user change the view in select
 const DataProvider = ({ children }) => {
   const [enabledArray, setEnabledArray] = useState({});
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [actions, setActions] = useState([]);
-  const [allMembers, setAllMembers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState(List());
+  const [selectedActions, setSelectedActions] = useState(List());
+  const [actions, setActions] = useState(List());
+  const [allMembers, setAllMembers] = useState(List());
   const [error, setError] = useState(false);
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
@@ -32,6 +34,7 @@ const DataProvider = ({ children }) => {
     },
     { enabled: Boolean(enabledArray[Context.BUILDER]) },
   );
+
   const { data: playerData, isError: playerIsError } = hooks.useActions(
     {
       itemId,
@@ -40,14 +43,33 @@ const DataProvider = ({ children }) => {
     },
     { enabled: Boolean(enabledArray[Context.PLAYER]) },
   );
+
   const { data: explorerData, isError: explorerIsError } = hooks.useActions(
     {
       itemId,
-      view: Context.EXPLORER,
+      view: Context.LIBRARY,
       requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
     },
-    { enabled: Boolean(enabledArray[Context.EXPLORER]) },
+    { enabled: Boolean(enabledArray[Context.LIBRARY]) },
   );
+
+  const { data: unknownData, isError: unknownIsError } = hooks.useActions(
+    {
+      itemId,
+      view: Context.UNKNOWN,
+      requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
+    },
+    { enabled: Boolean(enabledArray[Context.UNKNOWN]) },
+  );
+
+  const { data: itemData, isError: itemIsError } = hooks.useItem(itemId);
+  const { data: itemChildren } = hooks.useChildren(itemId);
+
+  useEffect(() => {
+    if (itemIsError) {
+      setError(true);
+    }
+  }, [itemIsError]);
 
   useEffect(() => {
     // fetch corresponding data only when view is shown
@@ -60,7 +82,7 @@ const DataProvider = ({ children }) => {
     if (
       builderData &&
       view === Context.BUILDER &&
-      actions.length !== builderData?.get('actions').length
+      actions.size !== builderData?.get('actions').size
     ) {
       setActions(builderData?.get('actions'));
       setAllMembers(builderData?.get('members'));
@@ -72,7 +94,7 @@ const DataProvider = ({ children }) => {
     if (
       playerData &&
       view === Context.PLAYER &&
-      actions.length !== playerData?.get('actions').length
+      actions.size !== playerData?.get('actions').size
     ) {
       setActions(playerData?.get('actions'));
       setAllMembers(playerData?.get('members'));
@@ -83,8 +105,8 @@ const DataProvider = ({ children }) => {
   useEffect(() => {
     if (
       explorerData &&
-      view === Context.EXPLORER &&
-      actions.length !== explorerData?.get('actions').length
+      view === Context.LIBRARY &&
+      actions.size !== explorerData?.get('actions').size
     ) {
       setActions(explorerData?.get('actions'));
       setAllMembers(explorerData?.get('members'));
@@ -92,15 +114,31 @@ const DataProvider = ({ children }) => {
     }
   }, [explorerData, view, actions, explorerIsError]);
 
+  useEffect(() => {
+    if (
+      unknownData &&
+      view === Context.UNKNOWN &&
+      actions.size !== unknownData?.get('actions').size
+    ) {
+      setActions(unknownData?.get('actions'));
+      setAllMembers(unknownData?.get('members'));
+      setError(unknownIsError);
+    }
+  }, [unknownData, view, actions, unknownIsError]);
+
   const value = useMemo(
     () => ({
       actions,
       allMembers,
       selectedUsers,
       setSelectedUsers,
+      selectedActions,
+      setSelectedActions,
       error,
+      itemData,
+      itemChildren,
     }),
-    [actions, allMembers, error, selectedUsers],
+    [actions, allMembers, error, selectedUsers, selectedActions, itemData],
   );
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

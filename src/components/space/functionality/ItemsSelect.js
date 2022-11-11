@@ -36,12 +36,12 @@ const ItemsSelect = ({ actions, selectedItemTypes, setSelectedItemTypes }) => {
             // the 'selected' argument in this function would be [{"name": "Option A", value: "Option A"}, {name: "Select All", value: "*"}]
             // hence the third condition below: always check the last item in this array - if it's the Select All option, then handleChange(allItemTypes)
             // the other two conditions prevent the following errors occuring:
-            // (selected !== null): when multiple options are selected THEN removed, 'selected' here becomes null - hence selected[selected.length - 1].value fails
-            // (selected.length > 0): when multiple options are being selected, there are 'transitions' where 'selected' here becomes [], and again [...].value fails
+            // (selected !== null): when multiple options are selected THEN removed, 'selected' here becomes null - hence selected[selected.size - 1].value fails
+            // (selected.size > 0): when multiple options are being selected, there are 'transitions' where 'selected' here becomes [], and again [...].value fails
             // (to see the errors, comment out 1 or more of the conditions)
             selected !== null &&
-            selected.length > 0 &&
-            selected[selected.length - 1].value === allOption.value
+            selected.size > 0 &&
+            selected[selected.size - 1].value === allOption.value
           ) {
             return handleChange(allItemTypes);
           }

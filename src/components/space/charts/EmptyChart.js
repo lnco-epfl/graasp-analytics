@@ -27,7 +27,7 @@ const EmptyChart = ({ chartTitle, selectFilter }) => {
   const { selectedUsers } = useContext(DataContext);
 
   let message = '';
-  if (selectedUsers.length > 1) {
+  if (selectedUsers.size > 1) {
     message = t('No actions to show for these users');
   } else {
     message = t('No actions to show for this user');

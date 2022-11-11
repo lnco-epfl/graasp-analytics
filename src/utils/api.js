@@ -1,6 +1,6 @@
 // Functions in this file manipulate data retrieved from the api to make it usable by the app's charts/components
-const _ = require('lodash');
-const {
+import _ from 'lodash';
+import {
   LEARNING_ANALYTICS_USER_ID,
   MIN_PERCENTAGE_TO_SHOW_VERB,
   OTHER_VERB,
@@ -12,13 +12,14 @@ const {
   NIGHT,
   ACCESSED_STRING,
   TOP_NUMBER_OF_ITEMS_TO_DISPLAY,
-} = require('../config/constants');
+  ITEM_NAME_MAX_LENGTH,
+} from '../config/constants';
 
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
 export const getActionsByDay = (actions) => {
   const dateKey = 'createdAt';
   const actionsByDay = {};
-  actions.forEach((action) => {
+  actions?.forEach((action) => {
     const actionDate = new Date(action[dateKey].slice(0, 10));
     if (!actionsByDay[actionDate]) {
       actionsByDay[actionDate] = 1;
@@ -76,7 +77,7 @@ export const getActionsByTimeOfDay = (actions) => {
     [EVENING]: 0,
     [NIGHT]: 0,
   };
-  actions.forEach((action) => {
+  actions?.forEach((action) => {
     const actionHourOfDay = getActionHourOfDay(action);
     if (actionHourOfDay >= 0 && actionHourOfDay < 4) {
       actionsByTimeOfDay[LATE_NIGHT] += 1;
@@ -92,7 +93,7 @@ export const getActionsByTimeOfDay = (actions) => {
       actionsByTimeOfDay[NIGHT] += 1;
     } else {
       // eslint-disable-next-line no-console
-      console.log(`actionHourOfDay ${actionHourOfDay} is undefined`);
+      console.error(`actionHourOfDay ${actionHourOfDay} is undefined`);
     }
   });
   return actionsByTimeOfDay;
@@ -110,7 +111,7 @@ export const formatActionsByTimeOfDay = (actionsByTimeOfDayObject) => {
 
 // Takes array of action objects and returns an object with {key: value} pairs of {verb: %-of-actions}
 export const getActionsByVerb = (actions) => {
-  const totalActions = actions.length;
+  const totalActions = actions.size;
   const actionsByVerb = {};
   actions.forEach((action) => {
     if (!actionsByVerb[action.actionType]) {
@@ -163,6 +164,16 @@ export const filterActionsByUser = (actions, usersArray) => {
   const userKey = 'memberId';
   return actions.filter((action) =>
     usersArray.some((user) => user.id === action[userKey]),
+  );
+};
+
+export const filterActionsByActionTypes = (actions, actionsArray) => {
+  // no selection return whole array
+  if (!actionsArray || actionsArray.isEmpty()) {
+    return actions;
+  }
+  return actions.filter((action) =>
+    actionsArray.some((act) => act.value === action.actionType),
   );
 };
 
@@ -324,4 +335,10 @@ export const extractItemTypes = (actions) => {
   const itemsReactSelect = [];
   items.forEach((item) => itemsReactSelect.push({ name: item, value: item }));
   return itemsReactSelect;
+};
+
+export const findItemNameByPath = (path, items) => {
+  const name =
+    items?.find(({ path: thisPath }) => path === thisPath)?.name ?? 'Unknown';
+  return _.truncate(name, { length: ITEM_NAME_MAX_LENGTH });
 };

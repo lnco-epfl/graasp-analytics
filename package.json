@@ -10,8 +10,8 @@
   ],
   "dependencies": {
     "@graasp/query-client": "github:graasp/graasp-query-client",
-    "@graasp/ui": "github:graasp/graasp-ui",
-    "@graasp/utils": "github:graasp/graasp-utils",
+    "@graasp/sdk": "github:graasp/graasp-sdk",
+    "@graasp/ui": "github:graasp/graasp-ui#v0.2.1",
     "@material-ui/core": "4.12.4",
     "@material-ui/icons": "4.11.3",
     "@material-ui/lab": "4.0.0-alpha.61",
@@ -86,6 +86,9 @@
     "prettier": "2.6.2",
     "standard-version": "9.3.2",
     "typescript": "4.6.4"
+  },
+  "resolutions": {
+    "@graasp/sdk": "github:graasp/graasp-sdk"
   },
   "packageManager": "yarn@3.2.0"
 }

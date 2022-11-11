@@ -4,13 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from 'recharts';
 import EmptyChart from './EmptyChart';
-import {
-  getActionsByVerb,
-  formatActionsByVerb,
-  filterActionsByUser,
-} from '../../../utils/api';
+import { filterActions } from '../../../utils/array';
 import { COLORS, CONTAINER_HEIGHT } from '../../../config/constants';
 import { DataContext } from '../../context/DataProvider';
+import { formatActionsByVerb, getActionsByVerb } from '../../../utils/api';
 
 const useStyles = makeStyles(() => ({
   typography: { textAlign: 'center' },
@@ -19,30 +16,24 @@ const useStyles = makeStyles(() => ({
 const ActionsByVerbChart = () => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { actions, allMembers, selectedUsers } = useContext(DataContext);
+  const { actions, allMembers, selectedUsers, selectedActions } =
+    useContext(DataContext);
 
-  let actionsByVerb;
-  if (
-    selectedUsers === null ||
-    selectedUsers.length === 0 ||
-    selectedUsers.length === allMembers.length
-  ) {
-    actionsByVerb = getActionsByVerb(actions);
-  } else {
-    actionsByVerb = getActionsByVerb(
-      filterActionsByUser(actions, selectedUsers),
-    );
+  let actionsByVerb = [];
+  if (actions?.size) {
+    actionsByVerb = filterActions({
+      selectedUsers,
+      selectedActions,
+      actions,
+      allMembersLength: allMembers.size,
+      chartFunction: getActionsByVerb,
+    });
   }
   const formattedActionsByVerb = formatActionsByVerb(actionsByVerb);
-
+  const title = 'Actions by Verb';
   // if selected user(s) have no actions, render component with message that there are no actions
-  if (formattedActionsByVerb.length === 0) {
-    return (
-      <EmptyChart
-        selectedUsers={selectedUsers}
-        chartTitle={t('Actions by Verb')}
-      />
-    );
+  if (!formattedActionsByVerb.length) {
+    return <EmptyChart selectedUsers={selectedUsers} chartTitle={t(title)} />;
   }
 
   return (

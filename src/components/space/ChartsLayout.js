@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import ChartsHeader from './charts-layout/ChartsHeader';
 import ChartsAlerts from './charts-layout/ChartsAlerts';
 import ChartsArea from './charts-layout/ChartsArea';
-import UsersSelect from './functionality/UsersSelect';
 import { ViewDataContext } from '../context/ViewDataProvider';
 import { DataContext } from '../context/DataProvider';
 
@@ -44,7 +43,6 @@ const ChartsLayout = () => {
       ) : (
         <>
           <ChartsAlerts />
-          <UsersSelect />
           <ChartsArea />
         </>
       )}

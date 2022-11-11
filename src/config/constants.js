@@ -4,6 +4,7 @@ export const DEFAULT_LONGITUDE = 8.5417;
 
 // Default Zoom for map
 export const DEFAULT_ZOOM = 3;
+export const ACTIONS_BY_USER_MAX_DISPLAYED_USERS = 10;
 
 // If user zooms in beyond MAX_CLUSTER_ZOOM, map no longer displays data points.
 // Maximum possible value is 16 (zoomed all the way in). See npm supercluster docs for further info.
@@ -63,6 +64,9 @@ export const DEFAULT_REQUEST_SAMPLE_SIZE = 5000;
 export const Context = {
   BUILDER: 'builder',
   PLAYER: 'player',
-  EXPLORER: 'explorer',
-  ANALYZER: 'analyzer',
+  LIBRARY: 'library',
+  ANALYTICS: 'analytics',
+  UNKNOWN: 'unknown',
 };
+
+export const ITEM_NAME_MAX_LENGTH = 20;

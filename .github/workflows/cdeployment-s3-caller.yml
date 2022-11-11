@@ -11,7 +11,7 @@ jobs:
   graasp-deploy-s3-workflow:
     name: Graasp Analytics
     # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
-    uses: graasp/graasp-deploy/.github/workflows/cdeployment-s3.yml@7b5dd84304458c3c5ab03cbbde059670f77b1687
+    uses: graasp/graasp-deploy/.github/workflows/cdeployment-s3.yml@v1
     with:
       build-folder: 'build'
       tag: ${{ github.event.client_payload.tag }}
