@@ -1,44 +1,33 @@
-import React, { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import {
+  Bar,
   CartesianGrid,
+  ComposedChart,
+  Line,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  Bar,
-  Line,
-  ResponsiveContainer,
-  ComposedChart,
 } from 'recharts';
-import EmptyChart from './EmptyChart';
+
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import {
+  ACTIONS_BY_USER_MAX_DISPLAYED_USERS,
+  COLORS,
+} from '../../../config/constants';
 import {
   filterActionsByActionTypes,
   filterActionsByUser,
   findYAxisMax,
 } from '../../../utils/api';
 import { groupBy } from '../../../utils/array';
+import ChartContainer from '../../common/ChartContainer';
+import ChartTitle from '../../common/ChartTitle';
 import { DataContext } from '../../context/DataProvider';
-import {
-  COLORS,
-  CONTAINER_HEIGHT,
-  ACTIONS_BY_USER_MAX_DISPLAYED_USERS,
-} from '../../../config/constants';
-
-const useStyles = makeStyles(() => ({
-  typography: { textAlign: 'center' },
-  composedChart: {
-    marginTop: 30,
-    marginBottom: 20,
-    marginLeft: 20,
-    marginRight: 20,
-  },
-}));
+import EmptyChart from './EmptyChart';
 
 const UsersByActionByChart = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { actions, selectedUsers, selectedActions, allMembers } =
     useContext(DataContext);
   const users = selectedUsers.size ? selectedUsers : allMembers;
@@ -62,7 +51,7 @@ const UsersByActionByChart = () => {
     formattedUsersByAction.push(userActions);
   });
   const maxUsers = ACTIONS_BY_USER_MAX_DISPLAYED_USERS;
-  const title = 'The Most Active Users';
+  const title = `${ACTIONS_BY_USER_MAX_DISPLAYED_USERS} Most Active Users`;
 
   // sort by total actions in descending order
   formattedUsersByAction.sort((a, b) => b.total - a.total);
@@ -76,14 +65,9 @@ const UsersByActionByChart = () => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.typography}>
-        {t(title)}
-      </Typography>
-      <ResponsiveContainer width="95%" height={CONTAINER_HEIGHT}>
-        <ComposedChart
-          data={formattedUsersByAction}
-          className={classes.composedChart}
-        >
+      <ChartTitle>{t(title)}</ChartTitle>
+      <ChartContainer>
+        <ComposedChart data={formattedUsersByAction}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis dataKey="name" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
@@ -104,7 +88,7 @@ const UsersByActionByChart = () => {
             activeDot={{ r: 6 }}
           />
         </ComposedChart>
-      </ResponsiveContainer>
+      </ChartContainer>
     </>
   );
 };

@@ -1,4 +1,5 @@
 import { configureQueryClient } from '@graasp/query-client';
+
 import { REACT_APP_API_HOST } from './env';
 import notifier from './notifier';
 

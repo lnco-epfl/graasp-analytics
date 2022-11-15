@@ -1,33 +1,28 @@
-import React, { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import {
-  LineChart,
   CartesianGrid,
+  Line,
+  LineChart,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  Line,
-  ResponsiveContainer,
 } from 'recharts';
-import EmptyChart from './EmptyChart';
+
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import {
-  getActionsByDay,
-  formatActionsByDay,
   findYAxisMax,
+  formatActionsByDay,
+  getActionsByDay,
 } from '../../../utils/api';
 import { filterActions } from '../../../utils/array';
-import { CONTAINER_HEIGHT } from '../../../config/constants';
+import ChartContainer from '../../common/ChartContainer';
+import ChartTitle from '../../common/ChartTitle';
 import { DataContext } from '../../context/DataProvider';
-
-const useStyles = makeStyles(() => ({
-  typography: { textAlign: 'center' },
-}));
+import EmptyChart from './EmptyChart';
 
 const ActionsByDayChart = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { actions, selectedUsers, selectedActions, allMembers } =
     useContext(DataContext);
   // actionsByDay is the object passed, after formatting, to the BarChart component below
@@ -58,14 +53,9 @@ const ActionsByDayChart = () => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.typography}>
-        {t(title)}
-      </Typography>
-      <ResponsiveContainer width="95%" height={CONTAINER_HEIGHT}>
-        <LineChart
-          data={formattedActionsByDay}
-          margin={{ top: 30, bottom: 20, left: 20, right: 20 }}
-        >
+      <ChartTitle>{t(title)}</ChartTitle>
+      <ChartContainer>
+        <LineChart data={formattedActionsByDay}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis dataKey="date" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
@@ -77,7 +67,7 @@ const ActionsByDayChart = () => {
             activeDot={{ r: 6 }}
           />
         </LineChart>
-      </ResponsiveContainer>
+      </ChartContainer>
     </>
   );
 };

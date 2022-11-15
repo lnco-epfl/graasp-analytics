@@ -1,5 +1,7 @@
-import React, { createContext, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
+
+import React, { createContext, useMemo, useState } from 'react';
+
 import { Context } from '../../config/constants';
 
 export const ViewDataContext = createContext();

@@ -1,21 +1,18 @@
+import { Cell, Pie, PieChart, Tooltip } from 'recharts';
+
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from 'recharts';
-import EmptyChart from './EmptyChart';
-import { filterActions } from '../../../utils/array';
-import { COLORS, CONTAINER_HEIGHT } from '../../../config/constants';
-import { DataContext } from '../../context/DataProvider';
-import { formatActionsByVerb, getActionsByVerb } from '../../../utils/api';
 
-const useStyles = makeStyles(() => ({
-  typography: { textAlign: 'center' },
-}));
+import { COLORS } from '../../../config/constants';
+import { formatActionsByVerb, getActionsByVerb } from '../../../utils/api';
+import { filterActions } from '../../../utils/array';
+import ChartContainer from '../../common/ChartContainer';
+import ChartTitle from '../../common/ChartTitle';
+import { DataContext } from '../../context/DataProvider';
+import EmptyChart from './EmptyChart';
 
 const ActionsByVerbChart = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { actions, allMembers, selectedUsers, selectedActions } =
     useContext(DataContext);
 
@@ -38,10 +35,8 @@ const ActionsByVerbChart = () => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.typography}>
-        {t('Actions by Verb')}
-      </Typography>
-      <ResponsiveContainer width="95%" height={CONTAINER_HEIGHT}>
+      <ChartTitle>{t('Actions by Verb')}</ChartTitle>
+      <ChartContainer>
         <PieChart fontSize={14}>
           <Pie
             data={formattedActionsByVerb}
@@ -60,7 +55,7 @@ const ActionsByVerbChart = () => {
           </Pie>
           <Tooltip formatter={(value) => `${value}%`} />
         </PieChart>
-      </ResponsiveContainer>
+      </ChartContainer>
     </>
   );
 };

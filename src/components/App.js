@@ -1,23 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import Home from './home/Home';
-import Header from './layout/Header';
-import Footer from './layout/Footer';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+
+import { useTheme } from '@mui/material/styles';
+
 import ContextsWrapper from './context/ContextsWrapper';
+import Home from './home/Home';
+import Footer from './layout/Footer';
+import Header from './layout/Header';
 import ChartsLayout from './space/ChartsLayout';
 
-const useStyles = makeStyles((theme) => ({
-  main: {
-    flex: 1,
-  },
-  embedded: {
-    paddingTop: theme.spacing(2),
-  },
-}));
-
 const App = () => {
-  const classes = useStyles();
+  const theme = useTheme();
   return (
     <Router>
       <Routes>
@@ -25,7 +18,7 @@ const App = () => {
           path="/embedded/:itemId"
           element={
             // eslint-disable-next-line react/jsx-wrap-multilines
-            <main className={classes.embedded}>
+            <main style={{ paddingTop: theme.spacing(2) }}>
               <ContextsWrapper>
                 <ChartsLayout />
               </ContextsWrapper>
@@ -38,7 +31,7 @@ const App = () => {
             // eslint-disable-next-line react/jsx-wrap-multilines
             <>
               <Header />
-              <main className={classes.main}>
+              <main style={{ flex: 1 }}>
                 <ContextsWrapper>
                   <ChartsLayout />
                 </ContextsWrapper>
@@ -53,7 +46,7 @@ const App = () => {
             // eslint-disable-next-line react/jsx-wrap-multilines
             <>
               <Header />
-              <main className={classes.main}>
+              <main style={{ flex: 1 }}>
                 <Home />
               </main>
               <Footer />

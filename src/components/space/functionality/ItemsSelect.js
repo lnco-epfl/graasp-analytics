@@ -1,7 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
+
 import customStyles from '../../../styles/react-select-styles';
 import { extractItemTypes } from '../../../utils/api';
 

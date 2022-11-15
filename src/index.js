@@ -1,15 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
-import './index.css';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import Root from './components/Root';
-import * as serviceWorker from './serviceWorker';
 import {
   SENTRY_DSN,
   SENTRY_ENVIRONMENT,
   SENTRY_TRACE_SAMPLE_RATE,
 } from './config/sentry';
+import './index.css';
+import * as serviceWorker from './serviceWorker';
 
 Sentry.init({
   dsn: SENTRY_DSN,

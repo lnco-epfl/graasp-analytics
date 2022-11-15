@@ -1,56 +1,27 @@
 import React, { useContext } from 'react';
 import { useLocation, useMatch } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import ActionsSelect from '../functionality/ActionsSelect';
-import UsersSelect from '../functionality/UsersSelect';
-import ViewSelect from '../functionality/ViewSelect';
+
+import { styled, useTheme } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
 import { DataContext } from '../../context/DataProvider';
+import ActionsSelect from '../functionality/ActionsSelect';
 import ExportData from '../functionality/ExportData';
 import ReportData from '../functionality/ReportData';
+import UsersSelect from '../functionality/UsersSelect';
+import ViewSelect from '../functionality/ViewSelect';
 
-const useStyles = makeStyles((theme) => ({
-  itemName: {
-    fontWeight: theme.typography.fontWeightBold,
-    marginRight: theme.spacing(2),
-  },
-  leftCell: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  rightCell: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  root: {
-    flexGrow: 1,
-    paddingTop: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    paddingLeft: theme.spacing(4),
-    paddingBottom: theme.spacing(1),
-  },
-  rootAlt: {
-    flexGrow: 1,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: theme.spacing(1),
-    paddingRight: theme.spacing(2),
-    paddingLeft: theme.spacing(4),
-    paddingBottom: theme.spacing(2),
-  },
-  alert: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: theme.spacing(1),
-  },
+const CustomRoot = styled('div')(({ theme }) => ({
+  flexGrow: 1,
+  paddingTop: theme.spacing(2),
+  paddingRight: theme.spacing(2),
+  paddingLeft: theme.spacing(4),
+  paddingBottom: theme.spacing(1),
 }));
 
 const ChartsHeader = () => {
-  const classes = useStyles();
+  const theme = useTheme();
   const { itemName } = useContext(DataContext);
   const { pathname } = useLocation();
   const match = useMatch(pathname, {
@@ -60,14 +31,23 @@ const ChartsHeader = () => {
 
   if (match) {
     return (
-      <Grid container className={classes.rootAlt}>
-        <Grid item xs={8}>
+      <Grid
+        container
+        flexGrow={1}
+        justifyContent="space-between"
+        alignItems="center"
+        pt={1}
+        pr={2}
+        pl={4}
+        pb={2}
+      >
+        <Grid item xs={9}>
           <ExportData />
           <ViewSelect />
           <UsersSelect />
           <ActionsSelect />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <ReportData />
         </Grid>
       </Grid>
@@ -75,21 +55,26 @@ const ChartsHeader = () => {
   }
 
   return (
-    <div className={classes.root}>
+    <CustomRoot>
       <Grid container>
-        <Grid item xs={6} className={classes.leftCell}>
-          <Typography variant="h5" color="inherit" className={classes.itemName}>
+        <Grid item xs={6} justifyContent="flex-start" alignItems="center">
+          <Typography
+            variant="h5"
+            color="inherit"
+            fontWeight={theme.typography.fontWeightBold}
+            mr={2}
+          >
             {itemName}
           </Typography>
           <ExportData />
         </Grid>
-        <Grid item xs={6} className={classes.rightCell}>
+        <Grid item xs={6} justifyContent="flex-end" alignItems="center">
           <ViewSelect />
           <UsersSelect />
           <ActionsSelect />
         </Grid>
       </Grid>
-    </div>
+    </CustomRoot>
   );
 };
 

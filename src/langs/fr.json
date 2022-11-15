@@ -11,7 +11,7 @@
     "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.": "La vue 'player' affiche les analytics de l'interface indépendente de Graasp typiquement utilisée par les étudiants pour accéder à un élément.",
     "The 'explorer' view displays analytics from the standalone Graasp interface typically used by visualize resources.": "La vue 'explore' affiche les analytics de l'interface indépendent Graasp typiquement utilisée pour visualiser les ressources ouvertes.",
     "Analytics": "Analytics",
-    "Select View": "Sélectionner une Vue:",
+    "Select View": "Sélectionner une Vue",
     "Select All": "Tout Sélectionner",
     "Filter by User": "Filtrer par Utilisateur:",
     "No actions to show for these users": "Aucune action à afficher pour ces utilisateurs",

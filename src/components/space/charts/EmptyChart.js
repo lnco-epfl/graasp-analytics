@@ -1,29 +1,25 @@
-import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+
 import { CONTAINER_HEIGHT } from '../../../config/constants';
+import ChartTitle from '../../common/ChartTitle';
+import SelectContainer from '../../common/SelectContainer';
 import { DataContext } from '../../context/DataProvider';
 
-const useStyles = makeStyles(() => ({
-  typography: { textAlign: 'center' },
-  emptyChartAlert: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: `${CONTAINER_HEIGHT}px`,
-  },
-  selectContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '1em',
-  },
-}));
+const EmptyChartAlert = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: `${CONTAINER_HEIGHT}px`,
+});
 
 const EmptyChart = ({ chartTitle, selectFilter }) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { selectedUsers } = useContext(DataContext);
 
   let message = '';
@@ -35,15 +31,11 @@ const EmptyChart = ({ chartTitle, selectFilter }) => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.typography}>
-        {chartTitle}
-      </Typography>
-      {selectFilter && (
-        <div className={classes.selectContainer}>{selectFilter}</div>
-      )}
-      <div className={classes.emptyChartAlert}>
+      <ChartTitle>{chartTitle}</ChartTitle>
+      {selectFilter && <SelectContainer>{selectFilter}</SelectContainer>}
+      <EmptyChartAlert>
         <Typography>{message}</Typography>
-      </div>
+      </EmptyChartAlert>
     </>
   );
 };

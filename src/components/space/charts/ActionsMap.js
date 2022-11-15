@@ -1,50 +1,31 @@
-import React, { useState, useRef, useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import { useTranslation } from 'react-i18next';
 import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
+
+import React, { useContext, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { useTheme } from '@mui/material/styles';
+
 import {
-  mapActionsToGeoJsonFeatureObjects,
-  filterActionsByUser,
-} from '../../../utils/api';
-import {
+  CLUSTER_RADIUS,
   DEFAULT_LATITUDE,
   DEFAULT_LONGITUDE,
   DEFAULT_ZOOM,
+  ENTER_KEY,
   MAX_CLUSTER_ZOOM,
-  CLUSTER_RADIUS,
-  ENTER_KEY_CODE,
 } from '../../../config/constants';
+import {
+  filterActionsByUser,
+  mapActionsToGeoJsonFeatureObjects,
+} from '../../../utils/api';
+import ChartContainer from '../../common/ChartContainer';
+import ChartTitle from '../../common/ChartTitle';
 import { DataContext } from '../../context/DataProvider';
-
-const useStyles = makeStyles((theme) => ({
-  clusterMarker: {
-    color: '#fff',
-    background: theme.palette.primary.main,
-    borderRadius: '50%',
-    padding: 10,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    cursor: 'pointer',
-  },
-  typography: {
-    textAlign: 'center',
-  },
-  mapContainer: {
-    width: '100%',
-    height: 400,
-    marginTop: 30,
-    marginBottom: 30,
-  },
-}));
 
 const Marker = ({ children }) => children;
 
 const ActionsMap = () => {
-  const classes = useStyles();
+  const theme = useTheme();
   const { t } = useTranslation();
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
@@ -93,10 +74,8 @@ const ActionsMap = () => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.typography}>
-        {t('Actions by Location')}
-      </Typography>
-      <Container className={classes.mapContainer}>
+      <ChartTitle>{t('Actions by Location')}</ChartTitle>
+      <ChartContainer>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_KEY }}
           defaultCenter={{ lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE }}
@@ -124,8 +103,15 @@ const ActionsMap = () => {
               return (
                 <Marker key={cluster.id} lat={latitude} lng={longitude}>
                   <div
-                    className={classes.clusterMarker}
                     style={{
+                      color: '#fff',
+                      background: theme.palette.primary.main,
+                      borderRadius: '50%',
+                      padding: 10,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      cursor: 'pointer',
                       width: `${calculateClusterRadius(
                         pointCount,
                         points.length,
@@ -141,7 +127,7 @@ const ActionsMap = () => {
                     }}
                     onClick={() => handleClusterZoom(longitude, latitude)}
                     onKeyPress={(event) => {
-                      if (event.keyCode === ENTER_KEY_CODE) {
+                      if (event.key === ENTER_KEY) {
                         handleClusterZoom(longitude, latitude);
                       }
                     }}
@@ -156,7 +142,7 @@ const ActionsMap = () => {
             return null;
           })}
         </GoogleMapReact>
-      </Container>
+      </ChartContainer>
     </>
   );
 };

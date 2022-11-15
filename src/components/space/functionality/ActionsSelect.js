@@ -1,26 +1,26 @@
+import { List } from 'immutable';
+
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { List } from 'immutable';
 import Select from 'react-select';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import { DataContext } from '../../context/DataProvider';
-import customStyles from '../../../styles/react-select-styles';
-import CustomValueContainer from '../../custom/CustomValueContainer';
-import { groupBy } from '../../../utils/array';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(2),
-  },
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+
+import customStyles from '../../../styles/react-select-styles';
+import { groupBy } from '../../../utils/array';
+import { DataContext } from '../../context/DataProvider';
+import CustomValueContainer from '../../custom/CustomValueContainer';
+
+const CustomRoot = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  marginBottom: theme.spacing(2),
 }));
 
 const ActionsSelect = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
   // eslint-disable-next-line no-unused-vars
   const { actions, selectedActions, setSelectedActions } =
     useContext(DataContext);
@@ -43,7 +43,7 @@ const ActionsSelect = () => {
   };
 
   return (
-    <Grid container className={classes.root}>
+    <CustomRoot container>
       <Grid item xs={2}>
         <Typography>{t('Select Action(s)')}</Typography>
       </Grid>
@@ -72,7 +72,7 @@ const ActionsSelect = () => {
           }}
         />
       </Grid>
-    </Grid>
+    </CustomRoot>
   );
 };
 

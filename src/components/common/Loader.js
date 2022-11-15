@@ -1,32 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
 import { LOADER_TEXT_DELAY } from '../../config/constants';
 
-const useStyles = makeStyles((theme) => ({
-  gridItem: {
-    textAlign: 'center',
-    flex: 1,
-    margin: theme.spacing(4),
-  },
-  '@keyframes blinker': {
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-  },
-  additionalText: {
-    marginTop: theme.spacing(4),
-    animation: '$blinker',
-    animationDuration: '2s',
-    animationTimingFunction: 'linear',
-    animationIterationCount: 'infinite',
-  },
-}));
-
 const Loader = () => {
-  const classes = useStyles();
   const { t } = useTranslation();
   const [showAdditionalText, setShowAdditionalText] = useState(false);
 
@@ -39,12 +20,17 @@ const Loader = () => {
 
   return (
     <Grid container>
-      <Grid item className={classes.gridItem}>
+      <Grid
+        item
+        sx={{
+          textAlign: 'center',
+          flex: 1,
+          margin: 4,
+        }}
+      >
         <CircularProgress />
         {showAdditionalText && (
-          <Typography variant="subtitle1" className={classes.additionalText}>
-            {t('Still loading...')}
-          </Typography>
+          <Typography variant="subtitle1">{t('Still loading...')}</Typography>
         )}
       </Grid>
     </Grid>

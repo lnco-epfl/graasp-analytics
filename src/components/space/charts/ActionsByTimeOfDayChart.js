@@ -1,35 +1,22 @@
+import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import {
-  BarChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Bar,
-  ResponsiveContainer,
-} from 'recharts';
-import EmptyChart from './EmptyChart';
-import ActionsByTimeOfDayCustomTooltip from '../../custom/ActionsByTimeOfDayCustomTooltip';
 
-import { filterActions } from '../../../utils/array';
-import { CONTAINER_HEIGHT } from '../../../config/constants';
-import { DataContext } from '../../context/DataProvider';
 import {
   findYAxisMax,
   formatActionsByTimeOfDay,
   getActionsByTimeOfDay,
 } from '../../../utils/api';
-
-const useStyles = makeStyles(() => ({
-  typography: { textAlign: 'center' },
-}));
+import { filterActions } from '../../../utils/array';
+import ChartContainer from '../../common/ChartContainer';
+import ChartTitle from '../../common/ChartTitle';
+import { DataContext } from '../../context/DataProvider';
+import ActionsByTimeOfDayCustomTooltip from '../../custom/ActionsByTimeOfDayCustomTooltip';
+import EmptyChart from './EmptyChart';
 
 const ActionsByTimeOfDayChart = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { actions, allMembers, selectedUsers, selectedActions } =
     useContext(DataContext);
 
@@ -64,21 +51,16 @@ const ActionsByTimeOfDayChart = () => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.typography}>
-        {t('Actions by Time of Day')}
-      </Typography>
-      <ResponsiveContainer width="95%" height={CONTAINER_HEIGHT}>
-        <BarChart
-          data={formattedActionsByTimeOfDay}
-          margin={{ top: 30, bottom: 20, left: 20, right: 20 }}
-        >
+      <ChartTitle>{t('Actions by Time of Day')}</ChartTitle>
+      <ChartContainer>
+        <BarChart data={formattedActionsByTimeOfDay}>
           <CartesianGrid strokeDasharray="2" />
-          <XAxis dataKey="timeOfDay" tick={{ fontSize: 12 }} />
+          <XAxis interval={0} dataKey="timeOfDay" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip content={<ActionsByTimeOfDayCustomTooltip />} />
           <Bar dataKey="count" name={t('Count')} fill="#8884d8" />
         </BarChart>
-      </ResponsiveContainer>
+      </ChartContainer>
     </>
   );
 };

@@ -1,27 +1,24 @@
 import React, { useContext } from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Alert from '@material-ui/lab/Alert';
-import Tooltip from '@material-ui/core/Tooltip';
-import { Info } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
-import { ViewDataContext } from '../../context/ViewDataProvider';
-import { DataContext } from '../../context/DataProvider';
 
-const useStyles = makeStyles((theme) => ({
+import Info from '@mui/icons-material/Info';
+import Tooltip from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+
+import StyledAlert from '../../common/StyledAlert';
+import { DataContext } from '../../context/DataProvider';
+import { ViewDataContext } from '../../context/ViewDataProvider';
+
+const StyledRoot = styled('div')(({ theme }) => ({
   root: {
     flexGrow: 1,
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
-  alert: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(1),
-  },
 }));
 
-const AlertsTooltip = withStyles((theme) => ({
+const AlertsTooltip = styled(({ theme }) => ({
   tooltip: {
     fontSize: '11px',
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
@@ -31,18 +28,17 @@ const AlertsTooltip = withStyles((theme) => ({
 
 const ChartsAlerts = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { view, requestedSampleSize } = useContext(ViewDataContext);
   const { numActionsRetrieved } = useContext(DataContext);
 
   const displayWarningMessage = () => {
     if (numActionsRetrieved === 0) {
       return (
-        <Alert severity="warning" className={classes.alert}>
+        <StyledAlert severity="warning">
           {t('This item does not have any actions yet.', {
             view,
           })}
-        </Alert>
+        </StyledAlert>
       );
     }
     return null;
@@ -66,23 +62,23 @@ const ChartsAlerts = () => {
     if (numActionsRetrieved > 0) {
       return (
         // TODO: implement maxTreeLengthExceeded to show message if depth is capped
-        <Alert severity="info" className={classes.alert} action={action}>
+        <StyledAlert severity="info" action={action}>
           {t('The charts below display a sample of actions from this item.', {
             view,
             numActionsRetrieved,
             requestedSampleSize,
           })}
-        </Alert>
+        </StyledAlert>
       );
     }
     return null;
   };
 
   return (
-    <div className={classes.root}>
+    <StyledRoot>
       {displayWarningMessage()}
       {displaySampleInfo()}
-    </div>
+    </StyledRoot>
   );
 };
 

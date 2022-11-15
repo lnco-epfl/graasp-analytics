@@ -1,4 +1,4 @@
-import { filterActionsByUser, filterActionsByActionTypes } from './api';
+import { filterActionsByActionTypes, filterActionsByUser } from './api';
 
 export const groupBy = (key, arr) =>
   arr.reduce(

@@ -1,35 +1,22 @@
 // CustomToolTip used in ActionsByTimeOfDayChart
 // x-axis labels in that chart say 'morning', 'afternoon', etc.
 // this tooltip adds the time of day those labels refer to
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import {
-  LATE_NIGHT,
-  EARLY_MORNING,
-  MORNING,
   AFTERNOON,
+  EARLY_MORNING,
   EVENING,
+  LATE_NIGHT,
+  MORNING,
   NIGHT,
 } from '../../config/constants';
-
-const useStyles = makeStyles((theme) => ({
-  customTooltipDiv: {
-    backgroundColor: 'white',
-    paddingTop: theme.spacing(0.5),
-    paddingBottom: theme.spacing(0.5),
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    border: '0.5px solid #cccccc',
-  },
-  customTooltipCount: {
-    color: theme.palette.primary.main,
-  },
-}));
+import { CustomTooltipDiv, CustomTooltipDivCount } from './CustomTooltip';
 
 const ActionsByTimeOfDayCustomTooltip = ({ active, payload, label }) => {
-  const classes = useStyles();
   const { t } = useTranslation();
 
   const generateAddedTooltipText = (input) => {
@@ -53,12 +40,12 @@ const ActionsByTimeOfDayCustomTooltip = ({ active, payload, label }) => {
 
   if (active) {
     return (
-      <div className={classes.customTooltipDiv}>
+      <CustomTooltipDiv>
         <p>{`${label} (${generateAddedTooltipText(label)})`}</p>
-        <p className={classes.customTooltipCount}>
+        <CustomTooltipDivCount>
           {`${t('Count:')} ${payload[0].value}`}
-        </p>
-      </div>
+        </CustomTooltipDivCount>
+      </CustomTooltipDiv>
     );
   }
 

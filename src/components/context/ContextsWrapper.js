@@ -1,7 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import ViewDataProvider from './ViewDataProvider';
+
+import React from 'react';
+
 import DataProvider from './DataProvider';
+import ViewDataProvider from './ViewDataProvider';
 
 const ContextsWrapper = ({ children }) => (
   <ViewDataProvider>

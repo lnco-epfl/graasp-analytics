@@ -1,43 +1,36 @@
-import React, { useContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import {
+  Bar,
   BarChart,
   CartesianGrid,
+  Label,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  Bar,
-  ResponsiveContainer,
-  Label,
 } from 'recharts';
-import EmptyChart from './EmptyChart';
+
+import React, { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { useTheme } from '@mui/material/styles';
+
 import {
-  getItemsByAccessedCount,
-  formatItemsByAccessedCount,
   filterActionsByUser,
   findYAxisMax,
+  formatItemsByAccessedCount,
+  getItemsByAccessedCount,
 } from '../../../utils/api';
-import { CONTAINER_HEIGHT } from '../../../config/constants';
-import ItemsSelect from '../functionality/ItemsSelect';
-import ItemsByAccessedCountCustomTooltip from '../../custom/ItemsByAccessedCountCustomTooltip';
+import ChartContainer from '../../common/ChartContainer';
+import ChartTitle from '../../common/ChartTitle';
+import SelectContainer from '../../common/SelectContainer';
 import { DataContext } from '../../context/DataProvider';
 import { ViewDataContext } from '../../context/ViewDataProvider';
-
-const useStyles = makeStyles((theme) => ({
-  selectContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: theme.spacing(1),
-  },
-  typography: { textAlign: 'center' },
-}));
+import ItemsByAccessedCountCustomTooltip from '../../custom/ItemsByAccessedCountCustomTooltip';
+import ItemsSelect from '../functionality/ItemsSelect';
+import EmptyChart from './EmptyChart';
 
 const ItemsByAccessedCount = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const classes = useStyles();
   const { view } = useContext(ViewDataContext);
   const {
     actions: allActions,
@@ -85,21 +78,16 @@ const ItemsByAccessedCount = () => {
 
   return (
     <>
-      <Typography variant="h6" className={classes.typography}>
-        {t(title)}
-      </Typography>
-      <div className={classes.selectContainer}>
+      <ChartTitle>{t(title)}</ChartTitle>
+      <SelectContainer>
         <ItemsSelect
           actions={filteredActions}
           selectedItemTypes={selectedItemTypes}
           setSelectedItemTypes={setSelectedItemTypes}
         />
-      </div>
-      <ResponsiveContainer width="95%" height={CONTAINER_HEIGHT}>
-        <BarChart
-          data={formattedMostViewedItems}
-          margin={{ top: 30, bottom: 20, left: 20, right: 20 }}
-        >
+      </SelectContainer>
+      <ChartContainer>
+        <BarChart data={formattedMostViewedItems}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis
             dataKey="displayName"
@@ -114,7 +102,7 @@ const ItemsByAccessedCount = () => {
             fill={theme.palette.primary.main}
           />
         </BarChart>
-      </ResponsiveContainer>
+      </ChartContainer>
     </>
   );
 };

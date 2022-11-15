@@ -1,30 +1,31 @@
-import React, { useState, useContext } from 'react';
+import capitalize from 'lodash.capitalize';
+
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import _ from 'lodash';
-import LightTooltip from '../../common/LightTooltip';
-import { ViewDataContext } from '../../context/ViewDataProvider';
-import customStyles from '../../../styles/react-select-styles';
-import { Context } from '../../../config/constants';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(2),
-  },
+import InfoIcon from '@mui/icons-material/Info';
+import Grid from '@mui/material/Grid';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+
+import { Context } from '../../../config/constants';
+import customStyles from '../../../styles/react-select-styles';
+import { ViewDataContext } from '../../context/ViewDataProvider';
+
+const CustomRoot = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  marginBottom: theme.spacing(2),
 }));
 
 const ViewSelect = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
 
   const { view, setView } = useContext(ViewDataContext);
   const [selectedView, setSelectedView] = useState({
-    name: _.capitalize(view),
+    name: capitalize(view),
     value: view,
   });
 
@@ -51,34 +52,33 @@ const ViewSelect = () => {
       break;
   }
   return (
-    <LightTooltip
-      title={t(viewMessage)}
-      placement="left"
-      className={classes.root}
-    >
-      <Grid container>
-        <Grid item xs={2}>
-          <Typography>{t('Select a View')}</Typography>
-        </Grid>
-        <Grid item xs={2}>
-          <Select
-            styles={customStyles}
-            options={Object.values(Context)
-              // does not show analyzer
-              .filter((context) => context !== Context.ANALYTICS)
-              .map((context) => ({
-                value: context,
-                name: context,
-              }))}
-            closeMenuOnSelect
-            hideSelectedOptions={false}
-            getOptionLabel={(option) => option.name}
-            value={selectedView}
-            onChange={handleChange}
-          />
-        </Grid>
+    <CustomRoot container>
+      <Grid item xs={2}>
+        <Typography>{t('Select a View')}</Typography>
       </Grid>
-    </LightTooltip>
+      <Grid item xs={2}>
+        <Select
+          styles={customStyles}
+          options={Object.values(Context)
+            // does not show analyzer
+            .filter((context) => context !== Context.ANALYTICS)
+            .map((context) => ({
+              value: context,
+              name: context,
+            }))}
+          closeMenuOnSelect
+          hideSelectedOptions={false}
+          getOptionLabel={(option) => option.name}
+          value={selectedView}
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid item>
+        <Tooltip tooltip={viewMessage}>
+          <InfoIcon />
+        </Tooltip>
+      </Grid>
+    </CustomRoot>
   );
 };
 

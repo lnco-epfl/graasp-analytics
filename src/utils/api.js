@@ -1,18 +1,21 @@
 // Functions in this file manipulate data retrieved from the api to make it usable by the app's charts/components
-import _ from 'lodash';
+import capitalize from 'lodash.capitalize';
+import sortBy from 'lodash.sortby';
+import truncate from 'lodash.truncate';
+
 import {
+  ACCESSED_STRING,
+  AFTERNOON,
+  EARLY_MORNING,
+  EVENING,
+  ITEM_NAME_MAX_LENGTH,
+  LATE_NIGHT,
   LEARNING_ANALYTICS_USER_ID,
   MIN_PERCENTAGE_TO_SHOW_VERB,
-  OTHER_VERB,
-  LATE_NIGHT,
-  EARLY_MORNING,
   MORNING,
-  AFTERNOON,
-  EVENING,
   NIGHT,
-  ACCESSED_STRING,
+  OTHER_VERB,
   TOP_NUMBER_OF_ITEMS_TO_DISPLAY,
-  ITEM_NAME_MAX_LENGTH,
 } from '../config/constants';
 
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
@@ -130,7 +133,7 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
   // capitalize verbs (entry[0][0]), convert 0.0x notation to x% and round to two decimal places (entry[0][1])
   const formattedActionsByVerbArray = actionsByVerbArray
     .map((entry) => [
-      _.capitalize(entry[0]),
+      capitalize(entry[0]),
       parseFloat((entry[1] * 100).toFixed(2)),
     ])
     .filter((entry) => entry[1] >= MIN_PERCENTAGE_TO_SHOW_VERB);
@@ -248,7 +251,7 @@ export const formatConsolidatedUsers = (consolidatedUsersArray) => {
     if (user.name.indexOf('@') !== -1) {
       return {
         ...user,
-        name: _.capitalize(user.name),
+        name: capitalize(user.name),
       };
     }
     // otherwise, reg exp below capitalizes first letter of each part of a user's space-delimited name
@@ -258,7 +261,7 @@ export const formatConsolidatedUsers = (consolidatedUsersArray) => {
     };
   });
   // return alphbatically sorted array of users
-  return _.sortBy(usersArrayCapitalized, (user) => user.name);
+  return sortBy(usersArrayCapitalized, (user) => user.name);
 };
 
 // for react-select purposes, add a 'value' key to each element of the users array, holding the same value as the key 'name'
@@ -340,5 +343,23 @@ export const extractItemTypes = (actions) => {
 export const findItemNameByPath = (path, items) => {
   const name =
     items?.find(({ path: thisPath }) => path === thisPath)?.name ?? 'Unknown';
-  return _.truncate(name, { length: ITEM_NAME_MAX_LENGTH });
+  return truncate(name, { length: ITEM_NAME_MAX_LENGTH });
+};
+
+// group children of children under the same parent
+export const groupByFirstLevelItems = (actions, item) => {
+  if (!item) {
+    return {};
+  }
+
+  const nbLevelParent = item.path.split('.').length;
+
+  // compare first level only
+  const d = actions.groupBy((a) =>
+    a.itemPath
+      .split('.')
+      .slice(0, nbLevelParent + 1)
+      .join('.'),
+  );
+  return d.toJS();
 };

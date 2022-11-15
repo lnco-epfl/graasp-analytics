@@ -1,16 +1,18 @@
+import { List } from 'immutable';
+import PropTypes from 'prop-types';
+
 import React, {
   createContext,
-  useState,
+  useContext,
   useEffect,
   useMemo,
-  useContext,
+  useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-import { List } from 'immutable';
-import { ViewDataContext } from './ViewDataProvider';
+
+import { Context, DEFAULT_REQUEST_SAMPLE_SIZE } from '../../config/constants';
 import { hooks } from '../../config/queryClient';
-import { DEFAULT_REQUEST_SAMPLE_SIZE, Context } from '../../config/constants';
+import { ViewDataContext } from './ViewDataProvider';
 
 export const DataContext = createContext();
 

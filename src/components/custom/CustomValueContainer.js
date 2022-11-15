@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { components } from 'react-select';
-import PropTypes from 'prop-types';
 
 const getNameFromValue = (value) => value.props.data.name;
 

@@ -1,25 +1,25 @@
+import { List } from 'immutable';
+
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import { List } from 'immutable';
-import CustomValueContainer from '../../custom/CustomValueContainer';
+
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+
 import customStyles from '../../../styles/react-select-styles';
 import { DataContext } from '../../context/DataProvider';
+import CustomValueContainer from '../../custom/CustomValueContainer';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(2),
-  },
+const CustomRoot = styled(Grid)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  marginBottom: theme.spacing(2),
 }));
 
 const UsersSelect = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { selectedUsers, setSelectedUsers, allMembers } =
     useContext(DataContext);
 
@@ -38,7 +38,7 @@ const UsersSelect = () => {
   };
 
   return (
-    <Grid container className={classes.root}>
+    <CustomRoot container>
       <Grid item xs={2}>
         <Typography>{t('Select User(s)')}</Typography>
       </Grid>
@@ -74,7 +74,7 @@ const UsersSelect = () => {
           }}
         />
       </Grid>
-    </Grid>
+    </CustomRoot>
   );
 };
 

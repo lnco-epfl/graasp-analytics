@@ -15,7 +15,7 @@ export const MAX_CLUSTER_ZOOM = 10;
 export const CLUSTER_RADIUS = 75;
 
 // Key code for the Enter/Return key (Used in a placeholder keyboard event listener in ActionsMap)
-export const ENTER_KEY_CODE = 13;
+export const ENTER_KEY = 'Enter';
 
 // Height of container in ActionsByDayChart
 export const CONTAINER_HEIGHT = 450;
@@ -69,4 +69,4 @@ export const Context = {
   UNKNOWN: 'unknown',
 };
 
-export const ITEM_NAME_MAX_LENGTH = 20;
+export const ITEM_NAME_MAX_LENGTH = 15;
