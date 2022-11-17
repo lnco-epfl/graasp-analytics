@@ -1,18 +1,21 @@
 {
   "extends": [
     "airbnb",
+    "airbnb-typescript",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:import/recommended",
     "prettier",
-    "plugin:react/jsx-runtime"
+    "plugin:react/jsx-runtime",
+    "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
     "import",
     "@babel",
     "react",
-    "jsx-a11y"
+    "jsx-a11y",
+    "@typescript-eslint"
   ],
   "env": {
     "browser": true,
@@ -24,7 +27,7 @@
     "cy": true,
     "Cypress": true
   },
-  "parser": "@babel/eslint-parser",
+  "parser": "@typescript-eslint/parser",
   "rules": {
     "import/no-named-as-default": 0,
     "react/jsx-uses-react": "error",
@@ -32,7 +35,7 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx"]
+        "extensions": [".js", ".jsx", ".tsx"]
       }
     ],
     "react/function-component-definition":  
@@ -40,6 +43,7 @@
     "no-console": [1, { "allow": ["error"] }]
   },
   "parserOptions": {
+    "project": "./tsconfig.eslint.json",
     "requireConfigFile": false,
     "ecmaFeatures": {
       "jsx": true

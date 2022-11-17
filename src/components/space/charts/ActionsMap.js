@@ -51,7 +51,7 @@ const ActionsMap = () => {
   }
 
   // GeoJSON Feature objects
-  const points = mapActionsToGeoJsonFeatureObjects(actionsToChart);
+  const points = mapActionsToGeoJsonFeatureObjects(actionsToChart.toJS());
 
   const { clusters } = useSupercluster({
     points,
@@ -80,7 +80,9 @@ const ActionsMap = () => {
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_KEY }}
           defaultCenter={{ lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE }}
           defaultZoom={DEFAULT_ZOOM}
-          distanceToMouse={() => {}}
+          distanceToMouse={() => {
+            // do nothing
+          }}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({ map }) => {
             mapRef.current = map;
