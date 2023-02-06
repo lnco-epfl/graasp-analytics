@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.14](https://github.com/graasp/graasp-analytics/compare/v0.1.13...v0.1.14) (2023-02-06)
+
+
+### Bug Fixes
+
+* prevent crash on waiting requests, update dependencies ([#118](https://github.com/graasp/graasp-analytics/issues/118)) ([10371ac](https://github.com/graasp/graasp-analytics/commit/10371acc9e781d144f0ea958c954dac1f31f85d6))
+
 ### 0.1.13 (2022-11-18)
 
 ### 0.1.12 (2022-11-15)
