@@ -1,10 +1,19 @@
 import PropTypes from 'prop-types';
 
-import React, { createContext, useMemo, useState } from 'react';
+import { Dispatch, createContext, useMemo, useState } from 'react';
 
 import { Context } from '../../config/constants';
 
-export const ViewDataContext = createContext();
+const defaultValue: {
+  // todo: use sdk context
+  view: string;
+  setView: Dispatch<string>;
+} = {
+  view: Context.BUILDER,
+  setView: () => {},
+};
+
+export const ViewDataContext = createContext(defaultValue);
 
 const ViewDataProvider = ({ children }) => {
   const [view, setView] = useState(Context.BUILDER);

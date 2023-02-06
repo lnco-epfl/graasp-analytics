@@ -9,7 +9,6 @@ const {
   hooks,
   useMutation,
   ReactQueryDevtools,
-  API_ROUTES,
 } = configureQueryClient({
   API_HOST: REACT_APP_API_HOST,
   enableWebsocket: true,
@@ -29,5 +28,4 @@ export {
   hooks,
   useMutation,
   ReactQueryDevtools,
-  API_ROUTES,
 };
