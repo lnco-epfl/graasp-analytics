@@ -18,19 +18,20 @@ import {
   TOP_NUMBER_OF_ITEMS_TO_DISPLAY,
 } from '../config/constants';
 
+const getActionDay = (action) => {
+  const dateKey = 'createdAt';
+  // createdAt should have the format "2020-12-31T23:59:59.999Z"
+  const dateObject = new Date(action[dateKey]);
+  // extract only the date information
+  const day = new Date(dateObject.toDateString());
+  return day;
+};
+
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
 export const getActionsByDay = (actions) => {
-  const dateKey = 'createdAt';
-  const actionsByDay = {};
-  actions?.forEach((action) => {
-    const actionDate = new Date(action[dateKey].slice(0, 10));
-    if (!actionsByDay[actionDate]) {
-      actionsByDay[actionDate] = 1;
-    } else {
-      actionsByDay[actionDate] += 1;
-    }
-  });
-  return actionsByDay;
+  const actionsByDayMap = actions?.countBy(getActionDay);
+  const actionsByDayObject = Object.fromEntries(actionsByDayMap);
+  return actionsByDayObject;
 };
 
 // Takes object with {key: value} pairs of {date: #-of-actions} and returns a date-sorted array in Recharts.js format
@@ -63,11 +64,12 @@ export const mapActionsToGeoJsonFeatureObjects = (actions) =>
     }));
 
 // helper function used in getActionsByTimeOfDay below
-// todo: update this function to retrieve hour of day using JS Date objects/moment
 const getActionHourOfDay = (action) => {
   const dateKey = 'createdAt';
   // createdAt should have the format "2020-12-31T23:59:59.999Z"
-  return action[dateKey].slice(11, 13);
+  const date = new Date(action[dateKey]);
+  const hours = date.getHours();
+  return hours;
 };
 
 // Takes array of action objects and returns an object with {key: value} pairs of {hourOfDay: #-of-actions}
