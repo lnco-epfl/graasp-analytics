@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.15](https://github.com/graasp/graasp-analytics/compare/v0.1.14...v0.1.15) (2023-03-16)
+
+
+### Bug Fixes
+
+* fix date extracting approach ([c0b192a](https://github.com/graasp/graasp-analytics/commit/c0b192abcc258668d8708ad0b1ff0a5c4f176219))
+
 ## [0.1.14](https://github.com/graasp/graasp-analytics/compare/v0.1.13...v0.1.14) (2023-02-06)
 
 
