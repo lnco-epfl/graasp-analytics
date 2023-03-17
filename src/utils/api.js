@@ -114,6 +114,42 @@ export const formatActionsByTimeOfDay = (actionsByTimeOfDayObject) => {
   }));
 };
 
+// helper function used in getActionsByWeekday below
+const getActionWeekday = (action) => {
+  const dateKey = 'createdAt';
+  // createdAt should have the format "2020-12-31T23:59:59.999Z"
+  const date = new Date(action[dateKey]);
+  const weekday = date.getDay();
+  return weekday;
+};
+
+// Takes array of action objects and returns an object with {key: value} pairs of {weekday: #-of-actions}
+export const getActionsByWeekday = (actions) => {
+  const actionsByWeekday = { ...Array(7).fill(0) };
+  const updatedActionsByWeekday = actions?.countBy(getActionWeekday).toJS();
+  Object.assign(actionsByWeekday, updatedActionsByWeekday);
+  return actionsByWeekday;
+};
+
+// Takes object with {key: value} pairs of {weekday: #-of-actions}
+// returns an array in Recharts.js format
+export const formatActionsByWeekday = (actionsByWeekdayObject) => {
+  const weekdayEnum = {
+    0: 'Sunday',
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+  };
+  const actionsByWeekdayArray = Object.entries(actionsByWeekdayObject);
+  return actionsByWeekdayArray.map(([day, count]) => ({
+    day: weekdayEnum[day],
+    count,
+  }));
+};
+
 // Takes array of action objects and returns an object with {key: value} pairs of {verb: %-of-actions}
 export const getActionsByVerb = (actions) => {
   const totalActions = actions.size;
