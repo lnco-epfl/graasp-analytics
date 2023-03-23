@@ -2,11 +2,12 @@
   "name": "graasp-analytics",
   "version": "0.1.15",
   "private": true,
-  "author": "Graasp Association",
+  "author": "Graasp",
   "contributors": [
     "Hagop Taminian",
     "Juan Carlos Farah",
-    "Kim Lan Phan Hoang"
+    "Kim Lan Phan Hoang",
+    "Po-Jui Chang"
   ],
   "dependencies": {
     "@emotion/react": "11.10.5",
