@@ -6,7 +6,6 @@ on:
   push:
     branches-ignore:
       - main
-      - master
 
 # This workflow is made up of one job that calls the reusable workflow in graasp-deploy
 jobs:
