@@ -10,11 +10,7 @@ import {
 } from 'react';
 import { useParams } from 'react-router-dom';
 
-import {
-  ActionRecord,
-  ItemRecord,
-  MemberRecord,
-} from '@graasp/query-client/dist/types';
+import { ActionRecord, ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 
 import { Context, DEFAULT_REQUEST_SAMPLE_SIZE } from '../../config/constants';
 import { hooks } from '../../config/queryClient';
@@ -36,8 +32,12 @@ const defaultValue: {
   allMembers: List(),
   selectedUsers: List(),
   itemChildren: List(),
-  setSelectedUsers: () => {},
-  setSelectedActions: () => {},
+  setSelectedUsers: () => {
+    // do nothing
+  },
+  setSelectedActions: () => {
+    // do nothing
+  },
   selectedActions: List(),
   error: false,
   isLoading: true,
@@ -163,7 +163,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     if (!enabledArray[view]) {
       setEnabledArray({ ...enabledArray, [view]: true });
     }
-  }, [view]);
+  }, [view, enabledArray]);
 
   useEffect(() => {
     if (
@@ -234,6 +234,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       selectedActions,
       itemData,
       isLoading,
+      itemChildren,
     ],
   );
 

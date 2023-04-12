@@ -16,7 +16,7 @@ export const filterActions = ({
   allMembersLength,
   chartFunction,
 }) => {
-  const actionTypes = Object.keys(groupBy('actionType', actions));
+  const types = Object.keys(groupBy('type', actions));
   const noUsers =
     selectedUsers === null ||
     !selectedUsers.size ||
@@ -24,7 +24,7 @@ export const filterActions = ({
   const noActions =
     selectedActions === null ||
     !selectedActions.size ||
-    selectedActions.size === actionTypes.size;
+    selectedActions.size === types.size;
   let actionsByTimeOfDay;
   if (noUsers && noActions) {
     actionsByTimeOfDay = chartFunction(actions);

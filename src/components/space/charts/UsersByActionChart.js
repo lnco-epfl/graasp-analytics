@@ -32,13 +32,13 @@ const UsersByActionByChart = () => {
     useContext(DataContext);
   const users = selectedUsers.size ? selectedUsers : allMembers;
   const allActions = filterActionsByActionTypes(actions, selectedActions);
-  const actionTypes = Object.keys(groupBy('actionType', allActions));
+  const types = Object.keys(groupBy('type', allActions));
   const yAxisMax = findYAxisMax(users);
 
   let formattedUsersByAction = [];
   users.forEach((user) => {
     const filteredActions = filterActionsByUser(allActions, [{ id: user.id }]);
-    const groupedActions = groupBy('actionType', filteredActions);
+    const groupedActions = groupBy('type', filteredActions);
     const userActions = {
       id: user.id,
       name: user.name,
@@ -72,10 +72,10 @@ const UsersByActionByChart = () => {
           <XAxis dataKey="name" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip />
-          {actionTypes.map((actionType, index) => (
+          {types.map((type, index) => (
             <Bar
               key=""
-              dataKey={actionType}
+              dataKey={type}
               stackId="1"
               fill={COLORS[index % COLORS.length]}
             />

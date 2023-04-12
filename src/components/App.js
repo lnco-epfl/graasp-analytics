@@ -9,7 +9,7 @@ import Footer from './layout/Footer';
 import Header from './layout/Header';
 import ChartsLayout from './space/ChartsLayout';
 
-const App = () => {
+const App = (): JSX.Element => {
   const theme = useTheme();
   return (
     <Router>

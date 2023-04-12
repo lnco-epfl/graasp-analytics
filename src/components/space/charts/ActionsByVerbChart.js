@@ -41,16 +41,13 @@ const ActionsByVerbChart = () => {
           <Pie
             data={formattedActionsByVerb}
             dataKey="percentage"
-            nameKey="actionType"
+            nameKey="type"
             fill="#82ca9d"
             unit="%"
             label={({ value }) => `${value}%`}
           >
             {formattedActionsByVerb.map((entry, index) => (
-              <Cell
-                key={entry.actionType}
-                fill={COLORS[index % COLORS.length]}
-              />
+              <Cell key={entry.type} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
           <Tooltip formatter={(value) => `${value}%`} />

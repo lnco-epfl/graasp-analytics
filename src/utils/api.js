@@ -155,12 +155,12 @@ export const getActionsByVerb = (actions) => {
   const totalActions = actions.size;
   const actionsByVerb = {};
   actions.forEach((action) => {
-    if (!actionsByVerb[action.actionType]) {
-      // if actionType is still not in the actionsByVerb object, add it and assign it to (1 / totalActions)
+    if (!actionsByVerb[action.type]) {
+      // if type is still not in the actionsByVerb object, add it and assign it to (1 / totalActions)
       // we use (1 / totalActions) because in the end we want this object to be {verb: PERCENTAGE-of-total-actions}
-      actionsByVerb[action.actionType] = 1 / totalActions;
+      actionsByVerb[action.type] = 1 / totalActions;
     } else {
-      actionsByVerb[action.actionType] += 1 / totalActions;
+      actionsByVerb[action.type] += 1 / totalActions;
     }
   });
   return actionsByVerb;
@@ -195,7 +195,7 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
 
   // convert to recharts required format
   return formattedActionsByVerbArray.map((entry) => ({
-    actionType: entry[0],
+    type: entry[0],
     percentage: entry[1],
   }));
 };
@@ -214,7 +214,7 @@ export const filterActionsByActionTypes = (actions, actionsArray) => {
     return actions;
   }
   return actions.filter((action) =>
-    actionsArray.some((act) => act.value === action.actionType),
+    actionsArray.some((act) => act.value === action.type),
   );
 };
 
@@ -394,10 +394,10 @@ export const groupByFirstLevelItems = (actions, item) => {
 
   // compare first level only
   const d = actions.groupBy((a) =>
-    a.itemPath
-      .split('.')
-      .slice(0, nbLevelParent + 1)
-      .join('.'),
+    a.item?.path
+      ?.split('.')
+      ?.slice(0, nbLevelParent + 1)
+      ?.join('.'),
   );
   return d.toJS();
 };
