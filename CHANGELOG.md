@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/graasp/graasp-analytics/compare/v0.1.15...v0.2.0) (2023-04-14)
+
+
+### Features
+
+* add actionsByWeekday chart ([#121](https://github.com/graasp/graasp-analytics/issues/121)) ([0eae833](https://github.com/graasp/graasp-analytics/commit/0eae833d8c1af51167aed36752f95db092ed7d2a))
+
 ## [0.1.15](https://github.com/graasp/graasp-analytics/compare/v0.1.14...v0.1.15) (2023-03-16)
 
 
