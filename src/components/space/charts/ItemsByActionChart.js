@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import {
   Bar,
   CartesianGrid,
@@ -47,7 +48,7 @@ const ItemsByActionChart = () => {
   Object.entries(groupedItems).forEach((groupedItem) => {
     const currentPath = groupedItem[0];
     const userActions = {
-      name: findItemNameByPath(currentPath, children.push(item)),
+      name: findItemNameByPath(currentPath, (children ?? List()).push(item)),
       total: groupedItem[1].length,
     };
     const groupedActions = groupBy('type', groupedItem[1]);

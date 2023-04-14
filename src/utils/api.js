@@ -201,12 +201,10 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
 };
 
 // 'actions' is an array in the format retrieved from the API: [ { id: 1, memberId: 2, ... }, {...} ]
-export const filterActionsByUser = (actions, usersArray) => {
-  const userKey = 'memberId';
-  return actions.filter((action) =>
-    usersArray.some((user) => user.id === action[userKey]),
+export const filterActionsByUser = (actions, usersArray) =>
+  actions.filter((action) =>
+    usersArray.some((user) => user.id === action?.member?.id),
   );
-};
 
 export const filterActionsByActionTypes = (actions, actionsArray) => {
   // no selection return whole array

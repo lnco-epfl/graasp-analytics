@@ -9564,7 +9564,7 @@ __metadata:
     google-map-react: 2.2.0
     husky: 8.0.3
     i18next: 22.4.9
-    immutable: 4.2.3
+    immutable: 4.2.4
     istanbul-lib-coverage: 3.2.0
     lodash.capitalize: 4.2.1
     lodash.sortby: 4.7.0
@@ -10127,13 +10127,6 @@ __metadata:
   version: 9.0.19
   resolution: "immer@npm:9.0.19"
   checksum: f02ee53989989c287cd548a3d817fccf0bfe56db919755ee94a72ea3ae78a00363fba93ee6c010fe54a664380c29c53d44ed4091c6a86cae60957ad2cfabc010
-  languageName: node
-  linkType: hard
-
-"immutable@npm:4.2.3":
-  version: 4.2.3
-  resolution: "immutable@npm:4.2.3"
-  checksum: 11be9a328d5e3a35de47b7b7835e7d89f790bf19595a8de11e1ae19b2bb3be5def00c69928969f1607aa66fe4a3f48e95460b2b58894a83ce70b65c872466940
   languageName: node
   linkType: hard
 

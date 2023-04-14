@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import {
   Bar,
   CartesianGrid,
@@ -44,12 +45,16 @@ const ItemsByUserChart = () => {
 
   const groupedItems = groupByFirstLevelItems(allActions, itemData);
   const formattedItemsByUser = [];
-  Object.entries(groupedItems).forEach((item) => {
+  Object.entries(groupedItems).forEach(([path, actionsByItem]) => {
     const userActions = {
-      name: findItemNameByPath(item[0], children.push(itemData)),
-      total: item[1].length,
+      name: findItemNameByPath(path, (children ?? List()).push(itemData)),
+      total: actionsByItem.length,
     };
-    const groupedUsers = groupBy('memberId', item[1]);
+    const groupedUsers = groupBy(
+      'memberId',
+      // add memberId data to root level
+      actionsByItem.map((a) => ({ ...a, memberId: a?.member?.id })),
+    );
     Object.entries(groupedUsers).forEach((groupedUser) => {
       users.forEach((user) => {
         if (user.id === groupedUser[0]) {

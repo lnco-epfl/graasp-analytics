@@ -31,11 +31,15 @@ const ActionsByUserChart = () => {
   const groupedActions = groupBy('type', allActions);
   const formattedData = [];
   // for each action type, further group by member id, and then sum the number of actions
-  Object.entries(groupedActions).forEach((action) => {
-    const groupedUsers = groupBy('memberId', action[1]);
+  Object.entries(groupedActions).forEach(([key, actionsByType]) => {
+    const groupedUsers = groupBy(
+      'memberId',
+      // add member id to root level
+      actionsByType.map((a) => ({ ...a, memberId: a?.member?.id })),
+    );
     const userActions = {
-      type: action[0],
-      total: action[1].length,
+      type: key,
+      total: actionsByType.length,
     };
     Object.entries(groupedUsers).forEach((groupedUser) => {
       users.forEach((user) => {
