@@ -1,61 +1,25 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-import { useTheme } from '@mui/material/styles';
+import {
+  EMBEDDED_ITEM_PATH,
+  HOME_PATH,
+  ITEM_PATH,
+  SHARED_ITEMS_PATH,
+} from '../config/paths';
+import HomePage from './pages/HomePage';
+import ItemPage from './pages/ItemPage';
+import ShareItemPage from './pages/ShareItemPage';
 
-import ContextsWrapper from './context/ContextsWrapper';
-import Home from './home/Home';
-import Footer from './layout/Footer';
-import Header from './layout/Header';
-import ChartsLayout from './space/ChartsLayout';
-
-const App = () => {
-  const theme = useTheme();
-  return (
-    <Router>
-      <Routes>
-        <Route
-          path="/embedded/:itemId"
-          element={
-            // eslint-disable-next-line react/jsx-wrap-multilines
-            <main style={{ paddingTop: theme.spacing(2) }}>
-              <ContextsWrapper>
-                <ChartsLayout />
-              </ContextsWrapper>
-            </main>
-          }
-        />
-        <Route
-          path="/items/:itemId"
-          element={
-            // eslint-disable-next-line react/jsx-wrap-multilines
-            <>
-              <Header />
-              <main style={{ flex: 1 }}>
-                <ContextsWrapper>
-                  <ChartsLayout />
-                </ContextsWrapper>
-              </main>
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            // eslint-disable-next-line react/jsx-wrap-multilines
-            <>
-              <Header />
-              <main style={{ flex: 1 }}>
-                <Home />
-              </main>
-              <Footer />
-            </>
-          }
-        />
-      </Routes>
-    </Router>
-  );
-};
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path={EMBEDDED_ITEM_PATH} element={<ItemPage isEmbeded />} />
+      <Route path={ITEM_PATH} element={<ItemPage isEmbeded={false} />} />
+      <Route path={HOME_PATH} element={<HomePage />} />
+      <Route path={SHARED_ITEMS_PATH} element={<ShareItemPage />} />
+    </Routes>
+  </Router>
+);
 
 export default App;

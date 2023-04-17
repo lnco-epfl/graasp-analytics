@@ -70,3 +70,5 @@ export const Context = {
 };
 
 export const ITEM_NAME_MAX_LENGTH = 15;
+
+export const NAVIGATOR_BACKGROUND_COLOR = '#f6f6f6';
