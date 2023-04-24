@@ -69,6 +69,20 @@ export const Context = {
   UNKNOWN: 'unknown',
 };
 
+export const GRAASP_BUILDER_HOST =
+  process.env.REACT_APP_GRAASP_COMPOSE_HOST || 'http://localhost:3111';
+export const GRAASP_PLAYER_HOST =
+  process.env.REACT_APP_GRAASP_PERFORM_HOST || 'http://localhost:3112';
+export const GRAASP_LIBRARY_HOST =
+  process.env.REACT_APP_GRAASP_EXPLORE_HOST || 'http://localhost:3005';
+
+export const HOST_MAP = {
+  [Context.BUILDER]: GRAASP_BUILDER_HOST,
+  [Context.PLAYER]: GRAASP_PLAYER_HOST,
+  [Context.LIBRARY]: GRAASP_LIBRARY_HOST,
+  [Context.ANALYTICS]: '/',
+};
+
 export const ITEM_NAME_MAX_LENGTH = 15;
 
 export const NAVIGATOR_BACKGROUND_COLOR = '#f6f6f6';
