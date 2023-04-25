@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/graasp/graasp-analytics/compare/v0.2.0...v0.3.0) (2023-04-24)
+
+
+### Features
+
+* add breadcrumbs navigator ([#129](https://github.com/graasp/graasp-analytics/issues/129)) ([8f756a1](https://github.com/graasp/graasp-analytics/commit/8f756a1950bfc7f2ccc143f90544abeef7ac049a))
+* add sidebar ([#138](https://github.com/graasp/graasp-analytics/issues/138)) ([2c8d964](https://github.com/graasp/graasp-analytics/commit/2c8d9647b9eeb9c2ea02c40de966d5f5a11c4731))
+* navigation toggles ([#139](https://github.com/graasp/graasp-analytics/issues/139)) ([897ba7d](https://github.com/graasp/graasp-analytics/commit/897ba7dbfb40c5aa9b27e30b4ae1b5ef1f40bf3f))
+
 ## [0.2.0](https://github.com/graasp/graasp-analytics/compare/v0.1.15...v0.2.0) (2023-04-14)
 
 
