@@ -7,7 +7,7 @@ import i18n from './i18n';
 const { exportActionsRoutine } = routines;
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default ({ type, payload }) => {
+export default ({ type, payload }: { type: string, payload: any }): void => {
   let message = null;
   switch (type) {
     case exportActionsRoutine.SUCCESS: {

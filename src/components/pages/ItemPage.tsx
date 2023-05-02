@@ -10,7 +10,7 @@ import Navigator from '../navigator/Navigator';
 import Sidebar from '../sidebar/Sidebar';
 import ChartsLayout from '../space/ChartsLayout';
 
-const ItemPage = ({ isEmbeded }: { isEmbeded: boolean }) => {
+const ItemPage = ({ isEmbeded }: { isEmbeded: boolean }): JSX.Element => {
   const { t } = useTranslation();
   const theme = useTheme();
   if (isEmbeded) {

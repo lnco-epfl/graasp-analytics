@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import {
@@ -11,7 +10,7 @@ import HomePage from './pages/HomePage';
 import ItemPage from './pages/ItemPage';
 import ShareItemPage from './pages/ShareItemPage';
 
-const App = () => (
+const App = (): JSX.Element => (
   <Router>
     <Routes>
       <Route path={EMBEDDED_ITEM_PATH} element={<ItemPage isEmbeded />} />

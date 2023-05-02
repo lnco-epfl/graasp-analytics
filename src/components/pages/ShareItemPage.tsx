@@ -2,7 +2,7 @@ import Footer from '../layout/Footer';
 import Header from '../layout/Header';
 import Navigator from '../navigator/Navigator';
 
-const ShareItemPage = () => (
+const ShareItemPage = (): JSX.Element => (
   <>
     <Header />
     <Navigator />

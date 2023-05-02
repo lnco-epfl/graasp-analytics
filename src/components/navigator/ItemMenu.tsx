@@ -6,6 +6,11 @@ import { Menu, MenuItem, Typography } from '@mui/material';
 
 import { buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
+import {
+  buildMenu,
+  buildMenuDropdownButton,
+  buildMenuItem,
+} from '../../config/selectors';
 import { StyledIconButton } from './util';
 
 const { useChildren } = hooks;
@@ -32,8 +37,9 @@ const ItemMenu = ({ itemId }: { itemId: string }): JSX.Element => {
   return (
     <>
       <StyledIconButton
+        id={buildMenuDropdownButton(itemId)}
         onClick={handleClick}
-        aria-controls={open ? `menu-${itemId}` : undefined}
+        aria-controls={open ? buildMenu(itemId) : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
       >
@@ -41,7 +47,7 @@ const ItemMenu = ({ itemId }: { itemId: string }): JSX.Element => {
       </StyledIconButton>
       <Menu
         anchorEl={anchorEl}
-        id={`menu-${itemId}`}
+        id={buildMenu(itemId)}
         open={open}
         onClose={handleClose}
         onClick={handleClose}
@@ -49,7 +55,12 @@ const ItemMenu = ({ itemId }: { itemId: string }): JSX.Element => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         {items?.map(({ name, id }) => (
-          <MenuItem key={id} component={Link} to={buildItemPath(id)}>
+          <MenuItem
+            id={buildMenuItem(id, itemId)}
+            key={id}
+            component={Link}
+            to={buildItemPath(id)}
+          >
             <Typography>{name}</Typography>
           </MenuItem>
         ))}

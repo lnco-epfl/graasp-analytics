@@ -6,6 +6,12 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Menu, MenuItem, Typography } from '@mui/material';
 
 import { HOME_PATH, SHARED_ITEMS_PATH } from '../../config/paths';
+import {
+  HOME_MENU_DROPDOWN_BUTTON_ID,
+  HOME_MENU_ID,
+  HOME_MENU_OWN_MENUITEM_ID,
+  HOME_MENU_SHARED_MENUITEM_ID,
+} from '../../config/selectors';
 import { StyledIconButton } from './util';
 
 const HomeMenu = (): JSX.Element => {
@@ -22,8 +28,9 @@ const HomeMenu = (): JSX.Element => {
   return (
     <>
       <StyledIconButton
+        id={HOME_MENU_DROPDOWN_BUTTON_ID}
         onClick={handleClick}
-        aria-controls={open ? `menu-home` : undefined}
+        aria-controls={open ? HOME_MENU_ID : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
       >
@@ -31,17 +38,25 @@ const HomeMenu = (): JSX.Element => {
       </StyledIconButton>
       <Menu
         anchorEl={anchorEl}
-        id="menu-home"
+        id={HOME_MENU_ID}
         open={open}
         onClose={handleClose}
         onClick={handleClose}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem component={Link} to={HOME_PATH}>
+        <MenuItem
+          id={HOME_MENU_OWN_MENUITEM_ID}
+          component={Link}
+          to={HOME_PATH}
+        >
           <Typography>{t('My items')}</Typography>
         </MenuItem>
-        <MenuItem component={Link} to={SHARED_ITEMS_PATH}>
+        <MenuItem
+          id={HOME_MENU_SHARED_MENUITEM_ID}
+          component={Link}
+          to={SHARED_ITEMS_PATH}
+        >
           <Typography>{t('Shared items')}</Typography>
         </MenuItem>
       </Menu>

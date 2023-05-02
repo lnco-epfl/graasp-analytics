@@ -86,3 +86,5 @@ export const HOST_MAP = {
 export const ITEM_NAME_MAX_LENGTH = 15;
 
 export const NAVIGATOR_BACKGROUND_COLOR = '#f6f6f6';
+export const ENABLE_MOCK_API = process.env.REACT_APP_ENABLE_MOCK_API === 'true';
+export const API_HOST = process.env.REACT_APP_API_HOST;

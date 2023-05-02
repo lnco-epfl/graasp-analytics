@@ -15,7 +15,9 @@ jobs:
     # Replace 'main' with the hash of a commit, so it points to an specific version of the reusable workflow that is used
     # Reference reusable workflow file. Using the commit SHA is the safest for stability and security
     uses: graasp/graasp-deploy/.github/workflows/cypress.yml@v1
-    # with:
+    # Insert required inputs based on repository
+    with:
+      enable-mock-api-test: true
     # Insert required secrets based on repository with the following format: ${{ secrets.SECRET_NAME }}
     secrets:
       api-host-test: ${{ secrets.REACT_APP_API_HOST }}

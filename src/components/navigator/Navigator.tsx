@@ -1,7 +1,7 @@
 import truncate from 'lodash.truncate';
 
 import { useTranslation } from 'react-i18next';
-import { Navigate, useLocation, useMatch } from 'react-router-dom';
+import { useLocation, useMatch } from 'react-router-dom';
 
 import HomeIcon from '@mui/icons-material/Home';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -19,6 +19,10 @@ import {
   buildItemPath,
 } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
+import {
+  BREADCRUMBS_NAVIGATOR_ID,
+  buildBreadcrumbsItemLink,
+} from '../../config/selectors';
 import HomeMenu from './HomeMenu';
 import ItemMenu from './ItemMenu';
 import RootMenu from './RootMenu';
@@ -39,7 +43,7 @@ const StyledHomeIcon = styled(HomeIcon)({
   justifyContent: 'center',
 });
 
-const Navigator = () => {
+const Navigator = (): JSX.Element => {
   const { t } = useTranslation();
   const match = useMatch(buildItemPath());
   const { pathname } = useLocation();
@@ -107,11 +111,12 @@ const Navigator = () => {
     pathname !== SHARED_ITEMS_PATH &&
     pathname !== HOME_PATH
   ) {
-    return <Navigate to={HOME_PATH} />;
+    return null;
   }
 
   return (
     <Breadcrumbs
+      id={BREADCRUMBS_NAVIGATOR_ID}
       separator={<NavigateNextIcon />}
       aria-label="breadcrumb"
       style={{ backgroundColor: NAVIGATOR_BACKGROUND_COLOR }}
@@ -121,7 +126,11 @@ const Navigator = () => {
       {itemId && renderParents()}
       {itemId && (
         <CenterAlignWrapper>
-          <StyledLink key={itemId} to={buildItemPath(itemId)}>
+          <StyledLink
+            id={buildBreadcrumbsItemLink(itemId)}
+            key={itemId}
+            to={buildItemPath(itemId)}
+          >
             <Typography>
               {truncate(item.name, { length: ITEM_NAME_MAX_LENGTH })}
             </Typography>

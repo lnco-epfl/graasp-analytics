@@ -6,6 +6,11 @@ import { Menu, MenuItem, Typography } from '@mui/material';
 
 import { buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
+import {
+  ROOT_MENU_DROPDOWN_BUTTON_ID,
+  ROOT_MENU_ID,
+  buildMenuItem,
+} from '../../config/selectors';
 import { StyledIconButton } from './util';
 
 const { useOwnItems, useSharedItems } = hooks;
@@ -18,11 +23,15 @@ const RootMenu = ({ isShared }: { isShared: boolean }): JSX.Element => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const { data: items, isLoading: areItemsLoading } = isShared
-    ? useSharedItems()
-    : useOwnItems();
+  const { data: sharedItems, isLoading: areSharedItemsLoading } =
+    useSharedItems();
+  const { data: ownItems, isLoading: areOwnItemsLoading } = useOwnItems();
+  const items = isShared ? sharedItems : ownItems;
 
-  if (areItemsLoading) {
+  if (isShared && areSharedItemsLoading) {
+    return null;
+  }
+  if (!isShared && areOwnItemsLoading) {
     return null;
   }
 
@@ -33,8 +42,9 @@ const RootMenu = ({ isShared }: { isShared: boolean }): JSX.Element => {
   return (
     <>
       <StyledIconButton
+        id={ROOT_MENU_DROPDOWN_BUTTON_ID}
         onClick={handleClick}
-        aria-controls={open ? 'menu-root' : undefined}
+        aria-controls={open ? ROOT_MENU_ID : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
       >
@@ -42,7 +52,7 @@ const RootMenu = ({ isShared }: { isShared: boolean }): JSX.Element => {
       </StyledIconButton>
       <Menu
         anchorEl={anchorEl}
-        id="menu-root"
+        id={ROOT_MENU_ID}
         open={open}
         onClose={handleClose}
         onClick={handleClose}
@@ -50,7 +60,12 @@ const RootMenu = ({ isShared }: { isShared: boolean }): JSX.Element => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         {items?.map(({ name, id }) => (
-          <MenuItem key={id} component={Link} to={buildItemPath(id)}>
+          <MenuItem
+            id={buildMenuItem(id, ROOT_MENU_ID)}
+            key={id}
+            component={Link}
+            to={buildItemPath(id)}
+          >
             <Typography>{name}</Typography>
           </MenuItem>
         ))}
