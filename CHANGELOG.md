@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-rc.1](https://github.com/graasp/graasp-analytics/compare/v0.3.0...v1.0.0-rc.1) (2023-06-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* update for typeorm ([#144](https://github.com/graasp/graasp-analytics/issues/144))
+
+### Features
+
+* miragejs ([#135](https://github.com/graasp/graasp-analytics/issues/135)) ([07b1002](https://github.com/graasp/graasp-analytics/commit/07b10027728bf5d4798366cd3f9c21c2e184a35d))
+* update for typeorm ([#144](https://github.com/graasp/graasp-analytics/issues/144)) ([8112775](https://github.com/graasp/graasp-analytics/commit/8112775888c9f69ac1c1a36e3f91dd187128f59c))
+
+
+### Documentation
+
+* add installation steps ([#141](https://github.com/graasp/graasp-analytics/issues/141)) ([df56f0e](https://github.com/graasp/graasp-analytics/commit/df56f0e349f283047f2fadf1893d86ad7645af39))
+
+
+### chore
+
+* release 1.0.0-rc.1 ([5569aa0](https://github.com/graasp/graasp-analytics/commit/5569aa088c7d538d2e3f880f4e366034b411f1b9))
+
 ## [0.3.0](https://github.com/graasp/graasp-analytics/compare/v0.2.0...v0.3.0) (2023-04-24)
 
 
