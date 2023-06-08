@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { useContext } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Typography from '@mui/material/Typography';
@@ -9,7 +9,6 @@ import { styled } from '@mui/material/styles';
 import { CONTAINER_HEIGHT } from '../../../config/constants';
 import ChartTitle from '../../common/ChartTitle';
 import SelectContainer from '../../common/SelectContainer';
-import { DataContext } from '../../context/DataProvider';
 
 const EmptyChartAlert = styled('div')({
   display: 'flex',
@@ -20,18 +19,12 @@ const EmptyChartAlert = styled('div')({
 
 const EmptyChart = ({ chartTitle, selectFilter }) => {
   const { t } = useTranslation();
-  const { selectedUsers } = useContext(DataContext);
 
-  let message = '';
-  if (selectedUsers.size > 1) {
-    message = t('No actions to show for these users');
-  } else {
-    message = t('No actions to show for this user');
-  }
+  const message = t('No actions to show for this user');
 
   return (
     <>
-      <ChartTitle>{chartTitle}</ChartTitle>
+      <ChartTitle title={t(chartTitle)} />
       {selectFilter && <SelectContainer>{selectFilter}</SelectContainer>}
       <EmptyChartAlert>
         <Typography>{message}</Typography>

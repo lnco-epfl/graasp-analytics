@@ -1,10 +1,20 @@
-import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
+import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
+import { hooks } from '../../../config/queryClient';
 import {
-  findYAxisMax,
   formatActionsByWeekday,
   getActionsByWeekday,
 } from '../../../utils/api';
@@ -12,12 +22,75 @@ import { filterActions } from '../../../utils/array';
 import ChartContainer from '../../common/ChartContainer';
 import ChartTitle from '../../common/ChartTitle';
 import { DataContext } from '../../context/DataProvider';
+import { ViewDataContext } from '../../context/ViewDataProvider';
 import EmptyChart from './EmptyChart';
 
 const ActionsByWeekdayChart = (): JSX.Element => {
   const { t } = useTranslation();
   const { actions, allMembers, selectedUsers, selectedActions } =
     useContext(DataContext);
+
+  const { view } = useContext(ViewDataContext);
+  const { itemId } = useParams();
+
+  const {
+    data: aggregateData,
+    isLoading,
+    isError,
+  } = hooks.useAggregateActions({
+    itemId,
+    view,
+    requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
+    type: selectedActions?.value,
+    countGroupBy: ['user', 'createdDayOfWeek'],
+    aggregateFunction: 'avg',
+    aggregateMetric: 'actionCount',
+    aggregateBy: ['createdDayOfWeek'],
+  });
+
+  if (isLoading || isError) {
+    return null;
+  }
+
+  const title = 'Actions By Weekday';
+  if (aggregateData.size === 0) {
+    return <EmptyChart chartTitle={t(title)} />;
+  }
+
+  let formattedAggregateData = aggregateData.toArray().map((d) => ({
+    aggregateResult: parseFloat(d.aggregateResult),
+    createdDayOfWeek: parseFloat(d.createdDayOfWeek),
+  }));
+  const createdDayOfWeekEntry = formattedAggregateData.map(
+    (o) => o.createdDayOfWeek,
+  );
+
+  for (let day = 0; day < 7; day += 1) {
+    if (!createdDayOfWeekEntry.includes(day)) {
+      formattedAggregateData.push({
+        aggregateResult: 0.0,
+        createdDayOfWeek: day,
+      });
+    }
+  }
+
+  const weekdayEnum = {
+    0: 'Sunday',
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+  };
+
+  formattedAggregateData.sort(
+    (a, b) => a.createdDayOfWeek - b.createdDayOfWeek,
+  );
+  formattedAggregateData = formattedAggregateData.map((d) => ({
+    averageCount: d.aggregateResult,
+    day: weekdayEnum[d.createdDayOfWeek],
+  }));
 
   // ActionsByWeekday is the object passed, after formatting, to the BarChart component below
 
@@ -37,25 +110,47 @@ const ActionsByWeekdayChart = (): JSX.Element => {
       chartFunction: getActionsByWeekday,
     });
   }
-  const yAxisMax = findYAxisMax(actionsByWeekday);
+
   const formattedActionsByWeekday = formatActionsByWeekday(actionsByWeekday);
 
-  const title = 'Actions By Weekday';
-  // if selected user(s) have no actions, render component with message that there are no actions
-  if (formattedActionsByWeekday.every((weekday) => weekday.count === 0)) {
-    return <EmptyChart chartTitle={t(title)} />;
+  const mergedData = formattedAggregateData.map((o1) =>
+    Object.assign(
+      o1,
+      formattedActionsByWeekday.find((o2) => o2.day === o1.day) ?? {
+        count: 0,
+      },
+    ),
+  );
+
+  const maxCountEntry = mergedData.reduce((a, b) =>
+    Math.max(a.averageCount, a.count) > Math.max(b.averageCount, b.count)
+      ? a
+      : b,
+  );
+  const maxCount = Math.max(maxCountEntry.averageCount, maxCountEntry.count);
+  let yAxisMax;
+  if (maxCount <= 100) {
+    yAxisMax = Math.ceil(maxCount / 10) * 10;
+  } else {
+    yAxisMax = Math.ceil(maxCount / 100) * 100;
   }
 
   return (
     <>
-      <ChartTitle>{t('Actions By Weekday')}</ChartTitle>
+      <ChartTitle title={t(title)} />
       <ChartContainer>
-        <BarChart data={formattedActionsByWeekday}>
+        <BarChart data={mergedData}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis interval={0} dataKey="day" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip />
+          <Legend />
           <Bar dataKey="count" name={t('Count')} fill="#8884d8" />
+          <Bar
+            dataKey="averageCount"
+            name={t('Average Count')}
+            fill="#F99417"
+          />
         </BarChart>
       </ChartContainer>
     </>

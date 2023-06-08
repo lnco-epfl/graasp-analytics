@@ -38,7 +38,7 @@ const ItemsByUserChart = () => {
     itemChildren: children,
     itemData,
   } = useContext(DataContext);
-  const users = selectedUsers.size ? selectedUsers : allMembers;
+  const users = selectedUsers !== null ? [selectedUsers] : allMembers;
   const allActions = filterActionsByActionTypes(actions, selectedActions);
   const userNames = Object.keys(groupBy('name', users));
   const yAxisMax = findYAxisMax(users);
@@ -79,7 +79,7 @@ const ItemsByUserChart = () => {
 
   return (
     <>
-      <ChartTitle>{t(title)}</ChartTitle>
+      <ChartTitle title={t(title)} />
       <ChartContainer>
         <ComposedChart data={firstFormattedItmesByUser}>
           <CartesianGrid strokeDasharray="2" />

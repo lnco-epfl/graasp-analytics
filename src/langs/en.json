@@ -20,6 +20,26 @@
     "Actions by Location": "Actions by Location",
     "Actions by Day": "Actions by Day",
     "No actions to show for this user": "No actions to show for this user",
-    "Your request has been sent. An email will be sent to you in several minutes.": "Your request has been sent. An email will be sent to you in several minutes."
+    "Your request has been sent. An email will be sent to you in several minutes.": "Your request has been sent. An email will be sent to you in several minutes.",
+    "Count": "Count",
+    "Average Count": "Average Count",
+    "Actions By Weekday": "Actions By Weekday",
+    "Total actions": "Total actions",
+    "Total users": "Total users",
+    "Download the full dataset for this space": "Download the full dataset for this space",
+    "Select a View": "Select a View",
+    "Select User": "Select User",
+    "Select Action(s)": "Select Action(s)",
+    "Actions Distributions": "Actions Distributions",
+    "Total Actions Distributions": "Total Actions Distributions",
+    "Actions by User": "Actions by User",
+    "Total": "Total",
+    "10 Most Active Users": "10 Most Active Users",
+    "10 Most Interacted Items by Action": "10 Most Interacted Items by Action",
+    "10 Most Interacted Items by User": "10 Most Interacted Items by User",
+    "Active Users by Day": "Active Users by Day",
+    "Actions this month": "Actions this month",
+    "Actions this week": "Actions this week",
+    "Actions today": "Actions today"
   }
 }

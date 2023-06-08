@@ -30,7 +30,7 @@ const ReportData = () => {
               <FaceIcon fontSize="large" />
             </Grid>
             <Grid item xs={9}>
-              <Typography align="center">
+              <Typography component="div" align="center">
                 {t('Total users')}
                 <Typography variant="h5" component="div" align="center">
                   {allMembers.size}
@@ -47,7 +47,7 @@ const ReportData = () => {
               <TouchAppIcon fontSize="large" />
             </Grid>
             <Grid item xs={9}>
-              <Typography align="center">
+              <Typography component="div" align="center">
                 {t('Total actions')}
                 <Typography variant="h5" component="div" align="center">
                   {actions.size}

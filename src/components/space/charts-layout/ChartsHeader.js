@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import { DataContext } from '../../context/DataProvider';
 import ActionsSelect from '../functionality/ActionsSelect';
 import ExportData from '../functionality/ExportData';
-import ReportData from '../functionality/ReportData';
 import UsersSelect from '../functionality/UsersSelect';
 import ViewSelect from '../functionality/ViewSelect';
 
@@ -41,7 +40,19 @@ const ChartsHeader = () => {
         pl={4}
         pb={2}
       >
-        <Grid item xs={9}>
+        <Grid item xs={3.5}>
+          <ViewSelect />
+        </Grid>
+        <Grid item xs={3.5}>
+          <UsersSelect />
+        </Grid>
+        <Grid item xs={3.5}>
+          <ActionsSelect />
+        </Grid>
+        <Grid item xs={1.5}>
+          <ExportData />
+        </Grid>
+        {/* <Grid item xs={9}>
           <ExportData />
           <ViewSelect />
           <UsersSelect />
@@ -49,7 +60,7 @@ const ChartsHeader = () => {
         </Grid>
         <Grid item xs={3}>
           <ReportData />
-        </Grid>
+        </Grid> */}
       </Grid>
     );
   }

@@ -30,14 +30,14 @@ const UsersByActionByChart = () => {
   const { t } = useTranslation();
   const { actions, selectedUsers, selectedActions, allMembers } =
     useContext(DataContext);
-  const users = selectedUsers.size ? selectedUsers : allMembers;
+  const users = allMembers;
   const allActions = filterActionsByActionTypes(actions, selectedActions);
   const types = Object.keys(groupBy('type', allActions));
   const yAxisMax = findYAxisMax(users);
 
   let formattedUsersByAction = [];
   users.forEach((user) => {
-    const filteredActions = filterActionsByUser(allActions, [{ id: user.id }]);
+    const filteredActions = filterActionsByUser(allActions, { id: user.id });
     const groupedActions = groupBy('type', filteredActions);
     const userActions = {
       id: user.id,
@@ -65,7 +65,7 @@ const UsersByActionByChart = () => {
 
   return (
     <>
-      <ChartTitle>{t(title)}</ChartTitle>
+      <ChartTitle title={t(title)} />
       <ChartContainer>
         <ComposedChart data={formattedUsersByAction}>
           <CartesianGrid strokeDasharray="2" />

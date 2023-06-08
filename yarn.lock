@@ -1531,7 +1531,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.21.5
   resolution: "@babel/runtime@npm:7.21.5"
   dependencies:
@@ -2369,24 +2369,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@github:graasp/graasp-query-client#typeorm":
-  version: 0.4.0
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=0b1a697d9bb79a80c128df1d88db5a3705934b03"
+"@graasp/query-client@portal:/Users/ray/graasp_repo/graasp-query-client::locator=graasp-analytics%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@graasp/query-client@portal:/Users/ray/graasp_repo/graasp-query-client::locator=graasp-analytics%40workspace%3A."
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#typeorm"
-    "@graasp/translations": "github:graasp/graasp-translations#89-email"
+    "@graasp/translations": 1.13.0
     axios: 0.27.2
     crypto-js: 4.1.1
     http-status-codes: 2.2.0
     immutable: 4.3.0
-    qs: 6.11.0
+    qs: 6.11.1
     react-query: 3.39.3
     uuid: 9.0.0
   peerDependencies:
     react: ^17.0.0
-  checksum: 746e71b798e2e446d783dae4a3b10b36fbb346e7c9e9c28cf7c871ea0ec2a7054c3f5fb2d2076cb87edda9ce591329441ef140f356af2d810d7acbf87376ea4e
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@graasp/sdk@github:graasp/graasp-sdk#typeorm":
   version: 0.10.1
@@ -2406,12 +2405,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/translations@github:graasp/graasp-translations#89-email":
-  version: 1.8.0
-  resolution: "@graasp/translations@https://github.com/graasp/graasp-translations.git#commit=645c467410a68dbc249bc685985f7c6189f489f9"
+"@graasp/translations@npm:1.13.0":
+  version: 1.13.0
+  resolution: "@graasp/translations@npm:1.13.0"
   dependencies:
-    i18next: 21.8.1
-  checksum: bc49bfd6ad1e8d9c3fef70edba9ac0ff674bbc58f2466bfa2b0966dc0e62fbcce3fa80dff819ab0911fa64883060b5d29e699d4c8660667630f96a2c8afd949f
+    i18next: 22.4.15
+  checksum: 319a62cf134e7427f31ba8fb7e9e91b536b9e97b05f773f0d459c42ab933a54c9175af3aa5017b82fcfdf91b934e5faf0f6a7c6dfb98e0b788698ebf2a9a64e1
   languageName: node
   linkType: hard
 
@@ -9689,7 +9688,7 @@ __metadata:
     google-map-react: 2.2.0
     husky: 8.0.3
     i18next: 22.4.9
-    immutable: 4.2.4
+    immutable: 4.3.0
     istanbul-lib-coverage: 3.2.0
     lodash.capitalize: 4.2.1
     lodash.sortby: 4.7.0
@@ -9697,7 +9696,7 @@ __metadata:
     nyc: 15.1.0
     prettier: 2.8.3
     prop-types: 15.8.1
-    qs: 6.11.0
+    qs: 6.11.1
     react: 18.2.0
     react-app-rewired: 2.2.1
     react-dom: 18.2.0
@@ -10173,12 +10172,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:21.8.1":
-  version: 21.8.1
-  resolution: "i18next@npm:21.8.1"
+"i18next@npm:22.4.15":
+  version: 22.4.15
+  resolution: "i18next@npm:22.4.15"
   dependencies:
-    "@babel/runtime": ^7.17.2
-  checksum: d95da86626356d980c7063f41f2dcb3ce82462a11aa968df10bb87eb19e7fa54a2303643551bfef6276c18e6fb12e8e320f6ff914ff2ad4e0b32ff849150fed0
+    "@babel/runtime": ^7.20.6
+  checksum: fced898227983e439c59e7aa6e7b87e53ad1b8a1c85f0613a968881418266e5336e9443831125590559796075d516fe3dbf8118679c894094a0a404be78b02a2
   languageName: node
   linkType: hard
 

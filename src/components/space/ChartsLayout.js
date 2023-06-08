@@ -11,6 +11,7 @@ import { ViewDataContext } from '../context/ViewDataProvider';
 import ChartsAlerts from './charts-layout/ChartsAlerts';
 import ChartsArea from './charts-layout/ChartsArea';
 import ChartsHeader from './charts-layout/ChartsHeader';
+import GeneralAnalytics from './charts-layout/GeneralAnalytics';
 
 const ChartsLayout = () => {
   const { t } = useTranslation();
@@ -47,6 +48,7 @@ const ChartsLayout = () => {
       {!error && !isLoading && (
         <>
           <ChartsAlerts />
+          <GeneralAnalytics />
           <ChartsArea />
         </>
       )}

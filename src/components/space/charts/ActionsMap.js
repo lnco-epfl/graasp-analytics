@@ -30,7 +30,7 @@ const ActionsMap = () => {
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
-  const { actions, selectedUsers, allMembers } = useContext(DataContext);
+  const { actions, selectedUsers } = useContext(DataContext);
 
   // actionsToChart is the array converted to GeoJSON Feature objects below
   // if you remove all names in the react-select dropdown, selectedUsers becomes null
@@ -40,11 +40,7 @@ const ActionsMap = () => {
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
   let actionsToChart;
-  if (
-    selectedUsers === null ||
-    selectedUsers.size === 0 ||
-    selectedUsers.size === allMembers.size
-  ) {
+  if (selectedUsers === null) {
     actionsToChart = actions;
   } else {
     actionsToChart = filterActionsByUser(actions, selectedUsers);
@@ -74,7 +70,7 @@ const ActionsMap = () => {
 
   return (
     <>
-      <ChartTitle>{t('Actions by Location')}</ChartTitle>
+      <ChartTitle title={t('Actions by Location')} />
       <ChartContainer>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_KEY }}

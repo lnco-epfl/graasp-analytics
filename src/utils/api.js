@@ -5,15 +5,9 @@ import truncate from 'lodash.truncate';
 
 import {
   ACCESSED_STRING,
-  AFTERNOON,
-  EARLY_MORNING,
-  EVENING,
   ITEM_NAME_MAX_LENGTH,
-  LATE_NIGHT,
   LEARNING_ANALYTICS_USER_ID,
   MIN_PERCENTAGE_TO_SHOW_VERB,
-  MORNING,
-  NIGHT,
   OTHER_VERB,
   TOP_NUMBER_OF_ITEMS_TO_DISPLAY,
 } from '../config/constants';
@@ -68,38 +62,19 @@ const getActionHourOfDay = (action) => {
   const dateKey = 'createdAt';
   // createdAt should have the format "2020-12-31T23:59:59.999Z"
   const date = new Date(action[dateKey]);
-  const hours = date.getHours();
+  const hours = date.getUTCHours();
   return hours;
 };
 
 // Takes array of action objects and returns an object with {key: value} pairs of {hourOfDay: #-of-actions}
 export const getActionsByTimeOfDay = (actions) => {
-  const actionsByTimeOfDay = {
-    [LATE_NIGHT]: 0,
-    [EARLY_MORNING]: 0,
-    [MORNING]: 0,
-    [AFTERNOON]: 0,
-    [EVENING]: 0,
-    [NIGHT]: 0,
-  };
+  const actionsByTimeOfDay = {};
+  for (let hours = 0; hours < 24; hours += 1) {
+    actionsByTimeOfDay[hours] = 0;
+  }
   actions?.forEach((action) => {
     const actionHourOfDay = getActionHourOfDay(action);
-    if (actionHourOfDay >= 0 && actionHourOfDay < 4) {
-      actionsByTimeOfDay[LATE_NIGHT] += 1;
-    } else if (actionHourOfDay >= 4 && actionHourOfDay < 8) {
-      actionsByTimeOfDay[EARLY_MORNING] += 1;
-    } else if (actionHourOfDay >= 8 && actionHourOfDay < 12) {
-      actionsByTimeOfDay[MORNING] += 1;
-    } else if (actionHourOfDay >= 12 && actionHourOfDay < 16) {
-      actionsByTimeOfDay[AFTERNOON] += 1;
-    } else if (actionHourOfDay >= 16 && actionHourOfDay < 20) {
-      actionsByTimeOfDay[EVENING] += 1;
-    } else if (actionHourOfDay >= 20 && actionHourOfDay < 24) {
-      actionsByTimeOfDay[NIGHT] += 1;
-    } else {
-      // eslint-disable-next-line no-console
-      console.error(`actionHourOfDay ${actionHourOfDay} is undefined`);
-    }
+    actionsByTimeOfDay[actionHourOfDay] += 1;
   });
   return actionsByTimeOfDay;
 };
@@ -109,7 +84,7 @@ export const getActionsByTimeOfDay = (actions) => {
 export const formatActionsByTimeOfDay = (actionsByTimeOfDayObject) => {
   const actionsByTimeOfDayArray = Object.entries(actionsByTimeOfDayObject);
   return actionsByTimeOfDayArray.map((entry) => ({
-    timeOfDay: entry[0],
+    timeOfDay: parseInt(entry[0], 10),
     count: entry[1],
   }));
 };
@@ -201,19 +176,15 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
 };
 
 // 'actions' is an array in the format retrieved from the API: [ { id: 1, memberId: 2, ... }, {...} ]
-export const filterActionsByUser = (actions, usersArray) =>
-  actions.filter((action) =>
-    usersArray.some((user) => user.id === action?.member?.id),
-  );
+export const filterActionsByUser = (actions, user) =>
+  actions.filter((action) => user.id === action?.member?.id);
 
-export const filterActionsByActionTypes = (actions, actionsArray) => {
+export const filterActionsByActionTypes = (actions, actionsType) => {
   // no selection return whole array
-  if (!actionsArray || actionsArray.isEmpty()) {
+  if (!actionsType?.value) {
     return actions;
   }
-  return actions.filter((action) =>
-    actionsArray.some((act) => act.value === action.type),
-  );
+  return actions.filter((action) => actionsType.value === action?.type);
 };
 
 // given an actionsByDay object, findYAxisMax finds max value to set on the yAxis in the graph in ActionsByDayChart.js

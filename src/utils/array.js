@@ -13,19 +13,19 @@ export const filterActions = ({
   selectedUsers,
   selectedActions,
   actions,
+  // TODO: remove the argument
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   allMembersLength,
   chartFunction,
 }) => {
-  const types = Object.keys(groupBy('type', actions));
-  const noUsers =
-    selectedUsers === null ||
-    !selectedUsers.size ||
-    selectedUsers.size === allMembersLength;
-  const noActions =
-    selectedActions === null ||
-    !selectedActions.size ||
-    selectedActions.size === types.size;
+  const noUsers = selectedUsers === null;
+  const noActions = selectedActions === null;
   let actionsByTimeOfDay;
+
+  if (noUsers) {
+    return {};
+  }
+
   if (noUsers && noActions) {
     actionsByTimeOfDay = chartFunction(actions);
   } else if (!noUsers && noActions) {

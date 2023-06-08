@@ -10,20 +10,57 @@ import {
 
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
-import { COLORS } from '../../../config/constants';
+import { COLORS, DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
+import { hooks } from '../../../config/queryClient';
 import { filterActionsByActionTypes, findYAxisMax } from '../../../utils/api';
 import { groupBy } from '../../../utils/array';
 import ChartContainer from '../../common/ChartContainer';
 import ChartTitle from '../../common/ChartTitle';
 import { DataContext } from '../../context/DataProvider';
+import { ViewDataContext } from '../../context/ViewDataProvider';
 import EmptyChart from './EmptyChart';
 
 const ActionsByUserChart = () => {
   const { t } = useTranslation();
   const { actions, selectedUsers, selectedActions, allMembers } =
     useContext(DataContext);
-  const users = selectedUsers.size ? selectedUsers : allMembers;
+  const { view } = useContext(ViewDataContext);
+  const { itemId } = useParams();
+
+  // get aggregate actions
+  const {
+    data: aggregateData,
+    isLoading,
+    isError,
+  } = hooks.useAggregateActions({
+    itemId,
+    view,
+    requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
+    type: selectedActions?.value,
+    countGroupBy: ['user', 'actionType'],
+    aggregateFunction: 'sum',
+    aggregateMetric: 'actionCount',
+    aggregateBy: ['actionType'],
+  });
+
+  if (isLoading || isError) {
+    return null;
+  }
+
+  const aggregateDataMap = new Map(
+    aggregateData
+      .toArray()
+      .map((d) => [d.actionType, parseInt(d.aggregateResult, 10)]),
+  );
+
+  const users = selectedUsers !== null ? [selectedUsers] : allMembers;
+  const title = 'Actions by User';
+  if (!users) {
+    return <EmptyChart chartTitle={t(title)} />;
+  }
+
   const allActions = filterActionsByActionTypes(actions, selectedActions);
   const userNames = Object.keys(groupBy('name', users));
   const yAxisMax = findYAxisMax(users);
@@ -39,7 +76,7 @@ const ActionsByUserChart = () => {
     );
     const userActions = {
       type: key,
-      total: actionsByType.length,
+      total: aggregateDataMap.get(key),
     };
     Object.entries(groupedUsers).forEach((groupedUser) => {
       users.forEach((user) => {
@@ -50,15 +87,12 @@ const ActionsByUserChart = () => {
     });
     formattedData.push(userActions);
   });
+
   formattedData.sort((a, b) => b.total - a.total);
-  const title = 'Actions by User';
-  if (!formattedData.length) {
-    return <EmptyChart selectedUsers={selectedUsers} chartTitle={t(title)} />;
-  }
 
   return (
     <>
-      <ChartTitle>{t(title)}</ChartTitle>
+      <ChartTitle title={t(title)} />
       <ChartContainer>
         <ComposedChart data={formattedData}>
           <CartesianGrid strokeDasharray="2" />

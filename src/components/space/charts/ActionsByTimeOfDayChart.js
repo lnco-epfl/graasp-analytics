@@ -1,10 +1,20 @@
-import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
+import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
+import { hooks } from '../../../config/queryClient';
 import {
-  findYAxisMax,
   formatActionsByTimeOfDay,
   getActionsByTimeOfDay,
 } from '../../../utils/api';
@@ -12,13 +22,56 @@ import { filterActions } from '../../../utils/array';
 import ChartContainer from '../../common/ChartContainer';
 import ChartTitle from '../../common/ChartTitle';
 import { DataContext } from '../../context/DataProvider';
-import ActionsByTimeOfDayCustomTooltip from '../../custom/ActionsByTimeOfDayCustomTooltip';
+import { ViewDataContext } from '../../context/ViewDataProvider';
 import EmptyChart from './EmptyChart';
 
 const ActionsByTimeOfDayChart = () => {
   const { t } = useTranslation();
   const { actions, allMembers, selectedUsers, selectedActions } =
     useContext(DataContext);
+  const { view } = useContext(ViewDataContext);
+  const { itemId } = useParams();
+
+  const title = 'Actions by Time of Day';
+
+  const {
+    data: aggregateData,
+    isLoading,
+    isError,
+  } = hooks.useAggregateActions({
+    itemId,
+    view,
+    requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
+    type: selectedActions?.value,
+    countGroupBy: ['user', 'createdTimeOfDay'],
+    aggregateFunction: 'avg',
+    aggregateMetric: 'actionCount',
+    aggregateBy: ['createdTimeOfDay'],
+  });
+
+  if (isLoading || isError) {
+    return null;
+  }
+
+  if (aggregateData.size === 0) {
+    return <EmptyChart chartTitle={t(title)} />;
+  }
+
+  const formattedAggregateData = aggregateData.toArray().map((d) => ({
+    averageCount: parseFloat(d.aggregateResult),
+    timeOfDay: parseFloat(d.createdTimeOfDay),
+  }));
+
+  const timeOfDayEntry = formattedAggregateData.map((o) => o.timeOfDay);
+
+  for (let hour = 0; hour < 24; hour += 1) {
+    if (!timeOfDayEntry.includes(hour)) {
+      formattedAggregateData.push({
+        averageCount: 0.0,
+        timeOfDay: hour,
+      });
+    }
+  }
 
   // actionsByTimeOfDay is the object passed, after formatting, to the BarChart component below
   // if you remove all names in the react-select dropdown, selectedUsers becomes null
@@ -37,28 +90,51 @@ const ActionsByTimeOfDayChart = () => {
       chartFunction: getActionsByTimeOfDay,
     });
   }
-  const yAxisMax = findYAxisMax(actionsByTimeOfDay);
   const formattedActionsByTimeOfDay =
     formatActionsByTimeOfDay(actionsByTimeOfDay);
 
-  const title = 'Actions by Time of Day';
-  // if selected user(s) have no actions, render component with message that there are no actions
-  if (
-    formattedActionsByTimeOfDay.every((timePeriod) => timePeriod.count === 0)
-  ) {
-    return <EmptyChart selectedUsers={selectedUsers} chartTitle={t(title)} />;
+  const mergedData = formattedAggregateData.map((o1) =>
+    Object.assign(
+      o1,
+      formattedActionsByTimeOfDay.find(
+        (o2) => o2.timeOfDay === o1.timeOfDay,
+      ) ?? {
+        count: 0,
+      },
+    ),
+  );
+
+  mergedData.sort((a, b) => a.timeOfDay - b.timeOfDay);
+
+  const maxCountEntry = mergedData.reduce((a, b) =>
+    Math.max(a.averageCount, a.count) > Math.max(b.averageCount, b.count)
+      ? a
+      : b,
+  );
+  const maxCount = Math.max(maxCountEntry.averageCount, maxCountEntry.count);
+  let yAxisMax;
+  if (maxCount <= 100) {
+    yAxisMax = Math.ceil(maxCount / 10) * 10;
+  } else {
+    yAxisMax = Math.ceil(maxCount / 100) * 100;
   }
 
   return (
     <>
-      <ChartTitle>{t('Actions by Time of Day')}</ChartTitle>
+      <ChartTitle title={t(title)} />
       <ChartContainer>
-        <BarChart data={formattedActionsByTimeOfDay}>
+        <BarChart data={mergedData}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis interval={0} dataKey="timeOfDay" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
-          <Tooltip content={<ActionsByTimeOfDayCustomTooltip />} />
+          <Tooltip />
+          <Legend />
           <Bar dataKey="count" name={t('Count')} fill="#8884d8" />
+          <Bar
+            dataKey="averageCount"
+            name={t('Average Count')}
+            fill="#F99417"
+          />
         </BarChart>
       </ChartContainer>
     </>

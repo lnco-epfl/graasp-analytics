@@ -27,15 +27,17 @@ const ActionsByVerbChart = () => {
     });
   }
   const formattedActionsByVerb = formatActionsByVerb(actionsByVerb);
-  const title = 'Actions by Verb';
+  const title = 'Actions Distributions';
   // if selected user(s) have no actions, render component with message that there are no actions
-  if (!formattedActionsByVerb.length) {
-    return <EmptyChart selectedUsers={selectedUsers} chartTitle={t(title)} />;
+  if (!formattedActionsByVerb?.length) {
+    return <EmptyChart chartTitle={t(title)} />;
   }
+
+  formattedActionsByVerb.sort((a, b) => a.type.localeCompare(b.type));
 
   return (
     <>
-      <ChartTitle>{t('Actions by Verb')}</ChartTitle>
+      <ChartTitle title={t(title)} />
       <ChartContainer>
         <PieChart fontSize={14}>
           <Pie

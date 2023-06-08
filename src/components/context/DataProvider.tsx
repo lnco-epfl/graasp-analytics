@@ -20,10 +20,10 @@ import { ViewDataContext } from './ViewDataProvider';
 const defaultValue: {
   actions: List<ActionRecord>;
   allMembers: List<MemberRecord>;
-  selectedUsers: List<MemberRecord>;
-  setSelectedUsers: Dispatch<List<MemberRecord>>;
-  selectedActions: List<ActionRecord>;
-  setSelectedActions: Dispatch<List<ActionRecord>>;
+  selectedUsers: MemberRecord;
+  setSelectedUsers: Dispatch<MemberRecord>;
+  selectedActions: { name: string; value: string };
+  setSelectedActions: Dispatch<{ name: string; value: string }>;
   error: boolean;
   itemData?: ItemRecord;
   itemChildren: List<ItemRecord>;
@@ -31,7 +31,7 @@ const defaultValue: {
 } = {
   actions: List(),
   allMembers: List(),
-  selectedUsers: List(),
+  selectedUsers: null,
   itemChildren: List(),
   setSelectedUsers: () => {
     // do nothing
@@ -39,7 +39,7 @@ const defaultValue: {
   setSelectedActions: () => {
     // do nothing
   },
-  selectedActions: List(),
+  selectedActions: null,
   error: false,
   isLoading: true,
 };
@@ -60,14 +60,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     [Context.LIBRARY]: false,
     [Context.UNKNOWN]: false,
   });
-  const [selectedUsers, setSelectedUsers] = useState<List<MemberRecord>>(
-    List(),
-  );
-  const [selectedActions, setSelectedActions] = useState<List<ActionRecord>>(
-    List(),
-  );
   const [actions, setActions] = useState<List<ActionRecord>>(List());
   const [allMembers, setAllMembers] = useState<List<MemberRecord>>(List());
+  const [selectedUsers, setSelectedUsers] = useState<MemberRecord>(null);
+  const [selectedActions, setSelectedActions] = useState<ActionRecord>(null);
   const [error, setError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { view } = useContext(ViewDataContext);

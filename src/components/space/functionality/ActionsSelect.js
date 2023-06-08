@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
@@ -31,13 +29,14 @@ const ActionsSelect = () => {
     name: action,
     value: action,
   }));
+
   const allOption = {
     name: t('Select All'),
-    value: '*',
+    value: null,
   };
 
   const handleChange = (selectedAction) => {
-    setSelectedActions(List(selectedAction));
+    setSelectedActions(selectedAction);
   };
 
   return (
@@ -49,22 +48,13 @@ const ActionsSelect = () => {
         <Select
           styles={customStyles}
           options={[allOption, ...allActions]}
-          isMulti
-          closeMenuOnSelect={false}
+          isMulti={false}
+          closeMenuOnSelect
           hideSelectedOptions={false}
           getOptionValue={(option) => option.name}
           getOptionLabel={(option) => option.name}
-          value={selectedActions.toArray()}
-          onChange={(selected) => {
-            if (
-              selected !== null &&
-              selected.size > 0 &&
-              selected[selected.size - 1].value === allOption.value
-            ) {
-              return handleChange(allActions);
-            }
-            return handleChange(selected);
-          }}
+          value={selectedActions}
+          onChange={(selected) => handleChange(selected)}
           components={{
             ValueContainer: CustomValueContainer,
           }}
