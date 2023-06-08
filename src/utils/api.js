@@ -21,7 +21,7 @@ import {
 const getActionDay = (action) => {
   const dateKey = 'createdAt';
   // createdAt should have the format "2020-12-31T23:59:59.999Z"
-  const dateObject = new Date(action[dateKey]);
+  const dateObject = action[dateKey];
   // extract only the date information
   const day = new Date(dateObject.toDateString());
   return day;
@@ -67,7 +67,7 @@ export const mapActionsToGeoJsonFeatureObjects = (actions) =>
 const getActionHourOfDay = (action) => {
   const dateKey = 'createdAt';
   // createdAt should have the format "2020-12-31T23:59:59.999Z"
-  const date = new Date(action[dateKey]);
+  const date = action[dateKey];
   const hours = date.getHours();
   return hours;
 };
@@ -118,7 +118,7 @@ export const formatActionsByTimeOfDay = (actionsByTimeOfDayObject) => {
 const getActionWeekday = (action) => {
   const dateKey = 'createdAt';
   // createdAt should have the format "2020-12-31T23:59:59.999Z"
-  const date = new Date(action[dateKey]);
+  const date = action[dateKey];
   const weekday = date.getDay();
   return weekday;
 };
@@ -155,12 +155,12 @@ export const getActionsByVerb = (actions) => {
   const totalActions = actions.size;
   const actionsByVerb = {};
   actions.forEach((action) => {
-    if (!actionsByVerb[action.actionType]) {
-      // if actionType is still not in the actionsByVerb object, add it and assign it to (1 / totalActions)
+    if (!actionsByVerb[action.type]) {
+      // if type is still not in the actionsByVerb object, add it and assign it to (1 / totalActions)
       // we use (1 / totalActions) because in the end we want this object to be {verb: PERCENTAGE-of-total-actions}
-      actionsByVerb[action.actionType] = 1 / totalActions;
+      actionsByVerb[action.type] = 1 / totalActions;
     } else {
-      actionsByVerb[action.actionType] += 1 / totalActions;
+      actionsByVerb[action.type] += 1 / totalActions;
     }
   });
   return actionsByVerb;
@@ -195,18 +195,16 @@ export const formatActionsByVerb = (actionsByVerbObject) => {
 
   // convert to recharts required format
   return formattedActionsByVerbArray.map((entry) => ({
-    actionType: entry[0],
+    type: entry[0],
     percentage: entry[1],
   }));
 };
 
 // 'actions' is an array in the format retrieved from the API: [ { id: 1, memberId: 2, ... }, {...} ]
-export const filterActionsByUser = (actions, usersArray) => {
-  const userKey = 'memberId';
-  return actions.filter((action) =>
-    usersArray.some((user) => user.id === action[userKey]),
+export const filterActionsByUser = (actions, usersArray) =>
+  actions.filter((action) =>
+    usersArray.some((user) => user.id === action?.member?.id),
   );
-};
 
 export const filterActionsByActionTypes = (actions, actionsArray) => {
   // no selection return whole array
@@ -214,7 +212,7 @@ export const filterActionsByActionTypes = (actions, actionsArray) => {
     return actions;
   }
   return actions.filter((action) =>
-    actionsArray.some((act) => act.value === action.actionType),
+    actionsArray.some((act) => act.value === action.type),
   );
 };
 
@@ -394,10 +392,10 @@ export const groupByFirstLevelItems = (actions, item) => {
 
   // compare first level only
   const d = actions.groupBy((a) =>
-    a.itemPath
-      .split('.')
-      .slice(0, nbLevelParent + 1)
-      .join('.'),
+    a.item?.path
+      ?.split('.')
+      ?.slice(0, nbLevelParent + 1)
+      ?.join('.'),
   );
   return d.toJS();
 };

@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import {
   Bar,
   CartesianGrid,
@@ -39,7 +40,7 @@ const ItemsByActionChart = () => {
   } = useContext(DataContext);
   const users = selectedUsers.size ? selectedUsers : allMembers;
   const allActions = filterActionsByActionTypes(actions, selectedActions);
-  const actionTypes = Object.keys(groupBy('actionType', allActions));
+  const types = Object.keys(groupBy('type', allActions));
   const yAxisMax = findYAxisMax(users);
 
   const groupedItems = groupByFirstLevelItems(allActions, item);
@@ -47,10 +48,10 @@ const ItemsByActionChart = () => {
   Object.entries(groupedItems).forEach((groupedItem) => {
     const currentPath = groupedItem[0];
     const userActions = {
-      name: findItemNameByPath(currentPath, children.push(item)),
+      name: findItemNameByPath(currentPath, (children ?? List()).push(item)),
       total: groupedItem[1].length,
     };
-    const groupedActions = groupBy('actionType', groupedItem[1]);
+    const groupedActions = groupBy('type', groupedItem[1]);
     Object.entries(groupedActions).forEach((groupedAction) => {
       userActions[groupedAction[0]] = groupedAction[1].length;
     });
@@ -77,10 +78,10 @@ const ItemsByActionChart = () => {
           <XAxis interval={0} dataKey="name" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip />
-          {actionTypes.map((actionType, index) => (
+          {types.map((type, index) => (
             <Bar
               key=""
-              dataKey={actionType}
+              dataKey={type}
               stackId="1"
               fill={COLORS[index % COLORS.length]}
             />

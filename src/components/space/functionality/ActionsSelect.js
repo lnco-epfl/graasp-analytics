@@ -27,12 +27,10 @@ const ActionsSelect = () => {
   if (!actions || !actions.size) {
     return null;
   }
-  const allActions = Object.keys(groupBy('actionType', actions)).map(
-    (action) => ({
-      name: action,
-      value: action,
-    }),
-  );
+  const allActions = Object.keys(groupBy('type', actions)).map((action) => ({
+    name: action,
+    value: action,
+  }));
   const allOption = {
     name: t('Select All'),
     value: '*',

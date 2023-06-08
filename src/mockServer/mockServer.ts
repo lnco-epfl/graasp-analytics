@@ -5,7 +5,6 @@ import { API_ROUTES } from '@graasp/query-client';
 import { Item, ItemMembership, Member } from '@graasp/sdk';
 
 const {
-  buildGetPublicItemRoute,
   buildGetItemRoute,
   GET_CURRENT_MEMBER_ROUTE,
   GET_OWN_ITEMS_ROUTE,
@@ -32,7 +31,7 @@ const checkPermission = (schema, itemId, currentMember) => {
   const itemPath = item.path;
   const validPaths = schema
     .all('membership')
-    .filter(({ memberId }) => memberId === currentMember.id)
+    .filter(({ member }) => member.id === currentMember.id)
     .models.map((i) => i.itemPath);
   return validPaths.some((path) => itemPath.includes(path));
 };
@@ -101,15 +100,6 @@ export const mockServer = ({
         return schema.find('item', itemId);
       });
 
-      // get item
-      this.get(`/${buildGetPublicItemRoute(':id')}`, (schema, request) => {
-        const itemId = request.url.split('/').at(-1);
-        if (!checkPermission(schema, itemId, currentMember)) {
-          return new Response(StatusCodes.FORBIDDEN);
-        }
-        return schema.find('item', itemId);
-      });
-
       // get children
       this.get(`/items/:id/children`, (schema, request) => {
         const itemId = request.url.split('/').at(-2);
@@ -126,18 +116,17 @@ export const mockServer = ({
         );
       });
 
-      // get children
-      this.get(`/p/items/:id/children`, (schema, request) => {
+      // get parents
+      this.get(`/items/:id/parents`, (schema, request) => {
         const itemId = request.url.split('/').at(-2);
+        const itemPath = (schema.find('item', itemId) as unknown as Item).path;
 
         return (
           schema
             .all('item')
             // TODO: remove any after figuring out the type
-            .filter(({ id, path }: any) =>
-              path.includes(
-                `${buildPathFromId(itemId)}.${buildPathFromId(id)}`,
-              ),
+            .filter(
+              ({ path }: any) => itemPath.startsWith(path) && itemPath !== path,
             )
         );
       });
@@ -149,24 +138,26 @@ export const mockServer = ({
           // TODO: remove any after figuring out the type
           .filter(
             ({ id, creator, path }: any) =>
-              creator === currentMember.id && buildPathFromId(id) === path,
+              creator.id === currentMember.id && buildPathFromId(id) === path,
           ),
       );
 
       // get shared item
-      this.get(`/${SHARED_ITEM_WITH_ROUTE}`, (schema) => {
-        const sharedItem = schema
-          .all('membership')
-          // TODO: remove any after figuring out the type
-          .filter(({ memberId }: any) => memberId === currentMember.id)
-          .models.map((i: any) => i.itemPath);
-        return (
+      this.get(
+        `/${SHARED_ITEM_WITH_ROUTE}`,
+        (schema) =>
           schema
-            .all('item')
+            .all('membership')
             // TODO: remove any after figuring out the type
-            .filter(({ path }: any) => sharedItem.includes(path))
-        );
-      });
+            .filter(({ member }: any) => member.id === currentMember.id)
+            .models.map((i: any) => i.item),
+        // return (
+        //   schema
+        //     .all('item')
+        //     // TODO: remove any after figuring out the type
+        //     .filter(({ path }: any) => sharedItem.includes(path))
+        // );
+      );
 
       // passthrough external urls
       externalUrls.forEach((url) => {

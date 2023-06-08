@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { ItemType } from '@graasp/sdk';
 import { ActionRecord, ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 
 import { Context, DEFAULT_REQUEST_SAMPLE_SIZE } from '../../config/constants';
@@ -129,7 +130,9 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     isError: itemIsError,
     isLoading: itemIsLoading,
   } = hooks.useItem(itemId);
-  const { data: itemChildren } = hooks.useChildren(itemId);
+  const { data: itemChildren } = hooks.useChildren(itemId, {
+    enabled: itemData?.type === ItemType.FOLDER,
+  });
 
   useEffect(() => {
     if (itemIsError) {

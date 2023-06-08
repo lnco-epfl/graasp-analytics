@@ -7,8 +7,8 @@ const MOCK_MEMBERS: Member[] = [
     name: 'mock-name',
     type: MemberType.Individual,
     extra: {},
-    createdAt: Date.now().toLocaleString(),
-    updatedAt: Date.now().toLocaleString(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: 'f92fc73f-e46c-47ec-8a67-6922cd23fffd',
@@ -16,8 +16,8 @@ const MOCK_MEMBERS: Member[] = [
     name: 'mock-name',
     type: MemberType.Individual,
     extra: {},
-    createdAt: Date.now().toLocaleString(),
-    updatedAt: Date.now().toLocaleString(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
 

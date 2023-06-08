@@ -69,7 +69,7 @@ const Navigator = (): JSX.Element => {
     let isShared = false;
 
     const isParentOwned =
-      (item?.creator ?? parents?.first()?.creator) === currentMemberId;
+      (item?.creator?.id ?? parents?.first()?.creator?.id) === currentMemberId;
 
     if (
       pathname === SHARED_ITEMS_PATH ||

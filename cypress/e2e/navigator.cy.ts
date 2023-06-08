@@ -117,7 +117,7 @@ describe('Breadcrumbs', () => {
       .click();
     cy.wait(2000);
     // Check the layout and the url
-    cy.get(`#${buildBreadcrumbsItemLink(FOLDER3_ID)}`).should('not.exist');
+    cy.get(`#${buildBreadcrumbsItemLink(FOLDER3_ID)}`).should('be.visible');
     cy.get(`#${buildBreadcrumbsItemLink(SHARED_FOLDER1_ID)}`).should(
       'be.visible',
     );
@@ -131,7 +131,7 @@ describe('Breadcrumbs', () => {
       .click();
     cy.wait(2000);
     // Check the layout and the url
-    cy.get(`#${buildBreadcrumbsItemLink(FOLDER3_ID)}`).should('not.exist');
+    cy.get(`#${buildBreadcrumbsItemLink(FOLDER3_ID)}`).should('be.visible');
     cy.get(`#${buildBreadcrumbsItemLink(SHARED_FOLDER1_ID)}`).should(
       'be.visible',
     );
@@ -144,7 +144,7 @@ describe('Breadcrumbs', () => {
     cy.get(`#${buildBreadcrumbsItemLink(SHARED_FOLDER1_ID)}`).click();
     cy.wait(2000);
     // Check the layout and the url
-    cy.get(`#${buildBreadcrumbsItemLink(FOLDER3_ID)}`).should('not.exist');
+    cy.get(`#${buildBreadcrumbsItemLink(FOLDER3_ID)}`).should('be.visible');
     cy.get(`#${buildBreadcrumbsItemLink(SHARED_FOLDER1_ID)}`).should(
       'be.visible',
     );

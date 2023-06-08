@@ -28,14 +28,18 @@ const ActionsByUserChart = () => {
   const userNames = Object.keys(groupBy('name', users));
   const yAxisMax = findYAxisMax(users);
 
-  const groupedActions = groupBy('actionType', allActions);
+  const groupedActions = groupBy('type', allActions);
   const formattedData = [];
   // for each action type, further group by member id, and then sum the number of actions
-  Object.entries(groupedActions).forEach((action) => {
-    const groupedUsers = groupBy('memberId', action[1]);
+  Object.entries(groupedActions).forEach(([key, actionsByType]) => {
+    const groupedUsers = groupBy(
+      'memberId',
+      // add member id to root level
+      actionsByType.map((a) => ({ ...a, memberId: a?.member?.id })),
+    );
     const userActions = {
-      actionType: action[0],
-      total: action[1].length,
+      type: key,
+      total: actionsByType.length,
     };
     Object.entries(groupedUsers).forEach((groupedUser) => {
       users.forEach((user) => {
@@ -58,7 +62,7 @@ const ActionsByUserChart = () => {
       <ChartContainer>
         <ComposedChart data={formattedData}>
           <CartesianGrid strokeDasharray="2" />
-          <XAxis dataKey="actionType" tick={{ fontSize: 14 }} />
+          <XAxis dataKey="type" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip />
           {userNames.map((name, index) => (
