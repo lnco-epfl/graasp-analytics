@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/graasp/graasp-analytics/compare/v1.0.0-rc.1...v1.1.0) (2023-06-26)
+
+
+### Features
+
+* use graasp ui navigation ([#145](https://github.com/graasp/graasp-analytics/issues/145)) ([f437573](https://github.com/graasp/graasp-analytics/commit/f437573a2413fbea267a89ee7bdca73b3031d0ba))
+
+
+### chore
+
+* release 1.1.0 ([d469e70](https://github.com/graasp/graasp-analytics/commit/d469e70448edee1ab550ce4cde12f85b3e433c76))
+
 ## [1.0.0-rc.1](https://github.com/graasp/graasp-analytics/compare/v0.3.0...v1.0.0-rc.1) (2023-06-08)
 
 
