@@ -6,7 +6,7 @@ import i18n from './i18n';
 
 const { exportActionsRoutine } = routines;
 
-export default ({ type, payload }: { type: string; payload: any }): void => {
+export default ({ type, payload }: { type: string; payload?: any }): void => {
   let message = null;
   switch (type) {
     case exportActionsRoutine.SUCCESS: {

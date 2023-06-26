@@ -26,7 +26,7 @@ const defaultValue: {
   setSelectedActions: Dispatch<List<ActionRecord>>;
   error: boolean;
   itemData?: ItemRecord;
-  itemChildren: List<ItemRecord>;
+  itemChildren?: List<ItemRecord>;
   isLoading: boolean;
 } = {
   actions: List(),

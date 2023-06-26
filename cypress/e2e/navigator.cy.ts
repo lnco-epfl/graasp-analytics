@@ -1,12 +1,9 @@
-import { SHARED_ITEMS_PATH } from '../../src/config/paths';
+import { SHARED_ITEMS_PATH, buildItemPath } from '../../src/config/paths';
 import {
   HOME_MENU_DROPDOWN_BUTTON_ID,
-  HOME_MENU_OWN_MENUITEM_ID,
-  ROOT_MENU_DROPDOWN_BUTTON_ID,
-  ROOT_MENU_ID,
   buildBreadcrumbsItemLink,
-  buildMenuDropdownButton,
-  buildMenuItem,
+  buildMenuItemId,
+  buildNavigationDropDownId,
 } from '../../src/config/selectors';
 import MOCK_ITEMS from '../../src/mockServer/mockData/items';
 
@@ -18,12 +15,15 @@ describe('Breadcrumbs', () => {
   it('Home menu layout', () => {
     cy.visit('/');
 
-    // menuitem should not exist before clicking the dropdown button
-    cy.get(`#${HOME_MENU_OWN_MENUITEM_ID}`).should('not.exist');
     cy.get(`#${HOME_MENU_DROPDOWN_BUTTON_ID}`).click();
 
-    // menuitem should be visible after clicking the dropdown button
-    cy.get(`#${HOME_MENU_OWN_MENUITEM_ID}`).should('be.visible');
+    cy.get(`#${buildBreadcrumbsItemLink('shared')}`).should('be.visible');
+    cy.get(`#${buildBreadcrumbsItemLink('home')}`)
+      .should('be.visible')
+      .click();
+
+    cy.get(`#${buildNavigationDropDownId('root')}`).click();
+    cy.get(`[href="${buildItemPath(MOCK_ITEMS[0].id)}"]`).should('be.visible');
   });
 
   it('Navigate own items', () => {
@@ -40,32 +40,30 @@ describe('Breadcrumbs', () => {
 
     // Navigate to the folder1 by the dropdown menu
     cy.visit('/');
-    cy.get(`#${ROOT_MENU_DROPDOWN_BUTTON_ID}`).click();
-    cy.get(`#${buildMenuItem(FOLDER1_ID, ROOT_MENU_ID)}`)
+    cy.get(`#${buildNavigationDropDownId('root')}`).click();
+    cy.get(`[href="${buildItemPath(FOLDER1_ID)}"]`)
       .should('be.visible')
       .click();
     cy.wait(2000);
     // Check the layout and the url
     cy.get(`#${buildBreadcrumbsItemLink(FOLDER1_ID)}`).should('be.visible');
-    cy.get(`#${buildMenuDropdownButton(FOLDER1_ID)}`).should('be.visible');
+    cy.get(`#${buildNavigationDropDownId(FOLDER1_ID)}`).should('be.visible');
     cy.url().should('include', `${FOLDER1_ID}`);
 
     // Navigate to the folder2 by the dropdown menu
-    cy.get(`#${buildMenuDropdownButton(FOLDER1_ID)}`).click();
-    cy.get(`#${buildMenuItem(FOLDER2_ID, FOLDER1_ID)}`)
-      .should('exist')
+    cy.get(`#${buildNavigationDropDownId(FOLDER1_ID)}`).click();
+    cy.get(`#${buildMenuItemId(FOLDER2_ID)}`)
       .and('be.visible')
       .click();
     cy.wait(2000);
     // Check the layout and the url
     cy.get(`#${buildBreadcrumbsItemLink(FOLDER2_ID)}`).should('be.visible');
-    cy.get(`#${buildMenuDropdownButton(FOLDER2_ID)}`).should('be.visible');
+    cy.get(`#${buildNavigationDropDownId(FOLDER2_ID)}`).should('be.visible');
     cy.url().should('include', `${FOLDER2_ID}`);
 
     // Navigate to the document2 by the dropdown menu
-    cy.get(`#${buildMenuDropdownButton(FOLDER2_ID)}`).click();
-    cy.get(`#${buildMenuItem(DOCUMENT2_ID, FOLDER2_ID)}`)
-      .should('exist')
+    cy.get(`#${buildNavigationDropDownId(FOLDER2_ID)}`).click();
+    cy.get(`#${buildMenuItemId(DOCUMENT2_ID)}`)
       .and('be.visible')
       .click();
     cy.wait(2000);
@@ -73,7 +71,7 @@ describe('Breadcrumbs', () => {
     cy.get(`#${buildBreadcrumbsItemLink(FOLDER1_ID)}`).should('be.visible');
     cy.get(`#${buildBreadcrumbsItemLink(FOLDER2_ID)}`).should('be.visible');
     cy.get(`#${buildBreadcrumbsItemLink(DOCUMENT2_ID)}`).should('be.visible');
-    cy.get(`#${buildMenuDropdownButton(DOCUMENT2_ID)}`).should('not.exist');
+    cy.get(`#${buildNavigationDropDownId(DOCUMENT2_ID)}`).should('not.exist');
     cy.url().should('include', `${DOCUMENT2_ID}`);
 
     // Navigate back to the folder2 by the breadcrumbs item
@@ -86,8 +84,8 @@ describe('Breadcrumbs', () => {
     cy.url().should('include', `${FOLDER2_ID}`);
 
     // Navigate to the document1 by the dropdown menu
-    cy.get(`#${ROOT_MENU_DROPDOWN_BUTTON_ID}`).click();
-    cy.get(`#${buildMenuItem(DOCUMENT1_ID, ROOT_MENU_ID)}`)
+    cy.get(`#${buildNavigationDropDownId('root')}`).click();
+    cy.get(`[href="${buildItemPath(DOCUMENT1_ID)}"]`)
       .should('be.visible')
       .click();
     cy.wait(2000);
@@ -111,8 +109,8 @@ describe('Breadcrumbs', () => {
 
     // Navigate to the shared folder1 by the dropdown menu
     cy.visit(SHARED_ITEMS_PATH);
-    cy.get(`#${ROOT_MENU_DROPDOWN_BUTTON_ID}`).click();
-    cy.get(`#${buildMenuItem(SHARED_FOLDER1_ID, ROOT_MENU_ID)}`)
+    cy.get(`#${buildNavigationDropDownId('root')}`).click();
+    cy.get(`#${buildMenuItemId(SHARED_FOLDER1_ID)}`)
       .should('be.visible')
       .click();
     cy.wait(2000);
@@ -124,8 +122,8 @@ describe('Breadcrumbs', () => {
     cy.url().should('include', `${SHARED_FOLDER1_ID}`);
 
     // Navigate to the shared document1 by the dropdown menu
-    cy.get(`#${buildMenuDropdownButton(SHARED_FOLDER1_ID)}`).click();
-    cy.get(`#${buildMenuItem(SHARED_DOCUMENT1_ID, SHARED_FOLDER1_ID)}`)
+    cy.get(`#${buildNavigationDropDownId(SHARED_FOLDER1_ID)}`).click();
+    cy.get(`#${buildMenuItemId(SHARED_DOCUMENT1_ID)}`)
       .should('exist')
       .and('be.visible')
       .click();

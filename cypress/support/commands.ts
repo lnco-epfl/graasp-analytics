@@ -6,10 +6,17 @@ import MOCK_MEMBERS from '../../src/mockServer/mockData/members';
 import MOCK_MEMBERSHIP from '../../src/mockServer/mockData/membership';
 import { buildDatabase } from '../../src/mockServer/mockServer';
 
+declare global {
+  interface Window {
+    Cypress?: any;
+    database?: any;
+  }
+}
+
 Cypress.Commands.add('setUpApi', () => {
   cy.setCookie(COOKIE_KEYS.SESSION_KEY, 'session_key');
   // mock api and database
-  Cypress.on('window:before:load', (win) => {
+  Cypress.on('window:before:load', (win: Window) => {
     // eslint-disable-next-line no-param-reassign
     win.database = buildDatabase({
       currentMember: MOCK_MEMBERS[0],

@@ -4,7 +4,7 @@
     "module": "esnext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": false,
+    "strict": true,
     "skipLibCheck": true,
     "lib": [
       "dom",
@@ -19,15 +19,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "sourceMap": true,
-    "inlineSources": true,
-    "sourceRoot": "/",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
   },
   "include": [
     "src"
-  ],
-  "exclude": ["cypress", "*.test.ts", "*.test.js"]
+, "window.d.ts"  ],
 }

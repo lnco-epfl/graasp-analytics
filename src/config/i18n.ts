@@ -5,7 +5,12 @@ import { initReactI18next } from 'react-i18next';
 import en from '../langs/en.json';
 import fr from '../langs/fr.json';
 
-// eslint-disable-next-line import/no-named-as-default-member
+declare module 'i18next' {
+  interface CustomTypeOptions {
+    returnNull: false;
+  }
+}
+
 i18n.use(initReactI18next).init({
   resources: {
     en,
@@ -22,9 +27,7 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
     formatSeparator: ',',
   },
-  react: {
-    wait: true,
-  },
+  returnNull: false,
 });
 
 export default i18n;

@@ -23,20 +23,33 @@ const ApplicationSerializer = RestSerializer.extend({
   embed: true,
 });
 
-const checkPermission = (schema, itemId, currentMember) => {
+const checkPermission = (
+  // todo: improve type
+  schema: any,
+  itemId: string,
+  currentMember?: Member,
+) => {
+  // todo: apply public
+  if (!currentMember) {
+    return false;
+  }
+
   const item = schema.find('item', itemId);
-  if (currentMember.id === item.creator) {
+  if (!item) {
+    return false;
+  }
+  if (currentMember?.id === item.creator.id) {
     return true;
   }
   const itemPath = item.path;
   const validPaths = schema
     .all('membership')
-    .filter(({ member }) => member.id === currentMember.id)
-    .models.map((i) => i.itemPath);
-  return validPaths.some((path) => itemPath.includes(path));
+    .filter(({ member }: ItemMembership) => member.id === currentMember?.id)
+    .models.map((i: ItemMembership) => i.item.path);
+  return validPaths.some((path: string) => itemPath.includes(path));
 };
 
-const buildPathFromId = (id) => id.replace(/-/g, '_');
+const buildPathFromId = (id: string) => id.replace(/-/g, '_');
 
 export const buildDatabase = ({
   currentMember,
@@ -47,7 +60,7 @@ export const buildDatabase = ({
   currentMember,
   items,
   itemMemberships,
-  members: members ?? [currentMember],
+  members: members ?? (currentMember ? [currentMember] : []),
 });
 
 export const mockServer = ({
@@ -60,7 +73,7 @@ export const mockServer = ({
   externalUrls?: string[];
 } = {}): any => {
   const { items, members, itemMemberships } = database;
-  const [currentMember] = members;
+  const currentMember = members?.[0];
 
   return createServer({
     // environment
@@ -89,13 +102,25 @@ export const mockServer = ({
     },
     routes() {
       // get current member
-      this.get(`/${GET_CURRENT_MEMBER_ROUTE}`, () => currentMember);
+      this.get(`/${GET_CURRENT_MEMBER_ROUTE}`, () => {
+        if (currentMember) {
+          return currentMember;
+        }
+
+        return new Response(StatusCodes.UNAUTHORIZED);
+      });
 
       // get item
       this.get(`/${buildGetItemRoute(':id')}`, (schema, request) => {
         const itemId = request.url.split('/').at(-1);
+        if (!itemId) {
+          throw new Error('item id does not exist');
+        }
         if (!checkPermission(schema, itemId, currentMember)) {
           return new Response(StatusCodes.FORBIDDEN);
+        }
+        if (!itemId) {
+          throw new Error('item id does not exist');
         }
         return schema.find('item', itemId);
       });
@@ -103,6 +128,9 @@ export const mockServer = ({
       // get children
       this.get(`/items/:id/children`, (schema, request) => {
         const itemId = request.url.split('/').at(-2);
+        if (!itemId) {
+          throw new Error('item id does not exist');
+        }
 
         return (
           schema
@@ -119,6 +147,9 @@ export const mockServer = ({
       // get parents
       this.get(`/items/:id/parents`, (schema, request) => {
         const itemId = request.url.split('/').at(-2);
+        if (!itemId) {
+          throw new Error('item id does not exist');
+        }
         const itemPath = (schema.find('item', itemId) as unknown as Item).path;
 
         return (
@@ -138,7 +169,7 @@ export const mockServer = ({
           // TODO: remove any after figuring out the type
           .filter(
             ({ id, creator, path }: any) =>
-              creator.id === currentMember.id && buildPathFromId(id) === path,
+              creator.id === currentMember?.id && buildPathFromId(id) === path,
           ),
       );
 
@@ -149,7 +180,7 @@ export const mockServer = ({
           schema
             .all('membership')
             // TODO: remove any after figuring out the type
-            .filter(({ member }: any) => member.id === currentMember.id)
+            .filter(({ member }: any) => member.id === currentMember?.id)
             .models.map((i: any) => i.item),
         // return (
         //   schema

@@ -1,6 +1,6 @@
 import Footer from '../layout/Footer';
 import Header from '../layout/Header';
-import Navigator from '../navigator/Navigator';
+import Navigator from '../layout/Navigator';
 
 const ShareItemPage = (): JSX.Element => (
   <>

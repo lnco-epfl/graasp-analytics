@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import ContextsWrapper from '../context/ContextsWrapper';
 import Footer from '../layout/Footer';
 import Header from '../layout/Header';
-import Navigator from '../navigator/Navigator';
+import Navigator from '../layout/Navigator';
 import Sidebar from '../sidebar/Sidebar';
 import ChartsLayout from '../space/ChartsLayout';
 

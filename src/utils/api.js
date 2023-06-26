@@ -220,7 +220,7 @@ export const filterActionsByActionTypes = (actions, actionsArray) => {
 export const findYAxisMax = (actionsByDay) => {
   const arrayOfActionsCount = Object.values(actionsByDay);
   if (!arrayOfActionsCount.length) {
-    return null;
+    return 0;
   }
   const maxActionsCount = arrayOfActionsCount.reduce((a, b) => Math.max(a, b));
   let yAxisMax;
