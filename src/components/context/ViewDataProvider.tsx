@@ -1,15 +1,13 @@
-import PropTypes from 'prop-types';
-
 import { Dispatch, createContext, useMemo, useState } from 'react';
 
-import { Context } from '../../config/constants';
+import { Context } from '@graasp/sdk';
 
 const defaultValue: {
   // todo: use sdk context
-  view: string;
-  setView: Dispatch<string>;
+  view: Context;
+  setView: Dispatch<Context>;
 } = {
-  view: Context.BUILDER,
+  view: Context.Builder,
   setView: () => {
     // do nothing
   },
@@ -22,17 +20,13 @@ const ViewDataProvider = ({
 }: {
   children: JSX.Element;
 }): JSX.Element => {
-  const [view, setView] = useState(Context.BUILDER);
+  const [view, setView] = useState(Context.Builder);
   const value = useMemo(() => ({ view, setView }), [view, setView]);
   return (
     <ViewDataContext.Provider value={value}>
       {children}
     </ViewDataContext.Provider>
   );
-};
-
-ViewDataProvider.propTypes = {
-  children: PropTypes.element.isRequired,
 };
 
 export default ViewDataProvider;

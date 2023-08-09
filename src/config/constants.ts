@@ -1,3 +1,7 @@
+import { Context } from '@graasp/sdk';
+
+export const DOMAIN = process.env.REACT_APP_DOMAIN || 'localhost';
+
 // Default latitude and longitude for centering map. Zurich coordinates used below.
 export const DEFAULT_LATITUDE = 47.3769;
 export const DEFAULT_LONGITUDE = 8.5417;
@@ -23,9 +27,6 @@ export const CONTAINER_HEIGHT = 450;
 // Milliseconds after which additional text appears under loading spinner
 export const LOADER_TEXT_DELAY = 5000;
 
-// Used in api.js, to filter out the auto-generated 'user' with name 'Learning Analytics'
-export const LEARNING_ANALYTICS_USER_ID = '5405e202da3a95cf9050e8f9';
-
 // Used in api.js and then the ActionsByVerb piechart
 // for visual purposes, all verbs with < 3 percent of total actions are consolidated into an entry 'other'
 export const MIN_PERCENTAGE_TO_SHOW_VERB = 3;
@@ -47,6 +48,9 @@ export const COLORS = [
   '#FFFFAF',
 ];
 
+export const AVERAGE_COLOR = '#F99417';
+export const GENERAL_COLOR = '#8884d8';
+
 // strings used in components/custom/CustomTooltip to generate added tooltip text in ActionsByTimeOfDay
 export const LATE_NIGHT = 'Late night';
 export const EARLY_MORNING = 'Early morning';
@@ -56,18 +60,9 @@ export const EVENING = 'Evening';
 export const NIGHT = 'Night';
 
 // constants for most viewed items chart
-export const ACCESSED_STRING = 'accessed';
 export const TOP_NUMBER_OF_ITEMS_TO_DISPLAY = 10;
 
 export const DEFAULT_REQUEST_SAMPLE_SIZE = 5000;
-
-export const Context = {
-  BUILDER: 'builder',
-  PLAYER: 'player',
-  LIBRARY: 'library',
-  ANALYTICS: 'analytics',
-  UNKNOWN: 'unknown',
-};
 
 export const GRAASP_BUILDER_HOST =
   process.env.REACT_APP_GRAASP_COMPOSE_HOST || 'http://localhost:3111';
@@ -77,10 +72,10 @@ export const GRAASP_LIBRARY_HOST =
   process.env.REACT_APP_GRAASP_EXPLORE_HOST || 'http://localhost:3005';
 
 export const HOST_MAP = {
-  [Context.BUILDER]: GRAASP_BUILDER_HOST,
-  [Context.PLAYER]: GRAASP_PLAYER_HOST,
-  [Context.LIBRARY]: GRAASP_LIBRARY_HOST,
-  [Context.ANALYTICS]: '/',
+  [Context.Builder]: GRAASP_BUILDER_HOST,
+  [Context.Player]: GRAASP_PLAYER_HOST,
+  [Context.Library]: GRAASP_LIBRARY_HOST,
+  [Context.Analytics]: '/',
 };
 
 export const ITEM_NAME_MAX_LENGTH = 15;
@@ -88,3 +83,5 @@ export const ITEM_NAME_MAX_LENGTH = 15;
 export const NAVIGATOR_BACKGROUND_COLOR = '#f6f6f6';
 export const ENABLE_MOCK_API = process.env.REACT_APP_ENABLE_MOCK_API === 'true';
 export const API_HOST = process.env.REACT_APP_API_HOST;
+
+export const REACT_APP_GOOGLE_KEY = process.env.REACT_APP_GOOGLE_KEY;

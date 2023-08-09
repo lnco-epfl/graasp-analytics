@@ -1,18 +1,37 @@
-import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
-import { Grid } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
+import { Context } from '@graasp/sdk';
+import {
+  GraaspLogo,
+  Main as GraaspMain,
+  Platform,
+  PlatformSwitch,
+  defaultHostsMapper,
+  usePlatformNavigation,
+} from '@graasp/ui';
+
+import { HOST_MAP } from '../../config/constants';
 import ContextsWrapper from '../context/ContextsWrapper';
+import CookiesBanner from '../layout/CookieBanner';
 import Footer from '../layout/Footer';
-import Header from '../layout/Header';
 import Navigator from '../layout/Navigator';
-import Sidebar from '../sidebar/Sidebar';
+import Sidebar from '../layout/Sidebar';
 import ChartsLayout from '../space/ChartsLayout';
 
+const platformsHostsMap = defaultHostsMapper({
+  [Platform.Builder]: HOST_MAP[Context.Builder],
+  [Platform.Player]: HOST_MAP[Context.Player],
+  [Platform.Library]: HOST_MAP[Context.Library],
+});
+
 const ItemPage = ({ isEmbeded }: { isEmbeded: boolean }): JSX.Element => {
-  const { t } = useTranslation();
   const theme = useTheme();
+
+  const { itemId } = useParams();
+  const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
   if (isEmbeded) {
     return (
       <main style={{ paddingTop: theme.spacing(2) }}>
@@ -22,29 +41,50 @@ const ItemPage = ({ isEmbeded }: { isEmbeded: boolean }): JSX.Element => {
       </main>
     );
   }
+
+  const platformProps = {
+    [Platform.Builder]: {
+      ...getNavigationEvents(Platform.Builder),
+    },
+    [Platform.Player]: {
+      ...getNavigationEvents(Platform.Player),
+    },
+    [Platform.Library]: {
+      ...getNavigationEvents(Platform.Library),
+    },
+    [Platform.Analytics]: {
+      disabled: true,
+    },
+  };
+
+  const leftContent = (
+    <Box display="flex" ml={2} alignItems="center">
+      <GraaspLogo height={40} sx={{ fill: 'white' }} />
+      <Typography variant="h6" color="inherit" mr={2} ml={1}>
+        Graasp
+      </Typography>
+      <PlatformSwitch
+        selected={Platform.Analytics}
+        platformsProps={platformProps}
+        disabledColor="#999"
+      />
+    </Box>
+  );
+
   return (
-    <>
-      <Header />
-      <main style={{ flex: 1 }}>
-        <Navigator />
-        <Grid container spacing={2}>
-          <Grid item xs={1.5}>
-            <Sidebar />
-          </Grid>
-          <Grid item xs={10.5}>
-            <ContextsWrapper>
-              <ChartsLayout />
-            </ContextsWrapper>
-            <div id="general">{t('General')}</div>
-            <div id="contents">{t('Contents')}</div>
-            <div id="actions">{t('Actions')}</div>
-            <div id="chats">{t('Chats')}</div>
-            <div id="apps">{t('Apps')}</div>
-          </Grid>
-        </Grid>
-      </main>
+    <GraaspMain
+      context={Context.Analytics}
+      headerLeftContent={leftContent}
+      sidebar={<Sidebar />}
+      open
+    >
+      <CookiesBanner />
+      <Navigator />
+      <ContextsWrapper>
+        <ChartsLayout />
+      </ContextsWrapper>
       <Footer />
-    </>
+    </GraaspMain>
   );
 };
 

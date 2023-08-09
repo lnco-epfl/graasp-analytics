@@ -1,8 +1,9 @@
+import { List, Map } from 'immutable';
 import {
-  Bar,
-  BarChart,
   CartesianGrid,
   Legend,
+  Line,
+  LineChart,
   Tooltip,
   XAxis,
   YAxis,
@@ -18,6 +19,7 @@ import {
   AggregateMetric,
   CountGroupBy,
 } from '@graasp/sdk';
+import { ActionRecord } from '@graasp/sdk/frontend';
 
 import {
   AVERAGE_COLOR,
@@ -26,24 +28,21 @@ import {
 } from '../../../config/constants';
 import { hooks } from '../../../config/queryClient';
 import { filterActions } from '../../../utils/array';
-import {
-  formatActionsByWeekday,
-  getActionsByWeekday,
-} from '../../../utils/utils';
+import { formatActionsByDay, getActionsByDay } from '../../../utils/utils';
 import ChartContainer from '../../common/ChartContainer';
 import ChartTitle from '../../common/ChartTitle';
 import { DataContext } from '../../context/DataProvider';
 import { ViewDataContext } from '../../context/ViewDataProvider';
 import EmptyChart from './EmptyChart';
 
-const ActionsByWeekdayChart = (): JSX.Element | null => {
+const ActionsByDayChart = (): JSX.Element | null => {
   const { t } = useTranslation();
   const { actions, selectedUsers, selectedActionTypes } =
     useContext(DataContext);
-
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
 
+  // get aggregate actions
   const {
     data: aggregateData,
     isLoading,
@@ -53,90 +52,60 @@ const ActionsByWeekdayChart = (): JSX.Element | null => {
     view,
     requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
     type: selectedActionTypes.toJS(),
-    countGroupBy: [CountGroupBy.User, CountGroupBy.CreatedDayOfWeek],
+    countGroupBy: [CountGroupBy.User, CountGroupBy.CreatedDay],
     aggregateFunction: AggregateFunction.Avg,
     aggregateMetric: AggregateMetric.ActionCount,
-    aggregateBy: [AggregateBy.CreatedDayOfWeek],
+    aggregateBy: [AggregateBy.CreatedDay],
   });
 
   if (isLoading || isError) {
     return null;
   }
 
-  const title = 'Actions By Weekday';
-  if (!aggregateData.size) {
+  const title = 'Actions by Day';
+  if (!aggregateData?.size) {
     return <EmptyChart chartTitle={t(title)} />;
   }
 
-  const formattedAggregateData: {
-    aggregateResult: number;
-    createdDayOfWeek: number;
-  }[] = aggregateData
-    .toArray()
-    .map((d: { aggregateResult: number; createdDayOfWeek: string }) => ({
-      aggregateResult: d.aggregateResult,
-      createdDayOfWeek: parseFloat(d.createdDayOfWeek),
+  const formattedAggregateData = (
+    aggregateData.toArray() as { aggregateResult: number; createdDay: Date }[]
+  )
+    // sort by creation date
+    .sort((a, b) => a.createdDay.getTime() - b.createdDay.getTime())
+    .map((d) => ({
+      averageCount: d.aggregateResult,
+      date: `${d.createdDay.getDate()}-${
+        d.createdDay.getMonth() + 1
+      }-${d.createdDay.getFullYear()}`,
     }));
-  const createdDayOfWeekEntry = formattedAggregateData.map(
-    (o) => o.createdDayOfWeek,
-  );
 
-  // fill with empty data
-  for (let day = 0; day < 7; day += 1) {
-    if (!createdDayOfWeekEntry.includes(day)) {
-      formattedAggregateData.push({
-        aggregateResult: 0.0,
-        createdDayOfWeek: day,
-      });
-    }
-  }
-
-  const weekdayEnum = {
-    0: 'Sunday',
-    1: 'Monday',
-    2: 'Tuesday',
-    3: 'Wednesday',
-    4: 'Thursday',
-    5: 'Friday',
-    6: 'Saturday',
-  };
-
-  formattedAggregateData.sort(
-    (a, b) => a.createdDayOfWeek - b.createdDayOfWeek,
-  );
-  const formattedAggregateDataWithWeekday = formattedAggregateData.map((d) => ({
-    averageCount: d.aggregateResult,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    day: weekdayEnum[d.createdDayOfWeek],
-  }));
-
-  // ActionsByWeekday is the object passed, after formatting, to the BarChart component below
-
+  // actionsByDay is the object passed, after formatting, to the BarChart component below
   // if you remove all names in the react-select dropdown, selectedUsers becomes null
   // if no users are selected (i.e. selectedUsers.size === 0), show all actions
   // if all users are selected (i.e. selectedUsers.size === allMembers.size), also show all actions
   // third condition above is necessary: some actions are made by users NOT in the users list (e.g. user account deleted)
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
-  let actionsByWeekday = {};
+
+  let actionsByDay = Map<string, List<ActionRecord>>();
   if (actions?.size) {
-    actionsByWeekday = filterActions({
+    actionsByDay = filterActions({
       selectedUsers,
       selectedActionTypes,
       actions,
-      chartFunction: getActionsByWeekday,
+      chartFunction: getActionsByDay,
     });
   }
 
-  const formattedActionsByWeekday = formatActionsByWeekday(actionsByWeekday);
-
-  const mergedData = formattedAggregateDataWithWeekday.map((o1) =>
+  const formattedActionsByDay = formatActionsByDay(actionsByDay);
+  const mergedData: {
+    date: string;
+    count: number;
+    averageCount: number;
+  }[] = formattedAggregateData.map((o1) =>
     Object.assign(
       o1,
-      formattedActionsByWeekday.find((o2) => o2.day === o1.day) ?? {
-        count: 0,
-      },
+      formattedActionsByDay.find((o2) => o2.date === o1.date) ?? { count: 0 },
     ),
   );
 
@@ -157,21 +126,35 @@ const ActionsByWeekdayChart = (): JSX.Element | null => {
     <>
       <ChartTitle title={t(title)} />
       <ChartContainer>
-        <BarChart data={mergedData}>
+        <LineChart
+          data={mergedData.map((entry) => ({
+            ...entry,
+            averageCount: entry.averageCount.toFixed(2),
+          }))}
+        >
           <CartesianGrid strokeDasharray="2" />
-          <XAxis interval={0} dataKey="day" tick={{ fontSize: 14 }} />
+          <XAxis dataKey="date" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="count" name={t('Count')} fill={GENERAL_COLOR} />
-          <Bar
+          <Line
+            dataKey="count"
+            name={t('Count')}
+            stroke={GENERAL_COLOR}
+            activeDot={{ r: 6 }}
+            strokeWidth={3}
+          />
+          <Line
             dataKey="averageCount"
             name={t('Average Count')}
-            fill={AVERAGE_COLOR}
+            stroke={AVERAGE_COLOR}
+            activeDot={{ r: 6 }}
+            strokeWidth={3}
           />
-        </BarChart>
+        </LineChart>
       </ChartContainer>
     </>
   );
 };
-export default ActionsByWeekdayChart;
+
+export default ActionsByDayChart;

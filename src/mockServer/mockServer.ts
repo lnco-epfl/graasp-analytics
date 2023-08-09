@@ -4,6 +4,17 @@ import { Model, Response, RestSerializer, createServer } from 'miragejs';
 import { API_ROUTES } from '@graasp/query-client';
 import { Item, ItemMembership, Member } from '@graasp/sdk';
 
+import MOCK_ACTION_DATA from './mockData/actions';
+import {
+  MOCK_AGGREGATE_ACTIONS_ACTIVE_USERS,
+  MOCK_AGGREGATE_ACTIONS_BY_DAY,
+  MOCK_AGGREGATE_ACTIONS_BY_TIME,
+  MOCK_AGGREGATE_ACTIONS_BY_WEEKDAY,
+  MOCK_AGGREGATE_ACTIONS_TOTAL_ACTIONS,
+  MOCK_AGGREGATE_ACTIONS_TOTAL_USERS,
+  MOCK_AGGREGATE_ACTIONS_TYPE,
+} from './mockData/aggregateActions';
+
 const {
   buildGetItemRoute,
   GET_CURRENT_MEMBER_ROUTE,
@@ -189,6 +200,76 @@ export const mockServer = ({
         //     .filter(({ path }: any) => sharedItem.includes(path))
         // );
       );
+
+      // get actions
+      this.get(`/items/:id/actions`, () => MOCK_ACTION_DATA);
+
+      // get aggregate actions
+      this.get(`/items/:id//actions/aggregation`, (_schema, request) => {
+        const {
+          countGroupBy,
+          aggregateBy,
+          aggregateMetric,
+          aggregateFunction,
+        } = request.queryParams as any;
+
+        if (
+          countGroupBy === 'user' &&
+          aggregateMetric === 'user' &&
+          aggregateFunction === 'count'
+        ) {
+          return MOCK_AGGREGATE_ACTIONS_TOTAL_USERS;
+        }
+        if (
+          countGroupBy === 'createdDay' &&
+          aggregateBy === 'createdDay' &&
+          aggregateMetric === 'actionCount' &&
+          aggregateFunction === 'count'
+        ) {
+          return MOCK_AGGREGATE_ACTIONS_ACTIVE_USERS;
+        }
+        if (
+          countGroupBy === 'createdDay' &&
+          aggregateBy === 'createdDay' &&
+          aggregateMetric === 'actionCount' &&
+          aggregateFunction === 'avg'
+        ) {
+          return MOCK_AGGREGATE_ACTIONS_BY_DAY;
+        }
+        if (
+          countGroupBy === 'createdDay' &&
+          aggregateBy === 'createdDay' &&
+          aggregateMetric === 'actionCount' &&
+          aggregateFunction === 'sum'
+        ) {
+          return MOCK_AGGREGATE_ACTIONS_TOTAL_ACTIONS;
+        }
+        if (
+          countGroupBy === 'createdTimeOfDay' &&
+          aggregateBy === 'createdTimeOfDay' &&
+          aggregateMetric === 'actionCount' &&
+          aggregateFunction === 'avg'
+        ) {
+          return MOCK_AGGREGATE_ACTIONS_BY_TIME;
+        }
+        if (
+          countGroupBy === 'createdDayOfWeek' &&
+          aggregateBy === 'createdDayOfWeek' &&
+          aggregateMetric === 'actionCount' &&
+          aggregateFunction === 'avg'
+        ) {
+          return MOCK_AGGREGATE_ACTIONS_BY_WEEKDAY;
+        }
+        if (
+          countGroupBy === 'actionType' &&
+          aggregateBy === 'actionType' &&
+          aggregateMetric === 'actionCount' &&
+          aggregateFunction === 'sum'
+        ) {
+          return MOCK_AGGREGATE_ACTIONS_TYPE;
+        }
+        return [];
+      });
 
       // passthrough external urls
       externalUrls.forEach((url) => {

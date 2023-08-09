@@ -10,10 +10,10 @@ import {
 } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { ItemType } from '@graasp/sdk';
+import { Context, ItemType } from '@graasp/sdk';
 import { ActionRecord, ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 
-import { Context, DEFAULT_REQUEST_SAMPLE_SIZE } from '../../config/constants';
+import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../config/constants';
 import { hooks } from '../../config/queryClient';
 import { ViewDataContext } from './ViewDataProvider';
 
@@ -22,12 +22,13 @@ const defaultValue: {
   allMembers: List<MemberRecord>;
   selectedUsers: List<MemberRecord>;
   setSelectedUsers: Dispatch<List<MemberRecord>>;
-  selectedActions: List<ActionRecord>;
-  setSelectedActions: Dispatch<List<ActionRecord>>;
+  selectedActionTypes: List<string>;
+  setSelectedActionTypes: Dispatch<List<string>>;
   error: boolean;
   itemData?: ItemRecord;
   itemChildren?: List<ItemRecord>;
   isLoading: boolean;
+  requestedSampleSize: number;
 } = {
   actions: List(),
   allMembers: List(),
@@ -36,12 +37,13 @@ const defaultValue: {
   setSelectedUsers: () => {
     // do nothing
   },
-  setSelectedActions: () => {
+  setSelectedActionTypes: () => {
     // do nothing
   },
-  selectedActions: List(),
+  selectedActionTypes: List(),
   error: false,
   isLoading: true,
+  requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
 };
 
 export const DataContext = createContext(defaultValue);
@@ -55,23 +57,26 @@ type Props = {
 
 const DataProvider = ({ children }: Props): JSX.Element => {
   const [enabledArray, setEnabledArray] = useState({
-    [Context.BUILDER]: false,
-    [Context.PLAYER]: false,
-    [Context.LIBRARY]: false,
-    [Context.UNKNOWN]: false,
+    [Context.Builder]: false,
+    [Context.Player]: false,
+    [Context.Library]: false,
+    [Context.Unknown]: false,
   });
+  const [actions, setActions] = useState<List<ActionRecord>>(List());
+  const [allMembers, setAllMembers] = useState<List<MemberRecord>>(List());
   const [selectedUsers, setSelectedUsers] = useState<List<MemberRecord>>(
     List(),
   );
-  const [selectedActions, setSelectedActions] = useState<List<ActionRecord>>(
+  const [selectedActionTypes, setSelectedActionTypes] = useState<List<string>>(
     List(),
   );
-  const [actions, setActions] = useState<List<ActionRecord>>(List());
-  const [allMembers, setAllMembers] = useState<List<MemberRecord>>(List());
   const [error, setError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
+
+  // todo: have a dynamic value
+  const requestedSampleSize = DEFAULT_REQUEST_SAMPLE_SIZE;
 
   const {
     data: builderData,
@@ -80,10 +85,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   } = hooks.useActions(
     {
       itemId,
-      view: Context.BUILDER,
-      requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
+      view: Context.Builder,
+      requestedSampleSize,
     },
-    { enabled: Boolean(enabledArray[Context.BUILDER]) },
+    { enabled: Boolean(enabledArray[Context.Builder]) },
   );
 
   const {
@@ -93,10 +98,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   } = hooks.useActions(
     {
       itemId,
-      view: Context.PLAYER,
-      requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
+      view: Context.Player,
+      requestedSampleSize,
     },
-    { enabled: Boolean(enabledArray[Context.PLAYER]) },
+    { enabled: Boolean(enabledArray[Context.Player]) },
   );
 
   const {
@@ -106,10 +111,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   } = hooks.useActions(
     {
       itemId,
-      view: Context.LIBRARY,
-      requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
+      view: Context.Library,
+      requestedSampleSize,
     },
-    { enabled: Boolean(enabledArray[Context.LIBRARY]) },
+    { enabled: Boolean(enabledArray[Context.Library]) },
   );
 
   const {
@@ -119,10 +124,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   } = hooks.useActions(
     {
       itemId,
-      view: Context.UNKNOWN,
-      requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
+      view: Context.Unknown,
+      requestedSampleSize,
     },
-    { enabled: Boolean(enabledArray[Context.UNKNOWN]) },
+    { enabled: Boolean(enabledArray[Context.Unknown]) },
   );
 
   const {
@@ -141,13 +146,13 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   }, [itemIsError]);
 
   useEffect(() => {
-    if (enabledArray[Context.BUILDER]) {
+    if (enabledArray[Context.Builder]) {
       setIsLoading(builderIsLoading);
-    } else if (enabledArray[Context.PLAYER]) {
+    } else if (enabledArray[Context.Player]) {
       setIsLoading(playerIsLoading);
-    } else if (enabledArray[Context.LIBRARY]) {
+    } else if (enabledArray[Context.Library]) {
       setIsLoading(explorerIsLoading);
-    } else if (enabledArray[Context.UNKNOWN]) {
+    } else if (enabledArray[Context.Unknown]) {
       setIsLoading(unknownIsLoading);
     }
   }, [
@@ -161,6 +166,8 @@ const DataProvider = ({ children }: Props): JSX.Element => {
 
   useEffect(() => {
     // fetch corresponding data only when view is shown
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     if (!enabledArray[view]) {
       setEnabledArray({ ...enabledArray, [view]: true });
     }
@@ -169,7 +176,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     if (
       builderData &&
-      view === Context.BUILDER &&
+      view === Context.Builder &&
       actions.size !== builderData?.get('actions').size
     ) {
       setActions(builderData?.get('actions') ?? List());
@@ -181,7 +188,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     if (
       playerData &&
-      view === Context.PLAYER &&
+      view === Context.Player &&
       actions.size !== playerData?.get('actions').size
     ) {
       setActions(playerData?.get('actions') ?? List());
@@ -193,7 +200,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     if (
       explorerData &&
-      view === Context.LIBRARY &&
+      view === Context.Library &&
       actions.size !== explorerData?.get('actions').size
     ) {
       setActions(explorerData?.get('actions') ?? List());
@@ -205,7 +212,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     if (
       unknownData &&
-      view === Context.UNKNOWN &&
+      view === Context.Unknown &&
       actions.size !== unknownData?.get('actions').size
     ) {
       setActions(unknownData?.get('actions') ?? List());
@@ -220,22 +227,24 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       allMembers,
       selectedUsers,
       setSelectedUsers,
-      selectedActions,
-      setSelectedActions,
+      selectedActionTypes,
+      setSelectedActionTypes,
       error,
       itemData,
       itemChildren,
       isLoading,
+      requestedSampleSize,
     }),
     [
       actions,
       allMembers,
       error,
       selectedUsers,
-      selectedActions,
+      selectedActionTypes,
       itemData,
       isLoading,
       itemChildren,
+      requestedSampleSize,
     ],
   );
 

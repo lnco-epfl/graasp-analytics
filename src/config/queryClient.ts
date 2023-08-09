@@ -7,7 +7,7 @@ const {
   queryClient,
   QueryClientProvider,
   hooks,
-  useMutation,
+  mutations,
   ReactQueryDevtools,
 } = configureQueryClient({
   API_HOST: REACT_APP_API_HOST,
@@ -26,6 +26,6 @@ export {
   queryClient,
   QueryClientProvider,
   hooks,
-  useMutation,
+  mutations,
   ReactQueryDevtools,
 };
