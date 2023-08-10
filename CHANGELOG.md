@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/graasp/graasp-analytics/compare/v1.1.0...v1.2.0) (2023-08-09)
+
+
+### Features
+
+* add aggregate charts ([#150](https://github.com/graasp/graasp-analytics/issues/150)) ([054809e](https://github.com/graasp/graasp-analytics/commit/054809eda9772e23d3b34b17d88f6ca683a96a5b))
+
 ## [1.1.0](https://github.com/graasp/graasp-analytics/compare/v1.0.0-rc.1...v1.1.0) (2023-06-26)
 
 
