@@ -280,6 +280,7 @@ export const groupByFirstLevelItems = (
   const d = actions
     .filter((a) => a.item)
     .groupBy((a) =>
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       a
         .item!.path.split('.')
         .slice(0, nbLevelParent + 1)
