@@ -1,14 +1,3 @@
-import { List, Map } from 'immutable';
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
-
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -20,6 +9,17 @@ import {
   CountGroupBy,
 } from '@graasp/sdk';
 import { ActionRecord } from '@graasp/sdk/frontend';
+
+import { List, Map } from 'immutable';
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 import {
   AVERAGE_COLOR,

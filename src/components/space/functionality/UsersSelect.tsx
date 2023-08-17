@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +7,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 
 import { MemberRecord } from '@graasp/sdk/frontend';
+
+import { List } from 'immutable';
 
 import { DataContext } from '../../context/DataProvider';
 

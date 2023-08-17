@@ -1,10 +1,12 @@
-import GoogleMapReact from 'google-map-react';
-import useSupercluster from 'use-supercluster';
-
 import { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useTheme } from '@mui/material/styles';
+
+import GoogleMapReact from 'google-map-react';
+import useSupercluster from 'use-supercluster';
+
+import { GOOGLE_KEY } from '@/config/env';
 
 import {
   CLUSTER_RADIUS,
@@ -13,7 +15,6 @@ import {
   DEFAULT_ZOOM,
   ENTER_KEY,
   MAX_CLUSTER_ZOOM,
-  REACT_APP_GOOGLE_KEY,
 } from '../../../config/constants';
 import {
   filterActionsByUsers,
@@ -33,7 +34,7 @@ const ActionsMap = (): JSX.Element | null => {
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const { actions, selectedUsers } = useContext(DataContext);
 
-  if (!REACT_APP_GOOGLE_KEY) {
+  if (!GOOGLE_KEY) {
     return null;
   }
 
@@ -84,7 +85,7 @@ const ActionsMap = (): JSX.Element | null => {
       <ChartTitle title={t('Actions by Location')} />
       <ChartContainer>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: REACT_APP_GOOGLE_KEY }}
+          bootstrapURLKeys={{ key: GOOGLE_KEY }}
           defaultCenter={{ lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE }}
           defaultZoom={DEFAULT_ZOOM}
           yesIWantToUseGoogleMapApiInternals

@@ -1,3 +1,8 @@
+import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { ItemRecord } from '@graasp/sdk/frontend';
+
 import { List } from 'immutable';
 import {
   Bar,
@@ -7,11 +12,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-
-import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-
-import { ItemRecord } from '@graasp/sdk/frontend';
 
 import {
   COLORS,

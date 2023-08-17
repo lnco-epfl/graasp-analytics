@@ -7,13 +7,16 @@ export default defineConfig({
     runMode: 2,
   },
   chromeWebSecurity: false,
-  e2e: {
+  e2e: {    env: {
+    API_HOST: process.env.VITE_GRAASP_API_HOST,
+    ENABLE_MOCK_API: process.env.VITE_GRAASP_ENABLE_MOCK_API,
+  },
     setupNodeEvents(on, config) {
       // implement node event listeners here
       // eslint-disable-next-line @typescript-eslint/no-var-requires, import/no-extraneous-dependencies, global-require
       require('@cypress/code-coverage/task')(on, config);
       return config
     },
-    baseUrl: `http://localhost:${process.env.PORT}`,
+    baseUrl: `http://localhost:${process.env.VITE_PORT}`,
   }
 })

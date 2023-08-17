@@ -1,6 +1,6 @@
-import { ResponsiveContainer } from 'recharts';
-
 import { Box } from '@mui/material';
+
+import { ResponsiveContainer } from 'recharts';
 
 import { CONTAINER_HEIGHT } from '../../config/constants';
 

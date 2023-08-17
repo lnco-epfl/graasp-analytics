@@ -1,13 +1,14 @@
-import ReactGa from 'react-ga';
+import ReactGA from 'react-ga4';
 import { I18nextProvider } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { ThemeProvider, styled } from '@mui/material';
 
+import { hasAcceptedCookies } from '@graasp/sdk';
 import { theme } from '@graasp/ui';
 
-import { NODE_ENV, REACT_APP_GOOGLE_ANALYTICS_ID } from '../config/env';
+import { GA_MEASUREMENT_ID } from '../config/env';
 import i18nConfig from '../config/i18n';
 import {
   QueryClientProvider,
@@ -16,8 +17,9 @@ import {
 } from '../config/queryClient';
 import App from './App';
 
-if (REACT_APP_GOOGLE_ANALYTICS_ID) {
-  ReactGa.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
+if (GA_MEASUREMENT_ID && hasAcceptedCookies() && import.meta.env.PROD) {
+  ReactGA.initialize(GA_MEASUREMENT_ID);
+  ReactGA.send('pageview');
 }
 
 const CustomRoot = styled('div')({
@@ -36,7 +38,7 @@ const Root = (): JSX.Element => (
         </I18nextProvider>
       </CustomRoot>
     </ThemeProvider>
-    {NODE_ENV === 'development' && <ReactQueryDevtools />}
+    {import.meta.env.DEV && <ReactQueryDevtools />}
   </QueryClientProvider>
 );
 

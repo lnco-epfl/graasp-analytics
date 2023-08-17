@@ -1,13 +1,3 @@
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
-
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -18,6 +8,16 @@ import {
   AggregateMetric,
   CountGroupBy,
 } from '@graasp/sdk';
+
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 import {
   DEFAULT_REQUEST_SAMPLE_SIZE,

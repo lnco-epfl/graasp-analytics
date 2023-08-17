@@ -1,6 +1,6 @@
-import { List } from 'immutable';
-
 import { ActionRecord, MemberRecord } from '@graasp/sdk/frontend';
+
+import { List } from 'immutable';
 
 import { filterActionsByActionTypes, filterActionsByUsers } from './utils';
 

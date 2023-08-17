@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 import {
   Dispatch,
   createContext,
@@ -12,6 +10,8 @@ import { useParams } from 'react-router-dom';
 
 import { Context, ItemType } from '@graasp/sdk';
 import { ActionRecord, ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
+
+import { List } from 'immutable';
 
 import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../config/constants';
 import { hooks } from '../../config/queryClient';

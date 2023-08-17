@@ -1,10 +1,10 @@
-import { Cell, Pie, PieChart, Tooltip } from 'recharts';
-
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
+
+import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
 import { COLORS, CONTAINER_HEIGHT } from '../../../config/constants';
 import { filterActions } from '../../../utils/array';

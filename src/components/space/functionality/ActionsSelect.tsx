@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,6 +5,8 @@ import { Box, Chip, FormControl, InputLabel, MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
+
+import { List } from 'immutable';
 
 import { DataContext } from '../../context/DataProvider';
 

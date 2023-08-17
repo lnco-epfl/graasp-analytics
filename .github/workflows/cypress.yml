@@ -33,12 +33,12 @@ jobs:
         run: yarn lint
 
       - name: Build App
-        run: yarn build
+        run: yarn build:test
         shell: bash
         env:
-          REACT_APP_API_HOST: 'http://localhost:3000'
-          REACT_APP_ENABLE_MOCK_API: true
-          PORT: 3113
+          VITE_GRAASP_API_HOST: 'http://localhost:3000'
+          VITE_ENABLE_MOCK_API: true
+          VITE_PORT: 3113
 
       #  use the Cypress GitHub Action to run Cypress tests within the chrome browser
       - name: Cypress run
@@ -46,15 +46,15 @@ jobs:
         with:
           install: false
           # we launch the app in preview mode to avoid issues with hmr websockets from vite polluting the mocks
-          start: yarn start:ci
+          start: yarn preview:test
           browser: chrome
           quiet: true
           config-file: cypress.config.ts
           cache-key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
         env:
-          REACT_APP_API_HOST: 'http://localhost:3000'
-          REACT_APP_ENABLE_MOCK_API: true
-          PORT: 3113
+          VITE_GRAASP_API_HOST: 'http://localhost:3000'
+          VITE_ENABLE_MOCK_API: true
+          VITE_PORT: 3113
 
       # after the test run completes
       # store any screenshots

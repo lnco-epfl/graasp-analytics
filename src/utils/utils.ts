@@ -1,9 +1,9 @@
+import { Action } from '@graasp/sdk';
+import { ActionRecord, ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
+
 import { List, Map } from 'immutable';
 import capitalize from 'lodash.capitalize';
 import truncate from 'lodash.truncate';
-
-import { Action } from '@graasp/sdk';
-import { ActionRecord, ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
 
 import {
   ITEM_NAME_MAX_LENGTH,

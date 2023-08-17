@@ -1,8 +1,8 @@
-import { StatusCodes } from 'http-status-codes';
-import { Model, Response, RestSerializer, createServer } from 'miragejs';
-
 import { API_ROUTES } from '@graasp/query-client';
 import { Item, ItemMembership, Member } from '@graasp/sdk';
+
+import { StatusCodes } from 'http-status-codes';
+import { Model, Response, RestSerializer, createServer } from 'miragejs';
 
 import MOCK_ACTION_DATA from './mockData/actions';
 import {

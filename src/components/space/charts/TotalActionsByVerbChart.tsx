@@ -1,5 +1,3 @@
-import { Cell, Pie, PieChart, Tooltip } from 'recharts';
-
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -10,6 +8,8 @@ import {
   AggregateMetric,
   CountGroupBy,
 } from '@graasp/sdk';
+
+import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
 import { COLORS, DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
 import { hooks } from '../../../config/queryClient';

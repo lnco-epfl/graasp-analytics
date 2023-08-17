@@ -1,6 +1,10 @@
 import { Context } from '@graasp/sdk';
 
-export const DOMAIN = process.env.REACT_APP_DOMAIN || 'localhost';
+import {
+  GRAASP_BUILDER_HOST,
+  GRAASP_LIBRARY_HOST,
+  GRAASP_PLAYER_HOST,
+} from './env';
 
 // Default latitude and longitude for centering map. Zurich coordinates used below.
 export const DEFAULT_LATITUDE = 47.3769;
@@ -64,13 +68,6 @@ export const TOP_NUMBER_OF_ITEMS_TO_DISPLAY = 10;
 
 export const DEFAULT_REQUEST_SAMPLE_SIZE = 5000;
 
-export const GRAASP_BUILDER_HOST =
-  process.env.REACT_APP_GRAASP_COMPOSE_HOST || 'http://localhost:3111';
-export const GRAASP_PLAYER_HOST =
-  process.env.REACT_APP_GRAASP_PERFORM_HOST || 'http://localhost:3112';
-export const GRAASP_LIBRARY_HOST =
-  process.env.REACT_APP_GRAASP_EXPLORE_HOST || 'http://localhost:3005';
-
 export const HOST_MAP = {
   [Context.Builder]: GRAASP_BUILDER_HOST,
   [Context.Player]: GRAASP_PLAYER_HOST,
@@ -81,7 +78,3 @@ export const HOST_MAP = {
 export const ITEM_NAME_MAX_LENGTH = 15;
 
 export const NAVIGATOR_BACKGROUND_COLOR = '#f6f6f6';
-export const ENABLE_MOCK_API = process.env.REACT_APP_ENABLE_MOCK_API === 'true';
-export const API_HOST = process.env.REACT_APP_API_HOST;
-
-export const REACT_APP_GOOGLE_KEY = process.env.REACT_APP_GOOGLE_KEY;

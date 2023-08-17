@@ -1,3 +1,6 @@
+import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import {
   Bar,
   CartesianGrid,
@@ -6,9 +9,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-
-import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import {
   ACTIONS_BY_USER_MAX_DISPLAYED_USERS,
