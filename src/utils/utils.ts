@@ -23,19 +23,18 @@ const getActionDay = (action: ActionRecord) => {
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
 export const getActionsByDay = (
   actions: List<ActionRecord>,
-): Map<string, List<ActionRecord>> => {
+): { [key: string]: number } => {
   const actionsByDayMap = actions?.countBy(getActionDay);
   const actionsByDayObject = Object.fromEntries(actionsByDayMap);
   return actionsByDayObject;
 };
 
 // Takes object with {key: value} pairs of {date: #-of-actions} and returns a date-sorted array in Recharts.js format
-// TODO: types
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const formatActionsByDay = (
-  actionsByDayObject: Map<string, List<ActionRecord>>,
-) => {
-  const actionsByDayArray = Object.entries(actionsByDayObject);
+export const formatActionsByDay = (actionsByDayObject: {
+  [key: string]: number;
+}): { date: string; count: number }[] => {
+  const actionsByDayArray: [string, number][] =
+    Object.entries(actionsByDayObject);
   const sortedActionsByDay = actionsByDayArray.sort(
     ([d1], [d2]) => Date.parse(d1) - Date.parse(d2),
   );
@@ -47,7 +46,7 @@ export const formatActionsByDay = (
       }-${entryDate.getFullYear()}`,
       count,
     };
-  }) as { date: string; count: number }[];
+  });
 };
 
 export const mapActionsToGeoJsonFeatureObjects = (

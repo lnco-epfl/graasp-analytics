@@ -8,9 +8,7 @@ import {
   AggregateMetric,
   CountGroupBy,
 } from '@graasp/sdk';
-import { ActionRecord } from '@graasp/sdk/frontend';
 
-import { List, Map } from 'immutable';
 import {
   CartesianGrid,
   Legend,
@@ -87,7 +85,7 @@ const ActionsByDayChart = (): JSX.Element | null => {
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
 
-  let actionsByDay = Map<string, List<ActionRecord>>();
+  let actionsByDay: { [key: string]: number } = {};
   if (actions?.size) {
     actionsByDay = filterActions({
       selectedUsers,
