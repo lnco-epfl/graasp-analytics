@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { Box, Chip, FormControl, InputLabel, MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -7,6 +6,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 
 import { List } from 'immutable';
+
+import { useAnalyticsTranslation } from '@/config/i18n';
 
 import { DataContext } from '../../context/DataProvider';
 
@@ -17,7 +18,7 @@ const CustomRoot = styled(Grid)(({ theme }) => ({
 }));
 
 const ActionsSelect = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   // eslint-disable-next-line no-unused-vars
   const { actions, selectedActionTypes, setSelectedActionTypes } =
     useContext(DataContext);
@@ -36,10 +37,10 @@ const ActionsSelect = (): JSX.Element | null => {
     <CustomRoot container>
       <FormControl sx={{ m: 1, width: '90%' }}>
         <InputLabel id="demo-multiple-chip-label">
-          {t('Action Types')}
+          {t('ACTION_TYPES')}
         </InputLabel>
         <Select
-          label={t('Action Types')}
+          label={t('ACTION_TYPES')}
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple

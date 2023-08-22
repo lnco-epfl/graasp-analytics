@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import {
   Bar,
@@ -9,6 +8,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+
+import { useAnalyticsTranslation } from '@/config/i18n';
 
 import {
   ACTIONS_BY_USER_MAX_DISPLAYED_USERS,
@@ -24,7 +25,7 @@ import { DataContext } from '../../context/DataProvider';
 import EmptyChart from './EmptyChart';
 
 const UsersByActionByChart = (): JSX.Element => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { actions, selectedUsers, selectedActionTypes, allMembers } =
     useContext(DataContext);
   const allActions = filterActionsByActionTypes(actions, selectedActionTypes);
@@ -51,7 +52,9 @@ const UsersByActionByChart = (): JSX.Element => {
     }
   });
   const maxUsers = ACTIONS_BY_USER_MAX_DISPLAYED_USERS;
-  const title = `${ACTIONS_BY_USER_MAX_DISPLAYED_USERS} Most Active Users`;
+  const title = t(`MOST_ACTIVE_USERS`, {
+    nb: ACTIONS_BY_USER_MAX_DISPLAYED_USERS,
+  });
 
   // sort by total actions in descending order
   formattedUsersByAction.sort((a, b) => b.total - a.total);
@@ -60,12 +63,12 @@ const UsersByActionByChart = (): JSX.Element => {
   // filter out users with no actions
   formattedUsersByAction = formattedUsersByAction.filter((user) => user.total);
   if (!formattedUsersByAction.length) {
-    return <EmptyChart chartTitle={t(title)} />;
+    return <EmptyChart chartTitle={title} />;
   }
 
   return (
     <>
-      <ChartTitle title={t(title)} />
+      <ChartTitle title={title} />
       <ChartContainer>
         <ComposedChart data={formattedUsersByAction}>
           <CartesianGrid strokeDasharray="2" />

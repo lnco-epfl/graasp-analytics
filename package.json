@@ -16,7 +16,7 @@
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
-    "@graasp/query-client": "1.4.2",
+    "@graasp/query-client": "1.4.3",
     "@graasp/sdk": "1.2.1",
     "@graasp/translations": "1.18.3",
     "@graasp/ui": "3.3.2",
@@ -117,9 +117,6 @@
     "vite": "4.4.9",
     "vite-plugin-checker": "0.6.2",
     "vite-plugin-istanbul": "5.0.0"
-  },
-  "resolutions": {
-    "immutable": "4.3.2"
   },
   "packageManager": "yarn@3.6.2"
 }

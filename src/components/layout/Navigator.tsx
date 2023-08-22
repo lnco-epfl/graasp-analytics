@@ -1,7 +1,9 @@
-import { useTranslation } from 'react-i18next';
 import { useLocation, useMatch } from 'react-router-dom';
 
+import { COMMON } from '@graasp/translations';
 import { HomeMenu, ItemMenu, Navigation } from '@graasp/ui';
+
+import { useCommonTranslation } from '@/config/i18n';
 
 import { NAVIGATOR_BACKGROUND_COLOR } from '../../config/constants';
 import {
@@ -29,7 +31,7 @@ const {
 } = hooks;
 
 const Navigator = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useCommonTranslation();
   const match = useMatch(buildItemPath());
   const { pathname } = useLocation();
   const itemId = match?.params?.itemId;
@@ -51,8 +53,12 @@ const Navigator = (): JSX.Element | null => {
   }
 
   const menu = [
-    { name: t('Home'), id: 'home', to: HOME_PATH },
-    { name: t('Shared Items'), id: 'shared', to: SHARED_ITEMS_PATH },
+    { name: t(COMMON.USER_OWN_ITEMS), id: 'home', to: HOME_PATH },
+    {
+      name: t(COMMON.USER_SHARED_WITH_ITEMS),
+      id: 'shared',
+      to: SHARED_ITEMS_PATH,
+    },
   ];
 
   const renderRoot = () => {

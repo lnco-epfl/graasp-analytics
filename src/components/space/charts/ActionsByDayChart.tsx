@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -19,6 +18,8 @@ import {
   YAxis,
 } from 'recharts';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import {
   AVERAGE_COLOR,
   DEFAULT_REQUEST_SAMPLE_SIZE,
@@ -34,7 +35,7 @@ import { ViewDataContext } from '../../context/ViewDataProvider';
 import EmptyChart from './EmptyChart';
 
 const ActionsByDayChart = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { actions, selectedUsers, selectedActionTypes } =
     useContext(DataContext);
   const { view } = useContext(ViewDataContext);
@@ -60,9 +61,9 @@ const ActionsByDayChart = (): JSX.Element | null => {
     return null;
   }
 
-  const title = 'Actions by Day';
+  const title = t('ACTIONS_BY_DAY_TITLE');
   if (!aggregateData?.size) {
-    return <EmptyChart chartTitle={t(title)} />;
+    return <EmptyChart chartTitle={title} />;
   }
 
   const formattedAggregateData = (
@@ -122,7 +123,7 @@ const ActionsByDayChart = (): JSX.Element | null => {
 
   return (
     <>
-      <ChartTitle title={t(title)} />
+      <ChartTitle title={title} />
       <ChartContainer>
         <LineChart
           data={mergedData.map((entry) => ({
@@ -137,14 +138,14 @@ const ActionsByDayChart = (): JSX.Element | null => {
           <Legend />
           <Line
             dataKey="count"
-            name={t('Count')}
+            name={t('COUNT')}
             stroke={GENERAL_COLOR}
             activeDot={{ r: 6 }}
             strokeWidth={3}
           />
           <Line
             dataKey="averageCount"
-            name={t('Average Count')}
+            name={t('AVERAGE_COUNT')}
             stroke={AVERAGE_COLOR}
             activeDot={{ r: 6 }}
             strokeWidth={3}

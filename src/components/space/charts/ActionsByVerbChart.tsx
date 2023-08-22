@@ -1,10 +1,11 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
+
+import { useAnalyticsTranslation } from '@/config/i18n';
 
 import { COLORS, CONTAINER_HEIGHT } from '../../../config/constants';
 import { filterActions } from '../../../utils/array';
@@ -22,7 +23,7 @@ const EmptyChartAlert = styled('div')({
 });
 
 const ActionsByVerbChart = (): JSX.Element => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { actions, selectedUsers, selectedActionTypes } =
     useContext(DataContext);
 
@@ -36,7 +37,7 @@ const ActionsByVerbChart = (): JSX.Element => {
     });
   }
   const formattedActionsByVerb = formatActionsByVerb(actionsByVerb);
-  const title = 'Actions Distributions';
+  const title = t('ACTIONS_DISTRIBUTIONS');
 
   // if no user is selected, this chart will be the same as Total Actions Distribution
   // instead show an info text
@@ -45,7 +46,7 @@ const ActionsByVerbChart = (): JSX.Element => {
       <>
         <ChartTitle title={t(title)} />
         <EmptyChartAlert>
-          <Typography>{t('No User Selected')}</Typography>
+          <Typography>{t('NO_USER_SELECTED')}</Typography>
         </EmptyChartAlert>
       </>
     );
@@ -53,14 +54,14 @@ const ActionsByVerbChart = (): JSX.Element => {
 
   // if selected user(s) have no actions, render component with message that there are no actions
   if (!formattedActionsByVerb?.length) {
-    return <EmptyChart chartTitle={t(title)} />;
+    return <EmptyChart chartTitle={title} />;
   }
 
   formattedActionsByVerb.sort((a, b) => a.type.localeCompare(b.type));
 
   return (
     <>
-      <ChartTitle title={t(title)} />
+      <ChartTitle title={title} />
       <ChartContainer>
         <PieChart>
           <Pie

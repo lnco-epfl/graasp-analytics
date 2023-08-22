@@ -10,14 +10,12 @@ export default ({ type, payload }: { type: string; payload?: any }): void => {
   let message = null;
   switch (type) {
     case exportActionsRoutine.SUCCESS: {
-      message =
-        'Your request has been sent. An email will be sent to you in several minutes.';
+      message = 'EXPORT_SUCCESS_MESSAGE';
       break;
     }
     case exportActionsRoutine.FAILURE: {
       message =
-        payload?.error?.response?.data?.message ??
-        'An unexpected error occured, please retry later';
+        payload?.error?.response?.data?.message ?? 'EXPORT_ERROR_MESSAGE';
       break;
     }
     default:

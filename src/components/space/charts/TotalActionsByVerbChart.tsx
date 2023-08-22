@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -11,6 +10,8 @@ import {
 
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import { COLORS, DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
 import { hooks } from '../../../config/queryClient';
 import ChartContainer from '../../common/ChartContainer';
@@ -20,7 +21,7 @@ import { ViewDataContext } from '../../context/ViewDataProvider';
 import EmptyChart from './EmptyChart';
 
 const TotalActionsByVerbChart = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { selectedActionTypes } = useContext(DataContext);
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
@@ -45,9 +46,9 @@ const TotalActionsByVerbChart = (): JSX.Element | null => {
     return null;
   }
 
-  const title = 'Total Actions Distributions';
+  const title = t('TOTAL_ACTIONS_DISTRIBUTIONS');
   if (!aggregateData.size) {
-    return <EmptyChart chartTitle={t(title)} />;
+    return <EmptyChart chartTitle={title} />;
   }
 
   const formattedAggregateData: { actionCount: number; type: string }[] =
@@ -69,13 +70,16 @@ const TotalActionsByVerbChart = (): JSX.Element | null => {
       ((d.actionCount / totalActions) * 100).toFixed(2),
     );
   });
-  formattedAggregateData.push({ actionCount: 0.0, type: 'other' });
+  formattedAggregateData.push({
+    actionCount: 0.0,
+    type: t('OTHER_ACTION_TYPE'),
+  });
 
   formattedAggregateData.sort((a, b) => a.type.localeCompare(b.type));
 
   return (
     <>
-      <ChartTitle title={t(title)} />
+      <ChartTitle title={title} />
       <ChartContainer>
         <PieChart>
           <Pie

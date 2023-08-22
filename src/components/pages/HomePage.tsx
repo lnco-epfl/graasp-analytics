@@ -1,14 +1,14 @@
-import { useTranslation } from 'react-i18next';
-
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import { Box, Stack, Typography } from '@mui/material';
+
+import { useAnalyticsTranslation } from '@/config/i18n';
 
 import Footer from '../layout/Footer';
 import Header from '../layout/Header';
 import Navigator from '../layout/Navigator';
 
 const HomePage = (): JSX.Element => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   return (
     <Stack
       direction="column"
@@ -36,9 +36,7 @@ const HomePage = (): JSX.Element => {
         >
           <QueryStatsIcon sx={{ fontSize: 80 }} />
           <Typography variant="h4" textAlign="center">
-            {t(
-              'Please select an item from the navigator to view the analytics.',
-            )}
+            {t('NO_ITEM_SELECTED')}
           </Typography>
         </Stack>
       </Box>

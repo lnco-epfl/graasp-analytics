@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -19,6 +18,8 @@ import {
   YAxis,
 } from 'recharts';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import {
   DEFAULT_REQUEST_SAMPLE_SIZE,
   GENERAL_COLOR,
@@ -31,7 +32,7 @@ import { ViewDataContext } from '../../context/ViewDataProvider';
 import EmptyChart from './EmptyChart';
 
 const ActiveUsersChart = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { view } = useContext(ViewDataContext);
   const { selectedActionTypes } = useContext(DataContext);
   const { itemId } = useParams();
@@ -56,7 +57,7 @@ const ActiveUsersChart = (): JSX.Element | null => {
     return null;
   }
 
-  const title = 'Active Users by Day';
+  const title = t('ACTIVE_USERS_BY_DAY');
   if (!aggregateData.size) {
     return <EmptyChart chartTitle={t(title)} />;
   }
@@ -98,7 +99,7 @@ const ActiveUsersChart = (): JSX.Element | null => {
           <Legend />
           <Line
             dataKey="count"
-            name={t('Count')}
+            name={t('COUNT')}
             stroke={GENERAL_COLOR}
             strokeWidth={3}
             activeDot={{ r: 6 }}

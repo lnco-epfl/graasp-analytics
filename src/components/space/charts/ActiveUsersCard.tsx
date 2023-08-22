@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import FaceIcon from '@mui/icons-material/Face';
@@ -15,6 +14,8 @@ import {
   CountGroupBy,
 } from '@graasp/sdk';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
 import { hooks } from '../../../config/queryClient';
 import { ViewDataContext } from '../../context/ViewDataProvider';
@@ -27,7 +28,7 @@ const CustomRoot = styled(Card)(() => ({
 }));
 
 const ActiveUsersCard = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
 
@@ -127,9 +128,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
             </Grid>
             <Grid item xs={9}>
               <Typography component="div" align="center">
-                {t('Average daily users')}
-                <br />
-                {t('this month')}
+                {t('AVERAGE_DAILY_USERS_MONTH')}
                 <Typography variant="h5" component="div" align="center">
                   {averageDailyUsersThisMonth.toFixed(3)}
                 </Typography>
@@ -146,9 +145,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
             </Grid>
             <Grid item xs={9}>
               <Typography component="div" align="center">
-                {t('Average daily users')}
-                <br />
-                {t('this week')}
+                {t('AVERAGE_DAILY_USERS_WEEK')}
                 <Typography variant="h5" component="div" align="center">
                   {averageDailyUsersThisWeek.toFixed(3)}
                 </Typography>
@@ -165,7 +162,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
             </Grid>
             <Grid item xs={9}>
               <Typography component="div" align="center">
-                {t('Users today')}
+                {t('USERS_TODAY')}
                 <Typography variant="h5" component="div" align="center">
                   {usersToday}
                 </Typography>

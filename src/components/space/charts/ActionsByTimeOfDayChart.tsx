@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -19,6 +18,8 @@ import {
   YAxis,
 } from 'recharts';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import {
   AVERAGE_COLOR,
   DEFAULT_REQUEST_SAMPLE_SIZE,
@@ -37,13 +38,13 @@ import { ViewDataContext } from '../../context/ViewDataProvider';
 import EmptyChart from './EmptyChart';
 
 const ActionsByTimeOfDayChart = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { actions, selectedUsers, selectedActionTypes } =
     useContext(DataContext);
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
 
-  const title = 'Actions by Time of Day';
+  const title = t('Actions by Time of Day');
 
   const {
     data: aggregateData,
@@ -65,7 +66,7 @@ const ActionsByTimeOfDayChart = (): JSX.Element | null => {
   }
 
   if (!aggregateData.size) {
-    return <EmptyChart chartTitle={t(title)} />;
+    return <EmptyChart chartTitle={title} />;
   }
 
   const formattedAggregateData: {
@@ -137,7 +138,7 @@ const ActionsByTimeOfDayChart = (): JSX.Element | null => {
 
   return (
     <>
-      <ChartTitle title={t(title)} />
+      <ChartTitle title={title} />
       <ChartContainer>
         <BarChart data={mergedData}>
           <CartesianGrid strokeDasharray="2" />
@@ -145,10 +146,10 @@ const ActionsByTimeOfDayChart = (): JSX.Element | null => {
           <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="count" name={t('Count')} fill={GENERAL_COLOR} />
+          <Bar dataKey="count" name={t('COUNT')} fill={GENERAL_COLOR} />
           <Bar
             dataKey="averageCount"
-            name={t('Average Count')}
+            name={t('AVERAGE_COUNT')}
             fill={AVERAGE_COLOR}
           />
         </BarChart>

@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
 
@@ -12,6 +11,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+
+import { useAnalyticsTranslation } from '@/config/i18n';
 
 import {
   COLORS,
@@ -28,7 +29,7 @@ import { DataContext } from '../../context/DataProvider';
 import EmptyChart from './EmptyChart';
 
 const ItemsByActionChart = (): JSX.Element => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const {
     actions,
     selectedActionTypes,
@@ -54,7 +55,9 @@ const ItemsByActionChart = (): JSX.Element => {
     formattedItemsByAction.push(userActions);
   }
   formattedItemsByAction.sort((a, b) => b.total - a.total);
-  const title = `${TOP_NUMBER_OF_ITEMS_TO_DISPLAY} Most Interacted Items by Action`;
+  const title = t(`MOST_INTERACTED_ITEMS_BY_ACTION`, {
+    nb: TOP_NUMBER_OF_ITEMS_TO_DISPLAY,
+  });
   if (!formattedItemsByAction.length) {
     return <EmptyChart chartTitle={t(title)} />;
   }
@@ -65,7 +68,7 @@ const ItemsByActionChart = (): JSX.Element => {
   );
   return (
     <>
-      <ChartTitle title={t(title)} />
+      <ChartTitle title={title} />
       <ChartContainer>
         <ComposedChart data={firstFormattedItmesByUser}>
           <CartesianGrid strokeDasharray="2" />

@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import BarChartIcon from '@mui/icons-material/BarChart';
 import FolderIcon from '@mui/icons-material/Folder';
@@ -7,8 +6,10 @@ import PersonIcon from '@mui/icons-material/Person';
 
 import { MainMenu as GraaspMainMenu, MenuItem } from '@graasp/ui';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 const Sidebar: FC = () => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -19,17 +20,17 @@ const Sidebar: FC = () => {
       <MenuItem
         onClick={() => scrollTo('general')}
         icon={<BarChartIcon />}
-        text={t('General')}
+        text={t('TAB_GENERAL')}
       />
       <MenuItem
         onClick={() => scrollTo('users')}
         icon={<PersonIcon />}
-        text={t('Users')}
+        text={t('TAB_USERS')}
       />
       <MenuItem
         onClick={() => scrollTo('items')}
         icon={<FolderIcon />}
-        text={t('Items')}
+        text={t('TAB_ITEMS')}
       />
     </GraaspMainMenu>
   );

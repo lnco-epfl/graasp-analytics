@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { Box, Chip, FormControl, InputLabel, MenuItem } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -10,6 +9,8 @@ import { MemberRecord } from '@graasp/sdk/frontend';
 
 import { List } from 'immutable';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import { DataContext } from '../../context/DataProvider';
 
 const CustomRoot = styled(Grid)(({ theme }) => ({
@@ -19,7 +20,7 @@ const CustomRoot = styled(Grid)(({ theme }) => ({
 }));
 
 const UsersSelect = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { selectedUsers, setSelectedUsers, allMembers } =
     useContext(DataContext);
 
@@ -37,9 +38,11 @@ const UsersSelect = (): JSX.Element | null => {
   return (
     <CustomRoot container>
       <FormControl sx={{ m: 1, width: '90%' }}>
-        <InputLabel id="demo-multiple-chip-label">{t('Users')}</InputLabel>
+        <InputLabel id="demo-multiple-chip-label">
+          {t('USERS_SELECT')}
+        </InputLabel>
         <Select
-          label={t('Users')}
+          label={t('USERS_SELECT')}
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple

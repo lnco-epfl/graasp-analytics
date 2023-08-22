@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -18,6 +17,8 @@ import {
   YAxis,
 } from 'recharts';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import { COLORS, DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
 import { hooks } from '../../../config/queryClient';
 import { filterActionsByActionTypes } from '../../../utils/utils';
@@ -28,7 +29,7 @@ import { ViewDataContext } from '../../context/ViewDataProvider';
 import EmptyChart from './EmptyChart';
 
 const ActionsByUserChart = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { actions, selectedUsers, selectedActionTypes, allMembers } =
     useContext(DataContext);
   const { view } = useContext(ViewDataContext);
@@ -63,9 +64,9 @@ const ActionsByUserChart = (): JSX.Element | null => {
   );
 
   const users = selectedUsers?.size ? selectedUsers : allMembers;
-  const title = 'Actions by User';
+  const title = t('ACTIONS_BY_USER');
   if (!users) {
-    return <EmptyChart chartTitle={t(title)} />;
+    return <EmptyChart chartTitle={title} />;
   }
 
   const allActions = filterActionsByActionTypes(actions, selectedActionTypes);
@@ -100,12 +101,12 @@ const ActionsByUserChart = (): JSX.Element | null => {
   formattedData.sort((a, b) => b.total - a.total);
 
   if (!formattedData.length) {
-    return <EmptyChart chartTitle={t(title)} />;
+    return <EmptyChart chartTitle={title} />;
   }
 
   return (
     <>
-      <ChartTitle title={t(title)} />
+      <ChartTitle title={title} />
       <ChartContainer>
         <ComposedChart data={formattedData}>
           <CartesianGrid strokeDasharray="2" />

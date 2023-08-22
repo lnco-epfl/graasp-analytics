@@ -1,9 +1,10 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import Info from '@mui/icons-material/Info';
 import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
+
+import { useAnalyticsTranslation } from '@/config/i18n';
 
 import StyledAlert from '../../common/StyledAlert';
 import { DataContext } from '../../context/DataProvider';
@@ -27,17 +28,14 @@ const AlertsTooltip = styled(Tooltip)(({ theme }) => ({
 }));
 
 const ChartsAlerts = (): JSX.Element => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { view } = useContext(ViewDataContext);
   const { requestedSampleSize } = useContext(DataContext);
 
   // adding a tooltip to an Alert is tricky; this hack uses the Alert's built-in 'action' prop to do this
   const action = (
     <AlertsTooltip
-      title={t(
-        'By default, only a sample of actions is requested and displayed in the charts below, in order to provide a general overview of activity in this item.',
-        { requestedSampleSize },
-      )}
+      title={t('SAMPLE_ACTIONS_MESSAGE', { requestedSampleSize })}
       placement="left"
     >
       <Info fontSize="small" />
@@ -47,7 +45,7 @@ const ChartsAlerts = (): JSX.Element => {
   const displaySampleInfo = () => (
     // TODO: implement maxTreeLengthExceeded to show message if depth is capped
     <StyledAlert severity="info" action={action}>
-      {t('The charts below display a sample of actions from this item.', {
+      {t('SAMPLE_ACTIONS_CHARTS_MESSAGE', {
         view,
         requestedSampleSize,
       })}

@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -19,6 +18,8 @@ import {
   YAxis,
 } from 'recharts';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import {
   AVERAGE_COLOR,
   DEFAULT_REQUEST_SAMPLE_SIZE,
@@ -37,7 +38,7 @@ import { ViewDataContext } from '../../context/ViewDataProvider';
 import EmptyChart from './EmptyChart';
 
 const ActionsByWeekdayChart = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { actions, selectedUsers, selectedActionTypes } =
     useContext(DataContext);
 
@@ -63,9 +64,9 @@ const ActionsByWeekdayChart = (): JSX.Element | null => {
     return null;
   }
 
-  const title = 'Actions By Weekday';
+  const title = t('ACTIONS_BY_WEEKDAY');
   if (!aggregateData.size) {
-    return <EmptyChart chartTitle={t(title)} />;
+    return <EmptyChart chartTitle={title} />;
   }
 
   const formattedAggregateData: {
@@ -91,6 +92,7 @@ const ActionsByWeekdayChart = (): JSX.Element | null => {
     }
   }
 
+  // we don't translate here because we need to compare with the raw data
   const weekdayEnum = {
     0: 'Sunday',
     1: 'Monday',
@@ -131,42 +133,32 @@ const ActionsByWeekdayChart = (): JSX.Element | null => {
 
   const formattedActionsByWeekday = formatActionsByWeekday(actionsByWeekday);
 
-  const mergedData = formattedAggregateDataWithWeekday.map((o1) =>
-    Object.assign(
-      o1,
-      formattedActionsByWeekday.find((o2) => o2.day === o1.day) ?? {
-        count: 0,
-      },
-    ),
-  );
-
-  const maxCountEntry = mergedData.reduce((a, b) =>
-    Math.max(a.averageCount, a.count) > Math.max(b.averageCount, b.count)
-      ? a
-      : b,
-  );
-  const maxCount = Math.max(maxCountEntry.averageCount, maxCountEntry.count);
-  let yAxisMax;
-  if (maxCount <= 100) {
-    yAxisMax = Math.ceil(maxCount / 10) * 10;
-  } else {
-    yAxisMax = Math.ceil(maxCount / 100) * 100;
-  }
+  const mergedData = formattedAggregateDataWithWeekday
+    .map((o1) =>
+      Object.assign(
+        o1,
+        formattedActionsByWeekday.find((o2) => o2.day === o1.day) ?? {
+          count: 0,
+        },
+      ),
+    )
+    // translate weekdays
+    .map((d) => ({ ...d, day: t(d.day) }));
 
   return (
     <>
-      <ChartTitle title={t(title)} />
+      <ChartTitle title={title} />
       <ChartContainer>
         <BarChart data={mergedData}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis interval={0} dataKey="day" tick={{ fontSize: 14 }} />
-          <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
+          <YAxis tick={{ fontSize: 14 }} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="count" name={t('Count')} fill={GENERAL_COLOR} />
+          <Bar dataKey="count" name={t('COUNT')} fill={GENERAL_COLOR} />
           <Bar
             dataKey="averageCount"
-            name={t('Average Count')}
+            name={t('AVERAGE_COUNT')}
             fill={AVERAGE_COLOR}
           />
         </BarChart>

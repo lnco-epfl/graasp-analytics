@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { ItemRecord } from '@graasp/sdk/frontend';
 
@@ -12,6 +11,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+
+import { useAnalyticsTranslation } from '@/config/i18n';
 
 import {
   COLORS,
@@ -28,7 +29,7 @@ import { DataContext } from '../../context/DataProvider';
 import EmptyChart from './EmptyChart';
 
 const ItemsByUserChart = (): JSX.Element => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const {
     actions,
     selectedUsers,
@@ -66,9 +67,11 @@ const ItemsByUserChart = (): JSX.Element => {
     (a: { total: number }, b: { total: number }) => b.total - a.total,
   );
 
-  const title = `${TOP_NUMBER_OF_ITEMS_TO_DISPLAY} Most Interacted Items by User`;
+  const title = t(`MOST_INTERACTED_ITEMS_BY_USER`, {
+    nb: TOP_NUMBER_OF_ITEMS_TO_DISPLAY,
+  });
   if (!formattedItemsByUser.length) {
-    return <EmptyChart chartTitle={t(title)} />;
+    return <EmptyChart chartTitle={title} />;
   }
   const firstFormattedItmesByUser = formattedItemsByUser.slice(
     0,
@@ -77,7 +80,7 @@ const ItemsByUserChart = (): JSX.Element => {
 
   return (
     <>
-      <ChartTitle title={t(title)} />
+      <ChartTitle title={title} />
       <ChartContainer>
         <ComposedChart data={firstFormattedItmesByUser}>
           <CartesianGrid strokeDasharray="2" />

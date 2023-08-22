@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import InfoIcon from '@mui/icons-material/Info';
 import {
@@ -15,6 +14,8 @@ import { styled } from '@mui/material/styles';
 
 import { Context } from '@graasp/sdk';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import { ViewDataContext } from '../../context/ViewDataProvider';
 
 const CustomRoot = styled(Grid)(({ theme }) => ({
@@ -24,7 +25,7 @@ const CustomRoot = styled(Grid)(({ theme }) => ({
 }));
 
 const ViewSelect = (): JSX.Element => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
 
   const { view, setView } = useContext(ViewDataContext);
 
@@ -35,20 +36,16 @@ const ViewSelect = (): JSX.Element => {
   let viewMessage = '';
   switch (view) {
     case Context.Builder:
-      viewMessage =
-        "The 'builder' view displays analytics from the default Graasp item creation interface.";
+      viewMessage = 'VIEW_BUILDER_TOOLTIP';
       break;
     case Context.Player:
-      viewMessage =
-        "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.";
+      viewMessage = 'VIEW_PLAYER_TOOLTIP';
       break;
     case Context.Library:
-      viewMessage =
-        "The 'library' view displays analytics from the standalone Graasp interface typically used by visualize resources.";
+      viewMessage = 'VIEW_LIBRARY_TOOLTIP';
       break;
     case Context.Unknown:
-      viewMessage =
-        "The 'unknown' view groups all the other actions that might happen outside of the Graasp interfaces.";
+      viewMessage = 'VIEW_UNKNOWN_TOOLTIP';
       break;
     default:
       break;
@@ -57,9 +54,9 @@ const ViewSelect = (): JSX.Element => {
     <CustomRoot container>
       <Grid ml={2} xs={8} item>
         <FormControl sx={{ m: 1, width: '100%' }}>
-          <InputLabel id="viewLabel">{t('View')}</InputLabel>
+          <InputLabel id="viewLabel">{t('VIEWS_SELECT')}</InputLabel>
           <Select
-            label={t('View')}
+            label={t('VIEWS_SELECT')}
             labelId="viewLabel"
             value={view}
             onChange={handleChange}

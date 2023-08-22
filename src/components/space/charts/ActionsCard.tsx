@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import TouchAppIcon from '@mui/icons-material/TouchApp';
@@ -15,6 +14,8 @@ import {
   CountGroupBy,
 } from '@graasp/sdk';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
 import { hooks } from '../../../config/queryClient';
 import { ViewDataContext } from '../../context/ViewDataProvider';
@@ -27,7 +28,7 @@ const CustomRoot = styled(Card)(() => ({
 }));
 
 const ActiveUsersCard = (): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
 
@@ -87,7 +88,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
             </Grid>
             <Grid item xs={9}>
               <Typography component="div" align="center">
-                {t('Total actions')}
+                {t('TOTAL_ACTIONS')}
                 <Typography variant="h5" component="div" align="center">
                   {totalActions}
                 </Typography>
@@ -104,7 +105,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
             </Grid>
             <Grid item xs={9}>
               <Typography component="div" align="center">
-                {t('Actions this month')}
+                {t('ACTIONS_THIS_MONTH')}
                 <Typography variant="h5" component="div" align="center">
                   {totalActionsThisMonth}
                 </Typography>
@@ -121,7 +122,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
             </Grid>
             <Grid item xs={9}>
               <Typography component="div" align="center">
-                {t('Actions this week')}
+                {t('ACTIONS_THIS_WEEK')}
                 <Typography variant="h5" component="div" align="center">
                   {totalActionsThisWeek}
                 </Typography>
@@ -138,7 +139,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
             </Grid>
             <Grid item xs={9}>
               <Typography component="div" align="center">
-                {t('Actions today')}
+                {t('ACTIONS_TODAY')}
                 <Typography variant="h5" component="div" align="center">
                   {totalActionsToday}
                 </Typography>

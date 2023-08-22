@@ -1,8 +1,6 @@
 // CustomToolTip used in ActionsByTimeOfDayChart
 // x-axis labels in that chart say 'morning', 'afternoon', etc.
 // this tooltip adds the time of day those labels refer to
-import { useTranslation } from 'react-i18next';
-
 import {
   AFTERNOON,
   EARLY_MORNING,
@@ -11,6 +9,7 @@ import {
   MORNING,
   NIGHT,
 } from '../../config/constants';
+import { useAnalyticsTranslation } from '../../config/i18n';
 import { CustomTooltipDiv, CustomTooltipDivCount } from './CustomTooltip';
 
 const ActionsByTimeOfDayCustomTooltip = ({
@@ -22,7 +21,7 @@ const ActionsByTimeOfDayCustomTooltip = ({
   payload: { value: string }[];
   label: string;
 }): JSX.Element | null => {
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
 
   const generateAddedTooltipText = (input: string) => {
     switch (input) {
@@ -48,7 +47,7 @@ const ActionsByTimeOfDayCustomTooltip = ({
       <CustomTooltipDiv>
         <p>{`${label} (${generateAddedTooltipText(label)})`}</p>
         <CustomTooltipDivCount>
-          {`${t('Count:')} ${payload[0].value}`}
+          {`${t('Count')}: ${payload[0].value}`}
         </CustomTooltipDivCount>
       </CustomTooltipDiv>
     );

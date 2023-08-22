@@ -1,5 +1,4 @@
 import { useContext, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { useTheme } from '@mui/material/styles';
 
@@ -7,6 +6,7 @@ import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
 
 import { GOOGLE_KEY } from '@/config/env';
+import { useAnalyticsTranslation } from '@/config/i18n';
 
 import {
   CLUSTER_RADIUS,
@@ -28,7 +28,7 @@ const Marker = ({ children }: { children: JSX.Element }) => children;
 
 const ActionsMap = (): JSX.Element | null => {
   const theme = useTheme();
-  const { t } = useTranslation();
+  const { t } = useAnalyticsTranslation();
   const mapRef = useRef<any>();
   const [bounds, setBounds] = useState<number[]>();
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
@@ -82,7 +82,7 @@ const ActionsMap = (): JSX.Element | null => {
 
   return (
     <>
-      <ChartTitle title={t('Actions by Location')} />
+      <ChartTitle title={t('ACTIONS_BY_LOCATION')} />
       <ChartContainer>
         <GoogleMapReact
           bootstrapURLKeys={{ key: GOOGLE_KEY }}
