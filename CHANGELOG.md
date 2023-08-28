@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/graasp/graasp-analytics/compare/v1.2.1...v1.3.0) (2023-08-28)
+
+
+### Features
+
+* add german translations ([#184](https://github.com/graasp/graasp-analytics/issues/184)) ([479be1a](https://github.com/graasp/graasp-analytics/commit/479be1ac72ec69dc214155bf7ad48942d2d601cb))
+* set up global translations ([#181](https://github.com/graasp/graasp-analytics/issues/181)) ([6dcf6cd](https://github.com/graasp/graasp-analytics/commit/6dcf6cd19b16d91ce7f579e1f565e66523f46346))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/query-client to v1.4.2 ([#171](https://github.com/graasp/graasp-analytics/issues/171)) ([13d1316](https://github.com/graasp/graasp-analytics/commit/13d1316b4ab2bdb772c93e4e1db32c12e932e396))
+* **deps:** update dependency @graasp/sdk to v1.2.1 ([5229b15](https://github.com/graasp/graasp-analytics/commit/5229b159b1cf1636e4c48ef46e9c5b4d6c75c76a))
+* **deps:** update dependency @graasp/translations to v1.18.2 ([#163](https://github.com/graasp/graasp-analytics/issues/163)) ([724cefa](https://github.com/graasp/graasp-analytics/commit/724cefa44e6e0f1f796581b6eb40736ae587a870))
+* **deps:** update dependency @graasp/translations to v1.18.3 ([#173](https://github.com/graasp/graasp-analytics/issues/173)) ([ad539a3](https://github.com/graasp/graasp-analytics/commit/ad539a3c02f74e5ff08a8a950d050f23ea63089b))
+* **deps:** update dependency @graasp/ui to v3.3.2 ([#174](https://github.com/graasp/graasp-analytics/issues/174)) ([65a2eb3](https://github.com/graasp/graasp-analytics/commit/65a2eb3d3e1f54f8de2d000f123bb429617f2fc8))
+* **deps:** update mui (non-major) ([#189](https://github.com/graasp/graasp-analytics/issues/189)) ([6288bc9](https://github.com/graasp/graasp-analytics/commit/6288bc94b053779f9f3bc2ed415ece6bc6b28ec2))
+* types ([#179](https://github.com/graasp/graasp-analytics/issues/179)) ([09f8ea4](https://github.com/graasp/graasp-analytics/commit/09f8ea4e7746236941a32491f535dab083176ae1))
+
 ## [1.2.1](https://github.com/graasp/graasp-analytics/compare/v1.2.0...v1.2.1) (2023-08-11)
 
 
