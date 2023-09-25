@@ -41,7 +41,6 @@
   "VIEW_PLAYER_TOOLTIP": "The 'player' view displays analytics from the standalone Graasp interface typically used by students to access an item.",
   "VIEW_UNKNOWN_TOOLTIP": "The 'unknown' view groups all the other actions that might happen outside of the Graasp interfaces.",
   "VIEWS_SELECT": "View",
-  "HOME_MESSAGE": "Please select a shared item from the navigator to view the analytics.",
   "EXPORT_ERROR_MESSAGE": "An unexpected error occured",
 
   "Sunday": "Sunday",

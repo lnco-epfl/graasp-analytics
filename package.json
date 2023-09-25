@@ -10,7 +10,8 @@
     "Hagop Taminian",
     "Juan Carlos Farah",
     "Kim Lan Phan Hoang",
-    "Po-Jui Chang"
+    "Po-Jui Chang",
+    "Basile Spaenlehauer"
   ],
   "dependencies": {
     "@emotion/cache": "11.11.0",
@@ -23,7 +24,7 @@
     "@mui/icons-material": "5.14.6",
     "@mui/lab": "5.0.0-alpha.141",
     "@mui/material": "5.14.6",
-    "@sentry/react": "7.64.0",
+    "@sentry/react": "7.70.0",
     "google-map-react": "2.2.1",
     "http-status-codes": "2.2.0",
     "i18next": "23.4.4",
@@ -111,7 +112,7 @@
     "husky": "8.0.3",
     "istanbul-lib-coverage": "3.2.0",
     "nyc": "15.1.0",
-    "prettier": "3.0.2",
+    "prettier": "3.0.3",
     "rollup-plugin-visualizer": "5.9.2",
     "typescript": "5.1.6",
     "vite": "4.4.9",

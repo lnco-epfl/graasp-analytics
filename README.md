@@ -2,16 +2,17 @@
 
 ## Screenshot
 
-<img width="1381" alt="Screenshot 2023-04-27 at 4 58 43 PM" src="https://user-images.githubusercontent.com/13879502/234903339-a95ee2b8-a89e-4edb-a22a-20e9397346a6.png">
+<img width="1381" alt="graasp analytics" src="docs/assets/screenshot-v1.3.0.png">
 
 ## Installation
 
 1. Run `yarn` to install the dependencies.
 2. Run [the API](https://github.com/graasp/graasp) at `localhost:3000`
-3. Set the following environnement variables in `.env.local` (place this file at your project root)
+3. Set the following environnement variables in `.env.development` (place this file at your project root)
 
 ```sh
 VITE_PORT=3113
+VITE_VERSION=latest
 VITE_GRAASP_API_HOST=http://localhost:3000
 VITE_ENABLE_MOCK_API=false
 VITE_GRAASP_API_HOST=http://localhost:3000

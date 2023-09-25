@@ -34,7 +34,7 @@ const Header = (): JSX.Element => {
       ...getNavigationEvents(Platform.Library),
     },
     [Platform.Analytics]: {
-      disabled: true,
+      ...getNavigationEvents(Platform.Analytics),
     },
   };
   return (

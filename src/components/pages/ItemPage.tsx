@@ -53,7 +53,7 @@ const ItemPage = ({ isEmbeded }: { isEmbeded: boolean }): JSX.Element => {
       ...getNavigationEvents(Platform.Library),
     },
     [Platform.Analytics]: {
-      disabled: true,
+      ...getNavigationEvents(Platform.Analytics),
     },
   };
 
