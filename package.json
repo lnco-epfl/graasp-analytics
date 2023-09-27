@@ -45,7 +45,7 @@
     "stylis-plugin-rtl": "2.1.1",
     "supercluster": "8.0.1",
     "use-supercluster": "0.4.0",
-    "uuid": "9.0.0"
+    "uuid": "9.0.1"
   },
   "scripts": {
     "dev": "vite",
