@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.1](https://github.com/graasp/graasp-analytics/compare/v1.3.0...v1.3.1) (2023-09-27)
+
+
+### Bug Fixes
+
+* **build:** add missing favicon file ([522b596](https://github.com/graasp/graasp-analytics/commit/522b5960cb85498c6373d0735757b1812cfa7351))
+* **deps:** update dependency @sentry/react to v7.72.0 ([#202](https://github.com/graasp/graasp-analytics/issues/202)) ([5f63152](https://github.com/graasp/graasp-analytics/commit/5f631521cdbce79196733daac7a096a67b07e9de))
+* **docs:** update screenshot and readme ([522b596](https://github.com/graasp/graasp-analytics/commit/522b5960cb85498c6373d0735757b1812cfa7351))
+* platform switch color, favicon and shared layout ([#196](https://github.com/graasp/graasp-analytics/issues/196)) ([522b596](https://github.com/graasp/graasp-analytics/commit/522b5960cb85498c6373d0735757b1812cfa7351))
+* shared layout ([522b596](https://github.com/graasp/graasp-analytics/commit/522b5960cb85498c6373d0735757b1812cfa7351))
+
 ## [1.3.0](https://github.com/graasp/graasp-analytics/compare/v1.2.1...v1.3.0) (2023-08-28)
 
 
