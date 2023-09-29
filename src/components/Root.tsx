@@ -3,7 +3,7 @@ import { I18nextProvider } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { ThemeProvider, styled } from '@mui/material';
+import { CssBaseline, ThemeProvider, styled } from '@mui/material';
 
 import { hasAcceptedCookies } from '@graasp/sdk';
 import { theme } from '@graasp/ui';
@@ -31,6 +31,7 @@ const CustomRoot = styled('div')({
 const Root = (): JSX.Element => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <CustomRoot>
         <I18nextProvider i18n={i18nConfig}>
           <App />
