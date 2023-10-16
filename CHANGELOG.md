@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.2](https://github.com/graasp/graasp-analytics/compare/v1.3.1...v1.3.2) (2023-10-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/ui to v3.5.1 ([#201](https://github.com/graasp/graasp-analytics/issues/201)) ([b39f38b](https://github.com/graasp/graasp-analytics/commit/b39f38bbfeaf1511f749366e180f6076415645da))
+* **deps:** update dependency http-status-codes to v2.3.0 ([#203](https://github.com/graasp/graasp-analytics/issues/203)) ([df51510](https://github.com/graasp/graasp-analytics/commit/df51510dc6ca139b68e4a974d8e3182192136d98))
+* **deps:** update dependency recharts to v2.8.0 ([#191](https://github.com/graasp/graasp-analytics/issues/191)) ([db62188](https://github.com/graasp/graasp-analytics/commit/db621881bff950e5031c9759ef5f9fd6da9cbb25))
+* **deps:** update dependency uuid to v9.0.1 ([#197](https://github.com/graasp/graasp-analytics/issues/197)) ([9e912ca](https://github.com/graasp/graasp-analytics/commit/9e912ca93b24eca0946a95e7cd9ac66b284ad83c))
+* **style:** remove default browser margins with CSSBaseline ([#210](https://github.com/graasp/graasp-analytics/issues/210)) ([724e9c0](https://github.com/graasp/graasp-analytics/commit/724e9c0debd661f084e894b0ef49156827b0c6f3))
+
 ## [1.3.1](https://github.com/graasp/graasp-analytics/compare/v1.3.0...v1.3.1) (2023-09-27)
 
 
