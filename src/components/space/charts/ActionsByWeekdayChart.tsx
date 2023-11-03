@@ -49,11 +49,10 @@ const ActionsByWeekdayChart = (): JSX.Element | null => {
     data: aggregateData,
     isLoading,
     isError,
-  } = hooks.useAggregateActions({
-    itemId,
+  } = hooks.useAggregateActions(itemId, {
     view,
     requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
-    type: selectedActionTypes.toJS(),
+    type: selectedActionTypes,
     countGroupBy: [CountGroupBy.User, CountGroupBy.CreatedDayOfWeek],
     aggregateFunction: AggregateFunction.Avg,
     aggregateMetric: AggregateMetric.ActionCount,
@@ -65,19 +64,17 @@ const ActionsByWeekdayChart = (): JSX.Element | null => {
   }
 
   const title = t('ACTIONS_BY_WEEKDAY');
-  if (!aggregateData.size) {
+  if (!aggregateData?.length) {
     return <EmptyChart chartTitle={title} />;
   }
 
   const formattedAggregateData: {
     aggregateResult: number;
     createdDayOfWeek: number;
-  }[] = aggregateData
-    .toArray()
-    .map((d: { aggregateResult: number; createdDayOfWeek: string }) => ({
-      aggregateResult: d.aggregateResult,
-      createdDayOfWeek: parseFloat(d.createdDayOfWeek),
-    }));
+  }[] = aggregateData.map((d) => ({
+    aggregateResult: d.aggregateResult,
+    createdDayOfWeek: parseFloat(d.createdDayOfWeek ?? '0'),
+  }));
   const createdDayOfWeekEntry = formattedAggregateData.map(
     (o) => o.createdDayOfWeek,
   );
@@ -122,7 +119,7 @@ const ActionsByWeekdayChart = (): JSX.Element | null => {
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
   let actionsByWeekday = {};
-  if (actions?.size) {
+  if (actions?.length) {
     actionsByWeekday = filterActions({
       selectedUsers,
       selectedActionTypes,

@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 
+import groupBy from 'lodash.groupby';
 import {
   Bar,
   CartesianGrid,
@@ -29,24 +30,24 @@ const UsersByActionByChart = (): JSX.Element => {
   const { actions, selectedUsers, selectedActionTypes, allMembers } =
     useContext(DataContext);
   const allActions = filterActionsByActionTypes(actions, selectedActionTypes);
-  const types = [...new Set(allActions.map((a) => a.type).toJS())];
+  const types = [...new Set(allActions.map((a) => a.type))];
 
   let formattedUsersByAction: any[] = [];
-  const filteredActions = filterActionsByUsers(
-    allActions,
-    selectedUsers,
-  ).groupBy((a) => a.member?.id);
+  const filteredActions = groupBy(
+    filterActionsByUsers(allActions, selectedUsers),
+    (a) => a.member?.id,
+  );
   allMembers.forEach((user) => {
-    const groupedActions = filteredActions.get(user.id)?.groupBy((a) => a.type);
-    if (groupedActions?.size) {
+    const groupedActions = groupBy(filteredActions[user.id], (a) => a.type);
+    if (Object.values(groupedActions)?.length) {
       const userActions: any = {
         id: user.id,
         name: user.name,
         total: 0,
       };
-      for (const [type, list] of groupedActions.entries()) {
-        userActions[type] = list.size;
-        userActions.total += list.size;
+      for (const [type, list] of Object.entries(groupedActions)) {
+        userActions[type] = list.length;
+        userActions.total += list.length;
       }
       formattedUsersByAction.push(userActions);
     }

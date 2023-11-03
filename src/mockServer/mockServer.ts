@@ -1,5 +1,5 @@
 import { API_ROUTES } from '@graasp/query-client';
-import { Item, ItemMembership, Member } from '@graasp/sdk';
+import { DiscriminatedItem, ItemMembership, Member } from '@graasp/sdk';
 
 import { StatusCodes } from 'http-status-codes';
 import { Model, Response, RestSerializer, createServer } from 'miragejs';
@@ -24,7 +24,7 @@ const {
 
 type Database = {
   currentMember?: Member;
-  items?: Item[];
+  items?: DiscriminatedItem[];
   itemMemberships?: ItemMembership[];
   members?: Member[];
 };
@@ -161,7 +161,9 @@ export const mockServer = ({
         if (!itemId) {
           throw new Error('item id does not exist');
         }
-        const itemPath = (schema.find('item', itemId) as unknown as Item).path;
+        const itemPath = (
+          schema.find('item', itemId) as unknown as DiscriminatedItem
+        ).path;
 
         return (
           schema

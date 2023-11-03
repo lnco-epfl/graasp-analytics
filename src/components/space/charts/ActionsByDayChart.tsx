@@ -46,11 +46,10 @@ const ActionsByDayChart = (): JSX.Element | null => {
     data: aggregateData,
     isLoading,
     isError,
-  } = hooks.useAggregateActions({
-    itemId,
+  } = hooks.useAggregateActions(itemId, {
     view,
     requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
-    type: selectedActionTypes.toJS(),
+    type: selectedActionTypes,
     countGroupBy: [CountGroupBy.User, CountGroupBy.CreatedDay],
     aggregateFunction: AggregateFunction.Avg,
     aggregateMetric: AggregateMetric.ActionCount,
@@ -62,21 +61,32 @@ const ActionsByDayChart = (): JSX.Element | null => {
   }
 
   const title = t('ACTIONS_BY_DAY_TITLE');
-  if (!aggregateData?.size) {
+  if (!aggregateData?.length) {
     return <EmptyChart chartTitle={title} />;
   }
 
-  const formattedAggregateData = (
-    aggregateData.toArray() as { aggregateResult: number; createdDay: Date }[]
-  )
-    // sort by creation date
-    .sort((a, b) => a.createdDay.getTime() - b.createdDay.getTime())
-    .map((d) => ({
-      averageCount: d.aggregateResult,
-      date: `${d.createdDay.getDate()}-${
-        d.createdDay.getMonth() + 1
-      }-${d.createdDay.getFullYear()}`,
-    }));
+  // sort by creation date
+  const aggregateDataSorted = [...aggregateData];
+  aggregateDataSorted.sort((a, b) => {
+    if (!a.createdDay || !b.createdDay) {
+      return -1;
+    }
+    return new Date(a.createdDay).getTime() - new Date(b.createdDay).getTime();
+  });
+
+  const formatDate = (datestring?: string) => {
+    if (!datestring) {
+      return 'Unknown';
+    }
+    return `${new Date(datestring).getDate()}-${
+      new Date(datestring).getMonth() + 1
+    }-${new Date(datestring).getFullYear()}`;
+  };
+
+  const formattedAggregateData = aggregateDataSorted.map((d) => ({
+    averageCount: d.aggregateResult,
+    date: formatDate(d.createdDay),
+  }));
 
   // actionsByDay is the object passed, after formatting, to the BarChart component below
   // if you remove all names in the react-select dropdown, selectedUsers becomes null
@@ -87,7 +97,7 @@ const ActionsByDayChart = (): JSX.Element | null => {
   // therefore, to avoid confusion: when all users are selected, show all actions
 
   let actionsByDay: { [key: string]: number } = {};
-  if (actions?.size) {
+  if (actions?.length) {
     actionsByDay = filterActions({
       selectedUsers,
       selectedActionTypes,

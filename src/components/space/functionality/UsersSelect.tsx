@@ -5,9 +5,7 @@ import Grid from '@mui/material/Grid';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 
-import { MemberRecord } from '@graasp/sdk/frontend';
-
-import { List } from 'immutable';
+import { Member } from '@graasp/sdk';
 
 import { useAnalyticsTranslation } from '@/config/i18n';
 
@@ -24,15 +22,15 @@ const UsersSelect = (): JSX.Element | null => {
   const { selectedUsers, setSelectedUsers, allMembers } =
     useContext(DataContext);
 
-  if (!allMembers || !allMembers.size) {
+  if (!allMembers || !allMembers.length) {
     return null;
   }
 
-  const handleChange = (event: SelectChangeEvent<MemberRecord[]>) => {
+  const handleChange = (event: SelectChangeEvent<Member[]>) => {
     const {
       target: { value },
     } = event;
-    setSelectedUsers(List(value as MemberRecord[]));
+    setSelectedUsers(value as Member[]);
   };
 
   return (
@@ -46,10 +44,10 @@ const UsersSelect = (): JSX.Element | null => {
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={selectedUsers.toArray()}
+          value={selectedUsers}
           onChange={handleChange}
           // input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-          renderValue={(selected: MemberRecord[]) => (
+          renderValue={(selected: Member[]) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
                 <Chip key={value.id} label={value.name} />

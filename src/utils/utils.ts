@@ -1,8 +1,8 @@
-import { Action } from '@graasp/sdk';
-import { ActionRecord, ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
+import { Action, DiscriminatedItem, Member } from '@graasp/sdk';
 
-import { List, Map } from 'immutable';
 import capitalize from 'lodash.capitalize';
+import countBy from 'lodash.countby';
+import groupBy from 'lodash.groupby';
 import truncate from 'lodash.truncate';
 
 import {
@@ -11,22 +11,21 @@ import {
   OTHER_VERB,
 } from '../config/constants';
 
-const getActionDay = (action: ActionRecord) => {
+const getActionDay = (action: Action) => {
   const dateKey = 'createdAt';
   // createdAt should have the format "2020-12-31T23:59:59.999Z"
   const dateObject = action[dateKey];
   // extract only the date information
-  const day = new Date(dateObject.toDateString());
+  const day = new Date(dateObject);
   return day;
 };
 
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
 export const getActionsByDay = (
-  actions: List<ActionRecord>,
+  actions: Action[],
 ): { [key: string]: number } => {
-  const actionsByDayMap = actions?.countBy(getActionDay);
-  const actionsByDayObject = Object.fromEntries(actionsByDayMap);
-  return actionsByDayObject;
+  const actionsByDayMap = countBy(actions, getActionDay);
+  return actionsByDayMap;
 };
 
 // Takes object with {key: value} pairs of {date: #-of-actions} and returns a date-sorted array in Recharts.js format
@@ -35,9 +34,8 @@ export const formatActionsByDay = (actionsByDayObject: {
 }): { date: string; count: number }[] => {
   const actionsByDayArray: [string, number][] =
     Object.entries(actionsByDayObject);
-  const sortedActionsByDay = actionsByDayArray.sort(
-    ([d1], [d2]) => Date.parse(d1) - Date.parse(d2),
-  );
+  const sortedActionsByDay = [...actionsByDayArray];
+  sortedActionsByDay.sort(([d1], [d2]) => Date.parse(d1) - Date.parse(d2));
   return sortedActionsByDay.map(([date, count]) => {
     const entryDate = new Date(date);
     return {
@@ -76,7 +74,7 @@ export const mapActionsToGeoJsonFeatureObjects = (
     });
 
 // helper function used in getActionsByTimeOfDay below
-const getActionHourOfDay = (action: ActionRecord) => {
+const getActionHourOfDay = (action: Action) => {
   const dateKey = 'createdAt';
   // createdAt should have the format "2020-12-31T23:59:59.999Z"
   const date = new Date(action[dateKey]);
@@ -86,7 +84,7 @@ const getActionHourOfDay = (action: ActionRecord) => {
 
 // Takes array of action objects and returns an object with {key: value} pairs of {hourOfDay: #-of-actions}
 export const getActionsByTimeOfDay = (
-  actions: List<ActionRecord>,
+  actions: Action[],
 ): { [key: number]: number } => {
   const actionsByTimeOfDay: { [key: number]: number } = {};
   for (let hours = 0; hours < 24; hours += 1) {
@@ -112,20 +110,20 @@ export const formatActionsByTimeOfDay = (actionsByTimeOfDayObject: {
 };
 
 // helper function used in getActionsByWeekday below
-const getActionWeekday = (action: ActionRecord) => {
+const getActionWeekday = (action: Action) => {
   // createdAt should have the format "2020-12-31T23:59:59.999Z"
-  const date = action.createdAt;
+  const date = new Date(action.createdAt);
   const weekday = date.getDay();
   return weekday;
 };
 
 // Takes array of action objects and returns an object with {key: value} pairs of {weekday: #-of-actions}
 export const getActionsByWeekday = (
-  actions: List<ActionRecord>,
+  actions: Action[],
 ): { [key: string]: number } => {
   // bug: cannot infer types correctly with Array.from(8).fill(0)
   const actionsByWeekday = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
-  const updatedActionsByWeekday = actions?.countBy(getActionWeekday).toJS();
+  const updatedActionsByWeekday = countBy(actions, getActionWeekday);
   Object.assign(actionsByWeekday, updatedActionsByWeekday);
   return actionsByWeekday;
 };
@@ -155,9 +153,9 @@ export const formatActionsByWeekday = (actionsByWeekdayObject: {
 
 // Takes array of action objects and returns an object with {key: value} pairs of {verb: %-of-actions}
 export const getActionsByVerb = (
-  actions: List<ActionRecord>,
+  actions: Action[],
 ): { [key: string]: number } => {
-  const totalActions = actions.size;
+  const totalActions = actions.length;
   const actionsByVerb: { [key: string]: number } = {};
   actions.forEach((action) => {
     if (!actionsByVerb[action.type]) {
@@ -212,10 +210,10 @@ export const formatActionsByVerb = (actionsByVerbObject: {
 
 // 'actions' is an array in the format retrieved from the API: [ { id: 1, memberId: 2, ... }, {...} ]
 export const filterActionsByUsers = (
-  actions: List<ActionRecord>,
-  selectedUsers: List<MemberRecord>,
-): List<ActionRecord> => {
-  if (!selectedUsers?.size) {
+  actions: Action[],
+  selectedUsers: Member[],
+): Action[] => {
+  if (!selectedUsers?.length) {
     return actions;
   }
   const selectedUserIds = selectedUsers.map(({ id }) => id);
@@ -226,11 +224,11 @@ export const filterActionsByUsers = (
 };
 
 export const filterActionsByActionTypes = (
-  actions: List<ActionRecord>,
-  actionsTypes: List<string>,
-): List<ActionRecord> => {
+  actions: Action[],
+  actionsTypes: string[],
+): Action[] => {
   // no selection return whole array
-  if (!actionsTypes.size) {
+  if (!actionsTypes.length) {
     return actions;
   }
   return actions.filter((action) => actionsTypes.includes(action?.type));
@@ -257,7 +255,7 @@ export const findYAxisMax = (actions: {
 
 export const findItemNameByPath = (
   path: string,
-  items: List<ItemRecord>,
+  items: DiscriminatedItem[],
 ): string => {
   const name =
     items?.find(({ path: thisPath }) => path === thisPath)?.name ?? 'Unknown';
@@ -266,24 +264,23 @@ export const findItemNameByPath = (
 
 // group children of children under the same parent
 export const groupByFirstLevelItems = (
-  actions: List<ActionRecord>,
-  item?: ItemRecord,
-): Map<string, List<ActionRecord>> => {
+  actions: Action[],
+  item?: DiscriminatedItem,
+): { [key: string]: Action[] } => {
   if (!item) {
-    return Map();
+    return {};
   }
 
   const nbLevelParent = item.path.split('.').length;
 
   // compare first level only
-  const d = actions
-    .filter((a) => a.item)
-    .groupBy((a) =>
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const d = groupBy(
+    actions.filter((a) => a.item),
+    (a) =>
       a
         .item!.path.split('.')
         .slice(0, nbLevelParent + 1)
         .join('.'),
-    );
+  );
   return d;
 };

@@ -16,8 +16,8 @@ const MOCK_ITEMS: DiscriminatedItem[] = [
       },
     },
     creator: MOCK_MEMBERS[0],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
     id: '81950088-ec8b-4afc-a8d2-4c6ddffdc497',
@@ -32,8 +32,8 @@ const MOCK_ITEMS: DiscriminatedItem[] = [
       },
     },
     creator: MOCK_MEMBERS[0],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
     id: '865fad9a-a6e8-4c5f-899d-7f845bf37a1d',
@@ -48,8 +48,8 @@ const MOCK_ITEMS: DiscriminatedItem[] = [
       },
     },
     creator: MOCK_MEMBERS[0],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
     id: '02ae7c43-aaf8-45b7-a665-829fcf160550',
@@ -64,8 +64,8 @@ const MOCK_ITEMS: DiscriminatedItem[] = [
       },
     },
     creator: MOCK_MEMBERS[0],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
     id: 'c884c33a-f8db-4a20-9935-d10b8ca758a4',
@@ -80,8 +80,8 @@ const MOCK_ITEMS: DiscriminatedItem[] = [
       },
     },
     creator: MOCK_MEMBERS[1],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
     id: '5dd7ed57-59b2-4058-9e70-b171a5c50be9',
@@ -96,8 +96,8 @@ const MOCK_ITEMS: DiscriminatedItem[] = [
       },
     },
     creator: MOCK_MEMBERS[1],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
   {
     id: '676d82b9-5a4c-4127-9807-2ad19b073526',
@@ -112,8 +112,8 @@ const MOCK_ITEMS: DiscriminatedItem[] = [
       },
     },
     creator: MOCK_MEMBERS[1],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
 ];
 

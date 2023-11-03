@@ -31,11 +31,10 @@ const TotalActionsByVerbChart = (): JSX.Element | null => {
     data: aggregateData,
     isLoading,
     isError,
-  } = hooks.useAggregateActions({
-    itemId,
+  } = hooks.useAggregateActions(itemId, {
     view,
     requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
-    type: selectedActionTypes.toJS(),
+    type: selectedActionTypes,
     countGroupBy: [CountGroupBy.User, CountGroupBy.ActionType],
     aggregateFunction: AggregateFunction.Sum,
     aggregateMetric: AggregateMetric.ActionCount,
@@ -47,17 +46,14 @@ const TotalActionsByVerbChart = (): JSX.Element | null => {
   }
 
   const title = t('TOTAL_ACTIONS_DISTRIBUTIONS');
-  if (!aggregateData.size) {
+  if (!aggregateData?.length) {
     return <EmptyChart chartTitle={title} />;
   }
 
-  const formattedAggregateData: { actionCount: number; type: string }[] =
-    aggregateData
-      .toArray()
-      .map((d: { aggregateResult: number; actionType: string }) => ({
-        actionCount: d.aggregateResult,
-        type: d.actionType,
-      }));
+  const formattedAggregateData = aggregateData.map((d) => ({
+    actionCount: d.aggregateResult,
+    type: d.actionType,
+  }));
 
   const totalActions = formattedAggregateData.reduce(
     (sum, cur) => sum + cur.actionCount,
@@ -75,7 +71,10 @@ const TotalActionsByVerbChart = (): JSX.Element | null => {
     type: t('OTHER_ACTION_TYPE'),
   });
 
-  formattedAggregateData.sort((a, b) => a.type.localeCompare(b.type));
+  const formattedAggregateDataSorted = [...formattedAggregateData];
+  formattedAggregateDataSorted.sort((a, b) =>
+    (a?.type ?? 'Unknown').localeCompare(b.type ?? 'Unknown'),
+  );
 
   return (
     <>
@@ -83,13 +82,13 @@ const TotalActionsByVerbChart = (): JSX.Element | null => {
       <ChartContainer>
         <PieChart>
           <Pie
-            data={formattedAggregateData}
+            data={formattedAggregateDataSorted}
             dataKey="actionCount"
             nameKey="type"
             fill="#82ca9d"
             label={({ value }) => `${value}%`}
           >
-            {formattedAggregateData.map((entry, index) => (
+            {formattedAggregateDataSorted.map((entry, index) => (
               <Cell key={entry.type} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>

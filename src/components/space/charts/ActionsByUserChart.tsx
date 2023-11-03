@@ -8,6 +8,7 @@ import {
   CountGroupBy,
 } from '@graasp/sdk';
 
+import groupBy from 'lodash.groupby';
 import {
   Bar,
   CartesianGrid,
@@ -40,11 +41,10 @@ const ActionsByUserChart = (): JSX.Element | null => {
     data: aggregateData,
     isLoading,
     isError,
-  } = hooks.useAggregateActions({
-    itemId,
+  } = hooks.useAggregateActions(itemId, {
     view,
     requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
-    type: selectedActionTypes.toJS(),
+    type: selectedActionTypes,
     countGroupBy: [CountGroupBy.User, CountGroupBy.ActionType],
     aggregateFunction: AggregateFunction.Sum,
     aggregateMetric: AggregateMetric.ActionCount,
@@ -55,43 +55,38 @@ const ActionsByUserChart = (): JSX.Element | null => {
     return null;
   }
   const aggregateDataMap = new Map(
-    aggregateData
-      .toArray()
-      .map((d: { actionType: string; aggregateResult: number }) => [
-        d.actionType,
-        d.aggregateResult,
-      ]),
+    aggregateData?.map((d) => [d.actionType ?? 'Unknown', d.aggregateResult]),
   );
 
-  const users = selectedUsers?.size ? selectedUsers : allMembers;
+  const users = selectedUsers?.length ? selectedUsers : allMembers;
   const title = t('ACTIONS_BY_USER');
   if (!users) {
     return <EmptyChart chartTitle={title} />;
   }
 
   const allActions = filterActionsByActionTypes(actions, selectedActionTypes);
-  const actionsByUser = users.groupBy((u) => u.name);
+  const actionsByUser = groupBy(users, (u) => u.name);
 
   // for each action type, further group by member id, and then sum the number of actions
-  const groupedActions = allActions.groupBy((a) => a.type);
+  const groupedActions = groupBy(allActions, (a) => a.type);
   const formattedData: { type: any; total: any; others: any }[] = [];
 
-  for (const [type, actionsByType] of groupedActions.entries()) {
+  for (const [type, actionsByType] of Object.entries(groupedActions)) {
     // filter out non selected action types
-    if (selectedActionTypes.size && !selectedActionTypes.includes(type)) {
+    if (selectedActionTypes.length && !selectedActionTypes.includes(type)) {
       continue;
     }
-    const groupedUsers = actionsByType.groupBy((a) => a?.member?.id);
+    const groupedUsers = groupBy(actionsByType, (a) => a?.member?.id);
 
     const userActions: any = {
       type,
       total: aggregateDataMap.get(type) ?? 0,
       others: aggregateDataMap.get(type) ?? 0,
     };
-    for (const [id, list] of groupedUsers.entries()) {
+    for (const [id, list] of Object.entries(groupedUsers)) {
       users.forEach((user) => {
         if (user.id === id) {
-          userActions[user.name] = list.size;
+          userActions[user.name] = list.length;
         }
       });
     }
@@ -113,7 +108,7 @@ const ActionsByUserChart = (): JSX.Element | null => {
           <XAxis dataKey="type" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} />
           <Tooltip />
-          {Array.from(actionsByUser.keys(), (name, index) => (
+          {Array.from(Object.keys(actionsByUser), (name, index) => (
             <Bar
               key=""
               dataKey={name}

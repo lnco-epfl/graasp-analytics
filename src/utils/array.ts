@@ -1,6 +1,4 @@
-import { ActionRecord, MemberRecord } from '@graasp/sdk/frontend';
-
-import { List } from 'immutable';
+import { Action, Member } from '@graasp/sdk';
 
 import { filterActionsByActionTypes, filterActionsByUsers } from './utils';
 
@@ -10,13 +8,13 @@ export function filterActions<T>({
   actions,
   chartFunction,
 }: {
-  selectedUsers: List<MemberRecord>;
-  selectedActionTypes: List<string>;
-  actions: List<ActionRecord>;
+  selectedUsers: Member[];
+  selectedActionTypes: string[];
+  actions: Action[];
   chartFunction: (x: any) => T;
 }): T {
-  const shouldFilterByUser = selectedUsers?.size;
-  const shouldFilterByTypes = selectedActionTypes?.size;
+  const shouldFilterByUser = selectedUsers?.length;
+  const shouldFilterByTypes = selectedActionTypes?.length;
   let result;
 
   if (!shouldFilterByUser && !shouldFilterByTypes) {

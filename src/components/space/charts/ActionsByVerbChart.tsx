@@ -28,7 +28,7 @@ const ActionsByVerbChart = (): JSX.Element => {
     useContext(DataContext);
 
   let actionsByVerb = {};
-  if (actions?.size) {
+  if (actions?.length) {
     actionsByVerb = filterActions({
       selectedUsers,
       selectedActionTypes,
@@ -41,7 +41,7 @@ const ActionsByVerbChart = (): JSX.Element => {
 
   // if no user is selected, this chart will be the same as Total Actions Distribution
   // instead show an info text
-  if (!selectedUsers?.size) {
+  if (!selectedUsers?.length) {
     return (
       <>
         <ChartTitle title={t(title)} />
@@ -57,7 +57,8 @@ const ActionsByVerbChart = (): JSX.Element => {
     return <EmptyChart chartTitle={title} />;
   }
 
-  formattedActionsByVerb.sort((a, b) => a.type.localeCompare(b.type));
+  const formattedActionsByVerbSorted = [...formattedActionsByVerb];
+  formattedActionsByVerbSorted.sort((a, b) => a.type.localeCompare(b.type));
 
   return (
     <>
@@ -65,13 +66,13 @@ const ActionsByVerbChart = (): JSX.Element => {
       <ChartContainer>
         <PieChart>
           <Pie
-            data={formattedActionsByVerb}
+            data={formattedActionsByVerbSorted}
             dataKey="percentage"
             nameKey="type"
             fill="#82ca9d"
             label={({ value }) => `${value}%`}
           >
-            {formattedActionsByVerb.map((entry, index) => (
+            {formattedActionsByVerbSorted.map((entry, index) => (
               <Cell key={entry.type} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>

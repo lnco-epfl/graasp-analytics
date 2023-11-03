@@ -42,11 +42,10 @@ const ActiveUsersChart = (): JSX.Element | null => {
     data: aggregateData,
     isLoading,
     isError,
-  } = hooks.useAggregateActions({
-    itemId,
+  } = hooks.useAggregateActions(itemId, {
     view,
     requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
-    type: selectedActionTypes.toJS(),
+    type: selectedActionTypes,
     countGroupBy: [CountGroupBy.User, CountGroupBy.CreatedDay],
     aggregateFunction: AggregateFunction.Count,
     aggregateMetric: AggregateMetric.ActionCount,
@@ -58,23 +57,30 @@ const ActiveUsersChart = (): JSX.Element | null => {
   }
 
   const title = t('ACTIVE_USERS_BY_DAY');
-  if (!aggregateData.size) {
+  if (!aggregateData?.length) {
     return <EmptyChart chartTitle={t(title)} />;
   }
 
-  const formattedAggregateData: { count: number; date: string }[] =
-    aggregateData
-      .toArray()
-      .sort(
-        (a: { createdDay: Date }, b: { createdDay: Date }) =>
-          a.createdDay.getTime() - b.createdDay.getTime(),
-      )
-      .map((d: { aggregateResult: number; createdDay: Date }) => ({
-        count: d.aggregateResult,
-        date: `${d.createdDay.getDate()}-${
-          d.createdDay.getMonth() + 1
-        }-${d.createdDay.getFullYear()}`,
-      }));
+  const formatDate = (datestring?: string) => {
+    if (!datestring) {
+      return 'Unknown';
+    }
+    return `${new Date(datestring).getDate()}-${
+      new Date(datestring).getMonth() + 1
+    }-${new Date(datestring).getFullYear()}`;
+  };
+
+  const aggregateDataSorted = [...aggregateData];
+  aggregateDataSorted.sort((a, b) => {
+    if (!a.createdDay || !b.createdDay) {
+      return -1;
+    }
+    return new Date(a.createdDay).getTime() - new Date(b.createdDay).getTime();
+  });
+  const formattedAggregateData = aggregateDataSorted.map((d) => ({
+    count: d.aggregateResult,
+    date: formatDate(d.createdDay),
+  }));
 
   const maxCount = formattedAggregateData.reduce(
     (max, cur) => Math.max(max, cur.count),

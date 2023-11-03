@@ -5,8 +5,6 @@ import Grid from '@mui/material/Grid';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 
-import { List } from 'immutable';
-
 import { useAnalyticsTranslation } from '@/config/i18n';
 
 import { DataContext } from '../../context/DataProvider';
@@ -22,7 +20,7 @@ const ActionsSelect = (): JSX.Element | null => {
   // eslint-disable-next-line no-unused-vars
   const { actions, selectedActionTypes, setSelectedActionTypes } =
     useContext(DataContext);
-  if (!actions || !actions.size) {
+  if (!actions?.length) {
     return null;
   }
   const allActions = [...new Set(actions.map((a) => a.type))];
@@ -31,7 +29,7 @@ const ActionsSelect = (): JSX.Element | null => {
     const {
       target: { value },
     } = event;
-    setSelectedActionTypes(List(value));
+    setSelectedActionTypes(Array.isArray(value) ? value : [value]);
   };
   return (
     <CustomRoot container>
@@ -44,7 +42,7 @@ const ActionsSelect = (): JSX.Element | null => {
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={selectedActionTypes.toArray()}
+          value={selectedActionTypes}
           // closeMenuOnSelect
           // hideSelectedOptions={false}
           // getOptionValue={(option) => option.name}

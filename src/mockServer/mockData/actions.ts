@@ -12,7 +12,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'create',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP + 11 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP + 11 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-0000-926b-8b57d63042e6',
@@ -21,7 +21,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP + 10 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP + 10 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-0001-926b-8b57d63042e6',
@@ -30,7 +30,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP - DAY + 11 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP - DAY + 11 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-0002-926b-8b57d63042e6',
@@ -39,7 +39,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP - DAY + 11 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP - DAY + 11 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-0003-926b-8b57d63042e6',
@@ -48,7 +48,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP - DAY + 11 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP - DAY + 11 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-1111-926b-8b57d63042e6',
@@ -57,7 +57,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-1112-926b-8b57d63042e6',
@@ -66,7 +66,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-1113-926b-8b57d63042e6',
@@ -75,7 +75,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-1114-926b-8b57d63042e6',
@@ -84,7 +84,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-1115-926b-8b57d63042e6',
@@ -93,7 +93,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-1116-926b-8b57d63042e6',
@@ -102,7 +102,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-1117-926b-8b57d63042e6',
@@ -111,7 +111,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-1118-926b-8b57d63042e6',
@@ -120,7 +120,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'update',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-2222-926b-8b57d63042e6',
@@ -129,7 +129,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'copy',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-2223-926b-8b57d63042e6',
@@ -138,7 +138,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'copy',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-2224-926b-8b57d63042e6',
@@ -147,7 +147,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'move',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR).toISOString(),
   },
   {
     id: '712427d1-258a-2225-926b-8b57d63042e6',
@@ -156,7 +156,7 @@ const MOCK_ACTIONS: Action[] = [
     view: Context.Builder,
     type: 'move',
     extra: {},
-    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR),
+    createdAt: new Date(DUMMY_TIMESTAMP - 2 * DAY + 12 * HOUR).toISOString(),
   },
 ];
 

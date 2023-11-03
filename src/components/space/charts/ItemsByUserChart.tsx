@@ -1,8 +1,6 @@
 import { useContext } from 'react';
 
-import { ItemRecord } from '@graasp/sdk/frontend';
-
-import { List } from 'immutable';
+import groupBy from 'lodash.groupby';
 import {
   Bar,
   CartesianGrid,
@@ -38,24 +36,27 @@ const ItemsByUserChart = (): JSX.Element => {
     itemChildren: children,
     itemData,
   } = useContext(DataContext);
-  const users = selectedUsers?.size ? selectedUsers : allMembers;
+  const users = selectedUsers?.length ? selectedUsers : allMembers;
   const allActions = filterActionsByActionTypes(actions, selectedActionTypes);
-  const userNames = [...new Set(users.map(({ name }) => name).toJS())];
+  const userNames = [...new Set(users.map(({ name }) => name))];
 
   const groupedItems = groupByFirstLevelItems(allActions, itemData);
-  const formattedItemsByUser: any = [];
-  const allItems =
-    itemData && children ? children.push(itemData) : List<ItemRecord>();
-  for (const [path, actionsByItem] of groupedItems) {
-    const userActions: any = {
+  const formattedItemsByUser = [];
+  const allItems = itemData && children ? [...children, itemData] : [];
+  for (const [path, actionsByItem] of Object.entries(groupedItems)) {
+    const userActions: {
+      total: number;
+      name: string;
+      [key: string]: number | string;
+    } = {
       name: findItemNameByPath(path, allItems),
-      total: actionsByItem.size,
+      total: actionsByItem.length,
     };
-    const groupedUsers = actionsByItem.groupBy((i) => i.member?.id);
-    for (const groupedUser of groupedUsers) {
+    const groupedUsers = groupBy(actionsByItem, (i) => i.member?.id);
+    for (const groupedUser of Object.keys(groupedUsers)) {
       users.forEach((user) => {
-        if (user.id === groupedUser[0]) {
-          userActions[user.name] = groupedUser[1].size;
+        if (user.id === groupedUser) {
+          userActions[user.name] = groupedUsers[user.id].length;
         }
       });
     }
@@ -63,9 +64,7 @@ const ItemsByUserChart = (): JSX.Element => {
   }
 
   // limit to 10 first
-  formattedItemsByUser.sort(
-    (a: { total: number }, b: { total: number }) => b.total - a.total,
-  );
+  formattedItemsByUser.sort((a, b) => b.total - a.total);
 
   const title = t(`MOST_INTERACTED_ITEMS_BY_USER`, {
     nb: TOP_NUMBER_OF_ITEMS_TO_DISPLAY,

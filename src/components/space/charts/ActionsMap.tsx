@@ -53,9 +53,7 @@ const ActionsMap = (): JSX.Element | null => {
   }
 
   // GeoJSON Feature objects
-  const points = mapActionsToGeoJsonFeatureObjects(
-    actionsToChart.toJS() as any,
-  );
+  const points = mapActionsToGeoJsonFeatureObjects(actionsToChart as any);
 
   const { clusters } = useSupercluster({
     points,

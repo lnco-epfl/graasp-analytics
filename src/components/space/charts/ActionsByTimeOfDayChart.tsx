@@ -50,11 +50,10 @@ const ActionsByTimeOfDayChart = (): JSX.Element | null => {
     data: aggregateData,
     isLoading,
     isError,
-  } = hooks.useAggregateActions({
-    itemId,
+  } = hooks.useAggregateActions(itemId, {
     view,
     requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
-    type: selectedActionTypes.toJS(),
+    type: selectedActionTypes,
     countGroupBy: [CountGroupBy.User, CountGroupBy.CreatedTimeOfDay],
     aggregateFunction: AggregateFunction.Avg,
     aggregateMetric: AggregateMetric.ActionCount,
@@ -65,19 +64,14 @@ const ActionsByTimeOfDayChart = (): JSX.Element | null => {
     return null;
   }
 
-  if (!aggregateData.size) {
+  if (!aggregateData?.length) {
     return <EmptyChart chartTitle={title} />;
   }
 
-  const formattedAggregateData: {
-    averageCount: number;
-    timeOfDay: number;
-  }[] = aggregateData
-    .toArray()
-    .map((d: { aggregateResult: number; createdTimeOfDay: string }) => ({
-      averageCount: d.aggregateResult,
-      timeOfDay: parseFloat(d.createdTimeOfDay),
-    }));
+  const formattedAggregateData = aggregateData.map((d) => ({
+    averageCount: d.aggregateResult,
+    timeOfDay: parseFloat(d.createdTimeOfDay ?? '0'),
+  }));
 
   const timeOfDayEntry = formattedAggregateData.map((o) => o.timeOfDay);
 
@@ -99,7 +93,7 @@ const ActionsByTimeOfDayChart = (): JSX.Element | null => {
   // e.g. we retrieve 100 total actions and 10 users, but these 10 users have only made 90 actions
   // therefore, to avoid confusion: when all users are selected, show all actions
   let actionsByTimeOfDay = {};
-  if (actions?.size) {
+  if (actions?.length) {
     actionsByTimeOfDay = filterActions({
       selectedUsers,
       selectedActionTypes,

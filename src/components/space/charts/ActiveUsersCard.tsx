@@ -37,8 +37,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
     data: totalUsersData,
     isLoading: totalUsersDataIsLoading,
     isError: totalUsersDataIsError,
-  } = hooks.useAggregateActions({
-    itemId,
+  } = hooks.useAggregateActions(itemId, {
     view,
     requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
     countGroupBy: [CountGroupBy.User],
@@ -52,8 +51,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
     data: aggregateData,
     isLoading: isAggregateDataLoading,
     isError: isAggregateDataError,
-  } = hooks.useAggregateActions({
-    itemId,
+  } = hooks.useAggregateActions(itemId, {
     view,
     requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
     countGroupBy: [CountGroupBy.User, CountGroupBy.CreatedDay],
@@ -71,7 +69,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
     return null;
   }
 
-  const totalUsers = totalUsersData.get(0).aggregateResult;
+  const totalUsers = totalUsersData?.[0]?.aggregateResult;
 
   const today = new Date();
   today.setDate(today.getDate() - 1);
@@ -84,20 +82,21 @@ const ActiveUsersCard = (): JSX.Element | null => {
   let averageDailyUsersThisWeek = 0;
   let usersToday = 0;
 
-  aggregateData
-    .toArray()
-    .forEach((o: { createdDay: Date; aggregateResult: number }) => {
-      const actionTime = o.createdDay.getTime();
-      if (actionTime > today.getTime()) {
-        usersToday += o.aggregateResult;
-      }
-      if (actionTime > oneWeekAgo.getTime()) {
-        averageDailyUsersThisWeek += o.aggregateResult;
-      }
-      if (actionTime > oneMonthAgo.getTime()) {
-        averageDailyUsersThisMonth += o.aggregateResult;
-      }
-    });
+  aggregateData?.forEach((o) => {
+    if (!o.createdDay) {
+      return -1;
+    }
+    const actionTime = new Date(o.createdDay).getTime();
+    if (actionTime > today.getTime()) {
+      usersToday += o.aggregateResult;
+    }
+    if (actionTime > oneWeekAgo.getTime()) {
+      averageDailyUsersThisWeek += o.aggregateResult;
+    }
+    if (actionTime > oneMonthAgo.getTime()) {
+      averageDailyUsersThisMonth += o.aggregateResult;
+    }
+  });
   averageDailyUsersThisWeek /= 7;
   averageDailyUsersThisMonth /= 30;
 

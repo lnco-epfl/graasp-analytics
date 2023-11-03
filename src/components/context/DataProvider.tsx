@@ -8,39 +8,42 @@ import {
 } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Context, ItemType } from '@graasp/sdk';
-import { ActionRecord, ItemRecord, MemberRecord } from '@graasp/sdk/frontend';
-
-import { List } from 'immutable';
+import {
+  Action,
+  Context,
+  DiscriminatedItem,
+  ItemType,
+  Member,
+} from '@graasp/sdk';
 
 import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../config/constants';
 import { hooks } from '../../config/queryClient';
 import { ViewDataContext } from './ViewDataProvider';
 
 const defaultValue: {
-  actions: List<ActionRecord>;
-  allMembers: List<MemberRecord>;
-  selectedUsers: List<MemberRecord>;
-  setSelectedUsers: Dispatch<List<MemberRecord>>;
-  selectedActionTypes: List<string>;
-  setSelectedActionTypes: Dispatch<List<string>>;
+  actions: Action[];
+  allMembers: Member[];
+  selectedUsers: Member[];
+  setSelectedUsers: Dispatch<Member[]>;
+  selectedActionTypes: string[];
+  setSelectedActionTypes: Dispatch<string[]>;
   error: boolean;
-  itemData?: ItemRecord;
-  itemChildren?: List<ItemRecord>;
+  itemData?: DiscriminatedItem;
+  itemChildren?: DiscriminatedItem[];
   isLoading: boolean;
   requestedSampleSize: number;
 } = {
-  actions: List(),
-  allMembers: List(),
-  selectedUsers: List(),
-  itemChildren: List(),
+  actions: [],
+  allMembers: [],
+  selectedUsers: [],
+  itemChildren: [],
   setSelectedUsers: () => {
     // do nothing
   },
   setSelectedActionTypes: () => {
     // do nothing
   },
-  selectedActionTypes: List(),
+  selectedActionTypes: [],
   error: false,
   isLoading: true,
   requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
@@ -62,14 +65,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     [Context.Library]: false,
     [Context.Unknown]: false,
   });
-  const [actions, setActions] = useState<List<ActionRecord>>(List());
-  const [allMembers, setAllMembers] = useState<List<MemberRecord>>(List());
-  const [selectedUsers, setSelectedUsers] = useState<List<MemberRecord>>(
-    List(),
-  );
-  const [selectedActionTypes, setSelectedActionTypes] = useState<List<string>>(
-    List(),
-  );
+  const [actions, setActions] = useState<Action[]>([]);
+  const [allMembers, setAllMembers] = useState<Member[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<Member[]>([]);
+  const [selectedActionTypes, setSelectedActionTypes] = useState<string[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { view } = useContext(ViewDataContext);
@@ -177,10 +176,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     if (
       builderData &&
       view === Context.Builder &&
-      actions.size !== builderData?.get('actions').size
+      actions.length !== builderData?.actions?.length
     ) {
-      setActions(builderData?.get('actions') ?? List());
-      setAllMembers(builderData?.get('members') ?? List());
+      setActions(builderData?.actions ?? []);
+      setAllMembers(builderData?.members ?? []);
       setError(builderIsError);
     }
   }, [builderData, view, actions, builderIsError]);
@@ -189,10 +188,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     if (
       playerData &&
       view === Context.Player &&
-      actions.size !== playerData?.get('actions').size
+      actions.length !== playerData?.actions?.length
     ) {
-      setActions(playerData?.get('actions') ?? List());
-      setAllMembers(playerData?.get('members') ?? List());
+      setActions(playerData?.actions ?? []);
+      setAllMembers(playerData?.members ?? []);
       setError(playerIsError);
     }
   }, [playerData, view, actions, playerIsError]);
@@ -201,10 +200,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     if (
       explorerData &&
       view === Context.Library &&
-      actions.size !== explorerData?.get('actions').size
+      actions.length !== explorerData?.actions?.length
     ) {
-      setActions(explorerData?.get('actions') ?? List());
-      setAllMembers(explorerData?.get('members') ?? List());
+      setActions(explorerData?.actions ?? []);
+      setAllMembers(explorerData?.members ?? []);
       setError(explorerIsError);
     }
   }, [explorerData, view, actions, explorerIsError]);
@@ -213,10 +212,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     if (
       unknownData &&
       view === Context.Unknown &&
-      actions.size !== unknownData?.get('actions').size
+      actions.length !== unknownData?.actions?.length
     ) {
-      setActions(unknownData?.get('actions') ?? List());
-      setAllMembers(unknownData?.get('members') ?? List());
+      setActions(unknownData?.actions ?? []);
+      setAllMembers(unknownData?.members ?? []);
       setError(unknownIsError);
     }
   }, [unknownData, view, actions, unknownIsError]);
