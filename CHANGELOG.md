@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/graasp/graasp-analytics/compare/v1.3.2...v2.0.0) (2023-11-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove immutable ([#215](https://github.com/graasp/graasp-analytics/issues/215))
+
+### Features
+
+* remove immutable ([#215](https://github.com/graasp/graasp-analytics/issues/215)) ([1abcee5](https://github.com/graasp/graasp-analytics/commit/1abcee55c0688b1294d1eb6c022d1dfc5975115d))
+
+
+### Bug Fixes
+
+* deploy workflows to use env vars ([#218](https://github.com/graasp/graasp-analytics/issues/218)) ([3b41da4](https://github.com/graasp/graasp-analytics/commit/3b41da4d9c533c5a4f51f5af75a92de668586711))
+* update variables for dev deploy workflow ([#216](https://github.com/graasp/graasp-analytics/issues/216)) ([fa03fa7](https://github.com/graasp/graasp-analytics/commit/fa03fa7623b4397c9af855831581fa98d85aa34b))
+
 ## [1.3.2](https://github.com/graasp/graasp-analytics/compare/v1.3.1...v1.3.2) (2023-10-16)
 
 
