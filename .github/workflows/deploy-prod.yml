@@ -31,7 +31,7 @@ jobs:
           VITE_GRAASP_BUILDER_HOST: ${{ vars.GRAASP_BUILDER_HOST }}
           VITE_SENTRY_ENV: ${{ vars.SENTRY_ENV }}
           VITE_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-          VITE_GOOGLE_KEY: ${{ secrets.GOOGLE_KEY_PROD }}
+          VITE_GOOGLE_KEY: ${{ secrets.GOOGLE_KEY }}
         run: yarn build
         shell: bash
 
@@ -43,5 +43,5 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
           aws-region: ${{ secrets.AWS_REGION_PROD }}
-          aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME_GRAASP_RESEARCH_PROD }}
-          cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_GRAASP_RESEARCH_PROD }}
+          aws-s3-bucket-name: ${{ secrets.AWS_S3_BUCKET_NAME }}
+          cloudfront-distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
