@@ -44,7 +44,7 @@ const ActionsByTimeOfDayChart = (): JSX.Element | null => {
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
 
-  const title = t('Actions by Time of Day');
+  const title = t('ACTIONS_BY_TIME_OF_DAY');
 
   const {
     data: aggregateData,

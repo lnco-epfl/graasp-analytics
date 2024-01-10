@@ -110,7 +110,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
             </Grid>
             <Grid item xs={9}>
               <Typography component="div" align="center">
-                {t('Total users')}
+                {t('TOTAL_USERS')}
                 <Typography variant="h5" component="div" align="center">
                   {totalUsers}
                 </Typography>

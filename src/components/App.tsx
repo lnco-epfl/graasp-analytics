@@ -1,9 +1,13 @@
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Outlet,
   Route,
   BrowserRouter as Router,
   Routes,
 } from 'react-router-dom';
+
+import { hooks } from '@/config/queryClient';
 
 import {
   EMBEDDED_ITEM_PATH,
@@ -16,24 +20,38 @@ import HomePage from './pages/HomePage';
 import ItemPage from './pages/ItemPage';
 import SharedItemPage from './pages/SharedItemPage';
 
-const App = (): JSX.Element => (
-  <Router>
-    <Routes>
-      <Route path={EMBEDDED_ITEM_PATH} element={<ItemPage isEmbeded />} />
-      <Route path={buildItemPath()} element={<ItemPage isEmbeded={false} />} />
-      <Route
-        // This is a shared route that allows us to re-use the same layout for both pages
-        element={
-          <PageWrapper>
-            <Outlet />
-          </PageWrapper>
-        }
-      >
-        <Route path={HOME_PATH} element={<HomePage />} />
-        <Route path={SHARED_ITEMS_PATH} element={<SharedItemPage />} />
-      </Route>
-    </Routes>
-  </Router>
-);
+const App = (): JSX.Element => {
+  const { data: currentMember } = hooks.useCurrentMember();
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    if (currentMember?.extra?.lang !== i18n.language) {
+      i18n.changeLanguage(currentMember?.extra?.lang ?? 'en');
+    }
+  }, [currentMember]);
+
+  return (
+    <Router>
+      <Routes>
+        <Route path={EMBEDDED_ITEM_PATH} element={<ItemPage isEmbeded />} />
+        <Route
+          path={buildItemPath()}
+          element={<ItemPage isEmbeded={false} />}
+        />
+        <Route
+          // This is a shared route that allows us to re-use the same layout for both pages
+          element={
+            <PageWrapper>
+              <Outlet />
+            </PageWrapper>
+          }
+        >
+          <Route path={HOME_PATH} element={<HomePage />} />
+          <Route path={SHARED_ITEMS_PATH} element={<SharedItemPage />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+};
 
 export default App;

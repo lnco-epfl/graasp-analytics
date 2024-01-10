@@ -1,4 +1,5 @@
 {
+  "TOTAL_USERS": "Total users",
   "ACTION_TYPES": "Action Types",
   "ACTIONS_BY_DAY_TITLE": "Actions by Day",
   "ACTIONS_BY_LOCATION": "Actions by Location",
@@ -42,7 +43,6 @@
   "VIEW_UNKNOWN_TOOLTIP": "The 'unknown' view groups all the other actions that might happen outside of the Graasp interfaces.",
   "VIEWS_SELECT": "View",
   "EXPORT_ERROR_MESSAGE": "An unexpected error occured",
-
   "Sunday": "Sunday",
   "Monday": "Monday",
   "Tuesday": "Tuesday",
