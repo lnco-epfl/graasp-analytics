@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/graasp/graasp-analytics/compare/v2.0.2...v2.1.0) (2024-01-11)
+
+
+### Features
+
+* **es:** add spanish ([#258](https://github.com/graasp/graasp-analytics/issues/258)) ([467a5b5](https://github.com/graasp/graasp-analytics/commit/467a5b516ef80adb5d27a6b5af200b5ed2f4cf3b))
+
+
+### Bug Fixes
+
+* add GA tracking  ([#260](https://github.com/graasp/graasp-analytics/issues/260)) ([b4a804d](https://github.com/graasp/graasp-analytics/commit/b4a804d228953e42a801c1a1afd1bdf09e77a2a6))
+* **deps:** update dependency @sentry/react to v7.84.0 ([#247](https://github.com/graasp/graasp-analytics/issues/247)) ([58374ee](https://github.com/graasp/graasp-analytics/commit/58374ee8d5d5b3e0647394ce5e8b736a7e10422d))
+* udpate release-please condition ([e2f5bc3](https://github.com/graasp/graasp-analytics/commit/e2f5bc35b4dff6e7654892bbc1fc256d37cac5c9))
+
 ## [2.0.2](https://github.com/graasp/graasp-analytics/compare/v2.0.1...v2.0.2) (2023-11-16)
 
 
