@@ -33,6 +33,7 @@ jobs:
           VITE_SENTRY_ENV: ${{ vars.SENTRY_ENV }}
           VITE_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           VITE_GOOGLE_KEY: ${{ secrets.GOOGLE_KEY }}
+          # VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
         run: yarn build
         shell: bash
 
