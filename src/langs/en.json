@@ -49,5 +49,9 @@
   "Wednesday": "Wednesday",
   "Thursday": "Thursday",
   "Friday": "Friday",
-  "Saturday": "Saturday"
+  "Saturday": "Saturday",
+  "SEE_PROFILE_TEXT": "See Profile",
+  "USER_SWITCH_SIGN_OUT_BUTTON": "Sign Out",
+  "USER_SWITCH_SIGNED_OUT_TOOLTIP": "You are not signed in.",
+  "USER_SWITCH_SWITCH_USER_TEXT": "Sign in with another account"
 }

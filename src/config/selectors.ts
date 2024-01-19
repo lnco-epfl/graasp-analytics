@@ -7,6 +7,25 @@ export const HOME_MENU_SHARED_MENUITEM_ID = 'homeMenuSharedMenuItem';
 export const ROOT_MENU_ID = 'rootMenu';
 export const ROOT_MENU_DROPDOWN_BUTTON_ID = 'rootMenuDropdownButton';
 
+export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
+  Builder: 'appNavigationPlatformSwitchButtonBuilder',
+  Player: 'appNavigationPlatformSwitchButtonPlayer',
+  Library: 'appNavigationPlatformSwitchButtonLibrary',
+  Analytics: 'appNavigationPlatformSwitchButtonAnalytics',
+};
+export const APP_NAVIGATION_PLATFORM_SWITCH_ID = 'appNavigationPlatformSwitch';
+
+export const HEADER_MEMBER_MENU_BUTTON_ID = 'headerMemberMenuButton';
+export const HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID =
+  'headerMemberMenuSeeProfileButton';
+export const HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID =
+  'headerMemberMenuSignInButton';
+export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
+  'headerMemberMenuSignOutButton';
+export const buildMemberAvatarClass = (id?: string): string =>
+  `memberAvatar-${id}`;
+export const buildMemberMenuItemId = (id: string): string =>
+  `memberMenuItem-${id}`;
 export const buildNavigationDropDownId = (id: string): string =>
   `dropDown-${id}`;
 

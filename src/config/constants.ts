@@ -38,6 +38,7 @@ export const MIN_PERCENTAGE_TO_SHOW_VERB = 3;
 // 'other' verb used in api.js
 export const OTHER_VERB = 'Other';
 
+export const MEMBER_AVATAR_MAX_DIMENSIONS = 40;
 // colors used to fill the segments of the ActionsByVerb piechart
 export const COLORS = [
   '#3066BE',

@@ -12,6 +12,8 @@ export const GRAASP_LIBRARY_HOST =
   import.meta.env.VITE_GRAASP_LIBRARY_HOST || 'http://localhost:3005';
 export const GRAASP_BUILDER_HOST =
   import.meta.env.VITE_GRAASP_BUILDER_HOST || 'http://localhost:3111';
+export const GRAASP_ACCOUNT_HOST =
+  import.meta.env.VITE_GRAASP_ACCOUNT_HOST || 'http://localhost:3115';
 
 export const SENTRY_ENV = import.meta.env.VITE_SENTRY_ENV;
 export const SENTRY_DSN = import.meta.env.VITE_SENTRY_DSN;
