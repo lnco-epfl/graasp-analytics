@@ -1,6 +1,6 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-import { AppBar, Box, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, styled } from '@mui/material';
 
 import { Context } from '@graasp/sdk';
 import {
@@ -11,6 +11,8 @@ import {
   usePlatformNavigation,
 } from '@graasp/ui';
 
+import { HOME_PATH } from '@/config/paths';
+
 import { HOST_MAP } from '../../config/constants';
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 
@@ -20,6 +22,12 @@ export const platformsHostsMap = defaultHostsMapper({
   [Platform.Library]: HOST_MAP[Context.Library],
 });
 
+const StyledLink = styled(Link)(() => ({
+  textDecoration: 'none',
+  color: 'inherit',
+  display: 'flex',
+  alignItems: 'center',
+}));
 const Header = (): JSX.Element => {
   const { itemId } = useParams();
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
@@ -49,10 +57,12 @@ const Header = (): JSX.Element => {
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box display="flex">
-            <GraaspLogo height={40} sx={{ fill: 'white' }} />
-            <Typography variant="h6" color="inherit" mr={2} ml={1}>
-              Graasp
-            </Typography>
+            <StyledLink to={HOME_PATH}>
+              <GraaspLogo height={40} sx={{ fill: 'white' }} />
+              <Typography variant="h6" color="inherit" mr={2} ml={1}>
+                Graasp
+              </Typography>
+            </StyledLink>
             <PlatformSwitch
               selected={Platform.Analytics}
               platformsProps={platformProps}
