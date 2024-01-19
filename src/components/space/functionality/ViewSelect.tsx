@@ -36,16 +36,16 @@ const ViewSelect = (): JSX.Element => {
   let viewMessage = '';
   switch (view) {
     case Context.Builder:
-      viewMessage = 'VIEW_BUILDER_TOOLTIP';
+      viewMessage = t('VIEW_BUILDER_TOOLTIP');
       break;
     case Context.Player:
-      viewMessage = 'VIEW_PLAYER_TOOLTIP';
+      viewMessage = t('VIEW_PLAYER_TOOLTIP');
       break;
     case Context.Library:
-      viewMessage = 'VIEW_LIBRARY_TOOLTIP';
+      viewMessage = t('VIEW_LIBRARY_TOOLTIP');
       break;
     case Context.Unknown:
-      viewMessage = 'VIEW_UNKNOWN_TOOLTIP';
+      viewMessage = t('VIEW_UNKNOWN_TOOLTIP');
       break;
     default:
       break;
