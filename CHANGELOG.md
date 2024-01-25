@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/graasp/graasp-analytics/compare/v2.1.0...v2.2.0) (2024-01-25)
+
+
+### Features
+
+* add user switch component ([#265](https://github.com/graasp/graasp-analytics/issues/265)) ([878384e](https://github.com/graasp/graasp-analytics/commit/878384eca9f35fee797af72f06db765e69a378e9))
+* remove account and unknown from context ([#264](https://github.com/graasp/graasp-analytics/issues/264)) ([b3ccd70](https://github.com/graasp/graasp-analytics/commit/b3ccd70d9ed575505dc26ed0e28878fdc2c04e1f))
+* **ui:** wrap logo with react router link ([#275](https://github.com/graasp/graasp-analytics/issues/275)) ([a32b464](https://github.com/graasp/graasp-analytics/commit/a32b464179f4a7a5a969d4598bd7896455bbe82c))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/query-client to v2.2.2 ([#267](https://github.com/graasp/graasp-analytics/issues/267)) ([c8318eb](https://github.com/graasp/graasp-analytics/commit/c8318ebe315e50c06205d6e8b74ac115df69ac1c))
+* **deps:** update dependency @graasp/query-client to v2.2.3 ([#276](https://github.com/graasp/graasp-analytics/issues/276)) ([06b6d09](https://github.com/graasp/graasp-analytics/commit/06b6d092675fd8c7fbdf8a53f0901b223f84f8fd))
+* **deps:** update dependency @graasp/sdk to v3.4.1 ([#272](https://github.com/graasp/graasp-analytics/issues/272)) ([9da9135](https://github.com/graasp/graasp-analytics/commit/9da913503111c6e78c33a80d3f5e0ef709f3cb54))
+* **deps:** update dependency @graasp/ui to v4.3.1 ([#273](https://github.com/graasp/graasp-analytics/issues/273)) ([babc7d6](https://github.com/graasp/graasp-analytics/commit/babc7d657358756b07ee9357a29543a5369b8a65))
+* **deps:** update dependency react-router-dom to v6.21.2 ([#271](https://github.com/graasp/graasp-analytics/issues/271)) ([8dfff45](https://github.com/graasp/graasp-analytics/commit/8dfff45d442e6f80338f74e759a9e94ff68b9d3c))
+* **it:** add italian ([#261](https://github.com/graasp/graasp-analytics/issues/261)) ([b995048](https://github.com/graasp/graasp-analytics/commit/b9950483f71f590375c4e544e186de52f48c9a00))
+* translate tooltip at view selection ([#262](https://github.com/graasp/graasp-analytics/issues/262)) ([e13b954](https://github.com/graasp/graasp-analytics/commit/e13b95414a1863a9bbba970d8a3713bd188674c3))
+* upgrade all deps ([#263](https://github.com/graasp/graasp-analytics/issues/263)) ([bcabf0b](https://github.com/graasp/graasp-analytics/commit/bcabf0bde714eeb86951fe0853230852b0df2be0))
+
 ## [2.1.0](https://github.com/graasp/graasp-analytics/compare/v2.0.2...v2.1.0) (2024-01-11)
 
 
