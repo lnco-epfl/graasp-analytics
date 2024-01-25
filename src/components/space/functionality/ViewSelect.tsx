@@ -1,20 +1,16 @@
 import { useContext } from 'react';
 
 import InfoIcon from '@mui/icons-material/Info';
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 
 import { Context } from '@graasp/sdk';
 
-import { useAnalyticsTranslation } from '@/config/i18n';
+import { ActionViewContext } from '@/config/constants';
+import { useAnalyticsTranslation, useEnumsTranslation } from '@/config/i18n';
+import { SELECT_VIEW_ID, buildSelectViewId } from '@/config/selectors';
 
 import { ViewDataContext } from '../../context/ViewDataProvider';
 
@@ -26,11 +22,16 @@ const CustomRoot = styled(Grid)(({ theme }) => ({
 
 const ViewSelect = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
+  const { t: enumT } = useEnumsTranslation();
 
   const { view, setView } = useContext(ViewDataContext);
 
-  const handleChange = ({ target: { value } }: SelectChangeEvent<Context>) => {
-    setView(value as Context);
+  const handleChange = ({
+    target: { value },
+  }: {
+    target: { value: string };
+  }) => {
+    setView(value);
   };
 
   let viewMessage = '';
@@ -44,9 +45,6 @@ const ViewSelect = (): JSX.Element => {
     case Context.Library:
       viewMessage = t('VIEW_LIBRARY_TOOLTIP');
       break;
-    case Context.Unknown:
-      viewMessage = t('VIEW_UNKNOWN_TOOLTIP');
-      break;
     default:
       break;
   }
@@ -56,26 +54,27 @@ const ViewSelect = (): JSX.Element => {
         <FormControl sx={{ m: 1, width: '100%' }}>
           <InputLabel id="viewLabel">{t('VIEWS_SELECT')}</InputLabel>
           <Select
+            id={SELECT_VIEW_ID}
             label={t('VIEWS_SELECT')}
             labelId="viewLabel"
             value={view}
             onChange={handleChange}
             renderValue={(selected) => (
-              <span style={{ textTransform: 'capitalize' }}>{selected}</span>
+              <span style={{ textTransform: 'capitalize' }}>
+                {enumT(selected)}
+              </span>
             )}
           >
-            {Object.values(Context)
-              // does not show analytics
-              .filter((context) => context !== Context.Analytics)
-              .map((c) => (
-                <MenuItem
-                  sx={{ textTransform: 'capitalize' }}
-                  key={c}
-                  value={c}
-                >
-                  {c}
-                </MenuItem>
-              ))}
+            {Object.values(ActionViewContext).map((c) => (
+              <MenuItem
+                key={c}
+                sx={{ textTransform: 'capitalize' }}
+                value={c}
+                id={buildSelectViewId(c)}
+              >
+                {enumT(c)}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>

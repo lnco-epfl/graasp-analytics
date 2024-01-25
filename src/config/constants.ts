@@ -1,4 +1,4 @@
-import { Context } from '@graasp/sdk';
+import { Context, UnionOfConst } from '@graasp/sdk';
 
 import {
   GRAASP_BUILDER_HOST,
@@ -68,6 +68,13 @@ export const NIGHT = 'Night';
 export const TOP_NUMBER_OF_ITEMS_TO_DISPLAY = 10;
 
 export const DEFAULT_REQUEST_SAMPLE_SIZE = 5000;
+
+export const ActionViewContext = {
+  Builder: Context.Builder,
+  Player: Context.Player,
+  Library: Context.Library,
+} as const;
+export type ActionViewContextUnion = UnionOfConst<typeof ActionViewContext>;
 
 export const HOST_MAP = {
   [Context.Builder]: GRAASP_BUILDER_HOST,

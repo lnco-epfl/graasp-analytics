@@ -63,7 +63,6 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     [Context.Builder]: false,
     [Context.Player]: false,
     [Context.Library]: false,
-    [Context.Unknown]: false,
   });
   const [actions, setActions] = useState<Action[]>([]);
   const [allMembers, setAllMembers] = useState<Member[]>([]);
@@ -117,19 +116,6 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   );
 
   const {
-    data: unknownData,
-    isError: unknownIsError,
-    isLoading: unknownIsLoading,
-  } = hooks.useActions(
-    {
-      itemId,
-      view: Context.Unknown,
-      requestedSampleSize,
-    },
-    { enabled: Boolean(enabledArray[Context.Unknown]) },
-  );
-
-  const {
     data: itemData,
     isError: itemIsError,
     isLoading: itemIsLoading,
@@ -151,8 +137,6 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       setIsLoading(playerIsLoading);
     } else if (enabledArray[Context.Library]) {
       setIsLoading(explorerIsLoading);
-    } else if (enabledArray[Context.Unknown]) {
-      setIsLoading(unknownIsLoading);
     }
   }, [
     enabledArray,
@@ -160,7 +144,6 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     builderIsLoading,
     playerIsLoading,
     explorerIsLoading,
-    unknownIsLoading,
   ]);
 
   useEffect(() => {
@@ -207,18 +190,6 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       setError(explorerIsError);
     }
   }, [explorerData, view, actions, explorerIsError]);
-
-  useEffect(() => {
-    if (
-      unknownData &&
-      view === Context.Unknown &&
-      actions.length !== unknownData?.actions?.length
-    ) {
-      setActions(unknownData?.actions ?? []);
-      setAllMembers(unknownData?.members ?? []);
-      setError(unknownIsError);
-    }
-  }, [unknownData, view, actions, unknownIsError]);
 
   const value = useMemo(
     () => ({

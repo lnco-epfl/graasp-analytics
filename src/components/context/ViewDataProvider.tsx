@@ -1,16 +1,19 @@
-import { Dispatch, createContext, useMemo, useState } from 'react';
+import { createContext, useMemo, useState } from 'react';
 
-import { Context } from '@graasp/sdk';
+import { ActionViewContext, ActionViewContextUnion } from '@/config/constants';
 
 const defaultValue: {
-  // todo: use sdk context
-  view: Context;
-  setView: Dispatch<Context>;
+  view: ActionViewContextUnion;
+  setView: (view: string) => void;
 } = {
-  view: Context.Builder,
+  view: ActionViewContext.Builder,
   setView: () => {
     // do nothing
   },
+};
+
+const isActionView = (view: string): view is ActionViewContextUnion => {
+  return Object.keys(ActionViewContext).includes(view);
 };
 
 export const ViewDataContext = createContext(defaultValue);
@@ -20,8 +23,20 @@ const ViewDataProvider = ({
 }: {
   children: JSX.Element;
 }): JSX.Element => {
-  const [view, setView] = useState(Context.Builder);
-  const value = useMemo(() => ({ view, setView }), [view, setView]);
+  const [view, setView] = useState<ActionViewContextUnion>(
+    ActionViewContext.Builder,
+  );
+  const value = useMemo(
+    () => ({
+      view,
+      setView: (view: string): void => {
+        if (isActionView(view)) {
+          setView(view);
+        }
+      },
+    }),
+    [view, setView],
+  );
   return (
     <ViewDataContext.Provider value={value}>
       {children}

@@ -6,6 +6,7 @@ export const HOME_MENU_SHARED_MENUITEM_ID = 'homeMenuSharedMenuItem';
 
 export const ROOT_MENU_ID = 'rootMenu';
 export const ROOT_MENU_DROPDOWN_BUTTON_ID = 'rootMenuDropdownButton';
+export const SELECT_VIEW_ID = 'selectViewId';
 
 export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
   Builder: 'appNavigationPlatformSwitchButtonBuilder',
@@ -35,3 +36,5 @@ export const buildMenu = (id: string): string => `menu-${id}`;
 export const buildMenuDropdownButton = (id: string): string =>
   `menuDropdownButton-${id}`;
 export const buildMenuItemId = (id: string): string => `menuItem-${id}`;
+
+export const buildSelectViewId = (view: string): string => `selectView-${view}`;
