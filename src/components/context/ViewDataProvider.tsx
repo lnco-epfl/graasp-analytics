@@ -13,7 +13,7 @@ const defaultValue: {
 };
 
 const isActionView = (view: string): view is ActionViewContextUnion => {
-  return Object.keys(ActionViewContext).includes(view);
+  return Object.values<string>(ActionViewContext).includes(view);
 };
 
 export const ViewDataContext = createContext(defaultValue);

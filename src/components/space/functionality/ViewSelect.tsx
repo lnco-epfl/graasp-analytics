@@ -10,7 +10,11 @@ import { Context } from '@graasp/sdk';
 
 import { ActionViewContext } from '@/config/constants';
 import { useAnalyticsTranslation, useEnumsTranslation } from '@/config/i18n';
-import { SELECT_VIEW_ID, buildSelectViewId } from '@/config/selectors';
+import {
+  SELECT_VIEW_ID,
+  SELECT_VIEW_RENDERED_TEXT_ID,
+  buildSelectViewId,
+} from '@/config/selectors';
 
 import { ViewDataContext } from '../../context/ViewDataProvider';
 
@@ -60,7 +64,10 @@ const ViewSelect = (): JSX.Element => {
             value={view}
             onChange={handleChange}
             renderValue={(selected) => (
-              <span style={{ textTransform: 'capitalize' }}>
+              <span
+                id={SELECT_VIEW_RENDERED_TEXT_ID}
+                style={{ textTransform: 'capitalize' }}
+              >
                 {enumT(selected)}
               </span>
             )}

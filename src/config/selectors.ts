@@ -7,6 +7,7 @@ export const HOME_MENU_SHARED_MENUITEM_ID = 'homeMenuSharedMenuItem';
 export const ROOT_MENU_ID = 'rootMenu';
 export const ROOT_MENU_DROPDOWN_BUTTON_ID = 'rootMenuDropdownButton';
 export const SELECT_VIEW_ID = 'selectViewId';
+export const SELECT_VIEW_RENDERED_TEXT_ID = 'selectViewTextId';
 
 export const APP_NAVIGATION_PLATFORM_SWITCH_BUTTON_IDS = {
   Builder: 'appNavigationPlatformSwitchButtonBuilder',
