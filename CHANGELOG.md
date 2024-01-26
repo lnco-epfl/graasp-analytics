@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.1](https://github.com/graasp/graasp-analytics/compare/v2.2.0...v2.2.1) (2024-01-26)
+
+
+### Bug Fixes
+
+* can't select a view ([#283](https://github.com/graasp/graasp-analytics/issues/283)) ([74b7035](https://github.com/graasp/graasp-analytics/commit/74b70353bcefb873a43e47984020a241c3288f65))
+* **typo:** in translations ([#284](https://github.com/graasp/graasp-analytics/issues/284)) ([787280e](https://github.com/graasp/graasp-analytics/commit/787280e56aa8238f4bdb8c3a5555a1a8c319e50d))
+
 ## [2.2.0](https://github.com/graasp/graasp-analytics/compare/v2.1.0...v2.2.0) (2024-01-25)
 
 
