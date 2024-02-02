@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 const SectionTitle = ({
@@ -8,12 +8,17 @@ const SectionTitle = ({
   title: string;
   icons?: JSX.Element[];
 }): JSX.Element => (
-  <Grid container alignItems="center" justifyContent="center">
+  <Stack
+    direction="row"
+    alignItems="center"
+    justifyContent="center"
+    spacing={2}
+  >
     <Typography variant="h3" align="center" fontWeight={900} color="#8C8C8C">
       {title}
-      {icons}
     </Typography>
-  </Grid>
+    {icons}
+  </Stack>
 );
 
 export default SectionTitle;

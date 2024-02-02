@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { Stack } from '@mui/material';
+
 import {
   AggregateBy,
   AggregateFunction,
@@ -100,7 +102,7 @@ const ActionsByUserChart = (): JSX.Element | null => {
   }
 
   return (
-    <>
+    <Stack direction="column" flexGrow={3} width="100%">
       <ChartTitle title={title} />
       <ChartContainer>
         <ComposedChart data={formattedData}>
@@ -118,7 +120,7 @@ const ActionsByUserChart = (): JSX.Element | null => {
           ))}
         </ComposedChart>
       </ChartContainer>
-    </>
+    </Stack>
   );
 };
 

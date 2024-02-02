@@ -24,6 +24,7 @@ export const HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID =
   'headerMemberMenuSignInButton';
 export const HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID =
   'headerMemberMenuSignOutButton';
+export const HOME_MESSAGE_ID = 'HomeMessage';
 export const buildMemberAvatarClass = (id?: string): string =>
   `memberAvatar-${id}`;
 export const buildMemberMenuItemId = (id: string): string =>

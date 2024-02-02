@@ -33,11 +33,7 @@ const App = (): JSX.Element => {
   return (
     <Router>
       <Routes>
-        <Route path={EMBEDDED_ITEM_PATH} element={<ItemPage isEmbeded />} />
-        <Route
-          path={buildItemPath()}
-          element={<ItemPage isEmbeded={false} />}
-        />
+        <Route path={EMBEDDED_ITEM_PATH} element={<ItemPage />} />
         <Route
           // This is a shared route that allows us to re-use the same layout for both pages
           element={
@@ -48,6 +44,7 @@ const App = (): JSX.Element => {
         >
           <Route path={HOME_PATH} element={<HomePage />} />
           <Route path={SHARED_ITEMS_PATH} element={<SharedItemPage />} />
+          <Route path={buildItemPath()} element={<ItemPage />} />
         </Route>
       </Routes>
     </Router>

@@ -2,10 +2,7 @@ import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import FaceIcon from '@mui/icons-material/Face';
-import { CardContent, Grid } from '@mui/material';
-import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
 import {
   AggregateBy,
@@ -19,13 +16,9 @@ import { useAnalyticsTranslation } from '@/config/i18n';
 import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
 import { hooks } from '../../../config/queryClient';
 import { ViewDataContext } from '../../context/ViewDataProvider';
+import StatsCard from './components/StatsCard';
 
-const CustomRoot = styled(Card)(() => ({
-  maxHeight: 150,
-  marginBottom: 5,
-  textAlign: 'right',
-  margin: 20,
-}));
+const Icon = <FaceIcon fontSize="large" />;
 
 const ActiveUsersCard = (): JSX.Element | null => {
   const { t } = useAnalyticsTranslation();
@@ -69,7 +62,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
     return null;
   }
 
-  const totalUsers = totalUsersData?.[0]?.aggregateResult;
+  const totalUsers = totalUsersData?.[0]?.aggregateResult ?? 0;
 
   const today = new Date();
   today.setDate(today.getDate() - 1);
@@ -101,76 +94,20 @@ const ActiveUsersCard = (): JSX.Element | null => {
   averageDailyUsersThisMonth /= 30;
 
   return (
-    <>
-      <CustomRoot variant="outlined">
-        <CardContent>
-          <Grid container alignItems="center">
-            <Grid item xs={3}>
-              <FaceIcon fontSize="large" />
-            </Grid>
-            <Grid item xs={9}>
-              <Typography component="div" align="center">
-                {t('TOTAL_USERS')}
-                <Typography variant="h5" component="div" align="center">
-                  {totalUsers}
-                </Typography>
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </CustomRoot>
-      <CustomRoot variant="outlined">
-        <CardContent>
-          <Grid container alignItems="center">
-            <Grid item xs={3}>
-              <FaceIcon fontSize="large" />
-            </Grid>
-            <Grid item xs={9}>
-              <Typography component="div" align="center">
-                {t('AVERAGE_DAILY_USERS_MONTH')}
-                <Typography variant="h5" component="div" align="center">
-                  {averageDailyUsersThisMonth.toFixed(3)}
-                </Typography>
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </CustomRoot>
-      <CustomRoot variant="outlined">
-        <CardContent>
-          <Grid container alignItems="center">
-            <Grid item xs={3}>
-              <FaceIcon fontSize="large" />
-            </Grid>
-            <Grid item xs={9}>
-              <Typography component="div" align="center">
-                {t('AVERAGE_DAILY_USERS_WEEK')}
-                <Typography variant="h5" component="div" align="center">
-                  {averageDailyUsersThisWeek.toFixed(3)}
-                </Typography>
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </CustomRoot>
-      <CustomRoot variant="outlined">
-        <CardContent>
-          <Grid container alignItems="center">
-            <Grid item xs={3}>
-              <FaceIcon fontSize="large" />
-            </Grid>
-            <Grid item xs={9}>
-              <Typography component="div" align="center">
-                {t('USERS_TODAY')}
-                <Typography variant="h5" component="div" align="center">
-                  {usersToday}
-                </Typography>
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </CustomRoot>
-    </>
+    <Grid2 container spacing={2} p={2} flexGrow={1} flexShrink={2}>
+      <StatsCard title={t('TOTAL_USERS')} stat={totalUsers} icon={Icon} />
+      <StatsCard
+        title={t('AVERAGE_DAILY_USERS_MONTH')}
+        stat={averageDailyUsersThisMonth.toFixed(3)}
+        icon={Icon}
+      />
+      <StatsCard
+        title={t('AVERAGE_DAILY_USERS_WEEK')}
+        stat={averageDailyUsersThisWeek.toFixed(3)}
+        icon={Icon}
+      />
+      <StatsCard title={t('USERS_TODAY')} stat={usersToday} icon={Icon} />
+    </Grid2>
   );
 };
 

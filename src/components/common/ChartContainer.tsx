@@ -9,15 +9,8 @@ const ChartContainer = ({
 }: {
   children: JSX.Element;
 }): JSX.Element => (
-  <Box
-    sx={{
-      marginTop: 3,
-      marginBottom: 2,
-      marginLeft: 2,
-      marginRight: 2,
-    }}
-  >
-    <ResponsiveContainer width="95%" height={CONTAINER_HEIGHT}>
+  <Box width="100%" p={2}>
+    <ResponsiveContainer width="100%" height={CONTAINER_HEIGHT}>
       {children}
     </ResponsiveContainer>
   </Box>

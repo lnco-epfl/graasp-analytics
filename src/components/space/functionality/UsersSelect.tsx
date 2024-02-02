@@ -1,21 +1,20 @@
 import { useContext } from 'react';
 
-import { Box, Chip, FormControl, InputLabel, MenuItem } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import {
+  Box,
+  Chip,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Stack,
+} from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { styled } from '@mui/material/styles';
 
 import { Member } from '@graasp/sdk';
 
 import { useAnalyticsTranslation } from '@/config/i18n';
 
 import { DataContext } from '../../context/DataProvider';
-
-const CustomRoot = styled(Grid)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  marginBottom: theme.spacing(2),
-}));
 
 const UsersSelect = (): JSX.Element | null => {
   const { t } = useAnalyticsTranslation();
@@ -34,8 +33,8 @@ const UsersSelect = (): JSX.Element | null => {
   };
 
   return (
-    <CustomRoot container>
-      <FormControl sx={{ m: 1, width: '90%' }}>
+    <Stack direction="row" alignItems="center" flexGrow={1} flexShrink={0}>
+      <FormControl fullWidth>
         <InputLabel id="demo-multiple-chip-label">
           {t('USERS_SELECT')}
         </InputLabel>
@@ -64,7 +63,7 @@ const UsersSelect = (): JSX.Element | null => {
           ))}
         </Select>
       </FormControl>
-    </CustomRoot>
+    </Stack>
   );
 };
 

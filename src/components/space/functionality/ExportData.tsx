@@ -25,14 +25,14 @@ const ExportData = (): JSX.Element => {
   if (clicked) {
     return (
       <Tooltip title={t('EXPORT_SUCCESS_MESSAGE')} placement="right" arrow>
-        <DoneIcon sx={{ mx: 2 }} fontSize="large" color="primary" />
+        <DoneIcon fontSize="large" color="primary" />
       </Tooltip>
     );
   }
 
   return (
     <Tooltip title={t('EXPORT_TOOLTIP')} placement="right" arrow>
-      <IconButton sx={{ ml: 2 }} onClick={onClick} color="primary">
+      <IconButton onClick={onClick} color="primary">
         <CloudDownloadIcon fontSize="large" />
       </IconButton>
     </Tooltip>

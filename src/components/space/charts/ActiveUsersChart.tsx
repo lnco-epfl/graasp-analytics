@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { Stack } from '@mui/material';
+
 import {
   AggregateBy,
   AggregateFunction,
@@ -94,8 +96,8 @@ const ActiveUsersChart = (): JSX.Element | null => {
   }
 
   return (
-    <>
-      <ChartTitle title={t(title)} />
+    <Stack direction="column" flexGrow={3} width="100%">
+      <ChartTitle title={title} />
       <ChartContainer>
         <LineChart data={formattedAggregateData}>
           <CartesianGrid strokeDasharray="2" />
@@ -112,7 +114,7 @@ const ActiveUsersChart = (): JSX.Element | null => {
           />
         </LineChart>
       </ChartContainer>
-    </>
+    </Stack>
   );
 };
 

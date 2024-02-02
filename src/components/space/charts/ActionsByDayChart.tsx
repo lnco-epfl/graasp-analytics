@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { Box } from '@mui/material';
+
 import {
   AggregateBy,
   AggregateFunction,
@@ -132,7 +134,7 @@ const ActionsByDayChart = (): JSX.Element | null => {
   }
 
   return (
-    <>
+    <Box width="100%">
       <ChartTitle title={title} />
       <ChartContainer>
         <LineChart
@@ -162,7 +164,7 @@ const ActionsByDayChart = (): JSX.Element | null => {
           />
         </LineChart>
       </ChartContainer>
-    </>
+    </Box>
   );
 };
 

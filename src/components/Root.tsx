@@ -3,7 +3,7 @@ import { I18nextProvider } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { CssBaseline, ThemeProvider, styled } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import { hasAcceptedCookies } from '@graasp/sdk';
 import { theme } from '@graasp/ui';
@@ -22,24 +22,18 @@ if (GA_MEASUREMENT_ID && hasAcceptedCookies() && import.meta.env.PROD) {
   ReactGA.send('pageview');
 }
 
-const CustomRoot = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  minHeight: '100vh',
-});
-
 const Root = (): JSX.Element => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <CustomRoot>
-        <I18nextProvider i18n={i18nConfig}>
-          <App />
-          <ToastContainer />
-        </I18nextProvider>
-      </CustomRoot>
+      <I18nextProvider i18n={i18nConfig}>
+        <App />
+        <ToastContainer />
+      </I18nextProvider>
     </ThemeProvider>
-    {import.meta.env.DEV && <ReactQueryDevtools />}
+    {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
+      <ReactQueryDevtools />
+    )}
   </QueryClientProvider>
 );
 

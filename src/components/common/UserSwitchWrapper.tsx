@@ -4,7 +4,6 @@ import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 import { GRAASP_ACCOUNT_HOST } from '@/config/env';
 import { SIGN_IN_PATH } from '@/config/externalPaths';
 import { mutations } from '@/config/queryClient';
-import '@/config/selectors';
 import {
   HEADER_MEMBER_MENU_BUTTON_ID,
   HEADER_MEMBER_MENU_SEE_PROFILE_BUTTON_ID,
@@ -40,7 +39,7 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
       seeProfileText={t('SEE_PROFILE_TEXT')}
       signedOutTooltipText={t('USER_SWITCH_SIGNED_OUT_TOOLTIP')}
       signOutText={t('USER_SWITCH_SIGN_OUT_BUTTON')}
-      switchMemberText={t('USER_SWITCH_SWITCH_USER_TEXT')}
+      switchMemberText={t('USER_SWITCH_SIGN_IN_TEXT')}
       profilePath={GRAASP_ACCOUNT_HOST}
       redirectPath={SIGN_IN_PATH}
       renderAvatar={renderAvatar}

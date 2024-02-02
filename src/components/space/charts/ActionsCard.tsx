@@ -2,10 +2,7 @@ import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import TouchAppIcon from '@mui/icons-material/TouchApp';
-import { CardContent, Grid } from '@mui/material';
-import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 import {
   AggregateBy,
@@ -19,13 +16,9 @@ import { useAnalyticsTranslation } from '@/config/i18n';
 import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
 import { hooks } from '../../../config/queryClient';
 import { ViewDataContext } from '../../context/ViewDataProvider';
+import StatsCard from './components/StatsCard';
 
-const CustomRoot = styled(Card)(() => ({
-  maxHeight: 150,
-  marginBottom: 5,
-  textAlign: 'right',
-  margin: 20,
-}));
+const StatsIcon = <TouchAppIcon fontSize="large" />;
 
 const ActiveUsersCard = (): JSX.Element | null => {
   const { t } = useAnalyticsTranslation();
@@ -77,78 +70,29 @@ const ActiveUsersCard = (): JSX.Element | null => {
       totalActionsThisMonth += aggregateResult;
     }
   });
-
   return (
-    <>
-      <CustomRoot variant="outlined">
-        <CardContent>
-          <Grid container alignItems="center">
-            <Grid item xs={3}>
-              <TouchAppIcon fontSize="large" />
-            </Grid>
-            <Grid item xs={9}>
-              <Typography component="div" align="center">
-                {t('TOTAL_ACTIONS')}
-                <Typography variant="h5" component="div" align="center">
-                  {totalActions}
-                </Typography>
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </CustomRoot>
-      <CustomRoot variant="outlined">
-        <CardContent>
-          <Grid container alignItems="center">
-            <Grid item xs={3}>
-              <TouchAppIcon fontSize="large" />
-            </Grid>
-            <Grid item xs={9}>
-              <Typography component="div" align="center">
-                {t('ACTIONS_THIS_MONTH')}
-                <Typography variant="h5" component="div" align="center">
-                  {totalActionsThisMonth}
-                </Typography>
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </CustomRoot>
-      <CustomRoot variant="outlined">
-        <CardContent>
-          <Grid container alignItems="center">
-            <Grid item xs={3}>
-              <TouchAppIcon fontSize="large" />
-            </Grid>
-            <Grid item xs={9}>
-              <Typography component="div" align="center">
-                {t('ACTIONS_THIS_WEEK')}
-                <Typography variant="h5" component="div" align="center">
-                  {totalActionsThisWeek}
-                </Typography>
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </CustomRoot>
-      <CustomRoot variant="outlined">
-        <CardContent>
-          <Grid container alignItems="center">
-            <Grid item xs={3}>
-              <TouchAppIcon fontSize="large" />
-            </Grid>
-            <Grid item xs={9}>
-              <Typography component="div" align="center">
-                {t('ACTIONS_TODAY')}
-                <Typography variant="h5" component="div" align="center">
-                  {totalActionsToday}
-                </Typography>
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </CustomRoot>
-    </>
+    <Grid2 container spacing={2} p={2} flexGrow={1} flexShrink={2}>
+      <StatsCard
+        icon={StatsIcon}
+        title={t('TOTAL_ACTIONS')}
+        stat={totalActions}
+      />
+      <StatsCard
+        icon={StatsIcon}
+        title={t('ACTIONS_THIS_MONTH')}
+        stat={totalActionsThisMonth}
+      />
+      <StatsCard
+        icon={StatsIcon}
+        title={t('ACTIONS_THIS_WEEK')}
+        stat={totalActionsThisWeek}
+      />
+      <StatsCard
+        icon={StatsIcon}
+        title={t('ACTIONS_TODAY')}
+        stat={totalActionsToday}
+      />
+    </Grid2>
   );
 };
 

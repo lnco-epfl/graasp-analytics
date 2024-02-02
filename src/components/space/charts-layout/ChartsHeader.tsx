@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useLocation, useMatch } from 'react-router-dom';
 
-import { styled, useTheme } from '@mui/material';
+import { Stack, styled, useTheme } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
@@ -27,23 +27,17 @@ const ChartsHeader = (): JSX.Element => {
 
   if (match) {
     return (
-      <Grid
-        container
-        flexGrow={1}
+      <Stack
+        direction="row"
         justifyContent="space-between"
         alignItems="center"
+        spacing={4}
         p={2}
       >
-        <Grid item xs={4}>
-          <ViewSelect />
-        </Grid>
-        <Grid item xs={4}>
-          <UsersSelect />
-        </Grid>
-        <Grid item xs={4}>
-          <ActionsSelect />
-        </Grid>
-      </Grid>
+        <ViewSelect />
+        <UsersSelect />
+        <ActionsSelect />
+      </Stack>
     );
   }
 
