@@ -3,7 +3,6 @@ import { COMMON } from '@graasp/translations';
 import { Avatar } from '@graasp/ui';
 
 import { MEMBER_AVATAR_MAX_DIMENSIONS } from '@/config/constants';
-import '@/config/selectors';
 import { buildMemberAvatarClass } from '@/config/selectors';
 
 import { useCommonTranslation } from '../../config/i18n';

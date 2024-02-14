@@ -12,8 +12,6 @@
 
 ```sh
 VITE_PORT=3113
-VITE_VERSION=latest
-VITE_GRAASP_API_HOST=http://localhost:3000
 VITE_ENABLE_MOCK_API=false
 VITE_GRAASP_API_HOST=http://localhost:3000
 VITE_GRAASP_AUTH_HOST=http://localhost:3001

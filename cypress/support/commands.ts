@@ -1,10 +1,10 @@
 /// <reference types="cypress" />
 import { COOKIE_KEYS } from '@graasp/sdk';
 
+import { buildDatabase } from '../../src/mockServer/database';
 import MOCK_ITEMS from '../../src/mockServer/mockData/items';
 import MOCK_MEMBERS from '../../src/mockServer/mockData/members';
 import MOCK_MEMBERSHIP from '../../src/mockServer/mockData/membership';
-import { buildDatabase } from '../../src/mockServer/mockServer';
 
 declare global {
   interface Window {

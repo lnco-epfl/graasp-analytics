@@ -5,17 +5,8 @@ import * as Sentry from '@sentry/react';
 
 import pkg from '../package.json';
 import Root from './components/Root';
-import {
-  API_HOST,
-  APP_VERSION,
-  ENABLE_MOCK_API,
-  SENTRY_DSN,
-} from './config/env';
+import { APP_VERSION, ENABLE_MOCK_API, SENTRY_DSN } from './config/env';
 import { SENTRY_ENVIRONMENT, SENTRY_TRACE_SAMPLE_RATE } from './config/sentry';
-import MOCK_ITEMS from './mockServer/mockData/items';
-import MOCK_MEMBERS from './mockServer/mockData/members';
-import MOCK_MEMBERSHIP from './mockServer/mockData/membership';
-import mockServer, { buildDatabase } from './mockServer/mockServer';
 
 declare global {
   interface Window {
@@ -24,18 +15,12 @@ declare global {
   }
 }
 
-if (ENABLE_MOCK_API) {
-  mockServer({
-    urlPrefix: API_HOST,
-    database: window.Cypress
-      ? window.database
-      : buildDatabase({
-          currentMember: MOCK_MEMBERS[0],
-          items: MOCK_ITEMS,
-          itemMemberships: MOCK_MEMBERSHIP,
-          members: MOCK_MEMBERS,
-        }),
-  });
+if (import.meta.env.MODE === 'test') {
+  if (ENABLE_MOCK_API) {
+    import('./mockServer/mockServer').then(({ initMockServer }) =>
+      initMockServer(),
+    );
+  }
 }
 
 Sentry.init({

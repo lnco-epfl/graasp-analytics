@@ -2,8 +2,17 @@ import { API_ROUTES } from '@graasp/query-client';
 import { DiscriminatedItem, ItemMembership, Member } from '@graasp/sdk';
 
 import { StatusCodes } from 'http-status-codes';
-import { Model, Response, RestSerializer, createServer } from 'miragejs';
+import {
+  Model,
+  Response,
+  RestSerializer,
+  Server,
+  createServer,
+} from 'miragejs';
 
+import { API_HOST } from '@/config/env';
+
+import { buildDatabase } from './database';
 import MOCK_ACTION_DATA from './mockData/actions';
 import {
   MOCK_AGGREGATE_ACTIONS_ACTIVE_USERS,
@@ -14,6 +23,9 @@ import {
   MOCK_AGGREGATE_ACTIONS_TOTAL_USERS,
   MOCK_AGGREGATE_ACTIONS_TYPE,
 } from './mockData/aggregateActions';
+import MOCK_ITEMS from './mockData/items';
+import MOCK_MEMBERS from './mockData/members';
+import MOCK_MEMBERSHIP from './mockData/membership';
 
 const {
   buildGetItemRoute,
@@ -21,13 +33,6 @@ const {
   GET_OWN_ITEMS_ROUTE,
   SHARED_ITEM_WITH_ROUTE,
 } = API_ROUTES;
-
-type Database = {
-  currentMember?: Member;
-  items?: DiscriminatedItem[];
-  itemMemberships?: ItemMembership[];
-  members?: Member[];
-};
 
 const ApplicationSerializer = RestSerializer.extend({
   root: false,
@@ -62,27 +67,15 @@ const checkPermission = (
 
 const buildPathFromId = (id: string) => id.replace(/-/g, '_');
 
-export const buildDatabase = ({
-  currentMember,
-  items = [],
-  itemMemberships = [],
-  members,
-}: Partial<Database> = {}): Database => ({
-  currentMember,
-  items,
-  itemMemberships,
-  members: members ?? (currentMember ? [currentMember] : []),
-});
-
-export const mockServer = ({
+const mockServer = ({
   urlPrefix,
   database = buildDatabase(),
   externalUrls = [],
 }: {
   urlPrefix?: string;
-  database?: Database;
+  database?: ReturnType<typeof buildDatabase>;
   externalUrls?: string[];
-} = {}): any => {
+}): Server => {
   const { items, members, itemMemberships } = database;
   const currentMember = members?.[0];
 
@@ -281,4 +274,16 @@ export const mockServer = ({
   });
 };
 
-export default mockServer;
+export const initMockServer = (): void => {
+  mockServer({
+    urlPrefix: API_HOST,
+    database: window.Cypress
+      ? window.database
+      : buildDatabase({
+          currentMember: MOCK_MEMBERS[0],
+          items: MOCK_ITEMS,
+          itemMemberships: MOCK_MEMBERSHIP,
+          members: MOCK_MEMBERS,
+        }),
+  });
+};

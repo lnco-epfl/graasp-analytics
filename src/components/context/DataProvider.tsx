@@ -120,7 +120,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     isError: itemIsError,
     isLoading: itemIsLoading,
   } = hooks.useItem(itemId);
-  const { data: itemChildren } = hooks.useChildren(itemId, {
+  const { data: itemChildren } = hooks.useChildren(itemId, undefined, {
     enabled: itemData?.type === ItemType.FOLDER,
   });
 
