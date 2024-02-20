@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/graasp/graasp-analytics/compare/v2.2.1...v2.3.0) (2024-02-15)
+
+
+### Features
+
+* translate es.json via GitLocalize ([#310](https://github.com/graasp/graasp-analytics/issues/310)) ([6c28380](https://github.com/graasp/graasp-analytics/commit/6c283807de701c9da8ee8e5aeab6b10a2ced2d0b))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @graasp/query-client to v2.5.0 ([#296](https://github.com/graasp/graasp-analytics/issues/296)) ([eb1a5a7](https://github.com/graasp/graasp-analytics/commit/eb1a5a71d64560fb43f29c4774baf62286b228f2))
+* **deps:** update dependency @graasp/ui to v4.6.0 ([#289](https://github.com/graasp/graasp-analytics/issues/289)) ([8656cf4](https://github.com/graasp/graasp-analytics/commit/8656cf4f176fd84c4cc51e19fc37f81d3a7db9fd))
+* **deps:** update dependency @sentry/react to v7.99.0 ([#290](https://github.com/graasp/graasp-analytics/issues/290)) ([3643f7d](https://github.com/graasp/graasp-analytics/commit/3643f7d1d0ef155cab84fbb7e96c24c329233684))
+* **deps:** update dependency react-router-dom to v6.21.3 ([13fad0a](https://github.com/graasp/graasp-analytics/commit/13fad0a5719bdebc0da168970b96646a7cd8abcf))
+* **deps:** update dependency react-router-dom to v6.22.0 ([#299](https://github.com/graasp/graasp-analytics/issues/299)) ([d171608](https://github.com/graasp/graasp-analytics/commit/d1716089abf3b8b5f17a0a06ed0b5c121730cc25))
+* update main component ([#292](https://github.com/graasp/graasp-analytics/issues/292)) ([12f23d1](https://github.com/graasp/graasp-analytics/commit/12f23d1e5a166476f35f518b9b438a87aa67bb06))
+* use new UI ([#305](https://github.com/graasp/graasp-analytics/issues/305)) ([9b31580](https://github.com/graasp/graasp-analytics/commit/9b31580221949ba4e91530bcb6a38b2c21fb0fef))
+
 ## [2.2.1](https://github.com/graasp/graasp-analytics/compare/v2.2.0...v2.2.1) (2024-01-26)
 
 
