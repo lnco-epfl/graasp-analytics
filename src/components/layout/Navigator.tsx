@@ -36,10 +36,10 @@ const Navigator = (): JSX.Element | null => {
   const { pathname } = useLocation();
   const itemId = match?.params?.itemId;
   const { data: currentMember } = useCurrentMember();
-  const { data: item, isLoading: isItemLoading } = useItem(itemId);
+  const { data: item, isInitialLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;
 
-  const { data: parents, isLoading: areParentsLoading } = useParents({
+  const { data: parents, isInitialLoading: areParentsLoading } = useParents({
     id: itemId,
     path: itemPath,
     enabled: !!itemPath,

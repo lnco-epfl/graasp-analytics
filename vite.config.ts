@@ -30,12 +30,21 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
     },
     build: {
       outDir: 'build',
-      // target: mode === 'test' ? 'esnext' : undefined,
+      rollupOptions: {
+        output: {
+          manualChunks: (id: string) => {
+            if (id.includes('mockServerEntry')) {
+              return 'mockServerEntry';
+            }
+          },
+        },
+      },
     },
     plugins: [
       checker({
         typescript: true,
         eslint: { lintCommand: 'eslint "./**/*.{ts,tsx}"' },
+        overlay: { initialIsOpen: false },
       }),
       react(),
       istanbul({

@@ -20,7 +20,7 @@
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
 
-    "types": ["vite/client"],
+    "types": ["vite/client", "node", "./window.d.ts"],
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"]

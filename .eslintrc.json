@@ -23,7 +23,8 @@
       "jsx": true
     },
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "tsconfig": "tsconfig.eslint.json"
   },
   "rules": {
     "import/extensions": "off",
@@ -40,7 +41,7 @@
     ],
     "import/no-named-as-default": 0,
     "no-restricted-syntax": "off",
-    "no-console": [1, { "allow": ["error"] }],
+    "no-console": [1, { "allow": ["error", "debug"] }],
     "react/prop-types": "off", // Since we do not use prop-types
     "react/require-default-props": "off" // Since we do not use prop-types
   },

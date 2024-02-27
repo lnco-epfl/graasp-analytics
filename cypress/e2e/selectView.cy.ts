@@ -1,4 +1,4 @@
-import { Context, Item } from '@graasp/sdk';
+import { Context } from '@graasp/sdk';
 
 import {
   SELECT_VIEW_ID,
@@ -7,9 +7,9 @@ import {
 } from '@/config/selectors';
 
 import { buildItemPath } from '../../src/config/paths';
-import MOCK_ITEMS from '../../src/mockServer/mockData/items';
+import MOCK_ITEMS from '../fixtures/items';
 
-const visitItemPage = (item: Item) => {
+const visitItemPage = (item: { id: string }) => {
   cy.visit(buildItemPath(item.id));
 };
 
@@ -17,6 +17,10 @@ const checkContainViewText = (view: Context) =>
   cy.get(`#${buildSelectViewId(view)}`).should('contain', view);
 
 describe('Select platform view ', () => {
+  beforeEach(() => {
+    cy.setUpApi();
+  });
+
   it('select platform view should be library, or player, or builder', () => {
     visitItemPage(MOCK_ITEMS[0]);
     cy.get(`#${SELECT_VIEW_ID}`).click();
@@ -24,6 +28,7 @@ describe('Select platform view ', () => {
       checkContainViewText(ele);
     });
   });
+
   it('change selected view', () => {
     visitItemPage(MOCK_ITEMS[0]);
     cy.get(`#${SELECT_VIEW_ID}`).click();
