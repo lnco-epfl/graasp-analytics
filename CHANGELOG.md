@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.2](https://github.com/graasp/graasp-analytics/compare/v2.3.1...v2.3.2) (2024-03-05)
+
+
+### Bug Fixes
+
+* correct wording and complete translations ([#312](https://github.com/graasp/graasp-analytics/issues/312)) ([f22204d](https://github.com/graasp/graasp-analytics/commit/f22204d66f72f7366f057e9a9777256b2e17e643))
+
 ## [2.3.1](https://github.com/graasp/graasp-analytics/compare/v2.3.0...v2.3.1) (2024-02-27)
 
 
