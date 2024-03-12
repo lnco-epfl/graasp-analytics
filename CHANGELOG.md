@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.3](https://github.com/graasp/graasp-analytics/compare/v2.3.2...v2.3.3) (2024-03-11)
+
+
+### Bug Fixes
+
+* fix platform switch colors for mobile ([#324](https://github.com/graasp/graasp-analytics/issues/324)) ([54775d1](https://github.com/graasp/graasp-analytics/commit/54775d1414df4f52e80130aefad1a61e36f8049d))
+
 ## [2.3.2](https://github.com/graasp/graasp-analytics/compare/v2.3.1...v2.3.2) (2024-03-05)
 
 
