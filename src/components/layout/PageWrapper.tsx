@@ -17,6 +17,7 @@ import { useAnalyticsTranslation } from '@/config/i18n';
 import { HOME_PATH } from '@/config/paths';
 
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
+import ContextsWrapper from '../context/ContextsWrapper';
 import Footer from './Footer';
 import Navigator from './Navigator';
 import Sidebar from './Sidebar';
@@ -58,43 +59,50 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
       ...getNavigationEvents(Platform.Analytics),
     },
   };
+
   return (
-    <Main
-      context={Context.Analytics}
-      drawerContent={<Sidebar />}
-      drawerOpenAriaLabel={t('DRAWER_OPEN_ARIA')}
-      headerRightContent={<UserSwitchWrapper />}
-      PlatformComponent={
-        <PlatformSwitch
-          selected={Platform.Analytics}
-          platformsProps={platformProps}
-          disabledColor="#999"
-          color={
-            isMobile ? theme.palette.primary.main : theme.palette.secondary.main
-          }
-          accentColor={
-            isMobile ? theme.palette.secondary.main : theme.palette.primary.main
-          }
-        />
-      }
-      LinkComponent={LinkComponent}
-    >
-      <Box
-        height="100%"
-        display="flex"
-        flexGrow={1}
-        justifyContent="space-between"
-        flexDirection="column"
-        // counteract the footer
-        pb="64px"
+    <ContextsWrapper>
+      <Main
+        context={Context.Analytics}
+        drawerContent={<Sidebar />}
+        drawerOpenAriaLabel={t('DRAWER_OPEN_ARIA')}
+        headerRightContent={<UserSwitchWrapper />}
+        PlatformComponent={
+          <PlatformSwitch
+            selected={Platform.Analytics}
+            platformsProps={platformProps}
+            disabledColor="#999"
+            color={
+              isMobile
+                ? theme.palette.primary.main
+                : theme.palette.secondary.main
+            }
+            accentColor={
+              isMobile
+                ? theme.palette.secondary.main
+                : theme.palette.primary.main
+            }
+          />
+        }
+        LinkComponent={LinkComponent}
       >
-        <Box id="navigatorContainer" width="100%">
-          <Navigator />
+        <Box
+          height="100%"
+          display="flex"
+          flexGrow={1}
+          justifyContent="space-between"
+          flexDirection="column"
+          // counteract the footer
+          pb="64px"
+        >
+          <Box id="navigatorContainer" width="100%">
+            <Navigator />
+          </Box>
+          {children}
+          <Footer />
         </Box>
-        {children}
-        <Footer />
-      </Box>
-    </Main>
+      </Main>
+    </ContextsWrapper>
   );
 };
 export default PageWrapper;

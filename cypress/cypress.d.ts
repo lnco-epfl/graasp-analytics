@@ -1,5 +1,5 @@
 declare namespace Cypress {
   interface Chainable {
-    setUpApi(): Chainable;
+    setUpApi(props?: Database): Chainable;
   }
 }

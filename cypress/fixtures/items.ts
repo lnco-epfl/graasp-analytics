@@ -1,4 +1,5 @@
 import {
+  AppItemFactory,
   DiscriminatedItem,
   DocumentItemFactory,
   FolderItemFactory,
@@ -66,5 +67,26 @@ const MOCK_ITEMS: DiscriminatedItem[] = [
     creator: MOCK_MEMBERS[1],
   }),
 ];
+
+export const CALC_APP_ITEM = AppItemFactory({
+  id: '820fb440-66dc-44d9-b6b4-bd767ac6085f',
+  name: 'Calculator',
+  path: '820fb440_66dc_44d9_b6b4_bd767ac6085f',
+  creator: MOCK_MEMBERS[0],
+});
+
+export const APP_ITEM_WITH_PARENT = AppItemFactory({
+  id: 'd70ec385-e6b7-4665-b4ea-fd06badeccbc',
+  name: 'App with parent',
+  creator: MOCK_MEMBERS[0],
+  parentItem: MOCK_ITEMS[0],
+});
+
+export const CALC_APP_ITEM_WITH_PARENT = AppItemFactory({
+  id: 'd70ec385-e6b7-4665-b4ea-fd06badeccdd',
+  name: 'Calculator with parent',
+  creator: MOCK_MEMBERS[0],
+  parentItem: MOCK_ITEMS[0],
+});
 
 export default MOCK_ITEMS;

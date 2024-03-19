@@ -9,6 +9,7 @@ const {
   hooks,
   mutations,
   ReactQueryDevtools,
+  axios,
 } = configureQueryClient({
   API_HOST,
   enableWebsocket: true,
@@ -25,4 +26,5 @@ export {
   hooks,
   mutations,
   ReactQueryDevtools,
+  axios,
 };

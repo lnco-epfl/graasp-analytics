@@ -4,12 +4,14 @@ import { Grid, Skeleton } from '@mui/material';
 import Box from '@mui/material/Box';
 
 import { useAnalyticsTranslation } from '@/config/i18n';
+import { APPS_ID } from '@/config/selectors';
 
 import { CONTAINER_HEIGHT } from '../../config/constants';
 import SectionTitle from '../common/SectionTitle';
 import StyledAlert from '../common/StyledAlert';
 import { DataContext } from '../context/DataProvider';
 import { ViewDataContext } from '../context/ViewDataProvider';
+import AppsAnalytics from './charts-layout/AppsAnalytics';
 import ChartsAlerts from './charts-layout/ChartsAlerts';
 import ChartsArea from './charts-layout/ChartsArea';
 import ChartsHeader from './charts-layout/ChartsHeader';
@@ -21,7 +23,7 @@ import ExportData from './functionality/ExportData';
 const ChartsLayout = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
   const { view } = useContext(ViewDataContext);
-  const { error, isLoading } = useContext(DataContext);
+  const { error, isLoading, descendantApps } = useContext(DataContext);
 
   return (
     <>
@@ -69,6 +71,12 @@ const ChartsLayout = (): JSX.Element => {
             <SectionTitle title={t('ITEMS_ANALYTICS_TITLE')} />
             <ItemsAnalytics />
           </div>
+          {descendantApps.length > 0 && (
+            <div id={APPS_ID}>
+              <SectionTitle title={t('APPS_ANALYTICS_TITLE')} />
+              <AppsAnalytics />
+            </div>
+          )}
         </>
       )}
     </>

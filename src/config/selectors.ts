@@ -40,3 +40,13 @@ export const buildMenuDropdownButton = (id: string): string =>
 export const buildMenuItemId = (id: string): string => `menuItem-${id}`;
 
 export const buildSelectViewId = (view: string): string => `selectView-${view}`;
+
+export const buildSidebarListItemId = (listName: string): string =>
+  `listItem-${listName}`;
+
+export const APP_ITEM = 'app';
+export const APPS_ID = 'apps';
+export const APP_ITEM_CLASS_NAME = 'appItemContainer';
+
+export const buildAppItemSelector = (appID: string): string =>
+  `appItem-${appID}`;

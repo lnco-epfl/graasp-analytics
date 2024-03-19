@@ -120,6 +120,21 @@ const mockServer = ({
         return new Response(StatusCodes.NOT_FOUND);
       });
 
+      // membership
+      this.get(`/item-memberships`, (schema, request) => {
+        const itemId = request.queryParams.itemId;
+        if (!itemId) {
+          throw new Error('item id does not exist');
+        }
+
+        const memberships = schema
+          .all('membership')
+          // TODO: remove any after figuring out the type
+          .filter(({ item }: any) => itemId === item.id);
+
+        return { data: { [itemId as string]: memberships.models } };
+      });
+
       // get item
       this.get(`/${buildGetItemRoute(':id')}`, (schema, request) => {
         const itemId = request.url.split('/').at(-1);
@@ -137,6 +152,25 @@ const mockServer = ({
 
       // get children
       this.get(`/items/:id/children`, (schema, request) => {
+        const itemId = request.params.id;
+        if (!itemId) {
+          throw new Error('item id does not exist');
+        }
+
+        return (
+          schema
+            .all('item')
+            // TODO: remove any after figuring out the type
+            .filter(({ id, path }: any) =>
+              path.includes(
+                `${buildPathFromId(itemId)}.${buildPathFromId(id)}`,
+              ),
+            )
+        );
+      });
+
+      // get descendants
+      this.get(`/items/:id/descendants`, (schema, request) => {
         const itemId = request.params.id;
         if (!itemId) {
           throw new Error('item id does not exist');

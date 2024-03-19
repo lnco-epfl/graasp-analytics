@@ -32,6 +32,7 @@
   "TAB_GENERAL": "General",
   "TAB_ITEMS": "Items",
   "TAB_USERS": "Users",
+  "TAB_APPS": "Apps",
   "TOTAL_ACTIONS_DISTRIBUTIONS": "Total Actions Distributions",
   "TOTAL_ACTIONS": "Total actions",
   "USERS_ANALYTICS_TITLE": "Users",
@@ -53,6 +54,8 @@
   "SEE_PROFILE_TEXT": "See Profile",
   "USER_SWITCH_SIGN_OUT_BUTTON": "Sign Out",
   "USER_SWITCH_SIGNED_OUT_TOOLTIP": "You are not signed in.",
+  "USER_SWITCH_SWITCH_USER_TEXT": "Sign in with another account",
+  "APPS_ANALYTICS_TITLE": "Applications",
   "USER_SWITCH_SIGN_IN_TEXT": "Sign In",
   "DRAWER_OPEN_ARIA": "Open Sidebar"
 }
