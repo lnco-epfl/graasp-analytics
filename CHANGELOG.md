@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/graasp/graasp-analytics/compare/v2.3.3...v2.4.0) (2024-03-19)
+
+
+### Features
+
+* add app analytics ([#323](https://github.com/graasp/graasp-analytics/issues/323)) ([93b4e0f](https://github.com/graasp/graasp-analytics/commit/93b4e0f0f23798c7b1c13e03a131bf5cd617d67e))
+
+
+### Bug Fixes
+
+* fix date chart ([#329](https://github.com/graasp/graasp-analytics/issues/329)) ([7a7843f](https://github.com/graasp/graasp-analytics/commit/7a7843f2a8d98898b995127787b718bf625b956a))
+* update selector ([8ee347f](https://github.com/graasp/graasp-analytics/commit/8ee347f698a8587b460cf047cf5b66c72c8809ea))
+
 ## [2.3.3](https://github.com/graasp/graasp-analytics/compare/v2.3.2...v2.3.3) (2024-03-11)
 
 
