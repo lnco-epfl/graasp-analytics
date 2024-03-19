@@ -15,9 +15,9 @@ const getActionDay = (action: Action) => {
   const dateKey = 'createdAt';
   // createdAt should have the format "2020-12-31T23:59:59.999Z"
   const dateObject = action[dateKey];
-  // extract only the date information
+  // extract only the date information, ignore time
   const day = new Date(dateObject);
-  return day;
+  return `${day.getDate()}-${day.getMonth() + 1}-${day.getFullYear()}`;
 };
 
 // Takes array of action objects and returns an object with {key: value} pairs of {date: #-of-actions}
@@ -35,13 +35,9 @@ export const formatActionsByDay = (actionsByDayObject: {
   const actionsByDayArray: [string, number][] =
     Object.entries(actionsByDayObject);
   const sortedActionsByDay = [...actionsByDayArray];
-  sortedActionsByDay.sort(([d1], [d2]) => Date.parse(d1) - Date.parse(d2));
   return sortedActionsByDay.map(([date, count]) => {
-    const entryDate = new Date(date);
     return {
-      date: `${entryDate.getDate()}-${
-        entryDate.getMonth() + 1
-      }-${entryDate.getFullYear()}`,
+      date,
       count,
     };
   });
