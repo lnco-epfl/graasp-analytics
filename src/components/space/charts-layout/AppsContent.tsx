@@ -41,7 +41,7 @@ const AppContent = ({
         </Typography>
         <Box sx={{ border: '1px solid rgba(0, 0, 0, 0.12)' }}>
           <AppItem
-            isResizable
+            isResizable={false}
             item={item}
             height={ITEM_DEFAULT_HEIGHT}
             requestApiAccessToken={(payload: {
@@ -55,7 +55,7 @@ const AppContent = ({
               memberId: member?.id,
               permission: permission || PermissionLevel.Read,
               settings: item.settings,
-              lang: item.settings?.lang || member?.extra?.lang || DEFAULT_LANG,
+              lang: item.lang || member?.extra?.lang || DEFAULT_LANG,
               context: Context.Analytics,
             }}
           />

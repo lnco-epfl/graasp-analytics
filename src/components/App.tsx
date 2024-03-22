@@ -10,14 +10,21 @@ import {
 import { hooks } from '@/config/queryClient';
 
 import {
+  APPS_ANALYTICS_PATH,
   EMBEDDED_ITEM_PATH,
   HOME_PATH,
+  ITEMS_ANALYTICS_PATH,
   SHARED_ITEMS_PATH,
+  USERS_ANALYTICS_PATH,
   buildItemPath,
 } from '../config/paths';
 import PageWrapper from './layout/PageWrapper';
 import HomePage from './pages/HomePage';
-import ItemPage from './pages/ItemPage';
+import AppsAnalyticPage from './pages/Item/AppsAnalyticPage';
+import GeneralAnalyticsPage from './pages/Item/GeneralAnalyticsPage';
+import ItemAnalyticPage from './pages/Item/ItemAnalyticPage';
+import ItemPage from './pages/Item/ItemPage';
+import UsersAnalyticPage from './pages/Item/UsersAnalyticPage';
 import SharedItemPage from './pages/SharedItemPage';
 
 const App = (): JSX.Element => {
@@ -44,7 +51,15 @@ const App = (): JSX.Element => {
         >
           <Route path={HOME_PATH} element={<HomePage />} />
           <Route path={SHARED_ITEMS_PATH} element={<SharedItemPage />} />
-          <Route path={buildItemPath()} element={<ItemPage />} />
+          <Route path={buildItemPath()} element={<ItemPage />}>
+            <Route index element={<GeneralAnalyticsPage />} />
+            <Route
+              path={USERS_ANALYTICS_PATH}
+              element={<UsersAnalyticPage />}
+            />
+            <Route path={ITEMS_ANALYTICS_PATH} element={<ItemAnalyticPage />} />
+            <Route path={APPS_ANALYTICS_PATH} element={<AppsAnalyticPage />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

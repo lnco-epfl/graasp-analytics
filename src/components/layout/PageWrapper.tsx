@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 import { Box, styled, useTheme } from '@mui/material';
 
@@ -14,7 +14,7 @@ import {
 
 import { HOST_MAP } from '@/config/constants';
 import { useAnalyticsTranslation } from '@/config/i18n';
-import { HOME_PATH } from '@/config/paths';
+import { HOME_PATH, SHARED_ITEMS_PATH } from '@/config/paths';
 
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import ContextsWrapper from '../context/ContextsWrapper';
@@ -41,6 +41,8 @@ const LinkComponent = ({ children }: { children: JSX.Element }) => (
 const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
   const { t } = useAnalyticsTranslation();
   const { itemId } = useParams();
+  const { pathname } = useLocation();
+
   const theme = useTheme();
   const { isMobile } = useMobileView();
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
@@ -85,12 +87,13 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
           />
         }
         LinkComponent={LinkComponent}
+        // to close the drawer at home and shared pages, So user won't move to item routes
+        open={pathname !== HOME_PATH && pathname !== SHARED_ITEMS_PATH}
       >
         <Box
           height="100%"
           display="flex"
           flexGrow={1}
-          justifyContent="space-between"
           flexDirection="column"
           // counteract the footer
           pb="64px"
