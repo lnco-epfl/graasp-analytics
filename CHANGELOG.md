@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/graasp/graasp-analytics/compare/v2.4.0...v2.5.0) (2024-03-22)
+
+
+### Features
+
+* have separate routes instead of sections ([#332](https://github.com/graasp/graasp-analytics/issues/332)) ([8dcf1cc](https://github.com/graasp/graasp-analytics/commit/8dcf1cc18f90a204fabe4dd333f165b1e7f06194))
+
 ## [2.4.0](https://github.com/graasp/graasp-analytics/compare/v2.3.3...v2.4.0) (2024-03-19)
 
 
