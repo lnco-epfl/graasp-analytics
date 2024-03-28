@@ -28,7 +28,7 @@ const Root = (): JSX.Element => (
       <CssBaseline />
       <I18nextProvider i18n={i18nConfig}>
         <App />
-        <ToastContainer />
+        <ToastContainer stacked />
       </I18nextProvider>
     </ThemeProvider>
     {import.meta.env.DEV && import.meta.env.MODE !== 'test' && (
