@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import GoogleMapReact from 'google-map-react';
 import useSupercluster from 'use-supercluster';
 
+import StyledAlert from '@/components/common/StyledAlert';
 import { GOOGLE_KEY } from '@/config/env';
 import { useAnalyticsTranslation } from '@/config/i18n';
 
@@ -34,10 +35,6 @@ const ActionsMap = (): JSX.Element | null => {
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const { actions, selectedUsers } = useContext(DataContext);
 
-  if (!GOOGLE_KEY) {
-    return null;
-  }
-
   // actionsToChart is the array converted to GeoJSON Feature objects below
   // if you remove all names in the react-select dropdown, selectedUsers becomes null
   // if no users are selected (i.e. selectedUsers.size === 0), show all actions
@@ -50,6 +47,11 @@ const ActionsMap = (): JSX.Element | null => {
     actionsToChart = actions;
   } else {
     actionsToChart = filterActionsByUsers(actions, selectedUsers);
+  }
+
+  // NO Google key
+  if (!GOOGLE_KEY) {
+    return null;
   }
 
   // GeoJSON Feature objects
@@ -78,76 +80,88 @@ const ActionsMap = (): JSX.Element | null => {
     mapRef.current.panTo({ lng: longitude, lat: latitude });
   };
 
+  // no actions for that item
+  if (!actionsToChart.length) {
+    return null;
+  }
+
   return (
     <>
       <ChartTitle title={t('ACTIONS_BY_LOCATION')} />
-      <ChartContainer>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: GOOGLE_KEY }}
-          defaultCenter={{ lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE }}
-          defaultZoom={DEFAULT_ZOOM}
-          yesIWantToUseGoogleMapApiInternals
-          onGoogleApiLoaded={({ map }) => {
-            mapRef.current = map;
-          }}
-          onChange={(map) => {
-            setZoom(map.zoom);
-            setBounds([
-              map.bounds.nw.lng,
-              map.bounds.se.lat,
-              map.bounds.se.lng,
-              map.bounds.nw.lat,
-            ]);
-          }}
-        >
-          {clusters.map((cluster) => {
-            const [longitude, latitude] = cluster.geometry.coordinates;
-            const { cluster: isCluster, point_count: pointCount } =
-              cluster.properties;
-            if (isCluster) {
-              return (
-                <Marker key={cluster.id}>
-                  <div
-                    style={{
-                      color: '#fff',
-                      background: theme.palette.primary.main,
-                      borderRadius: '50%',
-                      padding: 10,
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      cursor: 'pointer',
-                      width: `${calculateClusterRadius(
-                        pointCount,
-                        points.length,
-                        10,
-                        20,
-                      )}px`,
-                      height: `${calculateClusterRadius(
-                        pointCount,
-                        points.length,
-                        10,
-                        20,
-                      )}px`,
-                    }}
-                    onClick={() => handleClusterZoom(longitude, latitude)}
-                    onKeyDown={(event) => {
-                      if (event.key === ENTER_KEY) {
-                        handleClusterZoom(longitude, latitude);
-                      }
-                    }}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    {pointCount}
-                  </div>
-                </Marker>
-              );
-            }
-            return null;
-          })}
-        </GoogleMapReact>
-      </ChartContainer>
+      {points.length !== actionsToChart.length && (
+        <StyledAlert severity="warning">
+          {t('ACTIONS_MIGHT_HAS_NO_GEOLOCATION')}
+        </StyledAlert>
+      )}
+      {points.length > 0 && (
+        <ChartContainer>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: GOOGLE_KEY }}
+            defaultCenter={{ lat: DEFAULT_LATITUDE, lng: DEFAULT_LONGITUDE }}
+            defaultZoom={DEFAULT_ZOOM}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map }) => {
+              mapRef.current = map;
+            }}
+            onChange={(map) => {
+              setZoom(map.zoom);
+              setBounds([
+                map.bounds.nw.lng,
+                map.bounds.se.lat,
+                map.bounds.se.lng,
+                map.bounds.nw.lat,
+              ]);
+            }}
+          >
+            {clusters.map((cluster) => {
+              const [longitude, latitude] = cluster.geometry.coordinates;
+              const { cluster: isCluster, point_count: pointCount } =
+                cluster.properties;
+              if (isCluster) {
+                return (
+                  <Marker key={cluster.id}>
+                    <div
+                      style={{
+                        color: '#fff',
+                        background: theme.palette.primary.main,
+                        borderRadius: '50%',
+                        padding: 10,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        width: `${calculateClusterRadius(
+                          pointCount,
+                          points.length,
+                          10,
+                          20,
+                        )}px`,
+                        height: `${calculateClusterRadius(
+                          pointCount,
+                          points.length,
+                          10,
+                          20,
+                        )}px`,
+                      }}
+                      onClick={() => handleClusterZoom(longitude, latitude)}
+                      onKeyDown={(event) => {
+                        if (event.key === ENTER_KEY) {
+                          handleClusterZoom(longitude, latitude);
+                        }
+                      }}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      {pointCount}
+                    </div>
+                  </Marker>
+                );
+              }
+              return null;
+            })}
+          </GoogleMapReact>
+        </ChartContainer>
+      )}
     </>
   );
 };

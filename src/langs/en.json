@@ -57,5 +57,6 @@
   "USER_SWITCH_SWITCH_USER_TEXT": "Sign in with another account",
   "APPS_ANALYTICS_TITLE": "Applications",
   "USER_SWITCH_SIGN_IN_TEXT": "Sign In",
-  "DRAWER_OPEN_ARIA": "Open Sidebar"
+  "DRAWER_OPEN_ARIA": "Open Sidebar",
+  "ACTIONS_MIGHT_HAS_NO_GEOLOCATION": "Some actions might have no geolocation records"
 }
