@@ -14,7 +14,7 @@ import {
 
 import { HOST_MAP } from '@/config/constants';
 import { useAnalyticsTranslation } from '@/config/i18n';
-import { HOME_PATH, SHARED_ITEMS_PATH } from '@/config/paths';
+import { HOME_PATH } from '@/config/paths';
 
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import ContextsWrapper from '../context/ContextsWrapper';
@@ -61,6 +61,7 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
       ...getNavigationEvents(Platform.Analytics),
     },
   };
+  const isRoot = pathname === HOME_PATH;
 
   return (
     <ContextsWrapper>
@@ -88,7 +89,7 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
         }
         LinkComponent={LinkComponent}
         // to close the drawer at home and shared pages, So user won't move to item routes
-        open={pathname !== HOME_PATH && pathname !== SHARED_ITEMS_PATH}
+        open={pathname !== HOME_PATH}
       >
         <Box
           height="100%"
@@ -98,9 +99,11 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
           // counteract the footer
           pb="64px"
         >
-          <Box id="navigatorContainer" width="100%">
-            <Navigator />
-          </Box>
+          {!isRoot && (
+            <Box id="navigatorContainer" width="100%">
+              <Navigator />
+            </Box>
+          )}
           {children}
           <Footer />
         </Box>

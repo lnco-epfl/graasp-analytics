@@ -14,7 +14,6 @@ import {
   EMBEDDED_ITEM_PATH,
   HOME_PATH,
   ITEMS_ANALYTICS_PATH,
-  SHARED_ITEMS_PATH,
   USERS_ANALYTICS_PATH,
   buildItemPath,
 } from '../config/paths';
@@ -25,7 +24,6 @@ import GeneralAnalyticsPage from './pages/Item/GeneralAnalyticsPage';
 import ItemAnalyticPage from './pages/Item/ItemAnalyticPage';
 import ItemPage from './pages/Item/ItemPage';
 import UsersAnalyticPage from './pages/Item/UsersAnalyticPage';
-import SharedItemPage from './pages/SharedItemPage';
 
 const App = (): JSX.Element => {
   const { data: currentMember } = hooks.useCurrentMember();
@@ -50,7 +48,6 @@ const App = (): JSX.Element => {
           }
         >
           <Route path={HOME_PATH} element={<HomePage />} />
-          <Route path={SHARED_ITEMS_PATH} element={<SharedItemPage />} />
           <Route path={buildItemPath()} element={<ItemPage />}>
             <Route index element={<GeneralAnalyticsPage />} />
             <Route

@@ -11,7 +11,6 @@ import { MainMenu as GraaspMainMenu } from '@graasp/ui';
 import { useAnalyticsTranslation } from '@/config/i18n';
 import {
   HOME_PATH,
-  SHARED_ITEMS_PATH,
   buildAppsAnalyticsPath,
   buildItemPath,
   buildItemsAnalyticsPath,
@@ -28,8 +27,7 @@ const Sidebar: FC = () => {
   const { pathname } = useLocation();
   const { descendantApps } = useContext(DataContext);
 
-  const disableMenuItem =
-    pathname === HOME_PATH || pathname == SHARED_ITEMS_PATH;
+  const disableMenuItem = pathname === HOME_PATH;
 
   return (
     <GraaspMainMenu>

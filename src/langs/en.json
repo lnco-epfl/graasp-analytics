@@ -24,7 +24,7 @@
   "MOST_INTERACTED_ITEMS_BY_ACTION": "{{nb}} Most Interacted Items by Action",
   "MOST_INTERACTED_ITEMS_BY_USER": "{{nb}} Most Interacted Items by User",
   "NO_ACTIONS_TO_SHOW_FOR_THIS_USER": "No actions to show for this user",
-  "NO_ITEM_SELECTED": "Please select an item from the navigator to view the analytics.",
+  "NO_ITEM_SELECTED": "You have to select an item to view the analytics.",
   "NO_USER_SELECTED": "No user selected",
   "OTHER_ACTION_TYPE": "Other",
   "SAMPLE_ACTIONS_CHARTS_MESSAGE": "Displaying '{{view}} view' actions from a maximum requested sample size of {{requestedSampleSize}} actions.",
@@ -58,5 +58,11 @@
   "APPS_ANALYTICS_TITLE": "Applications",
   "USER_SWITCH_SIGN_IN_TEXT": "Sign In",
   "DRAWER_OPEN_ARIA": "Open Sidebar",
+  "ERROR_FETCHING_DATA": "An error occurred while fetching data, Please try again later",
+  "ITEM_SEARCH_PLACEHOLDER": "Search by item name",
+  "RECENT_ITEMS_TITLE": "Recent Items",
+  "NO_ITEMS_EXIT": "No items found.",
+  "NO_ITEMS_MATCH_SEARCH": "No search results found.",
+  "HOME_SHOW_MORE": "Show more...",
   "ACTIONS_MIGHT_HAS_NO_GEOLOCATION": "Some actions might have no geolocation records"
 }

@@ -6,11 +6,7 @@ import { HomeMenu, ItemMenu, Navigation } from '@graasp/ui';
 import { useCommonTranslation } from '@/config/i18n';
 
 import { NAVIGATOR_BACKGROUND_COLOR } from '../../config/constants';
-import {
-  HOME_PATH,
-  SHARED_ITEMS_PATH,
-  buildItemPath,
-} from '../../config/paths';
+import { HOME_PATH, buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
 import {
   BREADCRUMBS_NAVIGATOR_ID,
@@ -21,14 +17,8 @@ import {
   buildNavigationDropDownId,
 } from '../../config/selectors';
 
-const {
-  useItem,
-  useParents,
-  useCurrentMember,
-  useChildren,
-  useOwnItems,
-  useSharedItems,
-} = hooks;
+const { useItem, useParents, useCurrentMember, useChildren, useOwnItems } =
+  hooks;
 
 const Navigator = (): JSX.Element | null => {
   const { t } = useCommonTranslation();
@@ -52,14 +42,7 @@ const Navigator = (): JSX.Element | null => {
     return null;
   }
 
-  const menu = [
-    { name: t(COMMON.USER_OWN_ITEMS), id: 'home', to: HOME_PATH },
-    {
-      name: t(COMMON.USER_SHARED_WITH_ITEMS),
-      id: 'shared',
-      to: SHARED_ITEMS_PATH,
-    },
-  ];
+  const menu = [{ name: t(COMMON.USER_OWN_ITEMS), id: 'home', to: HOME_PATH }];
 
   const renderRoot = () => {
     // no root access if signed out
@@ -83,18 +66,14 @@ const Navigator = (): JSX.Element | null => {
           buildIconId={buildNavigationDropDownId}
           itemId="root"
           buildMenuItemId={buildMenuItemId}
-          useChildren={
-            isParentOwned || pathname === HOME_PATH
-              ? (useOwnItems as any)
-              : useSharedItems
-          }
+          useChildren={useOwnItems as any}
           buildToItemPath={buildItemPath}
         />
       </>
     );
   };
 
-  if (!item && pathname !== SHARED_ITEMS_PATH && pathname !== HOME_PATH) {
+  if (!item && pathname !== HOME_PATH) {
     return null;
   }
 
