@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/graasp/graasp-analytics/compare/v2.5.0...v2.6.0) (2024-04-04)
+
+
+### Features
+
+* display recent items at root ([#337](https://github.com/graasp/graasp-analytics/issues/337)) ([878a15d](https://github.com/graasp/graasp-analytics/commit/878a15da1ef565c1818d8456887b159a253385e6))
+* unify action colors ([#341](https://github.com/graasp/graasp-analytics/issues/341)) ([cfd2763](https://github.com/graasp/graasp-analytics/commit/cfd27632a546322273613d4185d59c293e3724b2))
+* use autocomplete for both user and actions select ([#336](https://github.com/graasp/graasp-analytics/issues/336)) ([7a44779](https://github.com/graasp/graasp-analytics/commit/7a44779b70eeee4795d9621eb6f2a6a1ba861794))
+
+
+### Bug Fixes
+
+* don't display map if there's no geolocation actions ([#335](https://github.com/graasp/graasp-analytics/issues/335)) ([7d08891](https://github.com/graasp/graasp-analytics/commit/7d0889150d2eeb1f6a5cf900c0de4fec8a2ff4e3))
+* use stacked notifs ([#342](https://github.com/graasp/graasp-analytics/issues/342)) ([d23a207](https://github.com/graasp/graasp-analytics/commit/d23a207edb7d52fc747efd3fb7c6ca38366e4d4d))
+
 ## [2.5.0](https://github.com/graasp/graasp-analytics/compare/v2.4.0...v2.5.0) (2024-03-22)
 
 
