@@ -1,14 +1,6 @@
-import { useContext } from 'react';
+import { SyntheticEvent, useContext } from 'react';
 
-import {
-  Box,
-  Chip,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Stack,
-} from '@mui/material';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Autocomplete, FormControl, Stack, TextField } from '@mui/material';
 
 import { Member } from '@graasp/sdk';
 
@@ -25,43 +17,27 @@ const UsersSelect = (): JSX.Element | null => {
     return null;
   }
 
-  const handleChange = (event: SelectChangeEvent<Member[]>) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedUsers(value as Member[]);
+  const handleChange = (
+    _event: SyntheticEvent<Element, Event>,
+    member: Member[],
+  ) => {
+    setSelectedUsers(member);
   };
 
   return (
-    <Stack direction="row" alignItems="center" flexGrow={1} flexShrink={0}>
+    <Stack direction="row" alignItems="center" width="100%">
       <FormControl fullWidth>
-        <InputLabel id="demo-multiple-chip-label">
-          {t('USERS_SELECT')}
-        </InputLabel>
-        <Select
-          label={t('USERS_SELECT')}
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
+        <Autocomplete
           multiple
           value={selectedUsers}
           onChange={handleChange}
-          // input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-          renderValue={(selected: Member[]) => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value.id} label={value.name} />
-              ))}
-            </Box>
+          renderInput={(params) => (
+            <TextField {...params} label={t('USERS_SELECT')} />
           )}
-        >
-          {allMembers.map((m) => (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            <MenuItem key={m.id} value={m}>
-              {m.name}
-            </MenuItem>
-          ))}
-        </Select>
+          getOptionLabel={(option) => option.name}
+          options={allMembers}
+          limitTags={2}
+        />
       </FormControl>
     </Stack>
   );

@@ -28,10 +28,10 @@ const ChartsHeader = (): JSX.Element => {
   if (match) {
     return (
       <Stack
-        direction="row"
+        direction={{ xs: 'column', sm: 'row' }}
         justifyContent="space-between"
         alignItems="center"
-        spacing={4}
+        spacing={{ xs: 2, sm: 3, lg: 4 }}
         p={2}
       >
         <ViewSelect />
