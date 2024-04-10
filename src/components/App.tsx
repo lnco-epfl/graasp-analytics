@@ -12,6 +12,7 @@ import { hooks } from '@/config/queryClient';
 import {
   APPS_ANALYTICS_PATH,
   EMBEDDED_ITEM_PATH,
+  EXPORT_ANALYTICS_PATH,
   HOME_PATH,
   ITEMS_ANALYTICS_PATH,
   USERS_ANALYTICS_PATH,
@@ -20,6 +21,7 @@ import {
 import PageWrapper from './layout/PageWrapper';
 import HomePage from './pages/HomePage';
 import AppsAnalyticPage from './pages/Item/AppsAnalyticPage';
+import ExportAnalyticsPage from './pages/Item/ExportAnalyticsPage';
 import GeneralAnalyticsPage from './pages/Item/GeneralAnalyticsPage';
 import ItemAnalyticPage from './pages/Item/ItemAnalyticPage';
 import ItemPage from './pages/Item/ItemPage';
@@ -56,6 +58,10 @@ const App = (): JSX.Element => {
             />
             <Route path={ITEMS_ANALYTICS_PATH} element={<ItemAnalyticPage />} />
             <Route path={APPS_ANALYTICS_PATH} element={<AppsAnalyticPage />} />
+            <Route
+              path={EXPORT_ANALYTICS_PATH}
+              element={<ExportAnalyticsPage />}
+            />
           </Route>
         </Route>
       </Routes>

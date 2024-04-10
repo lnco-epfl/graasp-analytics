@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 
 import { routines } from '@graasp/query-client';
 
-import i18n from './i18n';
+import i18n, { ANALYTICS_NAMESPACE } from './i18n';
 
 const { exportActionsRoutine } = routines;
 
@@ -22,10 +22,10 @@ export default ({ type, payload }: { type: string; payload?: any }): void => {
   }
   // error notification
   if (payload?.error && message) {
-    toast.error(i18n.t(message));
+    toast.error(i18n.t(message, { ns: ANALYTICS_NAMESPACE }));
   }
   // success notification
   else if (message) {
-    toast.success(i18n.t(message));
+    toast.success(i18n.t(message, { ns: ANALYTICS_NAMESPACE }));
   }
 };

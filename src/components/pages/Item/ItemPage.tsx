@@ -11,7 +11,10 @@ import ChartsAlerts from '@/components/space/charts-layout/ChartsAlerts';
 import ChartsHeader from '@/components/space/charts-layout/ChartsHeader';
 import { CONTAINER_HEIGHT } from '@/config/constants';
 import { useAnalyticsTranslation } from '@/config/i18n';
-import { buildAppsAnalyticsPath } from '@/config/paths';
+import {
+  buildAppsAnalyticsPath,
+  buildExportAnalyticsPath,
+} from '@/config/paths';
 
 const ItemPage = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
@@ -21,11 +24,12 @@ const ItemPage = (): JSX.Element => {
   const { itemId } = useParams();
 
   const isAppAnalytics = pathname === buildAppsAnalyticsPath(itemId);
+  const isExportAnalytics = pathname === buildExportAnalyticsPath(itemId);
 
   if (!error && !isLoading) {
     return (
       <>
-        {!isAppAnalytics && (
+        {!isAppAnalytics && !isExportAnalytics && (
           <>
             <ChartsHeader />
             <ChartsAlerts />

@@ -3,6 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import AppsIcon from '@mui/icons-material/Apps';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import FolderIcon from '@mui/icons-material/Folder';
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -12,6 +13,7 @@ import { useAnalyticsTranslation } from '@/config/i18n';
 import {
   HOME_PATH,
   buildAppsAnalyticsPath,
+  buildExportAnalyticsPath,
   buildItemPath,
   buildItemsAnalyticsPath,
   buildUsersAnalyticsPath,
@@ -61,6 +63,12 @@ const Sidebar: FC = () => {
       ) : (
         <></>
       )}
+      <LinkMenuItem
+        to={buildExportAnalyticsPath(itemId)}
+        disabled={disableMenuItem}
+        icon={<CloudDownloadIcon />}
+        text={t('TAB_EXPORT')}
+      />
     </GraaspMainMenu>
   );
 };

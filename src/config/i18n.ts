@@ -18,7 +18,7 @@ declare module 'i18next' {
 const i18n = buildI18n().use(initReactI18next);
 
 // add analytics translations
-const ANALYTICS_NAMESPACE = 'analytics';
+export const ANALYTICS_NAMESPACE = 'analytics';
 i18n.addResourceBundle('en', ANALYTICS_NAMESPACE, en);
 i18n.addResourceBundle('it', ANALYTICS_NAMESPACE, it);
 i18n.addResourceBundle('ar', ANALYTICS_NAMESPACE, ar);
