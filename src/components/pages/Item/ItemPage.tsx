@@ -6,6 +6,7 @@ import { Box, Grid, Skeleton } from '@mui/material';
 import StyledAlert from '@/components/common/StyledAlert';
 import { DataContext } from '@/components/context/DataProvider';
 import { ViewDataContext } from '@/components/context/ViewDataProvider';
+import ActionsLegend from '@/components/space/charts-layout/ActionsLegend';
 import ChartsAlerts from '@/components/space/charts-layout/ChartsAlerts';
 import ChartsHeader from '@/components/space/charts-layout/ChartsHeader';
 import { CONTAINER_HEIGHT } from '@/config/constants';
@@ -31,6 +32,7 @@ const ItemPage = (): JSX.Element => {
           </>
         )}
         <Outlet />
+        <ActionsLegend />
       </>
     );
   }

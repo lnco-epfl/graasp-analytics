@@ -18,7 +18,6 @@ import { HOME_PATH } from '@/config/paths';
 
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
 import ContextsWrapper from '../context/ContextsWrapper';
-import Footer from './Footer';
 import Navigator from './Navigator';
 import Sidebar from './Sidebar';
 
@@ -105,7 +104,6 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
             </Box>
           )}
           {children}
-          <Footer />
         </Box>
       </Main>
     </ContextsWrapper>

@@ -21,6 +21,7 @@ import ChartContainer from '../../common/ChartContainer';
 import ChartTitle from '../../common/ChartTitle';
 import { DataContext } from '../../context/DataProvider';
 import { ViewDataContext } from '../../context/ViewDataProvider';
+import ActionChartLabel from '../charts-layout/ActionChartLabel';
 import EmptyChart from './EmptyChart';
 
 const TotalActionsByVerbChart = (): JSX.Element | null => {
@@ -88,7 +89,8 @@ const TotalActionsByVerbChart = (): JSX.Element | null => {
             data={formattedAggregateDataSorted}
             dataKey="actionCount"
             nameKey="type"
-            label={({ value }) => `${value}%`}
+            label={ActionChartLabel}
+            labelLine={false}
           >
             {formattedAggregateDataSorted.map((entry) => (
               <Cell
