@@ -90,14 +90,7 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
         // to close the drawer at home and shared pages, So user won't move to item routes
         open={pathname !== HOME_PATH}
       >
-        <Box
-          height="100%"
-          display="flex"
-          flexGrow={1}
-          flexDirection="column"
-          // counteract the footer
-          pb="64px"
-        >
+        <Box height="100%" display="flex" flexGrow={1} flexDirection="column">
           {!isRoot && (
             <Box id="navigatorContainer" width="100%">
               <Navigator />
