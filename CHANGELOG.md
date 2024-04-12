@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/graasp/graasp-analytics/compare/v2.6.0...v2.7.0) (2024-04-11)
+
+
+### Features
+
+* actions legend and label ([#344](https://github.com/graasp/graasp-analytics/issues/344)) ([24bc22b](https://github.com/graasp/graasp-analytics/commit/24bc22b20e4096529be7ba334ab64d01dbf48e33))
+* separate export item in a route ([#346](https://github.com/graasp/graasp-analytics/issues/346)) ([d0c7aa0](https://github.com/graasp/graasp-analytics/commit/d0c7aa0dc26420bb712d4eae54206fdd834970b9))
+
+
+### Bug Fixes
+
+* cleanup favicons ([c0cede9](https://github.com/graasp/graasp-analytics/commit/c0cede9e93b6425c95cbd9c284b9453d0c699411))
+* udpate favicon and font ([5488ceb](https://github.com/graasp/graasp-analytics/commit/5488ceb541c61cf7d1d949bd0ff528986e0c0c6f))
+
 ## [2.6.0](https://github.com/graasp/graasp-analytics/compare/v2.5.0...v2.6.0) (2024-04-04)
 
 
