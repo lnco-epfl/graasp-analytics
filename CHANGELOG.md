@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.1](https://github.com/graasp/graasp-analytics/compare/v2.7.0...v2.7.1) (2024-04-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/react to v7.110.0 ([#304](https://github.com/graasp/graasp-analytics/issues/304)) ([54cf35d](https://github.com/graasp/graasp-analytics/commit/54cf35d6999d4aa1d53d779642c4b2c2f42a9aa9))
+
 ## [2.7.0](https://github.com/graasp/graasp-analytics/compare/v2.6.0...v2.7.0) (2024-04-11)
 
 
