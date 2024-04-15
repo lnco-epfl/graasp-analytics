@@ -6036,7 +6036,7 @@ __metadata:
     typescript: "npm:5.3.3"
     use-supercluster: "npm:0.4.0"
     uuid: "npm:9.0.1"
-    vite: "npm:5.1.4"
+    vite: "npm:5.1.7"
     vite-plugin-checker: "npm:0.6.4"
     vite-plugin-istanbul: "npm:5.0.0"
   languageName: unknown
@@ -10333,9 +10333,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.1.4":
-  version: 5.1.4
-  resolution: "vite@npm:5.1.4"
+"vite@npm:5.1.7":
+  version: 5.1.7
+  resolution: "vite@npm:5.1.7"
   dependencies:
     esbuild: "npm:^0.19.3"
     fsevents: "npm:~2.3.3"
@@ -10369,7 +10369,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/e9003b853f0784260f4fe7ce0190124b347fd8fd6bf889a07080facd0d9a9667eaff4022eddb1ba3f0283ef69d15d77f84bca832082e48874a7a62e7f6d66b08
+  checksum: 10/f1b31e32699f33ba18501413a35e1f7ced20cbf39510543c59041c3482aa877a10970f2ad64623707671c112e3ef3ea3095f125911e65fcb165bdee5a4116263
   languageName: node
   linkType: hard
 
