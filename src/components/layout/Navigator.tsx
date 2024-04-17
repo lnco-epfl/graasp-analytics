@@ -35,9 +35,6 @@ const Navigator = (): JSX.Element | null => {
     enabled: !!itemPath,
   });
 
-  const isParentOwned =
-    (item?.creator?.id ?? parents?.[0]?.creator?.id) === currentMember?.id;
-
   if (isItemLoading || areParentsLoading) {
     return null;
   }
@@ -50,8 +47,7 @@ const Navigator = (): JSX.Element | null => {
       return null;
     }
 
-    const selected =
-      isParentOwned || pathname === HOME_PATH ? menu[0] : menu[1];
+    const selected = menu[0];
 
     return (
       <>
