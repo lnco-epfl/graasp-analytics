@@ -1,5 +1,6 @@
 import ReactGA from 'react-ga4';
 import { I18nextProvider } from 'react-i18next';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -27,7 +28,9 @@ const Root = (): JSX.Element => (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <I18nextProvider i18n={i18nConfig}>
-        <App />
+        <Router>
+          <App />
+        </Router>
         <ToastContainer stacked />
       </I18nextProvider>
     </ThemeProvider>
