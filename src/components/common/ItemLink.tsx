@@ -36,6 +36,7 @@ const ItemLink = ({ item }: { item: DiscriminatedItem }): JSX.Element => {
           iconSrc={iconSrc}
           alt={alt}
           mimetype={getMimetype(item.extra)}
+          size="40px"
           sx={{
             width: '40px',
             height: '40px',
