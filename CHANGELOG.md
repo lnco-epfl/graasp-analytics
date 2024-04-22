@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.3](https://github.com/graasp/graasp-analytics/compare/v2.7.2...v2.7.3) (2024-04-22)
+
+
+### Bug Fixes
+
+* home pagination ([#359](https://github.com/graasp/graasp-analytics/issues/359)) ([848f2e0](https://github.com/graasp/graasp-analytics/commit/848f2e0be0a9a89c5486b087ff2b3785d5904220))
+
 ## [2.7.2](https://github.com/graasp/graasp-analytics/compare/v2.7.1...v2.7.2) (2024-04-18)
 
 
