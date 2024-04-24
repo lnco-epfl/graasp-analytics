@@ -33,5 +33,8 @@ export const useAnalyticsTranslation = () =>
 export const useCommonTranslation = () => useTranslation(namespaces.common);
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useEnumsTranslation = () => useTranslation(namespaces.enums);
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const useActionsTranslation = () =>
+  useTranslation(namespaces.actionTypes);
 
 export default i18n;

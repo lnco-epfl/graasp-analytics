@@ -10,7 +10,7 @@ import {
   YAxis,
 } from 'recharts';
 
-import { useAnalyticsTranslation } from '@/config/i18n';
+import { useActionsTranslation, useAnalyticsTranslation } from '@/config/i18n';
 
 import {
   TOP_NUMBER_OF_ITEMS_TO_DISPLAY,
@@ -28,6 +28,8 @@ import EmptyChart from './EmptyChart';
 
 const ItemsByActionChart = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
+  const { t: translateAction } = useActionsTranslation();
+
   const {
     actions,
     selectedActionTypes,
@@ -74,7 +76,9 @@ const ItemsByActionChart = (): JSX.Element => {
           <CartesianGrid strokeDasharray="2" />
           <XAxis interval={0} dataKey="name" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} />
-          <Tooltip />
+          <Tooltip
+            formatter={(value, name: string) => [value, translateAction(name)]}
+          />
           {types.map((type) => (
             <Bar
               key=""

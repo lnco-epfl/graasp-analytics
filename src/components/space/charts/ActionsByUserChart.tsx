@@ -20,7 +20,7 @@ import {
   YAxis,
 } from 'recharts';
 
-import { useAnalyticsTranslation } from '@/config/i18n';
+import { useActionsTranslation, useAnalyticsTranslation } from '@/config/i18n';
 
 import { COLORS, DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
 import { hooks } from '../../../config/queryClient';
@@ -33,6 +33,8 @@ import EmptyChart from './EmptyChart';
 
 const ActionsByUserChart = (): JSX.Element | null => {
   const { t } = useAnalyticsTranslation();
+  const { t: translateAction } = useActionsTranslation();
+
   const { actions, selectedUsers, selectedActionTypes, allMembers } =
     useContext(DataContext);
   const { view } = useContext(ViewDataContext);
@@ -81,7 +83,7 @@ const ActionsByUserChart = (): JSX.Element | null => {
     const groupedUsers = groupBy(actionsByType, (a) => a?.member?.id);
 
     const userActions: any = {
-      type,
+      type: translateAction(type),
       total: aggregateDataMap.get(type) ?? 0,
       others: aggregateDataMap.get(type) ?? 0,
     };

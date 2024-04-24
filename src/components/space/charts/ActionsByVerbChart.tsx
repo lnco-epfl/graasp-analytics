@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
-import { useAnalyticsTranslation } from '@/config/i18n';
+import { useActionsTranslation, useAnalyticsTranslation } from '@/config/i18n';
 
 import {
   CONTAINER_HEIGHT,
@@ -28,6 +28,8 @@ const EmptyChartAlert = styled('div')({
 
 const ActionsByVerbChart = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
+  const { t: translateActions } = useActionsTranslation();
+
   const { actions, selectedUsers, selectedActionTypes } =
     useContext(DataContext);
 
@@ -73,7 +75,7 @@ const ActionsByVerbChart = (): JSX.Element => {
             data={formattedActionsByVerbSorted}
             dataKey="percentage"
             nameKey="type"
-            label={ActionChartLabel}
+            label={(props) => <ActionChartLabel {...props} />}
             labelLine={false}
           >
             {formattedActionsByVerbSorted.map((entry) => (
@@ -83,7 +85,12 @@ const ActionsByVerbChart = (): JSX.Element => {
               />
             ))}
           </Pie>
-          <Tooltip formatter={(value) => `${value}%`} />
+          <Tooltip
+            formatter={(value, name: string) => [
+              `${value}%`,
+              translateActions(name),
+            ]}
+          />
         </PieChart>
       </ChartContainer>
     </>

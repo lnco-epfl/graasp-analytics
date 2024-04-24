@@ -1,3 +1,5 @@
+import { useActionsTranslation } from '@/config/i18n';
+
 const RADIAN = Math.PI / 180;
 
 type Props = {
@@ -21,13 +23,15 @@ const ActionChartLabel = ({
   fill,
   type,
 }: Props): JSX.Element => {
+  const { t } = useActionsTranslation();
+
   const radius = innerRadius + (outerRadius - innerRadius) * 1.15;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
   return (
     <text x={x} y={y} fill={fill} fontSize={14} textAnchor={'middle'}>
-      <tspan>{type}</tspan>
+      <tspan>{t(type)}</tspan>
       <tspan x={x} y={y + 15}>{`${(percent * 100).toFixed(0)}%`}</tspan>
     </text>
   );

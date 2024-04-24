@@ -10,7 +10,7 @@ import {
   YAxis,
 } from 'recharts';
 
-import { useAnalyticsTranslation } from '@/config/i18n';
+import { useActionsTranslation, useAnalyticsTranslation } from '@/config/i18n';
 
 import {
   ACTIONS_BY_USER_MAX_DISPLAYED_USERS,
@@ -27,6 +27,8 @@ import EmptyChart from './EmptyChart';
 
 const UsersByActionByChart = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
+  const { t: translateAction } = useActionsTranslation();
+
   const { actions, selectedUsers, selectedActionTypes, allMembers } =
     useContext(DataContext);
   const allActions = filterActionsByActionTypes(actions, selectedActionTypes);
@@ -75,7 +77,9 @@ const UsersByActionByChart = (): JSX.Element => {
           <CartesianGrid strokeDasharray="2" />
           <XAxis dataKey="name" tick={{ fontSize: 14 }} />
           <YAxis tick={{ fontSize: 14 }} />
-          <Tooltip />
+          <Tooltip
+            formatter={(value, name: string) => [value, translateAction(name)]}
+          />
           {types.map((type) => (
             <Bar
               key=""
