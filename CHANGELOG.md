@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0](https://github.com/graasp/graasp-analytics/compare/v2.7.3...v2.8.0) (2024-04-24)
+
+
+### Features
+
+* translate action types all over charts ([#361](https://github.com/graasp/graasp-analytics/issues/361)) ([01df65f](https://github.com/graasp/graasp-analytics/commit/01df65f5c126aa65af4caf5ef268d02fdb84c3e8))
+
+
+### Bug Fixes
+
+* **german:** translations ([#366](https://github.com/graasp/graasp-analytics/issues/366)) ([d1cab3c](https://github.com/graasp/graasp-analytics/commit/d1cab3c8ee5446c5bf13c32db1941787190c6134))
+
 ## [2.7.3](https://github.com/graasp/graasp-analytics/compare/v2.7.2...v2.7.3) (2024-04-22)
 
 
