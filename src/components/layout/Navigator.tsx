@@ -1,33 +1,32 @@
-import { useLocation, useMatch } from 'react-router-dom';
+import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 
-import { COMMON } from '@graasp/translations';
-import { HomeMenu, ItemMenu, Navigation } from '@graasp/ui';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import { IconButton } from '@mui/material';
 
-import { useCommonTranslation } from '@/config/i18n';
+import { Navigation } from '@graasp/ui';
 
 import { NAVIGATOR_BACKGROUND_COLOR } from '../../config/constants';
 import { HOME_PATH, buildItemPath } from '../../config/paths';
 import { hooks } from '../../config/queryClient';
 import {
   BREADCRUMBS_NAVIGATOR_ID,
-  HOME_MENU_DROPDOWN_BUTTON_ID,
-  HOME_MENU_ID,
   buildBreadcrumbsItemLink,
   buildMenuItemId,
   buildNavigationDropDownId,
 } from '../../config/selectors';
 
-const { useItem, useParents, useCurrentMember, useChildren, useOwnItems } =
-  hooks;
+const { useItem, useParents, useCurrentMember, useChildren } = hooks;
 
 const Navigator = (): JSX.Element | null => {
-  const { t } = useCommonTranslation();
   const match = useMatch(buildItemPath());
   const { pathname } = useLocation();
   const itemId = match?.params?.itemId;
   const { data: currentMember } = useCurrentMember();
   const { data: item, isInitialLoading: isItemLoading } = useItem(itemId);
   const itemPath = item?.path;
+
+  const navigate = useNavigate();
 
   const { data: parents, isInitialLoading: areParentsLoading } = useParents({
     id: itemId,
@@ -39,32 +38,18 @@ const Navigator = (): JSX.Element | null => {
     return null;
   }
 
-  const menu = [{ name: t(COMMON.USER_OWN_ITEMS), id: 'home', to: HOME_PATH }];
-
   const renderRoot = () => {
     // no root access if signed out
     if (!currentMember) {
       return null;
     }
 
-    const selected = menu[0];
-
     return (
       <>
-        <HomeMenu
-          selected={selected}
-          elements={menu}
-          menuId={HOME_MENU_ID}
-          homeDropdownId={HOME_MENU_DROPDOWN_BUTTON_ID}
-          buildMenuItemId={buildBreadcrumbsItemLink}
-        />
-        <ItemMenu
-          buildIconId={buildNavigationDropDownId}
-          itemId="root"
-          buildMenuItemId={buildMenuItemId}
-          useChildren={useOwnItems as any}
-          buildToItemPath={buildItemPath}
-        />
+        <IconButton onClick={() => navigate(HOME_PATH)}>
+          <HomeOutlinedIcon />
+        </IconButton>
+        <ArrowForwardIosIcon sx={{ m: 2 }} fontSize="inherit" />
       </>
     );
   };
