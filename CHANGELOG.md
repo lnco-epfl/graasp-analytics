@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.1](https://github.com/graasp/graasp-analytics/compare/v2.8.0...v2.8.1) (2024-05-03)
+
+
+### Bug Fixes
+
+* protect export actions for non-reads users ([#368](https://github.com/graasp/graasp-analytics/issues/368)) ([e40076b](https://github.com/graasp/graasp-analytics/commit/e40076b230a5426a0bf56cdbe072d70091c0355c))
+
 ## [2.8.0](https://github.com/graasp/graasp-analytics/compare/v2.7.3...v2.8.0) (2024-04-24)
 
 
