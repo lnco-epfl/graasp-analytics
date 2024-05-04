@@ -13,7 +13,7 @@ type Props = {
   id?: string;
   maxWidth?: number;
   maxHeight?: number;
-  component?: string;
+  component?: 'avatar' | 'img';
 };
 
 const MemberAvatar = ({
