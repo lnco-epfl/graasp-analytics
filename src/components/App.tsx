@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { saveUrlForRedirection } from '@graasp/sdk';
 import { Loader, withAuthorization } from '@graasp/ui';
@@ -18,6 +18,7 @@ import {
   USERS_ANALYTICS_PATH,
   buildItemPath,
 } from '../config/paths';
+import ContextsWrapper from './context/ContextsWrapper';
 import PageWrapper from './layout/PageWrapper';
 import HomePageWrapper from './pages/HomePage';
 import AppsAnalyticPage from './pages/Item/AppsAnalyticPage';
@@ -50,33 +51,44 @@ const App = (): JSX.Element => {
       saveUrlForRedirection(pathname, DOMAIN);
     },
   };
-  const PageWrapperWithAuth = withAuthorization(
-    PageWrapper,
+
+  const HomeWrapperWithAuth = withAuthorization(
+    HomePageWrapper,
+    withAuthorizationProps,
+  );
+  const ItemWrapperWithAuth = withAuthorization(
+    ItemPage,
     withAuthorizationProps,
   );
 
   return (
     <Routes>
       <Route path={EMBEDDED_ITEM_PATH} element={<ItemPage />} />
+
       <Route
-        // This is a shared route that allows us to re-use the same layout for both pages
+        path={HOME_PATH}
         element={
-          <PageWrapperWithAuth>
-            <Outlet />
-          </PageWrapperWithAuth>
+          <PageWrapper>
+            <HomeWrapperWithAuth />
+          </PageWrapper>
+        }
+      />
+
+      <Route
+        path={buildItemPath()}
+        element={
+          <ContextsWrapper>
+            <PageWrapper>
+              <ItemWrapperWithAuth />
+            </PageWrapper>
+          </ContextsWrapper>
         }
       >
-        <Route path={HOME_PATH} element={<HomePageWrapper />} />
-        <Route path={buildItemPath()} element={<ItemPage />}>
-          <Route index element={<GeneralAnalyticsPage />} />
-          <Route path={USERS_ANALYTICS_PATH} element={<UsersAnalyticPage />} />
-          <Route path={ITEMS_ANALYTICS_PATH} element={<ItemAnalyticPage />} />
-          <Route path={APPS_ANALYTICS_PATH} element={<AppsAnalyticPage />} />
-          <Route
-            path={EXPORT_ANALYTICS_PATH}
-            element={<ExportAnalyticsPage />}
-          />
-        </Route>
+        <Route index element={<GeneralAnalyticsPage />} />
+        <Route path={USERS_ANALYTICS_PATH} element={<UsersAnalyticPage />} />
+        <Route path={ITEMS_ANALYTICS_PATH} element={<ItemAnalyticPage />} />
+        <Route path={APPS_ANALYTICS_PATH} element={<AppsAnalyticPage />} />
+        <Route path={EXPORT_ANALYTICS_PATH} element={<ExportAnalyticsPage />} />
       </Route>
     </Routes>
   );

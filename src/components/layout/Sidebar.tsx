@@ -20,7 +20,13 @@ import {
   buildUsersAnalyticsPath,
 } from '@/config/paths';
 import { hooks } from '@/config/queryClient';
-import { APP_ITEM, buildSidebarListItemId } from '@/config/selectors';
+import {
+  APP_ITEM,
+  TAB_GENERAL,
+  TAB_ITEMS,
+  TAB_USERS,
+  buildSidebarListItemId,
+} from '@/config/selectors';
 
 import { DataContext } from '../context/DataProvider';
 import LinkMenuItem from '../custom/LinkMenuItem';
@@ -34,7 +40,7 @@ const Sidebar: FC = () => {
   const { data: item, isLoading } = hooks.useItem(itemId);
   const disableMenuItem = pathname === HOME_PATH;
 
-  if (isLoading) {
+  if (isLoading && !disableMenuItem) {
     return <Loader />;
   }
 
@@ -45,6 +51,7 @@ const Sidebar: FC = () => {
       to={buildItemPath(itemId)}
       disabled={disableMenuItem}
       key={'TAB_GENERAL'}
+      id={buildSidebarListItemId(TAB_GENERAL)}
     />,
     <LinkMenuItem
       to={buildUsersAnalyticsPath(itemId)}
@@ -52,6 +59,7 @@ const Sidebar: FC = () => {
       icon={<PersonIcon />}
       text={t('TAB_USERS')}
       key={'TAB_USERS'}
+      id={buildSidebarListItemId(TAB_USERS)}
     />,
     <LinkMenuItem
       to={buildItemsAnalyticsPath(itemId)}
@@ -59,6 +67,7 @@ const Sidebar: FC = () => {
       icon={<FolderIcon />}
       text={t('TAB_ITEMS')}
       key={'TAB_ITEMS'}
+      id={buildSidebarListItemId(TAB_ITEMS)}
     />,
   ];
 

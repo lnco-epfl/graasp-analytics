@@ -17,7 +17,6 @@ import { useAnalyticsTranslation } from '@/config/i18n';
 import { HOME_PATH } from '@/config/paths';
 
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
-import ContextsWrapper from '../context/ContextsWrapper';
 import Navigator from './Navigator';
 import Sidebar from './Sidebar';
 
@@ -63,43 +62,37 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
   const isRoot = pathname === HOME_PATH;
 
   return (
-    <ContextsWrapper>
-      <Main
-        context={Context.Analytics}
-        drawerContent={<Sidebar />}
-        drawerOpenAriaLabel={t('DRAWER_OPEN_ARIA')}
-        headerRightContent={<UserSwitchWrapper />}
-        PlatformComponent={
-          <PlatformSwitch
-            selected={Platform.Analytics}
-            platformsProps={platformProps}
-            disabledColor="#999"
-            color={
-              isMobile
-                ? theme.palette.primary.main
-                : theme.palette.secondary.main
-            }
-            accentColor={
-              isMobile
-                ? theme.palette.secondary.main
-                : theme.palette.primary.main
-            }
-          />
-        }
-        LinkComponent={LinkComponent}
-        // to close the drawer at home and shared pages, So user won't move to item routes
-        open={pathname !== HOME_PATH}
-      >
-        <Box height="100%" display="flex" flexGrow={1} flexDirection="column">
-          {!isRoot && (
-            <Box id="navigatorContainer" width="100%">
-              <Navigator />
-            </Box>
-          )}
-          {children}
-        </Box>
-      </Main>
-    </ContextsWrapper>
+    <Main
+      context={Context.Analytics}
+      drawerContent={<Sidebar />}
+      drawerOpenAriaLabel={t('DRAWER_OPEN_ARIA')}
+      headerRightContent={<UserSwitchWrapper />}
+      PlatformComponent={
+        <PlatformSwitch
+          selected={Platform.Analytics}
+          platformsProps={platformProps}
+          disabledColor="#999"
+          color={
+            isMobile ? theme.palette.primary.main : theme.palette.secondary.main
+          }
+          accentColor={
+            isMobile ? theme.palette.secondary.main : theme.palette.primary.main
+          }
+        />
+      }
+      LinkComponent={LinkComponent}
+      // to close the drawer at home and shared pages, So user won't move to item routes
+      open={pathname !== HOME_PATH}
+    >
+      <Box height="100%" display="flex" flexGrow={1} flexDirection="column">
+        {!isRoot && (
+          <Box id="navigatorContainer" width="100%">
+            <Navigator />
+          </Box>
+        )}
+        {children}
+      </Box>
+    </Main>
   );
 };
 export default PageWrapper;

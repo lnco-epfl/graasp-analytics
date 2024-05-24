@@ -1,8 +1,18 @@
 import { SyntheticEvent, useContext } from 'react';
 
-import { Autocomplete, FormControl, Stack, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Chip,
+  FormControl,
+  Stack,
+  TextField,
+} from '@mui/material';
 
 import { useActionsTranslation, useAnalyticsTranslation } from '@/config/i18n';
+import {
+  SELECT_ACTION_ID,
+  buildSelectedActionChipId,
+} from '@/config/selectors';
 
 import { DataContext } from '../../context/DataProvider';
 
@@ -45,6 +55,17 @@ const ActionsSelect = (): JSX.Element | null => {
           multiple
           value={value}
           limitTags={2}
+          id={SELECT_ACTION_ID}
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => (
+              <Chip
+                variant="outlined"
+                label={option.title}
+                {...getTagProps({ index })}
+                id={buildSelectedActionChipId(option.value)}
+              />
+            ))
+          }
         />
       </FormControl>
     </Stack>

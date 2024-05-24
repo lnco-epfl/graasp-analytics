@@ -1,10 +1,17 @@
 import { SyntheticEvent, useContext } from 'react';
 
-import { Autocomplete, FormControl, Stack, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Chip,
+  FormControl,
+  Stack,
+  TextField,
+} from '@mui/material';
 
 import { Member } from '@graasp/sdk';
 
 import { useAnalyticsTranslation } from '@/config/i18n';
+import { SELECT_USER_ID, buildSelectedUserChipId } from '@/config/selectors';
 
 import { DataContext } from '../../context/DataProvider';
 
@@ -37,6 +44,17 @@ const UsersSelect = (): JSX.Element | null => {
           getOptionLabel={(option) => option.name}
           options={allMembers}
           limitTags={2}
+          id={SELECT_USER_ID}
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => (
+              <Chip
+                variant="outlined"
+                label={option.name}
+                {...getTagProps({ index })}
+                id={buildSelectedUserChipId(option.name)}
+              />
+            ))
+          }
         />
       </FormControl>
     </Stack>
