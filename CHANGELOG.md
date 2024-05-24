@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.0](https://github.com/graasp/graasp-analytics/compare/v2.8.1...v2.9.0) (2024-05-24)
+
+
+### Features
+
+* maintain selects values over routes ([#386](https://github.com/graasp/graasp-analytics/issues/386)) ([677feed](https://github.com/graasp/graasp-analytics/commit/677feed8e559965a73017b7531f7adee330c6d7f))
+
+
+### Bug Fixes
+
+* **italian:** translations ([#375](https://github.com/graasp/graasp-analytics/issues/375)) ([8658c41](https://github.com/graasp/graasp-analytics/commit/8658c41479372a0c40f02c6e1c628ec352161044))
+* **spanish:** translations ([#376](https://github.com/graasp/graasp-analytics/issues/376)) ([6b9ce0f](https://github.com/graasp/graasp-analytics/commit/6b9ce0f168917e3116abed8b35ae1a12d872e341))
+
 ## [2.8.1](https://github.com/graasp/graasp-analytics/compare/v2.8.0...v2.8.1) (2024-05-03)
 
 
