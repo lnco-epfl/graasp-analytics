@@ -306,6 +306,10 @@ const mockServer = ({
         return [];
       });
 
+      this.post(`/items/:id/actions/export`, () => {
+        return { success: true };
+      });
+
       // passthrough external urls
       externalUrls.forEach((url) => {
         this.passthrough(url);

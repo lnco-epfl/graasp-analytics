@@ -1,3 +1,5 @@
+import { ExportActionsFormatting } from '@graasp/sdk';
+
 export const BREADCRUMBS_NAVIGATOR_ID = 'breadcrumbsNavigator';
 export const HOME_MENU_ID = 'homeMenu';
 export const HOME_MENU_DROPDOWN_BUTTON_ID = 'homeMenuDropdownButton';
@@ -60,3 +62,9 @@ export const APP_ITEM_CLASS_NAME = 'appItemContainer';
 
 export const buildAppItemSelector = (appID: string): string =>
   `appItem-${appID}`;
+
+export const buildSelectExportFormatID = (
+  format: ExportActionsFormatting,
+): string => `export-${format}-id`;
+
+export const EXPORT_ACTIONS_BUTTON_ID = 'exportActionsButtonId';

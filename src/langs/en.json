@@ -87,6 +87,7 @@
   "EXPORT_ANALYTICS_TITLE": "Export Analytics",
   "EXPORT_ANALYTICS_DESCRIPTION": "You can export the analytical traces left by users while interacting with your item (and its children). It may take some time to gather the data into an archive, after which you'll receive a link via email for download. This link remains valid for 7 days.\n \n You are allowed one data request per day. Any additional requests will yield the same archive. For instance, if an archive is generated at 8 AM and you request another export at 10 AM, you'll receive the same archive as the one generated at 8 AM, without including the data between 8 AM and 10 AM.",
   "EXPORT_ITEM_DATASET": "Export item dataset",
+  "EXPORT_ITEM": "Start Exporting",
   "EXPORT_LIST_ITEM_ITEM_TITLE": "Your Current Item",
   "EXPORT_LIST_ITEM_ITEM_DESCRIPTION": "This includes all the details of the item.",
   "EXPORT_LIST_ITEM_DESCENDANTS_TITLE": "Descendants (if available)",
@@ -99,5 +100,11 @@
   "EXPORT_LIST_ITEM_CHATS_DESCRIPTION": "Conversations or discussions related to this item will be captured in the export.",
   "EXPORT_LIST_ITEM_ACTIONS_TITLE": "Tracked Actions",
   "EXPORT_LIST_ITEM_ACTIONS_DESCRIPTION": "Actions or activities that have been recorded for this item within different view including Builder, Library, and Player.",
-  "WHAT_TO_EXPORT_TITLE": "What actions does the archive include?"
+  "WHAT_TO_EXPORT_TITLE": "What actions does the archive include?",
+  "SELECT_FORMAT_TITLE": "Select Archive file formats",
+  "SELECT_FORMAT_DIALOG_DESCRIPTION": "Data you are about to export are available in two formats:",
+  "JSON_DESCRIPTION": "key-value pairs, more a technical format.",
+  "CSV_DESCRIPTION": "like a table view, similar to what you see in spreadsheets like Excel.",
+  "START_EXPORTING": "Start exporting with {{format}}",
+  "EXPORTING_DONE": "{{format}} request sent"
 }

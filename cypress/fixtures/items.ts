@@ -4,6 +4,7 @@ import {
   DocumentItemFactory,
   FolderItemFactory,
   ItemType,
+  PackedFolderItemFactory,
 } from '@graasp/sdk';
 
 import MOCK_MEMBERS from './members';
@@ -87,6 +88,10 @@ export const CALC_APP_ITEM_WITH_PARENT = AppItemFactory({
   name: 'Calculator with parent',
   creator: MOCK_MEMBERS[0],
   parentItem: MOCK_ITEMS[0],
+});
+
+export const ITEM_TO_EXPORT = PackedFolderItemFactory({
+  creator: MOCK_MEMBERS[0],
 });
 
 export default MOCK_ITEMS;
