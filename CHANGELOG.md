@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.10.0](https://github.com/graasp/graasp-analytics/compare/v2.9.0...v2.10.0) (2024-06-03)
+
+
+### Features
+
+* export formatting select modal ([#384](https://github.com/graasp/graasp-analytics/issues/384)) ([291e1aa](https://github.com/graasp/graasp-analytics/commit/291e1aaf03e7062cb94a4314883a57b44eb04100))
+
 ## [2.9.0](https://github.com/graasp/graasp-analytics/compare/v2.8.1...v2.9.0) (2024-05-24)
 
 
