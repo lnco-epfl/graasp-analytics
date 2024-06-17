@@ -1352,9 +1352,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graasp/query-client@npm:3.10.0":
-  version: 3.10.0
-  resolution: "@graasp/query-client@npm:3.10.0"
+"@graasp/query-client@npm:3.13.2":
+  version: 3.13.2
+  resolution: "@graasp/query-client@npm:3.13.2"
   dependencies:
     "@tanstack/react-query": "npm:4.36.1"
     "@tanstack/react-query-devtools": "npm:4.36.1"
@@ -1365,7 +1365,7 @@ __metadata:
     "@graasp/sdk": ^4.0.0
     "@graasp/translations": ^1.23.0
     react: ^18.0.0
-  checksum: 10/4006a7ba4829fdfca8716ab22b992cf7695593584d7456b00abfc80a154fe7462b141c2124f186360224f96e13f476a54265a53bb928619e74d9eafa898f196c
+  checksum: 10/f0b1e801ffe0dbd5655a55287daad9e7460f2c89b7e6230c39c5bf67c2b05428add8e683b214c24477a90eae76079f17725a50f46a7364f07eb3b0fb7fc8f444
   languageName: node
   linkType: hard
 
@@ -6597,7 +6597,7 @@ __metadata:
     "@emotion/cache": "npm:11.11.0"
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
-    "@graasp/query-client": "npm:3.10.0"
+    "@graasp/query-client": "npm:3.13.2"
     "@graasp/sdk": "npm:4.12.0"
     "@graasp/translations": "npm:1.28.0"
     "@graasp/ui": "npm:4.17.1"
