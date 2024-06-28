@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.11.0](https://github.com/graasp/graasp-analytics/compare/v2.10.0...v2.11.0) (2024-06-28)
+
+
+### Features
+
+* create general statistic page ([#378](https://github.com/graasp/graasp-analytics/issues/378)) ([66cde10](https://github.com/graasp/graasp-analytics/commit/66cde1010ae28037323b9e4f4952213c6c17f8cc))
+
 ## [2.10.0](https://github.com/graasp/graasp-analytics/compare/v2.9.0...v2.10.0) (2024-06-03)
 
 
