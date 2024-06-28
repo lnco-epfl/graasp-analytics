@@ -2,6 +2,13 @@ import { initReactI18next, useTranslation } from 'react-i18next';
 
 import buildI18n, { namespaces } from '@graasp/translations';
 
+import arDateLocale from 'date-fns/locale/ar';
+import deDateLocale from 'date-fns/locale/de';
+import enUSDateLocale from 'date-fns/locale/en-US';
+import esDateLocale from 'date-fns/locale/es';
+import frDateLocale from 'date-fns/locale/fr';
+import itDateLocale from 'date-fns/locale/it';
+
 import ar from '../langs/ar.json';
 import de from '../langs/de.json';
 import en from '../langs/en.json';
@@ -36,5 +43,17 @@ export const useEnumsTranslation = () => useTranslation(namespaces.enums);
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useActionsTranslation = () =>
   useTranslation(namespaces.actionTypes);
+
+// Mapping locales
+export const locales: {
+  [key: string]: Locale;
+} = {
+  en: enUSDateLocale,
+  fr: frDateLocale,
+  es: esDateLocale,
+  de: deDateLocale,
+  it: itDateLocale,
+  ar: arDateLocale,
+};
 
 export default i18n;

@@ -13,13 +13,15 @@ import { useAnalyticsTranslation } from '@/config/i18n';
 const ItemPage = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
   const { view } = useContext(ViewDataContext);
-  const { error, isLoading } = useContext(DataContext);
+  const { error, isLoading, actions } = useContext(DataContext);
 
   if (!error && !isLoading) {
+    const types = [...new Set(actions.map((a) => a.type))];
+
     return (
       <>
         <Outlet />
-        <ActionsLegend />
+        <ActionsLegend actionsTypes={types} />
       </>
     );
   }

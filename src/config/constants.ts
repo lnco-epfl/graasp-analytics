@@ -130,3 +130,6 @@ export const ITEM_NAME_MAX_LENGTH = 15;
 export const NAVIGATOR_BACKGROUND_COLOR = '#f6f6f6';
 
 export const ITEM_PAGE_SIZE = 10;
+
+export const MAX_BARS_SMALL_SCREEN = 5;
+export const MAX_BARS_LARGE_SCREEN = 8;

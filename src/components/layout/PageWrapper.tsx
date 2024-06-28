@@ -81,8 +81,6 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
         />
       }
       LinkComponent={LinkComponent}
-      // to close the drawer at home and shared pages, So user won't move to item routes
-      open={pathname !== HOME_PATH}
     >
       <Box height="100%" display="flex" flexGrow={1} flexDirection="column">
         {!isRoot && (

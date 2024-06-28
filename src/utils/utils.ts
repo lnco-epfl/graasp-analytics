@@ -1,8 +1,23 @@
 import { Action, DiscriminatedItem, Member } from '@graasp/sdk';
 
+import {
+  addDays,
+  addMonths,
+  addWeeks,
+  addYears,
+  isBefore,
+  parseISO,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
+} from 'date-fns';
+import { fromPairs, orderBy, toPairs } from 'lodash';
 import countBy from 'lodash.countby';
 import groupBy from 'lodash.groupby';
 import truncate from 'lodash.truncate';
+
+import { GroupByInterval } from '@/config/type';
 
 import {
   ITEM_NAME_MAX_LENGTH,
@@ -281,4 +296,129 @@ export const groupByFirstLevelItems = (
         .join('.'),
   );
   return d;
+};
+
+const getStartDateFunction = (interval: GroupByInterval) => {
+  switch (interval) {
+    case GroupByInterval.Year:
+      return startOfYear;
+    case GroupByInterval.Month:
+      return startOfMonth;
+    case GroupByInterval.Day:
+      return startOfDay;
+    case GroupByInterval.Week:
+    default:
+      return (date: Date) => startOfWeek(date, { weekStartsOn: 1 });
+  }
+};
+
+const fillDateGaps = (
+  data: { [key: string]: Action[] },
+  freq: GroupByInterval,
+  start: Date,
+  stop: Date,
+): { [key: string]: Action[] } => {
+  const copy = { ...data };
+  const nextFunc = {
+    [GroupByInterval.Day]: addDays,
+    [GroupByInterval.Month]: addMonths,
+    [GroupByInterval.Week]: addWeeks,
+    [GroupByInterval.Year]: addYears,
+  };
+  const getStartDate = getStartDateFunction(freq);
+
+  let currentDate = getStartDate(start);
+
+  while (isBefore(currentDate, stop)) {
+    if (!copy[currentDate.toISOString()]) {
+      copy[currentDate.toISOString()] = [];
+    }
+
+    const getNextInterval = nextFunc[freq];
+    currentDate = getNextInterval(currentDate, 1);
+  }
+
+  return copy;
+};
+
+const groupActionsByInterval = (
+  actions: Action[],
+  interval: GroupByInterval,
+): { [key: string]: Action[] } => {
+  const getStartDate = getStartDateFunction(interval);
+
+  const groupedByInterval = groupBy(actions, (item) => {
+    const date = parseISO(item.createdAt);
+    const startDate = getStartDate(date);
+    return startDate.toISOString();
+  });
+
+  return groupedByInterval;
+};
+
+const groupActionsBasedOnMaxIntervals = (
+  actions: {
+    [key: string]: Action[];
+  },
+  maxNoOfIntervals: number,
+): { [key: string]: Action[] } => {
+  const keys = Object.keys(actions);
+  const totalActions = Object.values(actions);
+
+  const len = keys.length;
+
+  const maxKeysPerGroup = Math.ceil(len / maxNoOfIntervals);
+
+  if (len > maxNoOfIntervals) {
+    const obj = totalActions.reduce(
+      (acc: { [key: string]: Action[] }, curr, index) => {
+        const base = Math.floor(index / maxKeysPerGroup);
+        if (index % maxKeysPerGroup === 0) {
+          acc[keys[index]] = curr;
+        } else {
+          /*
+          index stepped by maxKeysPerGroup, so if index = 1 and maxKeysPerGroup = 2, acc[1*2]
+          index stepped by maxKeysPerGroup, so if index = 9 and maxKeysPerGroup = 2, acc[4*2]
+          */
+          acc[keys[base * maxKeysPerGroup]] = acc[
+            keys[base * maxKeysPerGroup]
+          ]?.concat(...curr);
+        }
+        return acc;
+      },
+      {},
+    );
+
+    return obj;
+  }
+  return actions;
+};
+
+export const groupActions = (
+  actions: Action[],
+  groupBy: GroupByInterval,
+  start: Date,
+  stop: Date,
+  maxIntervals: number,
+): { [key: string]: Action[] } => {
+  const groupedActions = groupActionsByInterval(actions, groupBy);
+  const filledGroupedActions = fillDateGaps(
+    groupedActions,
+    groupBy,
+    start,
+    stop,
+  );
+  const sortedGroupedActions = orderBy(
+    toPairs(filledGroupedActions),
+    ([key]) => key,
+  );
+
+  const pairsActions = fromPairs(sortedGroupedActions);
+
+  const groupedActionsMatchingMax = groupActionsBasedOnMaxIntervals(
+    pairsActions,
+    maxIntervals,
+  );
+
+  return groupedActionsMatchingMax;
 };

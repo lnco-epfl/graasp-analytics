@@ -1,13 +1,19 @@
-import { useLocation, useMatch, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import { IconButton } from '@mui/material';
+import { IconButton, Typography, styled } from '@mui/material';
 
 import { Navigation } from '@graasp/ui';
 
+import { useAnalyticsTranslation } from '@/config/i18n';
+
 import { NAVIGATOR_BACKGROUND_COLOR } from '../../config/constants';
-import { HOME_PATH, buildItemPath } from '../../config/paths';
+import {
+  HOME_PATH,
+  MY_ANALYTICS_PATH,
+  buildItemPath,
+} from '../../config/paths';
 import { hooks } from '../../config/queryClient';
 import {
   BREADCRUMBS_NAVIGATOR_ID,
@@ -18,7 +24,12 @@ import {
 
 const { useItem, useParents, useCurrentMember, useChildren } = hooks;
 
+const NavigationLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.text.primary,
+}));
 const Navigator = (): JSX.Element | null => {
+  const { t } = useAnalyticsTranslation();
   const match = useMatch(buildItemPath());
   const { pathname } = useLocation();
   const itemId = match?.params?.itemId;
@@ -50,11 +61,16 @@ const Navigator = (): JSX.Element | null => {
           <HomeOutlinedIcon />
         </IconButton>
         <ArrowForwardIosIcon sx={{ m: 2 }} fontSize="inherit" />
+        {pathname === MY_ANALYTICS_PATH && (
+          <NavigationLink to={MY_ANALYTICS_PATH}>
+            <Typography>{t('TAB_MY_ANALYTICS')}</Typography>
+          </NavigationLink>
+        )}
       </>
     );
   };
 
-  if (!item && pathname !== HOME_PATH) {
+  if (!item && pathname !== MY_ANALYTICS_PATH && pathname !== HOME_PATH) {
     return null;
   }
 

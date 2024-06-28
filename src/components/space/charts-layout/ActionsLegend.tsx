@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import {
@@ -15,10 +15,9 @@ import {
   styled,
 } from '@mui/material';
 
-import { DataContext } from '@/components/context/DataProvider';
 import { actionsDescriptionTransKeys } from '@/config/actionTriggers';
 import { getColorForActionTriggerType } from '@/config/constants';
-import { useAnalyticsTranslation } from '@/config/i18n';
+import { useActionsTranslation, useAnalyticsTranslation } from '@/config/i18n';
 
 const StyledFab = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -36,17 +35,19 @@ const ActionColorBox = styled(Box)<{ background: string }>(
   }),
 );
 
-const ActionsLegend = (): JSX.Element => {
-  const { actions } = useContext(DataContext);
+type Props = {
+  actionsTypes: string[];
+};
+
+const ActionsLegend = ({ actionsTypes }: Props): JSX.Element => {
   const { t } = useAnalyticsTranslation();
+  const { t: translateAction } = useActionsTranslation();
 
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  const types = [...new Set(actions.map((a) => a.type))];
 
   return (
     <>
@@ -65,8 +66,8 @@ const ActionsLegend = (): JSX.Element => {
           {t('ACTIONS_LEGEND_MODAL_TITLE')}
         </DialogTitle>
         <DialogContent>
-          <List sx={{ columns: types.length > 5 ? 2 : 1 }}>
-            {types.map((ele) => (
+          <List sx={{ columns: actionsTypes.length > 5 ? 2 : 1 }}>
+            {actionsTypes.map((ele) => (
               <ListItem
                 key={ele}
                 sx={{ p: 0, marginBottom: 1, breakInside: 'avoid' }}
@@ -78,7 +79,7 @@ const ActionsLegend = (): JSX.Element => {
                         background={getColorForActionTriggerType(ele)}
                       />
                       <Typography variant="body2" lineHeight={2}>
-                        {ele}
+                        {translateAction(ele)}
                       </Typography>
                     </Box>
                   }

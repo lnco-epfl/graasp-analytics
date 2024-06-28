@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { MenuItem } from '@graasp/ui';
 
 interface Props {
-  disabled: boolean;
+  disabled?: boolean;
   to: string;
   text: string;
   icon: ReactElement;

@@ -17,3 +17,5 @@ export const buildAppsAnalyticsPath = (id = ':itemId'): string =>
 
 export const buildExportAnalyticsPath = (id = ':itemId'): string =>
   `${ITEMS_PATH}/${id}/${EXPORT_ANALYTICS_PATH}`;
+
+export const MY_ANALYTICS_PATH = '/my-analytics';

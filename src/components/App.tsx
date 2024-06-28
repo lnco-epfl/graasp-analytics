@@ -15,6 +15,7 @@ import {
   EXPORT_ANALYTICS_PATH,
   HOME_PATH,
   ITEMS_ANALYTICS_PATH,
+  MY_ANALYTICS_PATH,
   USERS_ANALYTICS_PATH,
   buildItemPath,
 } from '../config/paths';
@@ -27,6 +28,7 @@ import GeneralAnalyticsPage from './pages/Item/GeneralAnalyticsPage';
 import ItemAnalyticPage from './pages/Item/ItemAnalyticPage';
 import ItemPage from './pages/Item/ItemPage';
 import UsersAnalyticPage from './pages/Item/UsersAnalyticPage';
+import MyAnalyticsPage from './pages/MyAnalyticsPage';
 
 const App = (): JSX.Element => {
   const { data: currentMember, isLoading } = hooks.useCurrentMember();
@@ -60,6 +62,10 @@ const App = (): JSX.Element => {
     ItemPage,
     withAuthorizationProps,
   );
+  const MyAnalyticsWithAuth = withAuthorization(
+    MyAnalyticsPage,
+    withAuthorizationProps,
+  );
 
   return (
     <Routes>
@@ -70,6 +76,14 @@ const App = (): JSX.Element => {
         element={
           <PageWrapper>
             <HomeWrapperWithAuth />
+          </PageWrapper>
+        }
+      />
+      <Route
+        path={MY_ANALYTICS_PATH}
+        element={
+          <PageWrapper>
+            <MyAnalyticsWithAuth />
           </PageWrapper>
         }
       />
