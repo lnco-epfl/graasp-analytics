@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.11.1](https://github.com/graasp/graasp-analytics/compare/v2.11.0...v2.11.1) (2024-07-01)
+
+
+### Bug Fixes
+
+* **arabic:** update translations ([#391](https://github.com/graasp/graasp-analytics/issues/391)) ([aa9cf54](https://github.com/graasp/graasp-analytics/commit/aa9cf541fdface9d92511521090f19a1b48fccc3))
+* **french:** update translations ([#394](https://github.com/graasp/graasp-analytics/issues/394)) ([96a584c](https://github.com/graasp/graasp-analytics/commit/96a584caeb79d8c3ef5296637ffe998776f6487b))
+* **german:** update translations ([#392](https://github.com/graasp/graasp-analytics/issues/392)) ([be80a21](https://github.com/graasp/graasp-analytics/commit/be80a21f280cd6ce87ed0292b72536c49cc7d5c0))
+* **italian:** update translations ([#395](https://github.com/graasp/graasp-analytics/issues/395)) ([0b66c30](https://github.com/graasp/graasp-analytics/commit/0b66c309a31613d4e13d643f714bfea3856b9715))
+* **spanish:** update translations ([#393](https://github.com/graasp/graasp-analytics/issues/393)) ([2e48ae0](https://github.com/graasp/graasp-analytics/commit/2e48ae080ca3274f8b9a32704cfa67bec7aa3347))
+
 ## [2.11.0](https://github.com/graasp/graasp-analytics/compare/v2.10.0...v2.11.0) (2024-06-28)
 
 
