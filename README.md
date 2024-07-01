@@ -1,5 +1,7 @@
 # Graasp Analytics
 
+[![gitlocalized ](https://gitlocalize.com/repo/8871/whole_project/badge.svg)](https://gitlocalize.com/repo/8871?utm_source=badge)
+
 ## Screenshot
 
 <img width="1381" alt="graasp analytics" src="docs/assets/screenshot-v1.3.0.png">
