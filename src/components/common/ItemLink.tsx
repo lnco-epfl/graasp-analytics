@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 import {
   DiscriminatedItem,
@@ -9,7 +9,7 @@ import {
   getLinkExtra,
   getMimetype,
 } from '@graasp/sdk';
-import { ItemIcon } from '@graasp/ui';
+import { DEFAULT_LIGHT_PRIMARY_COLOR, ItemIcon } from '@graasp/ui';
 
 import i18n from '@/config/i18n';
 import { buildItemPath } from '@/config/paths';
@@ -31,20 +31,20 @@ const ItemLink = ({ item }: { item: DiscriminatedItem }): JSX.Element => {
       }}
     >
       <Stack direction="row" alignItems="center" spacing={2}>
-        <ItemIcon
-          type={item.type}
-          iconSrc={iconSrc}
-          alt={alt}
-          mimetype={getMimetype(item.extra)}
-          size="40px"
-          sx={{
-            width: '40px',
-            height: '40px',
-            backgroundColor: '#4e4ecc33',
-            borderRadius: 1,
-            padding: 1,
-          }}
-        />
+        <Box
+          p={1}
+          width="40px"
+          height="40px"
+          borderRadius={1}
+          bgcolor={DEFAULT_LIGHT_PRIMARY_COLOR.main}
+        >
+          <ItemIcon
+            type={item.type}
+            iconSrc={iconSrc}
+            alt={alt}
+            mimetype={getMimetype(item.extra)}
+          />
+        </Box>
         <Stack>
           <Typography variant="h6">{item.name}</Typography>
           <Typography variant="caption" color="gray">
