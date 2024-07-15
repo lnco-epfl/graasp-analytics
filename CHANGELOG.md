@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.12.0](https://github.com/graasp/graasp-analytics/compare/v2.11.1...v2.12.0) (2024-07-15)
+
+
+### Features
+
+* remove starting from today my statistics date picker ([#408](https://github.com/graasp/graasp-analytics/issues/408)) ([024f273](https://github.com/graasp/graasp-analytics/commit/024f2739d09bf91bd94de217c4cd6481e8a8bfa0))
+
+
+### Bug Fixes
+
+* **deps:** update dependency react-router-dom to v6.24.1 ([#318](https://github.com/graasp/graasp-analytics/issues/318)) ([2c6e829](https://github.com/graasp/graasp-analytics/commit/2c6e829b57eb67100aa4704cd321b6018bb6d5ec))
+* **deps:** update graasp packages ([#402](https://github.com/graasp/graasp-analytics/issues/402)) ([c7c7d24](https://github.com/graasp/graasp-analytics/commit/c7c7d249c07d10f9063b094c82941798feef8671))
+* **deps:** update mui (non-major) to v5.16.1 ([#407](https://github.com/graasp/graasp-analytics/issues/407)) ([0047a75](https://github.com/graasp/graasp-analytics/commit/0047a7561673e05dcd144deadb245159181a2cdc))
+* update dependencies and fix ui breaking changes ([#397](https://github.com/graasp/graasp-analytics/issues/397)) ([c376302](https://github.com/graasp/graasp-analytics/commit/c376302bf03caa7de898b3cde984be41df4c71d0))
+
 ## [2.11.1](https://github.com/graasp/graasp-analytics/compare/v2.11.0...v2.11.1) (2024-07-01)
 
 
