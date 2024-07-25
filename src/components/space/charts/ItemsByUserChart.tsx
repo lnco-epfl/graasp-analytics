@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 
+import { useTheme } from '@mui/material';
+
 import groupBy from 'lodash.groupby';
 import {
   Bar,
@@ -28,6 +30,8 @@ import EmptyChart from './EmptyChart';
 
 const ItemsByUserChart = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
+  const { direction } = useTheme();
+
   const {
     actions,
     selectedUsers,
@@ -84,7 +88,10 @@ const ItemsByUserChart = (): JSX.Element => {
         <ComposedChart data={firstFormattedItmesByUser}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis dataKey="name" tick={{ fontSize: 14 }} interval={0} />
-          <YAxis tick={{ fontSize: 14 }} />
+          <YAxis
+            tick={{ fontSize: 14 }}
+            orientation={direction === 'rtl' ? 'right' : 'left'}
+          />
           <Tooltip />
           {userNames.map((name, index) => (
             <Bar

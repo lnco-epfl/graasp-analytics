@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Stack } from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
 
 import {
   AggregateBy,
@@ -39,6 +39,7 @@ const ActionsByUserChart = (): JSX.Element | null => {
     useContext(DataContext);
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
+  const { direction } = useTheme();
 
   // get aggregate actions
   const {
@@ -110,7 +111,10 @@ const ActionsByUserChart = (): JSX.Element | null => {
         <ComposedChart data={formattedData}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis dataKey="type" tick={{ fontSize: 14 }} />
-          <YAxis tick={{ fontSize: 14 }} />
+          <YAxis
+            tick={{ fontSize: 14 }}
+            orientation={direction === 'rtl' ? 'right' : 'left'}
+          />
           <Tooltip />
           {Array.from(Object.keys(actionsByUser), (name, index) => (
             <Bar

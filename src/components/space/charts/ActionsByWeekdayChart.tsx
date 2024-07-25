@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useTheme } from '@mui/material';
+
 import {
   AggregateBy,
   AggregateFunction,
@@ -44,6 +46,7 @@ const ActionsByWeekdayChart = (): JSX.Element | null => {
 
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
+  const { direction } = useTheme();
 
   const {
     data: aggregateData,
@@ -149,7 +152,10 @@ const ActionsByWeekdayChart = (): JSX.Element | null => {
         <BarChart data={mergedData}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis interval={0} dataKey="day" tick={{ fontSize: 14 }} />
-          <YAxis tick={{ fontSize: 14 }} />
+          <YAxis
+            tick={{ fontSize: 14 }}
+            orientation={direction === 'rtl' ? 'right' : 'left'}
+          />
           <Tooltip />
           <Legend />
           <Bar dataKey="count" name={t('COUNT')} fill={GENERAL_COLOR} />

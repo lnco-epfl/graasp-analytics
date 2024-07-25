@@ -110,7 +110,10 @@ const MemberActionsChart = ({ actions }: Props): JSX.Element => {
         <ComposedChart data={noOfActionTypesOverInterval}>
           <CartesianGrid strokeDasharray="2" />
           <XAxis interval={0} dataKey="date" tick={{ fontSize: 14 }} />
-          <YAxis tick={{ fontSize: 14 }} />
+          <YAxis
+            tick={{ fontSize: 14 }}
+            orientation={theme.direction === 'rtl' ? 'right' : 'left'}
+          />
           <Tooltip
             formatter={(value, name: string) => [value, translateAction(name)]}
           />

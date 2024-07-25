@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 
 import {
   AggregateBy,
@@ -42,7 +42,7 @@ const ActionsByDayChart = (): JSX.Element | null => {
     useContext(DataContext);
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
-
+  const { direction } = useTheme();
   // get aggregate actions
   const {
     data: aggregateData,
@@ -145,7 +145,11 @@ const ActionsByDayChart = (): JSX.Element | null => {
         >
           <CartesianGrid strokeDasharray="2" />
           <XAxis dataKey="date" tick={{ fontSize: 14 }} />
-          <YAxis tick={{ fontSize: 14 }} domain={[0, yAxisMax]} />
+          <YAxis
+            tick={{ fontSize: 14 }}
+            domain={[0, yAxisMax]}
+            orientation={direction === 'rtl' ? 'right' : 'left'}
+          />
           <Tooltip />
           <Legend />
           <Line

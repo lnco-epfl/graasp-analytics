@@ -10,7 +10,11 @@ const ChartContainer = ({
   children: JSX.Element;
 }): JSX.Element => (
   <Box width="100%">
-    <ResponsiveContainer width="100%" height={CONTAINER_HEIGHT}>
+    <ResponsiveContainer
+      width="100%"
+      height={CONTAINER_HEIGHT}
+      style={{ direction: 'ltr' }} // This fixes the spacing issues between points and the axis in RTL view
+    >
       {children}
     </ResponsiveContainer>
   </Box>
