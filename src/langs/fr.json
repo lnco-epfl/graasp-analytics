@@ -123,5 +123,6 @@
   "JSON_DESCRIPTION": "paires clé-valeur, plus un format technique.",
   "CSV_DESCRIPTION": "comme une vue tabulaire, similaire à ce que vous voyez dans des feuilles de calcul comme Excel.",
   "START_EXPORTING": "Commencez à exporter avec {{format}}",
-  "EXPORTING_DONE": "{{format}} demande envoyée"
+  "EXPORTING_DONE": "{{format}} demande envoyée",
+  "LAST_THREE_MONTHS_LABEL": "Trois derniers mois"
 }
