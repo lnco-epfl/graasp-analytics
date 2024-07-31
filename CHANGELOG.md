@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.13.0](https://github.com/graasp/graasp-analytics/compare/v2.12.0...v2.13.0) (2024-07-31)
+
+
+### Features
+
+* arabic view - rtl ([#416](https://github.com/graasp/graasp-analytics/issues/416)) ([58946ba](https://github.com/graasp/graasp-analytics/commit/58946ba5efdb1437a8a2a40e07bb4a49f64244f7))
+
+
+### Bug Fixes
+
+* **french:** update translations ([#417](https://github.com/graasp/graasp-analytics/issues/417)) ([7d8d6bd](https://github.com/graasp/graasp-analytics/commit/7d8d6bd8b082ded1f3054dd9c2212537680427e1))
+
 ## [2.12.0](https://github.com/graasp/graasp-analytics/compare/v2.11.1...v2.12.0) (2024-07-15)
 
 
