@@ -10,6 +10,7 @@ import {
   CountGroupBy,
 } from '@graasp/sdk';
 
+import { endOfDay, formatISO } from 'date-fns';
 import {
   CartesianGrid,
   Legend,
@@ -36,7 +37,7 @@ import EmptyChart from './EmptyChart';
 const ActiveUsersChart = (): JSX.Element | null => {
   const { t } = useAnalyticsTranslation();
   const { view } = useContext(ViewDataContext);
-  const { selectedActionTypes } = useContext(DataContext);
+  const { selectedActionTypes, dateRange } = useContext(DataContext);
   const { itemId } = useParams();
   const { direction } = useTheme();
 
@@ -53,6 +54,8 @@ const ActiveUsersChart = (): JSX.Element | null => {
     aggregateFunction: AggregateFunction.Count,
     aggregateMetric: AggregateMetric.ActionCount,
     aggregateBy: [AggregateBy.CreatedDay],
+    startDate: formatISO(dateRange.startDate),
+    endDate: formatISO(endOfDay(dateRange.endDate)),
   });
 
   if (isLoading || isError) {

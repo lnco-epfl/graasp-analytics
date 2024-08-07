@@ -57,6 +57,7 @@ const ActionsLegend = ({ actionsTypes }: Props): JSX.Element => {
           aria-label={t('ACTIONS_LEGEND_MODAL_TITLE')}
           onClick={() => setOpen(true)}
           size="large"
+          sx={{ zIndex: 50 }}
         >
           <QuestionMarkIcon />
         </StyledFab>

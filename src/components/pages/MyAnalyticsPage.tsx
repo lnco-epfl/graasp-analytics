@@ -22,7 +22,9 @@ import MemberActionsChart from '../space/charts/MemberActionsChart';
 const MyAnalyticsPage = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
 
-  const { dateRange } = useContext(MyAnalyticsDateRangeDataContext);
+  const { dateRange, setDateRange } = useContext(
+    MyAnalyticsDateRangeDataContext,
+  );
 
   const { data, isLoading } = hooks.useMemberActions({
     startDate: formatISO(dateRange.startDate),
@@ -47,7 +49,7 @@ const MyAnalyticsPage = (): JSX.Element => {
               spacing={1}
             >
               <SectionTitle title={t('MY_ANALYTICS')} />
-              <DateRange />
+              <DateRange dateRange={dateRange} setDateRange={setDateRange} />
             </Stack>
             {data.length ? (
               <>

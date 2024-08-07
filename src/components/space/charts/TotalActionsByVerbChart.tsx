@@ -8,6 +8,7 @@ import {
   CountGroupBy,
 } from '@graasp/sdk';
 
+import { endOfDay, formatISO } from 'date-fns';
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 
 import { useActionsTranslation, useAnalyticsTranslation } from '@/config/i18n';
@@ -27,7 +28,7 @@ import EmptyChart from './EmptyChart';
 const TotalActionsByVerbChart = (): JSX.Element | null => {
   const { t } = useAnalyticsTranslation();
   const { t: translateActions } = useActionsTranslation();
-  const { selectedActionTypes } = useContext(DataContext);
+  const { selectedActionTypes, dateRange } = useContext(DataContext);
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
 
@@ -44,6 +45,8 @@ const TotalActionsByVerbChart = (): JSX.Element | null => {
     aggregateFunction: AggregateFunction.Sum,
     aggregateMetric: AggregateMetric.ActionCount,
     aggregateBy: [AggregateBy.ActionType],
+    startDate: formatISO(dateRange.startDate),
+    endDate: formatISO(endOfDay(dateRange.endDate)),
   });
 
   if (isLoading || isError) {

@@ -26,7 +26,7 @@ import { buildDatabase } from './database';
 
 const {
   buildGetItemRoute,
-  GET_CURRENT_MEMBER_ROUTE,
+  buildGetCurrentMemberRoute,
   GET_OWN_ITEMS_ROUTE,
   SHARED_ITEM_WITH_ROUTE,
 } = API_ROUTES;
@@ -103,7 +103,7 @@ const mockServer = ({
     },
     routes() {
       // get current member
-      this.get(`/${GET_CURRENT_MEMBER_ROUTE}`, () => {
+      this.get(`/${buildGetCurrentMemberRoute()}`, () => {
         if (currentMember) {
           return currentMember;
         }

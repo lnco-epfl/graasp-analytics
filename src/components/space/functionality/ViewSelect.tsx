@@ -51,7 +51,13 @@ const ViewSelect = (): JSX.Element => {
       break;
   }
   return (
-    <Stack direction="row" alignItems="center" width="100%" spacing={1}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      width="100%"
+      spacing={1}
+      maxWidth={{ xs: '100%', sm: '300px' }}
+    >
       <FormControl fullWidth>
         <InputLabel id="viewLabel">{t('VIEWS_SELECT')}</InputLabel>
         <Select

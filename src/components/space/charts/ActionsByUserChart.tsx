@@ -10,6 +10,7 @@ import {
   CountGroupBy,
 } from '@graasp/sdk';
 
+import { endOfDay, formatISO } from 'date-fns';
 import groupBy from 'lodash.groupby';
 import {
   Bar,
@@ -35,7 +36,7 @@ const ActionsByUserChart = (): JSX.Element | null => {
   const { t } = useAnalyticsTranslation();
   const { t: translateAction } = useActionsTranslation();
 
-  const { actions, selectedUsers, selectedActionTypes, allMembers } =
+  const { actions, selectedUsers, selectedActionTypes, allMembers, dateRange } =
     useContext(DataContext);
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
@@ -54,6 +55,8 @@ const ActionsByUserChart = (): JSX.Element | null => {
     aggregateFunction: AggregateFunction.Sum,
     aggregateMetric: AggregateMetric.ActionCount,
     aggregateBy: [AggregateBy.ActionType],
+    startDate: formatISO(dateRange.startDate),
+    endDate: formatISO(endOfDay(dateRange.endDate)),
   });
 
   if (isLoading || isError) {

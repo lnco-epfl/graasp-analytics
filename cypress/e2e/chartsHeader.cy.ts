@@ -6,6 +6,7 @@ import {
   SELECT_VIEW_ID,
   SELECT_VIEW_RENDERED_TEXT_ID,
   TAB_USERS,
+  TOGGLE_FILTERS_DRAWER_BUTTON_ID,
   buildSelectViewId,
   buildSelectedActionChipId,
   buildSelectedUserChipId,
@@ -68,6 +69,9 @@ describe('Select users', () => {
   it('values of user select should be maintained when navigating within different routes', () => {
     visitItemPage(MOCK_ITEMS[0]);
 
+    // open filter drawers
+    cy.get(`#${TOGGLE_FILTERS_DRAWER_BUTTON_ID}`).click();
+
     cy.get(`#${SELECT_USER_ID}`).click();
     cy.get(`#${SELECT_USER_ID}-option-0`).click();
     cy.get(`#${buildSelectedUserChipId(MOCK_MEMBERS[0].name)}`).should(
@@ -75,7 +79,11 @@ describe('Select users', () => {
       MOCK_MEMBERS[0].name,
     );
 
+    cy.get('.MuiBackdrop-root').eq(2).click({ force: true });
     cy.get(`#${buildSidebarListItemId(TAB_USERS)}`).click();
+
+    // open filter drawers
+    cy.get(`#${TOGGLE_FILTERS_DRAWER_BUTTON_ID}`).click();
 
     cy.get(`#${buildSelectedUserChipId(MOCK_MEMBERS[0].name)}`).should(
       'contain.text',
@@ -90,13 +98,20 @@ describe('Select actions', () => {
   it('values of action select should be maintained when navigating within different routes', () => {
     visitItemPage(MOCK_ITEMS[0]);
 
+    // open filter drawers
+    cy.get(`#${TOGGLE_FILTERS_DRAWER_BUTTON_ID}`).click();
+
     cy.get(`#${SELECT_ACTION_ID}`).click();
     cy.get(`#${SELECT_ACTION_ID}-option-0`).click();
     cy.get(
       `#${buildSelectedActionChipId(MOCK_ACTION_DATA.actions[0].type)}`,
     ).should('contain.text', MOCK_ACTION_DATA.actions[0].type);
 
+    cy.get('.MuiBackdrop-root').eq(2).click({ force: true });
     cy.get(`#${buildSidebarListItemId(TAB_USERS)}`).click();
+
+    // open filter drawers
+    cy.get(`#${TOGGLE_FILTERS_DRAWER_BUTTON_ID}`).click();
 
     cy.get(
       `#${buildSelectedActionChipId(MOCK_ACTION_DATA.actions[0].type)}`,

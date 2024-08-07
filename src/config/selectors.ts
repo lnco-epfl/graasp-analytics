@@ -68,3 +68,5 @@ export const buildSelectExportFormatID = (
 ): string => `export-${format}-id`;
 
 export const EXPORT_ACTIONS_BUTTON_ID = 'exportActionsButtonId';
+
+export const TOGGLE_FILTERS_DRAWER_BUTTON_ID = 'toggleFilterDrawerButtonId';

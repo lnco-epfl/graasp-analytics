@@ -11,6 +11,9 @@ import {
   CountGroupBy,
 } from '@graasp/sdk';
 
+import { endOfDay, formatISO } from 'date-fns';
+
+import { DataContext } from '@/components/context/DataProvider';
 import { useAnalyticsTranslation } from '@/config/i18n';
 
 import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../../config/constants';
@@ -23,6 +26,7 @@ const Icon = <FaceIcon fontSize="large" />;
 const ActiveUsersCard = (): JSX.Element | null => {
   const { t } = useAnalyticsTranslation();
   const { view } = useContext(ViewDataContext);
+  const { dateRange } = useContext(DataContext);
   const { itemId } = useParams();
 
   // get total users
@@ -37,6 +41,8 @@ const ActiveUsersCard = (): JSX.Element | null => {
     aggregateFunction: AggregateFunction.Count,
     aggregateMetric: AggregateMetric.User,
     aggregateBy: [],
+    startDate: formatISO(dateRange.startDate),
+    endDate: formatISO(endOfDay(dateRange.endDate)),
   });
 
   // get aggregate actions
@@ -51,6 +57,8 @@ const ActiveUsersCard = (): JSX.Element | null => {
     aggregateFunction: AggregateFunction.Avg,
     aggregateMetric: AggregateMetric.ActionCount,
     aggregateBy: [AggregateBy.CreatedDay],
+    startDate: formatISO(dateRange.startDate),
+    endDate: formatISO(endOfDay(dateRange.endDate)),
   });
 
   if (

@@ -16,6 +16,10 @@ import {
   Member,
 } from '@graasp/sdk';
 
+import { addDays, endOfDay, formatISO } from 'date-fns';
+
+import { DateRange } from '@/config/type';
+
 import { DEFAULT_REQUEST_SAMPLE_SIZE } from '../../config/constants';
 import { hooks } from '../../config/queryClient';
 import { ViewDataContext } from './ViewDataProvider';
@@ -33,6 +37,8 @@ const defaultValue: {
   isLoading: boolean;
   requestedSampleSize: number;
   descendantApps: DiscriminatedItem[];
+  dateRange: DateRange;
+  setDateRange: (view: DateRange) => void;
 } = {
   actions: [],
   allMembers: [],
@@ -49,6 +55,14 @@ const defaultValue: {
   isLoading: true,
   requestedSampleSize: DEFAULT_REQUEST_SAMPLE_SIZE,
   descendantApps: [],
+  dateRange: {
+    startDate: addDays(new Date(), -30),
+    endDate: new Date(),
+    key: 'selection',
+  },
+  setDateRange: () => {
+    // do nothing
+  },
 };
 
 export const DataContext = createContext(defaultValue);
@@ -75,6 +89,8 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   const { view } = useContext(ViewDataContext);
   const { itemId } = useParams();
 
+  const [dateRange, setDateRange] = useState(defaultValue.dateRange);
+
   // todo: have a dynamic value
   const requestedSampleSize = DEFAULT_REQUEST_SAMPLE_SIZE;
   const { data: descendants = [] } = hooks.useDescendants({
@@ -90,6 +106,8 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       itemId,
       view: Context.Builder,
       requestedSampleSize,
+      startDate: formatISO(dateRange.startDate),
+      endDate: formatISO(endOfDay(dateRange.endDate)),
     },
     { enabled: Boolean(enabledArray[Context.Builder]) },
   );
@@ -103,6 +121,8 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       itemId,
       view: Context.Player,
       requestedSampleSize,
+      startDate: formatISO(dateRange.startDate),
+      endDate: formatISO(endOfDay(dateRange.endDate)),
     },
     { enabled: Boolean(enabledArray[Context.Player]) },
   );
@@ -116,6 +136,8 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       itemId,
       view: Context.Library,
       requestedSampleSize,
+      startDate: formatISO(dateRange.startDate),
+      endDate: formatISO(endOfDay(dateRange.endDate)),
     },
     { enabled: Boolean(enabledArray[Context.Library]) },
   );
@@ -214,6 +236,8 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       isLoading,
       requestedSampleSize,
       descendantApps,
+      dateRange,
+      setDateRange,
     }),
     [
       actions,
@@ -226,6 +250,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       itemChildren,
       requestedSampleSize,
       descendantApps,
+      dateRange,
     ],
   );
 

@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { DiscriminatedItem, PackedItem } from '@graasp/sdk';
 import { SearchInput } from '@graasp/ui';
 
 import { ITEM_PAGE_SIZE } from '@/config/constants';
@@ -31,7 +31,7 @@ const HomePage = (): JSX.Element => {
     isLoading,
     error,
   } = hooks.useAccessibleItems(
-    { name: searchQuery },
+    { keywords: searchQuery },
     // get items cumulative
     { pageSize: ITEM_PAGE_SIZE, page },
   );
@@ -43,7 +43,7 @@ const HomePage = (): JSX.Element => {
       } else {
         setItems((prev) => {
           const newItems = accessibleItems.data.filter(
-            (item) => !prev.some((p) => p.id === item.id),
+            (item: PackedItem) => !prev.some((p) => p.id === item.id),
           );
           return [...prev, ...newItems];
         });
