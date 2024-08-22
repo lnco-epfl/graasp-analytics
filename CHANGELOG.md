@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.0](https://github.com/graasp/graasp-analytics/compare/v2.14.0...v2.15.0) (2024-08-22)
+
+
+### Features
+
+* update graasp packages ([#428](https://github.com/graasp/graasp-analytics/issues/428)) ([e5af85f](https://github.com/graasp/graasp-analytics/commit/e5af85f87b2ad4055d7fb7101ff21ccb43fd71cc))
+
+
+### Bug Fixes
+
+* update package dependencies ([f54156e](https://github.com/graasp/graasp-analytics/commit/f54156ed0d497ab4ad15977a9dcd9b312e875106))
+* update ui to use ts build ([#419](https://github.com/graasp/graasp-analytics/issues/419)) ([5cb9b14](https://github.com/graasp/graasp-analytics/commit/5cb9b1494c5ceb97ad80708d522804dd1ccce4c2))
+
 ## [2.14.0](https://github.com/graasp/graasp-analytics/compare/v2.13.0...v2.14.0) (2024-08-20)
 
 
