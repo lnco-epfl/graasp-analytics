@@ -28,7 +28,7 @@ const AppContent = ({
 
   if (memberships) {
     const userMemberships = memberships
-      ?.filter((m) => m.member.id === member?.id)
+      ?.filter((m) => m.account.id === member?.id)
       .reduce((acc: PermissionLevel[], curr) => [...acc, curr.permission], []);
 
     const permission =

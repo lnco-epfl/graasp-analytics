@@ -40,7 +40,7 @@ const UsersByActionByChart = (): JSX.Element => {
   let formattedUsersByAction: any[] = [];
   const filteredActions = groupBy(
     filterActionsByUsers(allActions, selectedUsers),
-    (a) => a.member?.id,
+    (a) => a.account?.id,
   );
   allMembers.forEach((user) => {
     const groupedActions = groupBy(filteredActions[user.id], (a) => a.type);

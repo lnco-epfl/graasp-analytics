@@ -57,7 +57,7 @@ const checkPermission = (
   const itemPath = item.path;
   const validPaths = schema
     .all('membership')
-    .filter(({ member }: ItemMembership) => member.id === currentMember?.id)
+    .filter(({ account }: ItemMembership) => account.id === currentMember?.id)
     .models.map((i: ItemMembership) => i.item.path);
   return validPaths.some((path: string) => itemPath.includes(path));
 };

@@ -229,7 +229,7 @@ export const filterActionsByUsers = (
   const selectedUserIds = selectedUsers.map(({ id }) => id);
   return actions.filter(
     (action) =>
-      action?.member?.id && selectedUserIds.includes(action.member.id),
+      action?.account?.id && selectedUserIds.includes(action.account.id),
   );
 };
 

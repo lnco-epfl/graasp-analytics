@@ -84,7 +84,7 @@ const ActionsByUserChart = (): JSX.Element | null => {
     if (selectedActionTypes.length && !selectedActionTypes.includes(type)) {
       continue;
     }
-    const groupedUsers = groupBy(actionsByType, (a) => a?.member?.id);
+    const groupedUsers = groupBy(actionsByType, (a) => a?.account?.id);
 
     const userActions: any = {
       type: translateAction(type),
