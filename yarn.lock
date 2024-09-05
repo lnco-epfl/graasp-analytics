@@ -799,13 +799,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:3.12.45":
-  version: 3.12.45
-  resolution: "@cypress/code-coverage@npm:3.12.45"
+"@cypress/code-coverage@npm:3.12.47":
+  version: 3.12.47
+  resolution: "@cypress/code-coverage@npm:3.12.47"
   dependencies:
     "@cypress/webpack-preprocessor": "npm:^6.0.0"
     chalk: "npm:4.1.2"
-    dayjs: "npm:1.11.12"
+    dayjs: "npm:1.11.13"
     debug: "npm:4.3.6"
     execa: "npm:4.1.0"
     globby: "npm:11.1.0"
@@ -818,7 +818,7 @@ __metadata:
     babel-loader: ^8.3 || ^9
     cypress: "*"
     webpack: ^4 || ^5
-  checksum: 10/95ef341f0ed5f5673823b2d89224a0c5d5eb41a9eb759606b214c48b1b292f7905a0f284e0db42b0c4ff04d3a897c8765ae7c3832f9b92e210162136726f15b1
+  checksum: 10/5b92f053633587727e02b2cff2ce30f9c1c77cfea674283c71f75b1e4b092d5a503bf4ebf72d9fd9c5a34150d14bd68dd6276a9cada1f8dbddd0fd1ffb208bfc
   languageName: node
   linkType: hard
 
@@ -2659,9 +2659,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:16.0.0":
-  version: 16.0.0
-  resolution: "@testing-library/react@npm:16.0.0"
+"@testing-library/react@npm:16.0.1":
+  version: 16.0.1
+  resolution: "@testing-library/react@npm:16.0.1"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
   peerDependencies:
@@ -2675,7 +2675,7 @@ __metadata:
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 10/b32894be94e31276138decfa6bcea69dfebc0c37cf91499ff6c878f41eb1154a43a7df6eb1e72e7bede78468af6cb67ca59e4acd3206b41f3ecdae2c6efdf67e
+  checksum: 10/904b48881cf5bd208e25899e168f5c99c78ed6d77389544838d9d861a038d2c5c5385863ee9a367436770cbf7d21c5e05a991b9e24a33806e9ac985df2448185
   languageName: node
   linkType: hard
 
@@ -2938,12 +2938,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.16.1":
-  version: 20.16.1
-  resolution: "@types/node@npm:20.16.1"
+"@types/node@npm:20.16.5":
+  version: 20.16.5
+  resolution: "@types/node@npm:20.16.5"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10/9bae1dffd2094694147a91ebec51dc89a60a607d16d47a0d770320f1a75d3ba58663708fd93c37954a63acb701a4e0fd64245139c57ae810d3ad524e75481d4e
+  checksum: 10/39a8457149dc17cdea57afc90d4da53182fdb8b958d5bb065a15d123d81d4efa6b51a0de92428d05ead2e63ce07195586f71083401b99cdbcd04662344fbf7a1
   languageName: node
   linkType: hard
 
@@ -4527,10 +4527,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.11.12":
-  version: 1.11.12
-  resolution: "dayjs@npm:1.11.12"
-  checksum: 10/8ee7c1e14961fd08d40b788d0c0e930dc6288b3d32911bb911b2fb31bb703c262788164fbe678ee9e50e2a35268d667b8c8ba43fd1806771c1f404c300a2b428
+"dayjs@npm:1.11.13":
+  version: 1.11.13
+  resolution: "dayjs@npm:1.11.13"
+  checksum: 10/7374d63ab179b8d909a95e74790def25c8986e329ae989840bacb8b1888be116d20e1c4eee75a69ea0dfbae13172efc50ef85619d304ee7ca3c01d5878b704f5
   languageName: node
   linkType: hard
 
@@ -6307,7 +6307,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "graasp-analytics@workspace:."
   dependencies:
-    "@cypress/code-coverage": "npm:3.12.45"
+    "@cypress/code-coverage": "npm:3.12.47"
     "@emotion/cache": "npm:11.13.1"
     "@emotion/react": "npm:11.13.3"
     "@emotion/styled": "npm:11.13.0"
@@ -6320,7 +6320,7 @@ __metadata:
     "@mui/material": "npm:5.16.7"
     "@sentry/react": "npm:7.119.0"
     "@testing-library/jest-dom": "npm:6.4.8"
-    "@testing-library/react": "npm:16.0.0"
+    "@testing-library/react": "npm:16.0.1"
     "@testing-library/user-event": "npm:14.5.2"
     "@trivago/prettier-plugin-sort-imports": "npm:4.3.0"
     "@types/google-map-react": "npm:2.1.10"
@@ -6328,7 +6328,7 @@ __metadata:
     "@types/lodash.countby": "npm:4.6.9"
     "@types/lodash.groupby": "npm:4.6.9"
     "@types/lodash.truncate": "npm:4.4.9"
-    "@types/node": "npm:20.16.1"
+    "@types/node": "npm:20.16.5"
     "@types/react-date-range": "npm:1.4.9"
     "@types/react-dom": "npm:18.3.0"
     "@typescript-eslint/eslint-plugin": "npm:8.2.0"
@@ -6374,7 +6374,7 @@ __metadata:
     typescript: "npm:5.5.4"
     use-supercluster: "npm:0.4.0"
     uuid: "npm:10.0.0"
-    vite: "npm:5.4.2"
+    vite: "npm:5.4.3"
     vite-plugin-checker: "npm:0.7.2"
     vite-plugin-istanbul: "npm:6.0.2"
   languageName: unknown
@@ -8486,14 +8486,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.41":
-  version: 8.4.41
-  resolution: "postcss@npm:8.4.41"
+"postcss@npm:^8.4.43":
+  version: 8.4.45
+  resolution: "postcss@npm:8.4.45"
   dependencies:
     nanoid: "npm:^3.3.7"
     picocolors: "npm:^1.0.1"
     source-map-js: "npm:^1.2.0"
-  checksum: 10/6e6176c2407eff60493ca60a706c6b7def20a722c3adda94ea1ece38345eb99964191336fd62b62652279cec6938e79e0b1e1d477142c8d3516e7a725a74ee37
+  checksum: 10/7eaf7346d04929ee979548ece5e34d253eae6f175346e298b2c4621ad6f4ee00adfe7abe72688640e910c0361ae50537c5dda3e35fd1066491282c342b3ee5c8
   languageName: node
   linkType: hard
 
@@ -10619,13 +10619,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.4.2":
-  version: 5.4.2
-  resolution: "vite@npm:5.4.2"
+"vite@npm:5.4.3":
+  version: 5.4.3
+  resolution: "vite@npm:5.4.3"
   dependencies:
     esbuild: "npm:^0.21.3"
     fsevents: "npm:~2.3.3"
-    postcss: "npm:^8.4.41"
+    postcss: "npm:^8.4.43"
     rollup: "npm:^4.20.0"
   peerDependencies:
     "@types/node": ^18.0.0 || >=20.0.0
@@ -10658,7 +10658,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10/c449f9295060fa88c9b5cc1bd17c2de198deae596b7da1250db9662fb15e7b21e0dbe9a40a9106fb7438b1231494b169457e809ecbb65e732648d87dd284ab23
+  checksum: 10/864bf64fe57bd26b1527ea6d8dac2f4f8b834791f836590043463c0ded6a150a9407ffac6a859abc34ec013ecfcd23f405c20aa76f4ad99deab1176d5f017574
   languageName: node
   linkType: hard
 
