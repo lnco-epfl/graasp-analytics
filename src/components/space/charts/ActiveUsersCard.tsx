@@ -89,7 +89,7 @@ const ActiveUsersCard = (): JSX.Element | null => {
     }
     const actionTime = new Date(o.createdDay).getTime();
     if (actionTime > today.getTime()) {
-      usersToday += o.aggregateResult;
+      usersToday += 1;
     }
     if (actionTime > oneWeekAgo.getTime()) {
       averageDailyUsersThisWeek += o.aggregateResult;
