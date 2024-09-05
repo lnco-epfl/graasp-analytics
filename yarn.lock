@@ -6372,7 +6372,7 @@ __metadata:
     stylis-plugin-rtl: "npm:2.1.1"
     supercluster: "npm:8.0.1"
     typescript: "npm:5.5.4"
-    use-supercluster: "npm:0.4.0"
+    use-supercluster: "npm:1.2.0"
     uuid: "npm:10.0.0"
     vite: "npm:5.4.2"
     vite-plugin-checker: "npm:0.7.2"
@@ -10435,16 +10435,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-supercluster@npm:0.4.0":
-  version: 0.4.0
-  resolution: "use-supercluster@npm:0.4.0"
+"use-supercluster@npm:1.2.0":
+  version: 1.2.0
+  resolution: "use-supercluster@npm:1.2.0"
   dependencies:
-    dequal: "npm:^2.0.2"
+    dequal: "npm:^2.0.3"
     use-deep-compare-effect: "npm:^1.8.1"
   peerDependencies:
     react: ">=16"
-    supercluster: ">=6"
-  checksum: 10/24a2cdbc14a4d2548ecd8ea885b61413141db12d459e9c062008ed6d5f3e65ab4bffcf165ce2e12af5e29d45bb15dae15924021d067cf67c9d6b1aed1fcdfcfc
+    supercluster: ">=8"
+  checksum: 10/0720c66c75e41879e1defd58be6442ca91b0d72258ecacee21ab428470a3d28f52c7cfd569ded94c4c188d7273ba1fbff8c5ec7524d8b68a75903fcdf151c29d
   languageName: node
   linkType: hard
 
