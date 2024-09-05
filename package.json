@@ -45,7 +45,7 @@
     "react-router-dom": "6.26.1",
     "react-toastify": "10.0.5",
     "recharts": "2.12.7",
-    "stylis": "4.3.3",
+    "stylis": "4.3.4",
     "stylis-plugin-rtl": "2.1.1",
     "supercluster": "8.0.1",
     "use-supercluster": "0.4.0",

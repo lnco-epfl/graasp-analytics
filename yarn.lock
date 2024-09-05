@@ -6368,7 +6368,7 @@ __metadata:
     react-router-dom: "npm:6.26.1"
     react-toastify: "npm:10.0.5"
     recharts: "npm:2.12.7"
-    stylis: "npm:4.3.3"
+    stylis: "npm:4.3.4"
     stylis-plugin-rtl: "npm:2.1.1"
     supercluster: "npm:8.0.1"
     typescript: "npm:5.5.4"
@@ -9911,10 +9911,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylis@npm:4.3.3":
-  version: 4.3.3
-  resolution: "stylis@npm:4.3.3"
-  checksum: 10/7532382d2d923d1c71a8c3a17115dd6238dde588ac905abcc682db025b5852644990fd246d4f90c5a0bba0dd156efa7124be829598d52a2269781cc0e9a6f5c2
+"stylis@npm:4.3.4":
+  version: 4.3.4
+  resolution: "stylis@npm:4.3.4"
+  checksum: 10/69b902a3c9fc3329c8ddb18d422f8130068356dd4d4a20ae245953679cc88ae08d49c55e32b0b57c8fe8a76f2ed7f32697240b8db4d368a25fc2db045ebaeba8
   languageName: node
   linkType: hard
 
