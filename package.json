@@ -89,7 +89,7 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "3.12.45",
-    "@testing-library/jest-dom": "6.4.8",
+    "@testing-library/jest-dom": "6.5.0",
     "@testing-library/react": "16.0.0",
     "@testing-library/user-event": "14.5.2",
     "@trivago/prettier-plugin-sort-imports": "4.3.0",
@@ -106,7 +106,7 @@
     "@vitejs/plugin-react": "4.3.1",
     "concurrently": "8.2.2",
     "cross-env": "7.0.3",
-    "cypress": "13.13.3",
+    "cypress": "13.14.2",
     "env-cmd": "10.1.0",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
@@ -121,7 +121,7 @@
     "prettier": "3.3.3",
     "typescript": "5.5.4",
     "vite": "5.4.2",
-    "vite-plugin-checker": "0.7.2",
+    "vite-plugin-checker": "0.8.0",
     "vite-plugin-istanbul": "6.0.2"
   },
   "packageManager": "yarn@4.3.1"
