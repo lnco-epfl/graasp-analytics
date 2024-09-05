@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.1](https://github.com/graasp/graasp-analytics/compare/v2.15.0...v2.15.1) (2024-09-05)
+
+
+### Bug Fixes
+
+* fix number of users today ([#435](https://github.com/graasp/graasp-analytics/issues/435)) ([7e88df1](https://github.com/graasp/graasp-analytics/commit/7e88df1c9c4f16f5a39d53ab5e52bba8e6dae46a))
+
 ## [2.15.0](https://github.com/graasp/graasp-analytics/compare/v2.14.0...v2.15.0) (2024-08-22)
 
 
