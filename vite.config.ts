@@ -40,13 +40,21 @@ const config = ({ mode }: { mode: string }): UserConfigExport => {
         },
       },
     },
+    optimizeDeps: {
+      include: ['@emotion/react', '@emotion/styled', '@mui/material/Tooltip'],
+    },
     plugins: [
       checker({
         typescript: true,
         eslint: { lintCommand: 'eslint "./**/*.{ts,tsx}"' },
         overlay: { initialIsOpen: false },
       }),
-      react(),
+      react({
+        jsxImportSource: '@emotion/react',
+        babel: {
+          plugins: ['@emotion/babel-plugin'],
+        },
+      }),
       istanbul({
         include: 'src/*',
         exclude: ['node_modules', 'test/', '.nyc_output', 'coverage'],

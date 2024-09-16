@@ -44,9 +44,6 @@ const ViewSelect = (): JSX.Element => {
     case Context.Player:
       viewMessage = t('VIEW_PLAYER_TOOLTIP');
       break;
-    case Context.Library:
-      viewMessage = t('VIEW_LIBRARY_TOOLTIP');
-      break;
     default:
       break;
   }

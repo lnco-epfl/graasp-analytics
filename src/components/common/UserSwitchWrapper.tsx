@@ -25,10 +25,6 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
   const { t } = useAnalyticsTranslation();
   const { mutateAsync: signOut } = mutations.useSignOut();
 
-  const renderAvatar = (m?: CompleteMember | null) => (
-    <MemberAvatar id={m?.id} />
-  );
-
   return (
     <GraaspUserSwitch
       ButtonContent={ButtonContent}
@@ -42,7 +38,9 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
       switchMemberText={t('USER_SWITCH_SIGN_IN_TEXT')}
       profilePath={GRAASP_ACCOUNT_HOST}
       redirectPath={SIGN_IN_PATH}
-      renderAvatar={renderAvatar}
+      renderAvatar={(m?: CompleteMember | null): JSX.Element => (
+        <MemberAvatar member={m} />
+      )}
       buttonId={HEADER_MEMBER_MENU_BUTTON_ID}
       signInMenuItemId={HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID}
       signOutMenuItemId={HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID}
