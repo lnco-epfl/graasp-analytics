@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { CssBaseline } from '@mui/material';
 
-import { hasAcceptedCookies } from '@graasp/sdk';
+import { getCurrentAccountLang, hasAcceptedCookies } from '@graasp/sdk';
 import { langs } from '@graasp/translations';
 import { ThemeProvider } from '@graasp/ui';
 
@@ -36,7 +36,7 @@ const ThemeWrapper = () => {
       langs={langs}
       languageSelectSx={{ mb: 2, mr: 2 }}
       i18n={i18n}
-      defaultDirection={i18next.dir(currentMember?.extra?.lang)}
+      defaultDirection={i18next.dir(getCurrentAccountLang(currentMember))}
     >
       <CssBaseline />
       <I18nextProvider i18n={i18nConfig}>

@@ -13,9 +13,9 @@ import { useAnalyticsTranslation } from '@/config/i18n';
 const ItemPage = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
   const { view } = useContext(ViewDataContext);
-  const { error, isLoading, actions } = useContext(DataContext);
+  const { isLoading, actions } = useContext(DataContext);
 
-  if (!error && !isLoading) {
+  if (actions) {
     const types = [...new Set(actions.map((a) => a.type))];
 
     return (

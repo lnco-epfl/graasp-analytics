@@ -13,16 +13,9 @@ import MOCK_ITEMS, {
 } from '../fixtures/items';
 import MOCK_MEMBERSHIP from '../fixtures/membership';
 
-const visitItemPage = (
-  item: { id: string },
-  options: { moveToAnalytics?: boolean } = {},
-) => {
-  const { moveToAnalytics = true } = options;
-
+const visitItemPage = (item: { id: string }) => {
   cy.visit(buildItemPath(item.id));
-  if (moveToAnalytics) {
-    cy.get(`#${buildSidebarListItemId(APP_ITEM)}`).click();
-  }
+  cy.get(`#${buildSidebarListItemId(APP_ITEM)}`).click();
 };
 
 const checkContainAppAnalytics = () => {
@@ -66,7 +59,7 @@ describe('Check non-app item does not show app analytics', () => {
   });
 
   it('Check that app section and list do not exist', () => {
-    visitItemPage(MOCK_ITEMS[1], { moveToAnalytics: false });
+    cy.visit(buildItemPath(MOCK_ITEMS[1].id));
     cy.get(`#${APPS_ID}`).should('not.exist');
   });
 });

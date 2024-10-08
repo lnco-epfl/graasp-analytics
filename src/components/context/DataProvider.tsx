@@ -152,7 +152,6 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   const { data: itemChildren } = hooks.useChildren(itemId, undefined, {
     enabled: itemData?.type === ItemType.FOLDER,
   });
-
   const descendantApps =
     itemData?.type === ItemType.APP
       ? [itemData, ...appDescendants]
@@ -257,9 +256,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     ],
   );
 
-  return (
-    <DataContext.Provider value={value}> {children} </DataContext.Provider>
-  );
+  return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
 
 export default DataProvider;

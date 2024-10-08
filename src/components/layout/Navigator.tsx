@@ -1,4 +1,4 @@
-import { Link, useLocation, useMatch, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -30,19 +30,15 @@ const NavigationLink = styled(Link)(({ theme }) => ({
 }));
 const Navigator = (): JSX.Element | null => {
   const { t } = useAnalyticsTranslation();
-  const match = useMatch(buildItemPath());
+  const { itemId } = useParams();
   const { pathname } = useLocation();
-  const itemId = match?.params?.itemId;
   const { data: currentMember } = useCurrentMember();
-  const { data: item, isInitialLoading: isItemLoading } = useItem(itemId);
-  const itemPath = item?.path;
+  const { data: item, isLoading: isItemLoading } = useItem(itemId);
 
   const navigate = useNavigate();
 
-  const { data: parents, isInitialLoading: areParentsLoading } = useParents({
+  const { data: parents, isLoading: areParentsLoading } = useParents({
     id: itemId,
-    path: itemPath,
-    enabled: !!itemPath,
   });
 
   if (isItemLoading || areParentsLoading) {

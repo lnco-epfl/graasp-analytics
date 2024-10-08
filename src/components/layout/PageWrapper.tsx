@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { Box, styled, useTheme } from '@mui/material';
 
@@ -17,7 +17,6 @@ import { useAnalyticsTranslation } from '@/config/i18n';
 import { HOME_PATH } from '@/config/paths';
 
 import UserSwitchWrapper from '../common/UserSwitchWrapper';
-import Navigator from './Navigator';
 import Sidebar from './Sidebar';
 
 export const platformsHostsMap = defaultHostsMapper({
@@ -39,7 +38,6 @@ const LinkComponent = ({ children }: { children: JSX.Element }) => (
 const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
   const { t } = useAnalyticsTranslation();
   const { itemId } = useParams();
-  const { pathname } = useLocation();
 
   const theme = useTheme();
   const { isMobile } = useMobileView();
@@ -59,7 +57,6 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
       ...getNavigationEvents(Platform.Analytics),
     },
   };
-  const isRoot = pathname === HOME_PATH;
 
   return (
     <Main
@@ -83,11 +80,6 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
       LinkComponent={LinkComponent}
     >
       <Box height="100%" display="flex" flexGrow={1} flexDirection="column">
-        {!isRoot && (
-          <Box id="navigatorContainer" width="100%">
-            <Navigator />
-          </Box>
-        )}
         {children}
       </Box>
     </Main>
