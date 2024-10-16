@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import AppsIcon from '@mui/icons-material/Apps';
@@ -33,11 +33,10 @@ import {
 import { DataContext } from '../context/DataProvider';
 import LinkMenuItem from '../custom/LinkMenuItem';
 
-const Sidebar: FC = () => {
+const Sidebar = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
   const { itemId } = useParams();
   const { descendantApps } = useContext(DataContext);
-
   const { data: item } = hooks.useItem(itemId);
 
   const menuItems = [];

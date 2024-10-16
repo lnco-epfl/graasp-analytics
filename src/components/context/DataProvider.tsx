@@ -92,8 +92,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
 
   // todo: have a dynamic value
   const requestedSampleSize = DEFAULT_REQUEST_SAMPLE_SIZE;
-  const { data: descendants = [] } = hooks.useDescendants({
+  const { data: appDescendants = [] } = hooks.useDescendants({
     id: itemId || '',
+    types: [ItemType.APP],
+    showHidden: false,
   });
 
   const {
@@ -134,10 +136,10 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   const { data: itemChildren } = hooks.useChildren(itemId, undefined, {
     enabled: itemData?.type === ItemType.FOLDER,
   });
-
-  const descendantApps = (
-    itemData ? [itemData, ...descendants] : descendants
-  )?.filter(({ type }) => type === ItemType.APP);
+  const descendantApps =
+    itemData?.type === ItemType.APP
+      ? [itemData, ...appDescendants]
+      : appDescendants;
 
   useEffect(() => {
     if (itemIsError) {
@@ -218,9 +220,7 @@ const DataProvider = ({ children }: Props): JSX.Element => {
     ],
   );
 
-  return (
-    <DataContext.Provider value={value}> {children} </DataContext.Provider>
-  );
+  return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
 
 export default DataProvider;

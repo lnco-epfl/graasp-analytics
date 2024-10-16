@@ -2,7 +2,9 @@ import { Box, Typography } from '@mui/material';
 
 import { Api } from '@graasp/query-client';
 import {
+  AccountType,
   AppItemType,
+  CompleteGuest,
   CompleteMember,
   Context,
   PermissionLevel,
@@ -22,7 +24,7 @@ const AppContent = ({
   member,
 }: {
   item: AppItemType;
-  member?: CompleteMember | null;
+  member?: CompleteMember | CompleteGuest | null;
 }): JSX.Element | null => {
   const { data: memberships, isLoading } = hooks.useItemMemberships(item.id);
 
@@ -33,6 +35,11 @@ const AppContent = ({
 
     const permission =
       userMemberships && PermissionLevelCompare.getHighest(userMemberships);
+
+    const memberLang =
+      member && member?.type === AccountType.Individual
+        ? member.extra?.lang
+        : DEFAULT_LANG;
 
     return (
       <Box id={buildAppItemSelector(item.id)} className={APP_ITEM_CLASS_NAME}>
@@ -52,10 +59,10 @@ const AppContent = ({
             contextPayload={{
               apiHost: API_HOST,
               itemId: item.id,
-              memberId: member?.id,
+              accountId: member?.id,
               permission: permission || PermissionLevel.Read,
               settings: item.settings,
-              lang: item.lang || member?.extra?.lang || DEFAULT_LANG,
+              lang: item.lang || memberLang,
               context: Context.Analytics,
             }}
           />

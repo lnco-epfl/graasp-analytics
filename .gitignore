@@ -21,6 +21,7 @@ yarn-error.log*
 
 # development environments
 .idea/
+.vscode/
 
 # sample data
 /src/data

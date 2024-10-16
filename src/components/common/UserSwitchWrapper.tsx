@@ -1,4 +1,3 @@
-import { CompleteMember } from '@graasp/sdk';
 import { UserSwitchWrapper as GraaspUserSwitch } from '@graasp/ui';
 
 import { GRAASP_ACCOUNT_HOST } from '@/config/env';
@@ -38,9 +37,7 @@ const UserSwitchWrapper = ({ ButtonContent }: Props): JSX.Element => {
       switchMemberText={t('USER_SWITCH_SIGN_IN_TEXT')}
       profilePath={GRAASP_ACCOUNT_HOST}
       redirectPath={SIGN_IN_PATH}
-      renderAvatar={(m?: CompleteMember | null): JSX.Element => (
-        <MemberAvatar member={m} />
-      )}
+      avatar={<MemberAvatar id={member?.id} />}
       buttonId={HEADER_MEMBER_MENU_BUTTON_ID}
       signInMenuItemId={HEADER_MEMBER_MENU_SIGN_IN_BUTTON_ID}
       signOutMenuItemId={HEADER_MEMBER_MENU_SIGN_OUT_BUTTON_ID}

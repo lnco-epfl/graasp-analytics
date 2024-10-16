@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
   Alert,
@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@mui/material';
 
-import { DiscriminatedItem, PackedItem } from '@graasp/sdk';
 import { SearchInput } from '@graasp/ui';
 
 import { ITEM_PAGE_SIZE } from '@/config/constants';
@@ -23,35 +22,17 @@ import ItemLoaderSkelton from '../common/ItemLoaderSkeleton';
 const HomePage = (): JSX.Element => {
   const { t } = useAnalyticsTranslation();
 
-  const [page, setPage] = useState(1);
-  const [items, setItems] = useState<DiscriminatedItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const {
-    data: accessibleItems,
-    isLoading,
-    error,
-  } = hooks.useAccessibleItems(
-    { keywords: searchQuery },
-    // get items cumulative
-    { pageSize: ITEM_PAGE_SIZE, page },
-  );
+  const { data, isLoading, fetchNextPage, isFetching } =
+    hooks.useInfiniteAccessibleItems(
+      { keywords: searchQuery },
+      // get items cumulative
+      { pageSize: ITEM_PAGE_SIZE },
+    );
 
-  useEffect(() => {
-    if (accessibleItems?.data) {
-      if (page === 1) {
-        setItems(accessibleItems?.data);
-      } else {
-        setItems((prev) => {
-          const newItems = accessibleItems.data.filter(
-            (item: PackedItem) => !prev.some((p) => p.id === item.id),
-          );
-          return [...prev, ...newItems];
-        });
-      }
-    }
-  }, [accessibleItems?.data, page]);
+  const accessibleItems = data?.pages.flatMap(({ data: i }) => i);
 
-  if (!isLoading && !error) {
+  if (accessibleItems) {
     return (
       <Stack direction="column" spacing={2}>
         <Alert severity="warning">{t('NO_ITEM_SELECTED')}</Alert>
@@ -67,29 +48,27 @@ const HomePage = (): JSX.Element => {
             size="small"
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              setPage(1);
             }}
             value={searchQuery}
             placeholder={t('ITEM_SEARCH_PLACEHOLDER')}
           />
         </Stack>
-        {items.length ? (
+        {accessibleItems.length ? (
           <Stack spacing={1}>
             <Box>
-              {items.map((item) => (
+              {accessibleItems.map((item) => (
                 <ItemLink key={item.id} item={item} />
               ))}
             </Box>
-            {accessibleItems?.totalCount &&
-              items.length < accessibleItems?.totalCount && (
-                <Button
-                  variant="text"
-                  sx={{ textTransform: 'none', maxWidth: 'max-content' }}
-                  onClick={() => setPage((p) => p + 1)}
-                >
-                  {t('HOME_SHOW_MORE')}
-                </Button>
-              )}
+            {accessibleItems.length < (data?.pages?.[0]?.totalCount ?? 0) && (
+              <Button
+                variant="text"
+                sx={{ textTransform: 'none', maxWidth: 'max-content' }}
+                onClick={() => !isFetching && fetchNextPage()}
+              >
+                {t('HOME_SHOW_MORE')}
+              </Button>
+            )}
           </Stack>
         ) : (
           <Typography variant="subtitle1">

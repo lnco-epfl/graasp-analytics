@@ -14,7 +14,7 @@ const {
   API_HOST,
   enableWebsocket: true,
   defaultQueryOptions: {
-    keepPreviousData: true,
+    keepPreviousData: false,
     refetchOnWindowFocus: true,
   },
   notifier,
