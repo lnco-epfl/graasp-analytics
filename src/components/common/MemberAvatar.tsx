@@ -1,37 +1,42 @@
-import { Member, ThumbnailSize } from '@graasp/sdk';
+import { ThumbnailSize } from '@graasp/sdk';
 import { COMMON } from '@graasp/translations';
 import { Avatar } from '@graasp/ui';
 
-import { AVATAR_ICON_HEIGHT } from '@/config/constants';
-import { useCommonTranslation } from '@/config/i18n';
-import { hooks } from '@/config/queryClient';
+import { MEMBER_AVATAR_MAX_DIMENSIONS } from '@/config/constants';
 import { buildMemberAvatarId } from '@/config/selectors';
 
+import { useCommonTranslation } from '../../config/i18n';
+import { hooks } from '../../config/queryClient';
+import defaultImage from '../../resources/avatar.png';
+
 type Props = {
-  member?: Member | null;
+  id?: string;
+  maxWidth?: number;
+  maxHeight?: number;
+  component?: 'avatar' | 'img';
 };
 
-const MemberAvatar = ({ member }: Props): JSX.Element => {
+const MemberAvatar = ({
+  id,
+  maxWidth = MEMBER_AVATAR_MAX_DIMENSIONS,
+  maxHeight = MEMBER_AVATAR_MAX_DIMENSIONS,
+  component = 'avatar',
+}: Props): JSX.Element => {
   const { t } = useCommonTranslation();
-  const {
-    data: avatarUrl,
-    isLoading: isLoadingAvatar,
-    isFetching: isFetchingAvatar,
-  } = hooks.useAvatarUrl({
-    id: member?.id,
+  const { data: member, isLoading } = hooks.useMember(id);
+  const { data: avatarUrl, isLoading: isLoadingAvatar } = hooks.useAvatarUrl({
+    id,
     size: ThumbnailSize.Small,
   });
-
   return (
     <Avatar
       id={buildMemberAvatarId(member?.id)}
-      isLoading={isLoadingAvatar || isFetchingAvatar}
-      alt={member?.name || t(COMMON.AVATAR_DEFAULT_ALT)}
-      component="avatar"
-      variant="circular"
-      maxWidth={AVATAR_ICON_HEIGHT}
-      maxHeight={AVATAR_ICON_HEIGHT}
-      url={avatarUrl}
+      url={avatarUrl ?? defaultImage}
+      isLoading={isLoading || isLoadingAvatar}
+      alt={member?.name ?? t(COMMON.AVATAR_DEFAULT_ALT)}
+      component={component}
+      maxWidth={maxWidth}
+      maxHeight={maxHeight}
       sx={{ mx: 1 }}
     />
   );
