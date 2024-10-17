@@ -33,7 +33,7 @@ describe('Select platform view ', () => {
   it('select platform view should be library, or player, or builder', () => {
     visitItemPage(MOCK_ITEMS[0]);
     cy.get(`#${SELECT_VIEW_ID}`).click();
-    [Context.Library, Context.Builder, Context.Player].forEach((ele) => {
+    [Context.Builder, Context.Player].forEach((ele) => {
       checkContainViewText(ele);
     });
   });

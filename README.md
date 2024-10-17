@@ -18,7 +18,6 @@ VITE_ENABLE_MOCK_API=false
 VITE_GRAASP_API_HOST=http://localhost:3000
 VITE_GRAASP_AUTH_HOST=http://localhost:3001
 VITE_GRAASP_PLAYER_HOST=http://localhost:3112
-VITE_GRAASP_LIBRARY_HOST=http://localhost:3005
 VITE_GRAASP_BUILDER_HOST=http://localhost:3111
 ```
 

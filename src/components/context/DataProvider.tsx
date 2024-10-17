@@ -78,7 +78,6 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   const [enabledArray, setEnabledArray] = useState({
     [Context.Builder]: false,
     [Context.Player]: false,
-    [Context.Library]: false,
   });
   const [actions, setActions] = useState<Action[]>([]);
   const [allMembers, setAllMembers] = useState<Member[]>([]);
@@ -130,21 +129,6 @@ const DataProvider = ({ children }: Props): JSX.Element => {
   );
 
   const {
-    data: explorerData,
-    isError: explorerIsError,
-    isLoading: explorerIsLoading,
-  } = hooks.useActions(
-    {
-      itemId,
-      view: Context.Library,
-      requestedSampleSize,
-      startDate: formatISO(dateRange.startDate),
-      endDate: formatISO(endOfDay(dateRange.endDate)),
-    },
-    { enabled: Boolean(enabledArray[Context.Library]) },
-  );
-
-  const {
     data: itemData,
     isError: itemIsError,
     isLoading: itemIsLoading,
@@ -168,16 +152,8 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       setIsLoading(builderIsLoading);
     } else if (enabledArray[Context.Player]) {
       setIsLoading(playerIsLoading);
-    } else if (enabledArray[Context.Library]) {
-      setIsLoading(explorerIsLoading);
     }
-  }, [
-    enabledArray,
-    itemIsLoading,
-    builderIsLoading,
-    playerIsLoading,
-    explorerIsLoading,
-  ]);
+  }, [enabledArray, itemIsLoading, builderIsLoading, playerIsLoading]);
 
   useEffect(() => {
     // fetch corresponding data only when view is shown
@@ -211,18 +187,6 @@ const DataProvider = ({ children }: Props): JSX.Element => {
       setError(playerIsError);
     }
   }, [playerData, view, actions, playerIsError]);
-
-  useEffect(() => {
-    if (
-      explorerData &&
-      view === Context.Library &&
-      actions.length !== explorerData?.actions?.length
-    ) {
-      setActions(explorerData?.actions ?? []);
-      setAllMembers(explorerData?.members ?? []);
-      setError(explorerIsError);
-    }
-  }, [explorerData, view, actions, explorerIsError]);
 
   const value = useMemo(
     () => ({
