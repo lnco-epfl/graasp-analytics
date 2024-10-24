@@ -1,6 +1,7 @@
+import { ReactNode } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import { Box, styled, useTheme } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
 import { Context } from '@graasp/sdk';
 import {
@@ -8,7 +9,6 @@ import {
   Platform,
   PlatformSwitch,
   defaultHostsMapper,
-  useMobileView,
   usePlatformNavigation,
 } from '@graasp/ui';
 
@@ -22,7 +22,6 @@ import Sidebar from './Sidebar';
 export const platformsHostsMap = defaultHostsMapper({
   [Platform.Builder]: HOST_MAP[Context.Builder],
   [Platform.Player]: HOST_MAP[Context.Player],
-  [Platform.Library]: HOST_MAP[Context.Library],
 });
 
 const StyledLink = styled(Link)(() => ({
@@ -31,7 +30,7 @@ const StyledLink = styled(Link)(() => ({
   display: 'flex',
   alignItems: 'center',
 }));
-const LinkComponent = ({ children }: { children: JSX.Element }) => (
+const LinkComponent = ({ children }: { children: ReactNode }) => (
   <StyledLink to={HOME_PATH}>{children}</StyledLink>
 );
 
@@ -39,8 +38,6 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
   const { t } = useAnalyticsTranslation();
   const { itemId } = useParams();
 
-  const theme = useTheme();
-  const { isMobile } = useMobileView();
   const getNavigationEvents = usePlatformNavigation(platformsHostsMap, itemId);
 
   const platformProps = {
@@ -49,9 +46,6 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
     },
     [Platform.Player]: {
       ...getNavigationEvents(Platform.Player),
-    },
-    [Platform.Library]: {
-      ...getNavigationEvents(Platform.Library),
     },
     [Platform.Analytics]: {
       ...getNavigationEvents(Platform.Analytics),
@@ -69,12 +63,8 @@ const PageWrapper = ({ children }: { children: JSX.Element }): JSX.Element => {
           selected={Platform.Analytics}
           platformsProps={platformProps}
           disabledColor="#999"
-          color={
-            isMobile ? theme.palette.primary.main : theme.palette.secondary.main
-          }
-          accentColor={
-            isMobile ? theme.palette.secondary.main : theme.palette.primary.main
-          }
+          color="#ffffff"
+          accentColor="#000000"
         />
       }
       LinkComponent={LinkComponent}
